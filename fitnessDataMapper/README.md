@@ -1,1 +1,0 @@
-Fitness Data Mapper Module
