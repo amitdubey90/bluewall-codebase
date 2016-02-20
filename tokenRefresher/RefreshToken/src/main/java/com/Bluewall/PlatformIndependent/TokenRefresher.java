@@ -161,7 +161,7 @@ public class TokenRefresher {
 	}
 	
 	
-	// module to verify whether to refresh access token or not.
+	// Module to check whether to refresh access token or not.
 	@SuppressWarnings("deprecation")
 	public static boolean checkTokenExpiry(Connection conn, int userID){
 		ResultSet rs = null;
