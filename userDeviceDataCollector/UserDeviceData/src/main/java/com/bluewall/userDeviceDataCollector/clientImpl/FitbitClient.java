@@ -25,6 +25,7 @@ public class FitbitClient implements Device {
 
 		URL url;
 		try {
+			
 			url = new URL(Constants.FITBIT_REFRESH_TOKEN_URL);
 
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -43,6 +44,7 @@ public class FitbitClient implements Device {
 			int responseCode = conn.getResponseCode();
 
 			if (responseCode != 200) {
+				conn.getErrorStream();
 				throw new RuntimeException("Failed : HTTP error code : " + conn.getResponseCode());
 			} else {
 				BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
@@ -72,7 +74,7 @@ public class FitbitClient implements Device {
 		String encodedAuthString = null;
 		try {
 			encodedAuthString = Constants.BASIC + " "
-					+ Base64.encodeBase64(Constants.FITBIT_APP_CLIENT_ID_CLIENT_SECRET.getBytes(Constants.UTF8));
+					+ new String(Base64.encodeBase64(Constants.FITBIT_APP_CLIENT_ID_CLIENT_SECRET.getBytes(Constants.UTF8)));
 		} catch (UnsupportedEncodingException use) {
 			System.out.println("An UnsupportedEncodingException has occurred");
 		}
@@ -96,7 +98,7 @@ public class FitbitClient implements Device {
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
 			conn.setRequestMethod(Constants.GET_MEHTOD);
-			conn.setRequestProperty(Constants.AUTHORIZATION, accessToken);
+			conn.setRequestProperty(Constants.AUTHORIZATION, "Bearer "+accessToken);
 			conn.setRequestProperty(Constants.CONTENT_TYPE, Constants.APPLICATION_JSON);
 
 			BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
@@ -111,6 +113,12 @@ public class FitbitClient implements Device {
 		}
 		return sb.toString();
 
+	}
+	
+	public static void main(String args[]){
+		FitbitClient client = new FitbitClient();
+		//client.getRefreshedAccessToken("b57a634ca1cda8cc4aea728eb63fa620d3042dc9f418bd4b9206d2ec71e66810");
+		client.getUserActivityInfo("today", null, "eyJhbGciOiJIUzI1NiJ9.eyJleHAiOjE0NTYwNDU5NjksInNjb3BlcyI6Indsb2Mgd3BybyB3bnV0IHdzbGUgd3NldCB3d2VpIHdociB3YWN0IHdzb2MiLCJzdWIiOiIzTlRMTUoiLCJhdWQiOiIyMjdHQzUiLCJpc3MiOiJGaXRiaXQiLCJ0eXAiOiJhY2Nlc3NfdG9rZW4iLCJpYXQiOjE0NTYwNDIzNjl9.3isRT0f6rtl9gSchAbqu2KPz-oavmH6zM7MpZKJGshY");
 	}
 
 	

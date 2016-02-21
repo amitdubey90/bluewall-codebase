@@ -14,7 +14,6 @@ import com.bluewall.userDeviceDataCollector.common.Constants;
 
 public class JawboneClient implements Device {
 
-	
 	public UserConnectedDevice getRefreshedAccessToken(String oldRefreshToken) {
 
 		String response;
@@ -24,8 +23,8 @@ public class JawboneClient implements Device {
 		URL url;
 		try {
 			String JAWBONE_ACCESS_TOKEN_URL_PARAMS = Constants.JAWBONE_REFRESH_TOKEN_URL + "?client_id="
-					+ Constants.JAWBONE_CLIENT_ID + "&client_secret=" + Constants.JAWBONE_CLIENT_SECRET + "&"+Constants.GRANT_TYPE
-					+ oldRefreshToken;
+					+ Constants.JAWBONE_CLIENT_ID + "&client_secret=" + Constants.JAWBONE_CLIENT_SECRET + "&"
+					+ Constants.GRANT_TYPE + oldRefreshToken;
 			url = new URL(JAWBONE_ACCESS_TOKEN_URL_PARAMS);
 
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -71,17 +70,6 @@ public class JawboneClient implements Device {
 		return null;
 	}
 
-//	private String getEncodedAuthorization() {
-//		String encodedAuthString = null;
-//		try {
-//			encodedAuthString = Constants.BEARER + " "
-//					+ Base64.encodeBase64(Constants.JAWBONE_APP_CLIENT_ID_CLIENT_SECRET.getBytes(Constants.UTF8));
-//		} catch (UnsupportedEncodingException use) {
-//			System.out.println("An UnsupportedEncodingException has occurred");
-//		}
-//		return encodedAuthString;
-//	}
-
 	public String getAccessToken(String refreshToken, String userId) {
 		// TODO Auto-generated method stub
 		return null;
@@ -117,5 +105,12 @@ public class JawboneClient implements Device {
 		return sb.toString();
 	}
 
-	
+	// public static void main(String args[]){
+	// JawboneClient client = new JawboneClient();
+	// //client.getRefreshedAccessToken("b57a634ca1cda8cc4aea728eb63fa620d3042dc9f418bd4b9206d2ec71e66810");
+	// client.getUserActivityInfo("1383289200", "1383289200",
+	// "DudD7GQwFnf5RS-9XbWjmcTZi4ulO1-caMufUKjI_Xy6RwNLHwjaa0qsvFAJuoENkKMwPvEBJ55RAnYEZaPxlCzIBmUtBLpsaym2RYjpp5gDwoQTw2eSTw");
+	//
+	// }
+
 }

@@ -10,7 +10,7 @@ public class Constants {
 	public static final String PASSWORD = "q1w2e3r4t5y6";
 
 	public static final String FITBIT_REFRESH_TOKEN_URL = "https://api.fitbit.com/oauth2/token";
-	public static final String FITBIT_APP_CLIENT_ID_CLIENT_SECRET = "229WBX:a5e08a68db05625a2578ce37f7639ad4";
+	public static final String FITBIT_APP_CLIENT_ID_CLIENT_SECRET = "227GC5:59316e79fe526a2549ca5faf33e9ac3f";
 	public static final String REFRESH_TOKEN = "refresh_token";
 	public static final String ACCESS_TOKEN = "access_token";
 	public static final String BASIC = "Basic";
