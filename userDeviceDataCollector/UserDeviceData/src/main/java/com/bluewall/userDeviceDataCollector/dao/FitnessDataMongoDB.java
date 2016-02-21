@@ -1,12 +1,9 @@
-package mongodb;
+package com.bluewall.userDeviceDataCollector.dao;
 
 
 import org.bson.Document;
-import org.json.JSONObject;
 
 import com.mongodb.BasicDBObject;
-import com.mongodb.DB;
-import com.mongodb.DBCollection;
 import com.mongodb.DBObject;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;

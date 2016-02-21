@@ -1,6 +1,6 @@
 package com.bluewall.userDeviceDataCollector.factory;
 
-import com.bluewall.userDeviceDataCollector.Client.Device;
+import com.bluewall.userDeviceDataCollector.client.Device;
 import com.bluewall.userDeviceDataCollector.clientImpl.FitbitClient;
 import com.bluewall.userDeviceDataCollector.clientImpl.JawboneClient;
 import com.bluewall.userDeviceDataCollector.common.Constants;

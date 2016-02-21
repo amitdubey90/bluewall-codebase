@@ -8,8 +8,8 @@ import java.net.URL;
 
 import org.json.JSONObject;
 
-import com.bluewall.userDeviceDataCollector.Client.Device;
 import com.bluewall.userDeviceDataCollector.bean.UserConnectedDevice;
+import com.bluewall.userDeviceDataCollector.client.Device;
 import com.bluewall.userDeviceDataCollector.common.Constants;
 
 public class JawboneClient implements Device {

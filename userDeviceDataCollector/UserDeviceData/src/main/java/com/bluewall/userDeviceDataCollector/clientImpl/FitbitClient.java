@@ -11,8 +11,8 @@ import java.net.URL;
 import org.apache.commons.codec.binary.Base64;
 import org.json.JSONObject;
 
-import com.bluewall.userDeviceDataCollector.Client.Device;
 import com.bluewall.userDeviceDataCollector.bean.UserConnectedDevice;
+import com.bluewall.userDeviceDataCollector.client.Device;
 import com.bluewall.userDeviceDataCollector.common.Constants;
 
 public class FitbitClient implements Device {
@@ -79,11 +79,6 @@ public class FitbitClient implements Device {
 			System.out.println("An UnsupportedEncodingException has occurred");
 		}
 		return encodedAuthString;
-	}
-
-	public String getAccessToken(String refreshToken, String deviceUserId) {
-
-		return null;
 	}
 
 	public String getUserActivityInfo(String date, String date2, String accessToken) {

@@ -1,4 +1,4 @@
-package fitbit;
+package com.bluewall.userDeviceDataCollector.deviceData;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -9,54 +9,53 @@ import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
 
-import mongodb.FitnessDataMongoDB;
+import com.bluewall.userDeviceDataCollector.dao.FitnessDataMongoDB;
 
-public class Fitbit_apidata 
+public class JawboneApidata 
 {
 	public static void main(String[] args) throws Exception {
-		Fitbit_apidata.getFitbitAPI();
+		JawboneApidata.getJawbonAPI();
 	}
-		
-	public static String getFitbitAPI() throws Exception{
-		String user_api = "https://api.fitbit.com/1/user/-/profile.json";
+	
+	public static String getJawbonAPI() throws Exception{
+		String user_api = "https://jawbone.com/nudge/api/v.1.1/users/@me";
 		StringBuffer sb = new StringBuffer();
 		String userData = null;
 		
 		try {
 			
-			/* Configuration for Fitbit API call */
-		    String encodedAuthorization = "eyJhbGciOiJIUzI1NiJ9.eyJleHAiOjE0NTU4NjA5MjQsInNjb3BlcyI6Indwcm8gd2xvYyB3bnV0IHdzZXQgd3NsZSB3d2VpIHdociB3YWN0IHdzb2MiLCJzdWIiOiIzTlg2N0MiLCJhdWQiOiIyMjlXQlgiLCJpc3MiOiJGaXRiaXQiLCJ0eXAiOiJhY2Nlc3NfdG9rZW4iLCJpYXQiOjE0NTU4NTczMjR9.S9RH_-IBBk0-_wZykkFrsH1t5ApzSQEWT7eCOlbf1SI";
+			/* Configuration for Jawbone API call */
+		    String encodedAuthorization = "DCEOB729f3iDVYqVCgoIAhfD77pd79dmFL5is7A-jise9Np2eJCyH88xFKXmlBhMxW38ahOAj648QJQG1FtnJVECdgRlo_GULMgGZS0EumxrKbZFiOmnmAPChBPDZ5JP";
 			String auth = "Bearer "+ encodedAuthorization;
+			
 			URL url = new URL(user_api);
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 			
 			conn.setRequestMethod("GET");
 			conn.setRequestProperty("Authorization", auth);
+			conn.setRequestProperty("Content-Type", "application/json");
 			
-			/* Reading Fitbit API Data */
+			/* Reading Jawbone API Data */
 			BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
 			String inputLine;
-
 			while ((inputLine = in.readLine()) != null) {
+				System.out.println("InputLine:" + inputLine);
 				sb.append(inputLine);
 			}
 			in.close();
-
+			
 			/* Inserting Data Into Mongo */
 			FitnessDataMongoDB fdm = new FitnessDataMongoDB();
-			fdm.insert(sb.toString(), "Fitbit");
-
+			fdm.insert(sb.toString(), "Jawbone");
+			
 		}
 		catch(UnsupportedEncodingException e){
 			System.out.println("Error: "+e.getMessage());
 		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (ProtocolException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		

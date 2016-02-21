@@ -29,6 +29,6 @@ public class Constants {
 	public static final String JAWBONE_ACTIVITY_API = "https://jawbone.com/nudge/api/v.1.1/users/@me/moves";
 	public static final String GET_MEHTOD = "GET";
 	public static final String APPLICATION_JSON = "application/json";
-	public static final String FITBIT_ACTIVITY_API = "https://api.fitbitcom/1/user/-/activities/date/";
+	public static final String FITBIT_ACTIVITY_API = "https://api.fitbit.com/1/user/-/activities/date/";
 
 }

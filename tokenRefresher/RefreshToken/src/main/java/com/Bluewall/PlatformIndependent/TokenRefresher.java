@@ -92,6 +92,7 @@ public class TokenRefresher {
 	
 		try {
 			String old_refreshToken = getRefreshToken(dbconn, userID);
+			
 			String urlparams = "grant_type=refresh_token&refresh_token=" + old_refreshToken;
 			
 			String encodedAuthorization = Base64.getEncoder().encodeToString("229WBX:a5e08a68db05625a2578ce37f7639ad4".getBytes("utf-8"));
