@@ -14,7 +14,6 @@ import java.util.List;
 
 import com.bluewall.userDeviceDataCollector.bean.UserConnectedDevice;
 import com.bluewall.userDeviceDataCollector.client.Device;
-import com.bluewall.userDeviceDataCollector.clientImpl.FitbitClient;
 import com.bluewall.userDeviceDataCollector.common.Constants;
 import com.bluewall.userDeviceDataCollector.dao.FitnessDataMongoDB;
 import com.bluewall.userDeviceDataCollector.dao.UserDataMySql;
