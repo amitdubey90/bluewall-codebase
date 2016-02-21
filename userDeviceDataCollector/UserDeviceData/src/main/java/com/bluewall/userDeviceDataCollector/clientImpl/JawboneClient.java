@@ -117,9 +117,5 @@ public class JawboneClient implements Device {
 		return sb.toString();
 	}
 
-	public static void main(String args[]) {
-		JawboneClient client = new JawboneClient();
-		client.getRefreshedAccessToken("0KMp0hdWbLrW0meGNMzGdYNVipUKCggCngh0odnmt_LdL2WxNgQvKekaCy5aBtavNNWfJhnfRQwlAN2iCODyqw");
-	}
-
+	
 }

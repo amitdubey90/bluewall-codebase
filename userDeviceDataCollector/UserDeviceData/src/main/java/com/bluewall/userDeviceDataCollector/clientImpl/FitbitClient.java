@@ -113,8 +113,5 @@ public class FitbitClient implements Device {
 
 	}
 
-	public static void main(String args[]){
-		FitbitClient client = new FitbitClient();
-		client.getUserActivityInfo("2016-02-20", null, "abc");
-	}
+	
 }
