@@ -23,12 +23,13 @@ public class TokenHandler {
 		String accessToken = null;
 		Statement stmt = null;
 		ResultSet rs = null;
-		Connection dbconn = DatabaseConnections.establishMYSQLConnection(Constants.MYSQL_CONN_URL,Constants.USER_DB_NAME,Constants.USERNAME,Constants.PASSWORD);
+		DatabaseConnections dbconn = new DatabaseConnections();
+		Connection conn = dbconn.establishMYSQLConnection(Constants.MYSQL_CONN_URL,Constants.USER_DB_NAME,Constants.USERNAME,Constants.PASSWORD);
 		
 		try{
 			// check for token expiry before refreshing the token
-			if (checkTokenExpiry(dbconn,userID)){
-				String old_refreshToken = getRefreshToken(dbconn, userID);
+			if (checkTokenExpiry(conn,userID)){
+				String old_refreshToken = getRefreshToken(conn, userID);
 				
 				// Device id 10 - Fitbit, 11 -Jawbone
 				if (deviceID == 10){
@@ -38,11 +39,11 @@ public class TokenHandler {
 					devClient = devFac.getClientInstance("Jawbone");
 				}
 				
-				UserConnectedDevice userdevice = devClient.getRefreshedAccessToken(dbconn,old_refreshToken,userID);
+				UserConnectedDevice userdevice = devClient.getRefreshedAccessToken(conn,old_refreshToken,userID);
 				return userdevice.getAccessToken();
 			}
 			else{
-				stmt = dbconn.createStatement();
+				stmt = conn.createStatement();
 				rs = stmt.executeQuery("select accessToken from UserConnectedDevice where userID = "+userID);;
 			
 				while (rs.next()){
@@ -80,8 +81,8 @@ public class TokenHandler {
 			}
 			try 
 			{ 
-				if (dbconn != null)
-					dbconn.close();
+				if (conn != null)
+					conn.close();
 			} 
 			catch (SQLException e) 
 			{ 

@@ -2,42 +2,23 @@ package com.bluewall.userDeviceDataCollector.dao;
 
 
 import org.bson.Document;
-
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
-import com.mongodb.MongoClient;
-import com.mongodb.MongoClientURI;
 import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoDatabase;
 import com.mongodb.util.JSON;
 
-public class FitnessDataMongoDB {
+public class FitnessData {
 
-	MongoCollection<Document> collection;
-	MongoDatabase db;
-	public FitnessDataMongoDB(){
-		try{
-			/* Connecting to MongoDB */
-			String textUri = "mongodb://bluewallmongo:bluewall1234@ds061375.mongolab.com:61375/user-activity-raw";
-			MongoClientURI uri = new MongoClientURI(textUri);
-			MongoClient mongo = new MongoClient(uri);
-			db = mongo.getDatabase("user-activity-raw");
-			collection = db.getCollection("user-activity-raw_collection");
-		}
-		catch(Exception e){
-			e.printStackTrace();
-		}	
-	}
-	
-	public void insert(String data, String deviceType) throws Exception{
-		
+	public void insertDeviceData(String data, int userID, String deviceType) throws Exception{
+		DatabaseConnections dbconn = new DatabaseConnections();
+		MongoCollection<Document> collection = dbconn.establishMONGOConnection();
 		Document document = new Document();
 		//document.put("_id", getNextSequence("userid")); // Generating Auto Incremented ID 
 		
 		/*BasicDBObject searchQuery = new BasicDBObject();
 		searchQuery.put("seq", 1);
 		collection.remove(searchQuery);*/
-		
+		document.put("user_id", userID);
 	    document.put("device_type", deviceType);
 	    collection.insertOne(document);
 	    
@@ -50,7 +31,6 @@ public class FitnessDataMongoDB {
 		updateObj.put("$set", newDocument);
 
 		collection.updateOne(document, updateObj);
-	    
 	}
 	
 	/*public static Object getNextSequence(String name) throws Exception{

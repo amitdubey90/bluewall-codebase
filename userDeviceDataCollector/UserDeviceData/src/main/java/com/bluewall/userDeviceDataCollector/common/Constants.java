@@ -11,6 +11,10 @@ public class Constants {
 	public static final String USERNAME = "root";
 	public static final String PASSWORD = "q1w2e3r4t5y6";
 
+	public static final String MONGO_CONN_URL = "mongodb://bluewallmongo:bluewall1234@ds061375.mongolab.com:61375/user-activity-raw";
+	public static final String USER_ACTIVITY_DB_NAME = "user-activity-raw";
+	public static final String USER_ACTIVITY_COLLECTION_NAME = "user-activity-raw_collection";
+	
 	public static final String FITBIT_REFRESH_TOKEN_URL = "https://api.fitbit.com/oauth2/token";
 	public static final String FITBIT_APP_CLIENT_ID_CLIENT_SECRET = "227GC5:59316e79fe526a2549ca5faf33e9ac3f";
 	public static final String REFRESH_TOKEN = "refresh_token";

@@ -122,7 +122,7 @@ public class JawboneClient implements Device {
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
 			conn.setRequestMethod(Constants.GET_MEHTOD);
-			conn.setRequestProperty(Constants.AUTHORIZATION, accessToken);
+			conn.setRequestProperty(Constants.AUTHORIZATION, "Bearer " +accessToken);
 			conn.setRequestProperty(Constants.CONTENT_TYPE, Constants.APPLICATION_JSON);
 
 			BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
