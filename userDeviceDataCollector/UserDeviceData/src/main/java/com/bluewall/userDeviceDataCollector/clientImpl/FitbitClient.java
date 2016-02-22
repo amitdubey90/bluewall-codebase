@@ -7,6 +7,10 @@ import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 import org.apache.commons.codec.binary.Base64;
 import org.json.JSONObject;
@@ -18,11 +22,12 @@ import com.bluewall.userDeviceDataCollector.common.Constants;
 public class FitbitClient implements Device {
 
 	// content type
-	public UserConnectedDevice getRefreshedAccessToken(String oldRefreshToken) {
+	public UserConnectedDevice getRefreshedAccessToken(Connection dbconn,String oldRefreshToken, int userID) {
 		String response;
+		UserConnectedDevice userDevice = new UserConnectedDevice();
 		StringBuffer jsonResponse = new StringBuffer();
 		String refreshToken, accessToken = null;
-
+		Statement stmt = null;
 		URL url;
 		try {
 			
@@ -46,7 +51,8 @@ public class FitbitClient implements Device {
 			if (responseCode != 200) {
 				conn.getErrorStream();
 				throw new RuntimeException("Failed : HTTP error code : " + conn.getResponseCode());
-			} else {
+			} 
+			else {
 				BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
 				while ((response = br.readLine()) != null) {
 					jsonResponse.append(response);
@@ -59,15 +65,38 @@ public class FitbitClient implements Device {
 				refreshToken = (String) obj.get(Constants.REFRESH_TOKEN);
 				accessToken = (String) obj.getString(Constants.ACCESS_TOKEN);
 				
-				UserConnectedDevice userDevice = new UserConnectedDevice();
 				userDevice.setRefreshToken(refreshToken);
 				userDevice.setAccessToken(accessToken);
-				return userDevice;
+				
+				stmt = dbconn.createStatement();
+				String updateTokens = "UPDATE UserConnectedDevice SET refreshToken = " + refreshToken +",accessToken = " + accessToken + " where userID = "+userID;
+			    stmt.executeUpdate(updateTokens);
 			}
-		} catch (IOException io) {
-			System.out.println("An IO Exception has occured");
+		} 
+		catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		return null;
+		finally{
+			if (dbconn != null)
+				try {
+					dbconn.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			if (stmt != null)
+				try {
+					stmt.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		}
+		return userDevice;
 	}
 
 	private String getEncodedAuthorization() {
@@ -115,6 +144,5 @@ public class FitbitClient implements Device {
 		//client.getRefreshedAccessToken("b57a634ca1cda8cc4aea728eb63fa620d3042dc9f418bd4b9206d2ec71e66810");
 		client.getUserActivityInfo("today", null, "eyJhbGciOiJIUzI1NiJ9.eyJleHAiOjE0NTYwNDU5NjksInNjb3BlcyI6Indsb2Mgd3BybyB3bnV0IHdzbGUgd3NldCB3d2VpIHdociB3YWN0IHdzb2MiLCJzdWIiOiIzTlRMTUoiLCJhdWQiOiIyMjdHQzUiLCJpc3MiOiJGaXRiaXQiLCJ0eXAiOiJhY2Nlc3NfdG9rZW4iLCJpYXQiOjE0NTYwNDIzNjl9.3isRT0f6rtl9gSchAbqu2KPz-oavmH6zM7MpZKJGshY");
 	}
-
 	
 }

@@ -12,26 +12,40 @@ import com.bluewall.userDeviceDataCollector.bean.UserConnectedDevice;
 import com.bluewall.userDeviceDataCollector.common.Constants;
 import com.bluewall.userDeviceDataCollector.common.Queries;
 
-public class UserDataMySql {
+public class DatabaseConnections {
 
 	String dbUrl;
 	String dbClass;
 	String username;
 	String password;
 
-	public void getConnection() {
-		dbUrl = "jdbc:mysql://user-db-instance.cqqcnirpnrkg.us-west-1.rds.amazonaws.com:3306/userDatabase";
-		dbClass = Constants.DRIVER_CLASS;
-		username = Constants.USERNAME;
-		password = Constants.PASSWORD;
+	//Establish connection to database.
+	public static Connection establishMYSQLConnection(String dbConnURL,String dbName, String uName, String passwd) {
+		Connection conn = null;
+		try {
+			Class.forName("com.mysql.jdbc.Driver").newInstance();
+			conn = DriverManager.getConnection(dbConnURL+"/"+dbName, uName, passwd);
+		} catch (InstantiationException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (IllegalAccessException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (ClassNotFoundException e1) {
+			// TODO Auto-generated catch block
+			System.out.println("Your MySQL JDBC driver is missing !!");
+			e1.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return conn;
 	}
 
 	public List<UserConnectedDevice> getUserID() {
 		List<UserConnectedDevice> userConnectedDeviceList = null;
-		getConnection();
+		Connection connection = establishMYSQLConnection(Constants.MYSQL_CONN_URL,Constants.USER_DB_NAME,Constants.USERNAME,Constants.PASSWORD);
 		try {
-			Class.forName(dbClass);
-			Connection connection = DriverManager.getConnection(dbUrl, username, password);
 			Statement statement = connection.createStatement();
 			ResultSet resultSet = statement.executeQuery(Queries.GET_USER_ID);
 			userConnectedDeviceList = new ArrayList<UserConnectedDevice>();
@@ -44,8 +58,6 @@ public class UserDataMySql {
 
 			connection.close();
 
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

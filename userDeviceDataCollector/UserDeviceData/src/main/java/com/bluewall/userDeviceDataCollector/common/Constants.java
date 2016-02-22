@@ -5,7 +5,9 @@ public class Constants {
 	public static final String FITBIT = "fitbit";
 	public static final String JAWBONE = "jawbone";
 	public static final String DRIVER_CLASS = "com.mysql.jdbc.Driver";
-	public static final String DATABASE_NAME = "jdbc:mysql://user-db-instance.cqqcnirpnrkg.us-west-1.rds.amazonaws.com:3306/userDatabase";
+	public static final String MYSQL_CONN_URL = "jdbc:mysql://user-db-instance.cqqcnirpnrkg.us-west-1.rds.amazonaws.com:3306";
+	public static final String USER_DB_NAME = "userDatabase";
+	public static final String FOOD_DB_NAME = "foodDatabase";
 	public static final String USERNAME = "root";
 	public static final String PASSWORD = "q1w2e3r4t5y6";
 
@@ -23,8 +25,8 @@ public class Constants {
 
 	public static final String JAWBONE_REFRESH_TOKEN_URL = "https://jawbone.com/auth/oauth2/token";
 	public static final String BEARER = "Bearer";
-	public static final String JAWBONE_CLIENT_ID = "VQX6NU7FOAI";
-	public static final String JAWBONE_CLIENT_SECRET = "8a2502a78670f6971045232de2e79c4c18c529cd";
+	public static final String JAWBONE_APP_CLIENT_ID_CLIENT_SECRET = "VQX6NU7FOAI:8a2502a78670f6971045232de2e79c4c18c529cd";
+	
 
 	public static final String JAWBONE_ACTIVITY_API = "https://jawbone.com/nudge/api/v.1.1/users/@me/moves";
 	public static final String GET_MEHTOD = "GET";

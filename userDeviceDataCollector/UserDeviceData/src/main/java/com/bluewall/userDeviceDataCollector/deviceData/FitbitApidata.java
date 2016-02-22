@@ -1,22 +1,16 @@
 package com.bluewall.userDeviceDataCollector.deviceData;
 
-import java.io.BufferedReader;
+
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
-import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-
 import com.bluewall.userDeviceDataCollector.bean.UserConnectedDevice;
 import com.bluewall.userDeviceDataCollector.client.Device;
 import com.bluewall.userDeviceDataCollector.common.Constants;
 import com.bluewall.userDeviceDataCollector.dao.FitnessDataMongoDB;
-import com.bluewall.userDeviceDataCollector.dao.UserDataMySql;
+import com.bluewall.userDeviceDataCollector.dao.DatabaseConnections;
 import com.bluewall.userDeviceDataCollector.factory.DeviceFactory;
 import com.bluewall.userDeviceDataCollector.tokenHandler.TokenHandler;
 
@@ -31,7 +25,7 @@ public class FitbitApidata
 		String userData = null;
 		
 		try {
-			UserDataMySql userDataMySql = new UserDataMySql();
+			DatabaseConnections userDataMySql = new DatabaseConnections();
 			List<UserConnectedDevice> userConnectedDeviceList = userDataMySql.getUserID();
 			TokenHandler tokenHandler = new TokenHandler();
 			DeviceFactory fitbitInstance = new DeviceFactory();

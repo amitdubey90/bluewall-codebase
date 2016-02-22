@@ -1,11 +1,197 @@
 package com.bluewall.userDeviceDataCollector.tokenHandler;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.Timestamp;
+import java.util.Date;
+import com.bluewall.userDeviceDataCollector.bean.UserConnectedDevice;
+import com.bluewall.userDeviceDataCollector.clientImpl.FitbitClient;
+import com.bluewall.userDeviceDataCollector.common.Constants;
+import com.bluewall.userDeviceDataCollector.dao.DatabaseConnections;
+
 public class TokenHandler {
 
+	FitbitClient fc = new FitbitClient();
+	
+	//Get access token after refreshing.
 	public String getAccessToken(int userID){
 		String accessToken = null;
+		Statement stmt = null;
+		ResultSet rs = null;
+		Connection dbconn = DatabaseConnections.establishMYSQLConnection(Constants.MYSQL_CONN_URL,Constants.USER_DB_NAME,Constants.USERNAME,Constants.PASSWORD);
 		
-		return accessToken;
+		try{
+			// check for token expiry before refreshing the token
+			if (checkTokenExpiry(dbconn,userID)){
+				String old_refreshToken = getRefreshToken(dbconn, userID);
+				UserConnectedDevice userdevice = fc.getRefreshedAccessToken(dbconn,old_refreshToken,userID);
+				return userdevice.getAccessToken();
+			}
+			else{
+				stmt = dbconn.createStatement();
+				rs = stmt.executeQuery("select accessToken from UserConnectedDevice where userID = "+userID);;
+			
+				while (rs.next()){
+					try {
+						accessToken = rs.getString("accessToken");
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		
+		finally {
+			try 
+			{ 
+				if (rs != null) 
+					rs.close(); 
+			} 
+			catch (SQLException e) 
+			{ 
+				e.printStackTrace(); 
+			}
+			try 
+			{ 
+				if (stmt != null) 
+					stmt.close(); 
+			} 
+			catch (SQLException e) 
+			{ 
+				e.printStackTrace(); 
+			}
+			try 
+			{ 
+				if (dbconn != null)
+					dbconn.close();
+			} 
+			catch (SQLException e) 
+			{ 
+				e.printStackTrace(); 
+			}
+		}
+		
+		return accessToken;	
 	}
+	
+	//Fetch refresh token from database to refresh access token.
+	public static String getRefreshToken(Connection conn, int userID){
+			Statement stmt = null;
+			ResultSet rs = null;
+			String refreshToken = null;
+			
+			try {
+				stmt = conn.createStatement();
+				rs = stmt.executeQuery("select refreshToken from UserConnectedDevice where userID = "+userID);;
+				
+				while (rs.next()){
+					refreshToken = rs.getString("refreshToken");
+				}
+				
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			finally {
+				try 
+				{ 
+					if (rs != null) 
+						rs.close(); 
+				} 
+				catch (SQLException e) 
+				{ 
+					e.printStackTrace(); 
+				}
+				try 
+				{ 
+					if (stmt != null) 
+						stmt.close(); 
+				} 
+				catch (SQLException e) 
+				{ 
+					e.printStackTrace(); 
+				}
+				try 
+				{ 
+					if (conn != null) 
+						conn.close(); 
+				} 
+				catch (SQLException e) 
+				{ 
+					e.printStackTrace(); 
+				}
+			}
+			
+			return refreshToken;
+		}
+	
+	// Module to check whether to refresh access token or not.
+	@SuppressWarnings("deprecation")
+	public static boolean checkTokenExpiry(Connection conn, int userID){
+			ResultSet rs = null;
+			Statement stmt = null;
+			Timestamp creationTime = null;
+		
+			try {
+				stmt = conn.createStatement();
+				rs = stmt.executeQuery("select creationTime from UserConnectedDevice where userID = "+userID);;
+				
+				while (rs.next()){
+					creationTime = rs.getTimestamp("creationTime");
+				}
+					
+				Date date= new Date();
+		        long time = date.getTime(); 
+		        Timestamp ts = new Timestamp(time);
+		        
+		        if (ts.getDate() == creationTime.getDate()){
+		        	if ((ts.getHours() - creationTime.getHours()) > 1){
+		        		return true;
+		        	}
+		        }
+				
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			finally {
+				try 
+				{ 
+					if (rs != null) 
+						rs.close(); 
+				} 
+				catch (SQLException e) 
+				{ 
+					e.printStackTrace(); 
+				}
+				try 
+				{ 
+					if (stmt != null) 
+						stmt.close(); 
+				} 
+				catch (SQLException e) 
+				{ 
+					e.printStackTrace(); 
+				}
+				try 
+				{ 
+					if (conn != null) 
+						conn.close(); 
+				} 
+				catch (SQLException e) 
+				{ 
+					e.printStackTrace(); 
+				}
+			}
+			return false;	
+		}
+		
 }

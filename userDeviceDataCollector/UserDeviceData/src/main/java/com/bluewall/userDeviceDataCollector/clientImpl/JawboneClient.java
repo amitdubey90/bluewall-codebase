@@ -1,11 +1,17 @@
 package com.bluewall.userDeviceDataCollector.clientImpl;
 
 import java.io.BufferedReader;
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
 
+import org.apache.commons.codec.binary.Base64;
 import org.json.JSONObject;
 
 import com.bluewall.userDeviceDataCollector.bean.UserConnectedDevice;
@@ -14,41 +20,37 @@ import com.bluewall.userDeviceDataCollector.common.Constants;
 
 public class JawboneClient implements Device {
 
-	public UserConnectedDevice getRefreshedAccessToken(String oldRefreshToken) {
-
+	public UserConnectedDevice getRefreshedAccessToken(Connection dbconn,String oldRefreshToken, int userID) {
 		String response;
+		UserConnectedDevice userDevice = new UserConnectedDevice();
 		StringBuffer jsonResponse = new StringBuffer();
 		String refreshToken, accessToken = null;
-
+		Statement stmt = null;
 		URL url;
 		try {
-			String JAWBONE_ACCESS_TOKEN_URL_PARAMS = Constants.JAWBONE_REFRESH_TOKEN_URL + "?client_id="
-					+ Constants.JAWBONE_CLIENT_ID + "&client_secret=" + Constants.JAWBONE_CLIENT_SECRET + "&"
-					+ Constants.GRANT_TYPE + oldRefreshToken;
-			url = new URL(JAWBONE_ACCESS_TOKEN_URL_PARAMS);
+			
+			url = new URL(Constants.JAWBONE_REFRESH_TOKEN_URL);
 
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
 			conn.setRequestMethod(Constants.POST_METHOD);
 
-			// conn.setRequestProperty(Constants.AUTHORIZATION,
-			// getEncodedAuthorization());
-			// conn.setRequestProperty(Constants.CONTENT_TYPE,
-			// Constants.WWW_FORM_URL_ENCODED);
+			conn.setRequestProperty(Constants.AUTHORIZATION, getEncodedAuthorization());
+			conn.setRequestProperty(Constants.CONTENT_TYPE, Constants.WWW_FORM_URL_ENCODED);
 			conn.setDoOutput(true);
 
-			// DataOutputStream ds = new
-			// DataOutputStream(conn.getOutputStream());
-			//
-			// ds.writeBytes(JAWBONE_ACCESS_TOKEN_URL_PARAMS);
-			// ds.flush();
-			// ds.close();
+			DataOutputStream ds = new DataOutputStream(conn.getOutputStream());
+			ds.writeBytes(Constants.GRANT_TYPE + oldRefreshToken);
+			ds.flush();
+			ds.close();
 
 			int responseCode = conn.getResponseCode();
 
 			if (responseCode != 200) {
+				conn.getErrorStream();
 				throw new RuntimeException("Failed : HTTP error code : " + conn.getResponseCode());
-			} else {
+			} 
+			else {
 				BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
 				while ((response = br.readLine()) != null) {
 					jsonResponse.append(response);
@@ -57,24 +59,55 @@ public class JawboneClient implements Device {
 				conn.disconnect();
 
 				JSONObject obj = new JSONObject(jsonResponse.toString());
+				
 				refreshToken = (String) obj.get(Constants.REFRESH_TOKEN);
 				accessToken = (String) obj.getString(Constants.ACCESS_TOKEN);
-				UserConnectedDevice userDevice = new UserConnectedDevice();
+				
 				userDevice.setRefreshToken(refreshToken);
 				userDevice.setAccessToken(accessToken);
-				return userDevice;
+				
+				stmt = dbconn.createStatement();
+				String updateTokens = "UPDATE UserConnectedDevice SET refreshToken = " + refreshToken +",accessToken = " + accessToken + " where userID = "+userID;
+			    stmt.executeUpdate(updateTokens);
 			}
-		} catch (IOException io) {
-			System.out.println("An IO Exception has occured");
+		} 
+		catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		return null;
+		finally{
+			if (dbconn != null)
+				try {
+					dbconn.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			if (stmt != null)
+				try {
+					stmt.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		}
+		return userDevice;
 	}
-
-	public String getAccessToken(String refreshToken, String userId) {
-		// TODO Auto-generated method stub
-		return null;
+	
+	private String getEncodedAuthorization() {
+		String encodedAuthString = null;
+		try {
+			encodedAuthString = Constants.BASIC + " "
+					+ new String(Base64.encodeBase64(Constants.JAWBONE_APP_CLIENT_ID_CLIENT_SECRET.getBytes(Constants.UTF8)));
+		} catch (UnsupportedEncodingException use) {
+			System.out.println("An UnsupportedEncodingException has occurred");
+		}
+		return encodedAuthString;
 	}
-
+	
 	public String getUserActivityInfo(String startTime, String endTime, String accessToken) {
 
 		StringBuffer sb = new StringBuffer();
