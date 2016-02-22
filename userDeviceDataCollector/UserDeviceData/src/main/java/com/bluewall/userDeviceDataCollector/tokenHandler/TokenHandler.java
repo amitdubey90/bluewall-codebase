@@ -7,16 +7,19 @@ import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.Date;
 import com.bluewall.userDeviceDataCollector.bean.UserConnectedDevice;
+import com.bluewall.userDeviceDataCollector.client.Device;
 import com.bluewall.userDeviceDataCollector.clientImpl.FitbitClient;
 import com.bluewall.userDeviceDataCollector.common.Constants;
 import com.bluewall.userDeviceDataCollector.dao.DatabaseConnections;
+import com.bluewall.userDeviceDataCollector.factory.DeviceFactory;
 
 public class TokenHandler {
 
-	FitbitClient fc = new FitbitClient();
+	DeviceFactory devFac = new DeviceFactory();
+	Device devClient = null;
 	
 	//Get access token after refreshing.
-	public String getAccessToken(int userID){
+	public String getAccessToken(int userID,int deviceID){
 		String accessToken = null;
 		Statement stmt = null;
 		ResultSet rs = null;
@@ -26,7 +29,16 @@ public class TokenHandler {
 			// check for token expiry before refreshing the token
 			if (checkTokenExpiry(dbconn,userID)){
 				String old_refreshToken = getRefreshToken(dbconn, userID);
-				UserConnectedDevice userdevice = fc.getRefreshedAccessToken(dbconn,old_refreshToken,userID);
+				
+				// Device id 10 - Fitbit, 11 -Jawbone
+				if (deviceID == 10){
+					devClient = devFac.getClientInstance("Fitbit");
+				}
+				else {
+					devClient = devFac.getClientInstance("Jawbone");
+				}
+				
+				UserConnectedDevice userdevice = devClient.getRefreshedAccessToken(dbconn,old_refreshToken,userID);
 				return userdevice.getAccessToken();
 			}
 			else{
