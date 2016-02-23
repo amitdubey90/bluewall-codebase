@@ -1,5 +1,8 @@
 package com.bluewall.userDeviceDataMapper.util;
 
+/**
+ * Constant class
+ */
 public class Constants {
 
     // MySql Connection Settings

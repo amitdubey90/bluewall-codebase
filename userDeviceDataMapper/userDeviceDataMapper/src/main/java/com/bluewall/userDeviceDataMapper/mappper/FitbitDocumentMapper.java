@@ -6,7 +6,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.bson.Document;
 
 /**
- *
+ * {@link Document} to {@link com.bluewall.userDeviceDataMapper.bean.ActivityLog} mapper implementation
+ * for fitbit API response document.
  */
 @Slf4j
 public class FitbitDocumentMapper implements ActivityLogMapper<Document> {

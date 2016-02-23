@@ -4,7 +4,8 @@ import com.bluewall.userDeviceDataMapper.bean.ActivityLog;
 import org.bson.Document;
 
 /**
- *
+ * {@link Document} to {@link com.bluewall.userDeviceDataMapper.bean.ActivityLog} mapper implementation
+ * for Jawbone API response document.
  */
 public class JawboneDocumentMapper implements ActivityLogMapper<Document> {
 

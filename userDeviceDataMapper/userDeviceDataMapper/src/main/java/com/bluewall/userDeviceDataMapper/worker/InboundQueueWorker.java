@@ -13,7 +13,8 @@ import java.sql.Timestamp;
 import java.util.Date;
 
 /**
- *
+ * Worker thread that reads from Inbound mapper queue, transforms the
+ * document to {@link ActivityLog} and enqueues it to outbound queue
  */
 @Slf4j
 public class InboundQueueWorker extends Thread {
@@ -57,6 +58,7 @@ public class InboundQueueWorker extends Thread {
                 }
 
             } catch (Exception e) {
+                log.error("Unknown exception in inbound worker {}", e);
                 e.printStackTrace();
             }
         }
@@ -66,6 +68,9 @@ public class InboundQueueWorker extends Thread {
         }
     }
 
+    /**
+     * Method to shutdown the thread
+     */
     public void shutdown() {
         log.info("Inbound worker {} shutting down initiated.", workerId);
         forever = false;

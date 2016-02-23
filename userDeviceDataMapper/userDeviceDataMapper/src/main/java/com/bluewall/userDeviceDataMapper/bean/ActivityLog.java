@@ -5,7 +5,7 @@ import lombok.Data;
 import java.sql.Timestamp;
 
 /**
- *
+ * POJO representing activity logs in the database
  */
 @Data
 @lombok.ToString

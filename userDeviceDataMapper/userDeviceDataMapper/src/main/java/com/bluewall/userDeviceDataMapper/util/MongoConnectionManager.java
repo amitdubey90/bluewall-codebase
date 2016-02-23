@@ -5,6 +5,9 @@ import com.mongodb.MongoClientURI;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Connection manager for MongoDB. This connects to mongo lab on cloud
+ */
 public class MongoConnectionManager implements AutoCloseable {
 
     private static Logger LOG = LoggerFactory.getLogger(MongoConnectionManager.class);
@@ -12,8 +15,9 @@ public class MongoConnectionManager implements AutoCloseable {
     private static MongoClient MONGO_CLIENT;
 
     /**
-     *
-     * @return
+     * Creates a new connection if null otherwise returns the same connection in the
+     * subsequent calls.
+     * @return {@link MongoClient}
      */
     public MongoClient getConnection() {
         if(MONGO_CLIENT == null) {
@@ -24,8 +28,8 @@ public class MongoConnectionManager implements AutoCloseable {
     }
 
     /**
-     *
-     * @return
+     * Method to create client for mongodb.
+     * @return {@link MongoClient}
      */
     private MongoClient createConnection() {
         LOG.info("Creating client for mongodb");

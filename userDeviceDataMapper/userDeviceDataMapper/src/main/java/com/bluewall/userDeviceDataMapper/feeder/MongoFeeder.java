@@ -10,6 +10,9 @@ import com.mongodb.client.model.Filters;
 import lombok.extern.slf4j.Slf4j;
 import org.bson.Document;
 
+/**
+ * Feeder implementation with MongoDB as a source.
+ */
 @Slf4j
 public class MongoFeeder extends Thread implements Feeder<Document>  {
 
@@ -66,7 +69,7 @@ public class MongoFeeder extends Thread implements Feeder<Document>  {
                 cursor = collection.find().iterator();
                 while (cursor.hasNext()) {
                     Document document = cursor.next();
-                    log.info("Receive doc - {}", document.toJson());
+                    log.debug("Receive doc - {}", document.toJson());
                     enqueueToMapperQueue(document);
                 }
                 sleep(1000);
@@ -78,7 +81,7 @@ public class MongoFeeder extends Thread implements Feeder<Document>  {
     }
 
     /**
-     *
+     * Close cursor
      */
     private void closeCursor() {
         if(cursor != null) {
@@ -87,8 +90,8 @@ public class MongoFeeder extends Thread implements Feeder<Document>  {
     }
 
     /**
-     *
-     * @return
+     * Returns the last ID present in the database
+     * @return long
      */
     private long getLastProcessedID() {
         //TODO init last ID

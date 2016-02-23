@@ -10,7 +10,7 @@ import java.util.concurrent.LinkedBlockingDeque;
 import java.util.concurrent.TimeUnit;
 
 /**
- *
+ * {@link Document} based implementation for {@link QueueManager}
  */
 @Slf4j
 public class DocumentQueueManager implements QueueManager<Document> {
@@ -29,7 +29,10 @@ public class DocumentQueueManager implements QueueManager<Document> {
         init();
     }
 
-    protected void init() {
+    /**
+     * Starts all workers
+     */
+    private void init() {
         log.info("Initializing Queue Manager");
 
         inboundWorker.start();

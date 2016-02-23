@@ -13,7 +13,7 @@ import java.sql.SQLException;
 import java.util.stream.IntStream;
 
 /**
- *
+ * Worker thread that reads {@link ActivityLog} from outbound queue and writes them to the database.
  */
 @Slf4j
 public class OutboundQueueWorker extends Thread {
@@ -69,10 +69,8 @@ public class OutboundQueueWorker extends Thread {
                     }
                 } catch (SQLException e) {
                     log.error("SQLException in outbound queue worker {}", e);
-                    e.printStackTrace();
                 } catch (Exception e) {
                     log.error("Exception in outbound queue worker {}", e);
-                    e.printStackTrace();
                 }
             }
             //flush any remaining records before shutting down
@@ -89,8 +87,9 @@ public class OutboundQueueWorker extends Thread {
     }
 
     /**
+     * Executes a batch of {@link PreparedStatement}
      * @param pst
-     * @return
+     * @return int - total number of records inserted
      * @throws SQLException
      */
     private int flushToDatabase(PreparedStatement pst) throws SQLException {
@@ -107,6 +106,9 @@ public class OutboundQueueWorker extends Thread {
         return updateCount;
     }
 
+    /**
+     * Method to shutdown the thread
+     */
     public void shutdown() {
         log.info("Outbound worker {} shutting down initiated", workerId);
         forever = false;
