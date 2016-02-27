@@ -35,14 +35,15 @@ public class ApidataHandler
 						+ "DeviceID: " + userConnectedDevice.getDeviceID());
 				int userID = userConnectedDevice.getUserID();
 				int deviceID = userConnectedDevice.getDeviceID();
-				String accessToken = tokenHandler.getAccessToken(userID, deviceID);
-				if(deviceID == 10){
+				//String accessToken = tokenHandler.getAccessToken(userID, deviceID);
+				/*if(deviceID == 10){
 					System.out.println("inserting fitbit data");
 					Device fitbit = instance.getClientInstance(Constants.FITBIT);
 					userActivityInfoData =  fitbit.getUserActivityInfo("", "", accessToken);
 					fdm.insertDeviceData(userActivityInfoData, userID, Constants.FITBIT);
 				}	
-				else{
+				else{*/
+				if(deviceID == 11){
 					System.out.println("inserting jaawbone data");
 					Device jawbone = instance.getClientInstance(Constants.JAWBONE);
 					userActivityInfoData =  jawbone.getUserActivityInfo("1383289200", "1383289200", "DCEOB729f3iDVYqVCgoIAhfD77pd79dmFL5is7A-jise9Np2eJCyH2oQ71Ln3CCmxW38ahOAj648QJQG1FtnJVECdgRlo_GULMgGZS0EumxrKbZFiOmnmAPChBPDZ5JP");
