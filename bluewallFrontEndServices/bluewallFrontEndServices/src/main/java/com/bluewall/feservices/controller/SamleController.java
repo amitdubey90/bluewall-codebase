@@ -10,4 +10,12 @@ public class SamleController {
     public String helloRestApi() {
         return "Hello world";
     }
+    
+   @RequestMapping("/login")
+    public String login(){
+    	
+    	return "Provide your login details";
+    }
+    
+    
 }

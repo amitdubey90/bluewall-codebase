@@ -16,6 +16,7 @@ import org.springframework.stereotype.Component;
  * Simple filter implementation to add headers to all responses. Use this if you want
  * to add something to all the responses.
  */
+
 @Component
 public class SimpleFilter implements Filter {
 
