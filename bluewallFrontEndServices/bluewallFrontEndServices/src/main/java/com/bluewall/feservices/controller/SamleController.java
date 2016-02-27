@@ -14,7 +14,11 @@ public class SamleController {
    @RequestMapping("/login")
     public String login(){
     	
-    	return "Provide your login details";
+	   String username = "vrushank.doshi90@gmail.com";
+	   String passwd = "testpassword";
+	   
+	   
+	   return "Provide your login details";
     }
     
     

@@ -13,16 +13,20 @@ import com.bluewall.userDeviceDataCollector.common.Queries;
 
 public class UserDetails {
 
-	public List<UserConnectedDevice> getUserDetails(){
+	public List<UserConnectedDevice> getUserDetails() throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException{
 		
-		DatabaseConnections dbconn = new DatabaseConnections();
 		List<UserConnectedDevice> userConnectedDeviceList = null;
-		Connection connection = dbconn.establishMYSQLConnection(Constants.MYSQL_CONN_URL,Constants.USER_DB_NAME,Constants.USERNAME,Constants.PASSWORD);
+		SqlDBConnections dbconn = new SqlDBConnections(
+				Constants.MYSQL_CONN_URL,
+				Constants.USER_DB_NAME,
+				Constants.USERNAME,
+				Constants.PASSWORD);
 		
+		Connection connection = dbconn.returnSQLConnection();
 		try {
+			userConnectedDeviceList = new ArrayList<UserConnectedDevice>();
 			Statement statement = connection.createStatement();
 			ResultSet resultSet = statement.executeQuery(Queries.GET_USER_DETAILS);
-			userConnectedDeviceList = new ArrayList<UserConnectedDevice>();
 
 			while (resultSet.next()) {
 				UserConnectedDevice userConnectedDevice = new UserConnectedDevice();
@@ -30,13 +34,10 @@ public class UserDetails {
 				userConnectedDevice.setDeviceID(resultSet.getInt("deviceID"));
 				userConnectedDeviceList.add(userConnectedDevice);
 			}
-
 			connection.close();
-
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return userConnectedDeviceList;
-		
 	}
 }
