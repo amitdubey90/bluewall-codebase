@@ -1,11 +1,17 @@
 package com.bluewall.feservices.controller;
 
+import java.sql.Connection;
+
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.bluewall.feservices.dao.SqlDBConnections;
+import com.bluewall.feservices.util.SQLQueries;
+
 @RestController
 public class SamleController {
-
+	
+	
     @RequestMapping("/hello")
     public String helloRestApi() {
         return "Hello world";
@@ -13,12 +19,17 @@ public class SamleController {
     
    @RequestMapping("/login")
     public String login(){
-    	
-	   String username = "vrushank.doshi90@gmail.com";
+	   System.out.println("Login class");
+	   String username = "tewst@gmail.com";
 	   String passwd = "testpassword";
 	   
+	   SQLQueries sqlQuery = new SQLQueries();
 	   
-	   return "Provide your login details";
+	   if (sqlQuery.checkValidUser(username,passwd)){
+		   return "Valid User";
+	   }
+	   
+	   return "Invalid user";
     }
     
     

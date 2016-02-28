@@ -48,7 +48,7 @@ public class TokenHandler {
 				return userdevice.getAccessToken();
 			} else {
 				stmt = conn.createStatement();
-				rs = stmt.executeQuery("select accessToken from UserConnectedDevice where userID = "	+ userID);
+				rs = stmt.executeQuery("select accessToken from UserConnectedDevice where userID = " + userID);
 				while (rs.next()) {
 					try {
 						accessToken = rs.getString("accessToken");
