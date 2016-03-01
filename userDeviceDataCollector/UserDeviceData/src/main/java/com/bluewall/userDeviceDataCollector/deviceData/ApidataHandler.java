@@ -6,11 +6,11 @@ import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.util.List;
 import com.bluewall.userDeviceDataCollector.bean.UserConnectedDevice;
-import com.bluewall.userDeviceDataCollector.client.Device;
+import com.bluewall.userDeviceDataCollector.client.ClientInterface;
 import com.bluewall.userDeviceDataCollector.common.Constants;
 import com.bluewall.userDeviceDataCollector.dao.FitnessData;
 import com.bluewall.userDeviceDataCollector.dao.UserDetails;
-import com.bluewall.userDeviceDataCollector.factory.DeviceFactory;
+import com.bluewall.userDeviceDataCollector.factory.ClientFactory;
 import com.bluewall.userDeviceDataCollector.tokenHandler.TokenHandler;
 
 import lombok.extern.slf4j.Slf4j;
@@ -27,7 +27,7 @@ public class ApidataHandler
 		try {
 			UserDetails userDetails = new UserDetails();
 			TokenHandler tokenHandler = new TokenHandler();
-			DeviceFactory instance = new DeviceFactory();
+			ClientFactory instance = new ClientFactory();
 			FitnessData fdm = new FitnessData();
 			String userActivityInfoData;
 			List<UserConnectedDevice> userConnectedDeviceList = userDetails.getUserDetails();
@@ -47,7 +47,7 @@ public class ApidataHandler
 				else{*/
 				if(deviceID == 11){
 					System.out.println("inserting jaawbone data");
-					Device jawbone = instance.getClientInstance(Constants.JAWBONE);
+					ClientInterface jawbone = instance.getClientInstance(Constants.JAWBONE);
 					userActivityInfoData =  jawbone.getUserActivityInfo("1383289200", "1383289200", "DCEOB729f3iDVYqVCgoIAhfD77pd79dmFL5is7A-jise9Np2eJCyH2oQ71Ln3CCmxW38ahOAj648QJQG1FtnJVECdgRlo_GULMgGZS0EumxrKbZFiOmnmAPChBPDZ5JP");
 					System.out.println("USer Data: " + userActivityInfoData);
 					fdm.insertDeviceData(userActivityInfoData, userID, Constants.JAWBONE);

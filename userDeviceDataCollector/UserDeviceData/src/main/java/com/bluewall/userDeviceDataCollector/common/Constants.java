@@ -17,15 +17,14 @@ public class Constants {
 	
 	public static final String FITBIT_REFRESH_TOKEN_URL = "https://api.fitbit.com/oauth2/token";
 	public static final String FITBIT_APP_CLIENT_ID_CLIENT_SECRET = "227GC5:59316e79fe526a2549ca5faf33e9ac3f";
-	public static final String REFRESH_TOKEN = "refresh_token";
-	public static final String ACCESS_TOKEN = "access_token";
+	public static final String REFRESH_TOKEN_KEY = "refresh_token";
+	public static final String ACCESS_TOKEN_KEY = "access_token";
 	public static final String BASIC = "Basic";
 	public static final String UTF8 = "utf-8";
 	public static final String GRANT_TYPE = "grant_type=refresh_token&refresh_token=";
 	public static final String POST_METHOD = "POST";
 	public static final String AUTHORIZATION = "Authorization";
 	public static final String CONTENT_TYPE = "Content-Type";
-	public static final String WWW_FORM_URL_ENCODED = "application/x-www-form-urlencoded";
 
 	public static final String JAWBONE_REFRESH_TOKEN_URL = "https://jawbone.com/auth/oauth2/token";
 	public static final String BEARER = "Bearer";

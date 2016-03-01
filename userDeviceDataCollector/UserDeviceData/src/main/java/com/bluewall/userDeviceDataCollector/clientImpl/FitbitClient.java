@@ -15,8 +15,9 @@ import org.apache.commons.codec.binary.Base64;
 import org.json.JSONObject;
 
 import com.bluewall.userDeviceDataCollector.bean.UserConnectedDevice;
-import com.bluewall.userDeviceDataCollector.client.Device;
+import com.bluewall.userDeviceDataCollector.client.ClientInterface;
 import com.bluewall.userDeviceDataCollector.common.Constants;
+import javax.ws.rs.core.MediaType;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -28,7 +29,7 @@ import lombok.extern.slf4j.Slf4j;
  *
  */
 @Slf4j
-public class FitbitClient implements Device {
+public class FitbitClient implements ClientInterface {
 
 	/**
 	 * This method fetches a new access token for a user based on the refresh
@@ -49,7 +50,7 @@ public class FitbitClient implements Device {
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 			conn.setRequestMethod(Constants.POST_METHOD);
 			conn.setRequestProperty(Constants.AUTHORIZATION, getEncodedAuthorization());
-			conn.setRequestProperty(Constants.CONTENT_TYPE, Constants.WWW_FORM_URL_ENCODED);
+			conn.setRequestProperty(Constants.CONTENT_TYPE, MediaType.APPLICATION_FORM_URLENCODED.toString());
 			conn.setDoOutput(true);
 
 			DataOutputStream ds = new DataOutputStream(conn.getOutputStream());
@@ -73,10 +74,10 @@ public class FitbitClient implements Device {
 				conn.disconnect();
 				JSONObject obj = new JSONObject(jsonResponse.toString());
 				log.info("Fetching Refresh Token for Fitbit user");
-				refreshToken = (String) obj.get(Constants.REFRESH_TOKEN);
+				refreshToken = (String) obj.get(Constants.REFRESH_TOKEN_KEY);
 				log.debug("Refresh token fetched {}", refreshToken);
 				log.info("Fetching Access Token for Fitbit user");
-				accessToken = (String) obj.getString(Constants.ACCESS_TOKEN);
+				accessToken = (String) obj.getString(Constants.ACCESS_TOKEN_KEY);
 				log.debug("Access token fetched {}", accessToken);
 				userDevice.setRefreshToken(refreshToken);
 				userDevice.setAccessToken(accessToken);
@@ -141,7 +142,7 @@ public class FitbitClient implements Device {
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 			conn.setRequestMethod(Constants.GET_MEHTOD);
 			conn.setRequestProperty(Constants.AUTHORIZATION, "Bearer " + accessToken);
-			conn.setRequestProperty(Constants.CONTENT_TYPE, Constants.APPLICATION_JSON);
+			conn.setRequestProperty(Constants.CONTENT_TYPE, MediaType.APPLICATION_JSON.toString());
 
 			BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
 			String inputLine;

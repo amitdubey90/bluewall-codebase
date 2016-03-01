@@ -4,7 +4,7 @@ import java.sql.Connection;
 
 import com.bluewall.userDeviceDataCollector.bean.UserConnectedDevice;
 
-public interface Device {
+public interface ClientInterface {
 	
 	public UserConnectedDevice getRefreshedAccessToken(Connection dbconn, String oldRefreshToken, int userID);
 	//public String getAccessToken(String userId);

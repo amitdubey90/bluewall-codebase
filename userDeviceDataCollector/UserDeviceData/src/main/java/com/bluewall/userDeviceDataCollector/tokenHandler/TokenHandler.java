@@ -8,15 +8,15 @@ import java.sql.Timestamp;
 import java.util.Date;
 
 import com.bluewall.userDeviceDataCollector.bean.UserConnectedDevice;
-import com.bluewall.userDeviceDataCollector.client.Device;
+import com.bluewall.userDeviceDataCollector.client.ClientInterface;
 import com.bluewall.userDeviceDataCollector.common.Constants;
 import com.bluewall.userDeviceDataCollector.dao.SqlDBConnections;
-import com.bluewall.userDeviceDataCollector.factory.DeviceFactory;
+import com.bluewall.userDeviceDataCollector.factory.ClientFactory;
 
 public class TokenHandler {
 
-	DeviceFactory devFac = new DeviceFactory();
-	Device devClient = null;
+	ClientFactory devFac = new ClientFactory();
+	ClientInterface devClient = null;
 
 	// Get access token after refreshing.
 	public String getAccessToken(int userID, int deviceID)

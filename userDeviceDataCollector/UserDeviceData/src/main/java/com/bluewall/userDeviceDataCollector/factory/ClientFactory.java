@@ -1,6 +1,6 @@
 package com.bluewall.userDeviceDataCollector.factory;
 
-import com.bluewall.userDeviceDataCollector.client.Device;
+import com.bluewall.userDeviceDataCollector.client.ClientInterface;
 import com.bluewall.userDeviceDataCollector.clientImpl.FitbitClient;
 import com.bluewall.userDeviceDataCollector.clientImpl.JawboneClient;
 import com.bluewall.userDeviceDataCollector.common.Constants;
@@ -11,7 +11,7 @@ import com.bluewall.userDeviceDataCollector.common.Constants;
  * @author rainashastri
  *
  */
-public class DeviceFactory {
+public class ClientFactory {
 
 	/**
 	 * returns instance of a client based on the device name
@@ -19,8 +19,8 @@ public class DeviceFactory {
 	 * @param deviceName
 	 * @return
 	 */
-	public Device getClientInstance(String deviceName) {
-		Device instance = null;
+	public ClientInterface getClientInstance(String deviceName) {
+		ClientInterface instance = null;
 		if (deviceName.equalsIgnoreCase(Constants.FITBIT)) {
 			instance = new FitbitClient();
 		} else {
