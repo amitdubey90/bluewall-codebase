@@ -13,6 +13,9 @@ import com.bluewall.userDeviceDataCollector.dao.UserDetails;
 import com.bluewall.userDeviceDataCollector.factory.DeviceFactory;
 import com.bluewall.userDeviceDataCollector.tokenHandler.TokenHandler;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public class ApidataHandler 
 {
 	public static void main(String[] args) throws Exception {
@@ -27,7 +30,6 @@ public class ApidataHandler
 			DeviceFactory instance = new DeviceFactory();
 			FitnessData fdm = new FitnessData();
 			String userActivityInfoData;
-			
 			List<UserConnectedDevice> userConnectedDeviceList = userDetails.getUserDetails();
 			
 			for (UserConnectedDevice userConnectedDevice : userConnectedDeviceList) {

@@ -18,9 +18,25 @@ import com.bluewall.userDeviceDataCollector.bean.UserConnectedDevice;
 import com.bluewall.userDeviceDataCollector.client.Device;
 import com.bluewall.userDeviceDataCollector.common.Constants;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
+
+/**
+ * This class contains methods which make calls to several Jawbone APIs to fetch
+ * access token, refresh token , activity data, etc
+ * 
+ * @author rainashastri
+ *
+ */
 public class JawboneClient implements Device {
 
-	public UserConnectedDevice getRefreshedAccessToken(Connection dbconn,String oldRefreshToken, int userID) {
+	/**
+	 * This method fetches a new access token for a user based on the refresh
+	 * token. The new access token along with the new refresh token is then
+	 * stored in the database.
+	 */
+	public UserConnectedDevice getRefreshedAccessToken(Connection dbconn, String oldRefreshToken, int userID) {
 		String response;
 		UserConnectedDevice userDevice = new UserConnectedDevice();
 		StringBuffer jsonResponse = new StringBuffer();
@@ -28,9 +44,9 @@ public class JawboneClient implements Device {
 		Statement stmt = null;
 		URL url;
 		try {
-			
+			log.info("Fetching access token and refresh token for userID: {}", userID);
 			url = new URL(Constants.JAWBONE_REFRESH_TOKEN_URL);
-
+			log.info("Jawbone Refresh Token Url: {}", url);
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
 			conn.setRequestMethod(Constants.POST_METHOD);
@@ -47,10 +63,10 @@ public class JawboneClient implements Device {
 			int responseCode = conn.getResponseCode();
 
 			if (responseCode != 200) {
-				conn.getErrorStream();
-				throw new RuntimeException("Failed : HTTP error code : " + conn.getResponseCode());
-			} 
-			else {
+				log.error(
+						"Failed : HTTP error code : {} \n Error Stream {} \n Not able to fetch access Token and refresh token",
+						conn.getResponseCode(), conn.getErrorStream());
+			} else {
 				BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
 				while ((response = br.readLine()) != null) {
 					jsonResponse.append(response);
@@ -59,55 +75,66 @@ public class JawboneClient implements Device {
 				conn.disconnect();
 
 				JSONObject obj = new JSONObject(jsonResponse.toString());
-				
+
+				log.info("Fetching Refresh Token for Jawbone user");
 				refreshToken = (String) obj.get(Constants.REFRESH_TOKEN);
+				log.debug("Refresh token fetched {}", refreshToken);
+				log.info("Fetching Access Token for Jawbone user");
 				accessToken = (String) obj.getString(Constants.ACCESS_TOKEN);
-				
+				log.debug("Access token fetched {}", accessToken);
+
 				userDevice.setRefreshToken(refreshToken);
 				userDevice.setAccessToken(accessToken);
-				
+
 				stmt = dbconn.createStatement();
-				String updateTokens = "UPDATE UserConnectedDevice SET refreshToken = " + refreshToken +",accessToken = " + accessToken + " where userID = "+userID;
-			    stmt.executeUpdate(updateTokens);
+				String updateTokens = "UPDATE UserConnectedDevice SET refreshToken = " + refreshToken
+						+ ",accessToken = " + accessToken + " where userID = " + userID;
+				stmt.executeUpdate(updateTokens);
+				log.info("Refresh Token, Access token for fitbit user updated", updateTokens);
 			}
-		} 
-		catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		finally{
+		} catch (IOException ioExp) {
+			log.error("An IO Exception has occured {}", ioExp);
+		} catch (SQLException sqlExp) {
+			log.error("A SQL Exception has occured {}", sqlExp);
+		} catch (Exception e) {
+			log.error("An  Exception has occured {}", e);
+		} finally {
 			if (dbconn != null)
 				try {
 					dbconn.close();
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					if (stmt != null) {
+						stmt.close();
+					}
+				} catch (SQLException sExp) {
+					log.error("SQL Excpetion in finally block {}", sExp);
 				}
-			if (stmt != null)
-				try {
-					stmt.close();
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+
 		}
 		return userDevice;
 	}
-	
+
+	/**
+	 * This method encodes the jawbone client Id and client secret using Base64
+	 * encoder. This is the Authorization String in the request header
+	 * 
+	 * @return encodedAuthString
+	 */
 	private String getEncodedAuthorization() {
 		String encodedAuthString = null;
 		try {
-			encodedAuthString = Constants.BASIC + " "
-					+ new String(Base64.encodeBase64(Constants.JAWBONE_APP_CLIENT_ID_CLIENT_SECRET.getBytes(Constants.UTF8)));
+			log.info("Fetching Encoded Authorization String");
+			encodedAuthString = Constants.BASIC + " " + new String(
+					Base64.encodeBase64(Constants.JAWBONE_APP_CLIENT_ID_CLIENT_SECRET.getBytes(Constants.UTF8)));
 		} catch (UnsupportedEncodingException use) {
-			System.out.println("An UnsupportedEncodingException has occurred");
+			log.error("UnsupportedEncodingException has occured {}", use);
 		}
 		return encodedAuthString;
 	}
-	
+
+	/**
+	 * This method makes a call to Jawbone API which fetches User Activity
+	 * Information tracked through the device
+	 */
 	public String getUserActivityInfo(String startTime, String endTime, String accessToken) {
 
 		StringBuffer sb = new StringBuffer();
@@ -118,11 +145,11 @@ public class JawboneClient implements Device {
 			String acitivtyURLWithParams = Constants.JAWBONE_ACTIVITY_API + "?start_time=" + sTime + "&endTime="
 					+ eTime;
 			url = new URL(acitivtyURLWithParams);
-
+			log.info("Jawbone User Activity URL: {}", url);
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
 			conn.setRequestMethod(Constants.GET_MEHTOD);
-			conn.setRequestProperty(Constants.AUTHORIZATION, "Bearer " +accessToken);
+			conn.setRequestProperty(Constants.AUTHORIZATION, "Bearer " + accessToken);
 			conn.setRequestProperty(Constants.CONTENT_TYPE, Constants.APPLICATION_JSON);
 
 			BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
@@ -133,17 +160,10 @@ public class JawboneClient implements Device {
 			in.close();
 		} catch (IOException e) {
 
-			System.out.println("An IO Excpetion has occurred");
+			log.error("An IOException has occured, {}", e);
 		}
+		log.info("Fetched user Activity Info: {}", sb.toString());
 		return sb.toString();
 	}
-
-	// public static void main(String args[]){
-	// JawboneClient client = new JawboneClient();
-	// //client.getRefreshedAccessToken("b57a634ca1cda8cc4aea728eb63fa620d3042dc9f418bd4b9206d2ec71e66810");
-	// client.getUserActivityInfo("1383289200", "1383289200",
-	// "DudD7GQwFnf5RS-9XbWjmcTZi4ulO1-caMufUKjI_Xy6RwNLHwjaa0qsvFAJuoENkKMwPvEBJ55RAnYEZaPxlCzIBmUtBLpsaym2RYjpp5gDwoQTw2eSTw");
-	//
-	// }
 
 }
