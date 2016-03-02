@@ -1,19 +1,19 @@
 package com.bluewall.userDeviceDataCollector.deviceData;
 
+import com.bluewall.userDeviceDataCollector.dao.FitnessData;
+import com.bluewall.userDeviceDataCollector.dao.UserDetails;
+import com.bluewall.userDeviceDataCollector.tokenHandler.TokenHandler;
+import com.bluewall.util.bean.UserConnectedDevice;
+import com.bluewall.util.client.ClientInterface;
+import com.bluewall.util.common.DeviceType;
+import com.bluewall.util.factory.ClientFactory;
+import lombok.extern.slf4j.Slf4j;
+
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.util.List;
-import com.bluewall.userDeviceDataCollector.bean.UserConnectedDevice;
-import com.bluewall.userDeviceDataCollector.client.ClientInterface;
-import com.bluewall.userDeviceDataCollector.common.Constants;
-import com.bluewall.userDeviceDataCollector.dao.FitnessData;
-import com.bluewall.userDeviceDataCollector.dao.UserDetails;
-import com.bluewall.userDeviceDataCollector.factory.ClientFactory;
-import com.bluewall.userDeviceDataCollector.tokenHandler.TokenHandler;
-
-import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class ApidataHandler 
@@ -40,17 +40,17 @@ public class ApidataHandler
 				//String accessToken = tokenHandler.getAccessToken(userID, deviceID);
 				/*if(deviceID == 10){
 					System.out.println("inserting fitbit data");
-					Device fitbit = instance.getClientInstance(Constants.FITBIT);
+					Device fitbit = instance.getClientInstance(DeviceType.FITBIT);
 					userActivityInfoData =  fitbit.getUserActivityInfo("", "", accessToken);
 					fdm.insertDeviceData(userActivityInfoData, userID, Constants.FITBIT);
 				}	
 				else{*/
 				if(deviceID == 11){
 					System.out.println("inserting jaawbone data");
-					ClientInterface jawbone = instance.getClientInstance(Constants.JAWBONE);
+					ClientInterface jawbone = instance.getClientInstance(DeviceType.JAWBONE);
 					userActivityInfoData =  jawbone.getUserActivityInfo("1383289200", "1383289200", "DCEOB729f3iDVYqVCgoIAhfD77pd79dmFL5is7A-jise9Np2eJCyH2oQ71Ln3CCmxW38ahOAj648QJQG1FtnJVECdgRlo_GULMgGZS0EumxrKbZFiOmnmAPChBPDZ5JP");
 					System.out.println("USer Data: " + userActivityInfoData);
-					fdm.insertDeviceData(userActivityInfoData, userID, Constants.JAWBONE);
+					fdm.insertDeviceData(userActivityInfoData, userID, DeviceType.JAWBONE.getName());
 				}
 			}
 		}

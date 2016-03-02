@@ -1,15 +1,15 @@
 package com.bluewall.userDeviceDataCollector.dao;
 
+import com.bluewall.userDeviceDataCollector.common.Constants;
+import com.bluewall.userDeviceDataCollector.common.Queries;
+import com.bluewall.util.bean.UserConnectedDevice;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-
-import com.bluewall.userDeviceDataCollector.bean.UserConnectedDevice;
-import com.bluewall.userDeviceDataCollector.common.Constants;
-import com.bluewall.userDeviceDataCollector.common.Queries;
 
 public class UserDetails {
 

@@ -1,17 +1,18 @@
 package com.bluewall.userDeviceDataCollector.tokenHandler;
 
+import com.bluewall.userDeviceDataCollector.common.Constants;
+import com.bluewall.userDeviceDataCollector.dao.SqlDBConnections;
+import com.bluewall.util.bean.UserConnectedDevice;
+import com.bluewall.util.client.ClientInterface;
+import com.bluewall.util.common.DeviceType;
+import com.bluewall.util.factory.ClientFactory;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.Date;
-
-import com.bluewall.userDeviceDataCollector.bean.UserConnectedDevice;
-import com.bluewall.userDeviceDataCollector.client.ClientInterface;
-import com.bluewall.userDeviceDataCollector.common.Constants;
-import com.bluewall.userDeviceDataCollector.dao.SqlDBConnections;
-import com.bluewall.userDeviceDataCollector.factory.ClientFactory;
 
 public class TokenHandler {
 
@@ -39,9 +40,9 @@ public class TokenHandler {
 
 				// Device id 10 - Fitbit, 11 -Jawbone
 				if (deviceID == 10) {
-					devClient = devFac.getClientInstance("Fitbit");
+					devClient = devFac.getClientInstance(DeviceType.FITBIT);
 				} else {
-					devClient = devFac.getClientInstance("Jawbone");
+					devClient = devFac.getClientInstance(DeviceType.JAWBONE);
 				}
 
 				UserConnectedDevice userdevice = devClient.getRefreshedAccessToken(conn, old_refreshToken, userID);
