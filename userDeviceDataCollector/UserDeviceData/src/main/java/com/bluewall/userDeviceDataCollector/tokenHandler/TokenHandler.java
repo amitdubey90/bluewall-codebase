@@ -5,7 +5,7 @@ import com.bluewall.userDeviceDataCollector.dao.SqlDBConnections;
 import com.bluewall.util.bean.UserConnectedDevice;
 import com.bluewall.util.client.ClientInterface;
 import com.bluewall.util.common.DeviceType;
-import com.bluewall.util.factory.ClientFactory;
+import com.bluewall.util.factory.DeviceClientFactory;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -16,7 +16,7 @@ import java.util.Date;
 
 public class TokenHandler {
 
-	ClientFactory devFac = new ClientFactory();
+	DeviceClientFactory devFac = new DeviceClientFactory();
 	ClientInterface devClient = null;
 
 	// Get access token after refreshing.
