@@ -6,7 +6,7 @@ import com.bluewall.userDeviceDataCollector.tokenHandler.TokenHandler;
 import com.bluewall.util.bean.UserConnectedDevice;
 import com.bluewall.util.client.ClientInterface;
 import com.bluewall.util.common.DeviceType;
-import com.bluewall.util.factory.DeviceClientFactory;
+import com.bluewall.util.factory.ClientFactory;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
@@ -27,7 +27,7 @@ public class ApidataHandler
 		try {
 			UserDetails userDetails = new UserDetails();
 			TokenHandler tokenHandler = new TokenHandler();
-			DeviceClientFactory instance = new DeviceClientFactory();
+			ClientFactory instance = new ClientFactory();
 			FitnessData fdm = new FitnessData();
 			String userActivityInfoData;
 			List<UserConnectedDevice> userConnectedDeviceList = userDetails.getUserDetails();

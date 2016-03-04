@@ -5,7 +5,7 @@ import com.bluewall.util.clientImpl.FitbitClient;
 import com.bluewall.util.clientImpl.JawboneClient;
 import com.bluewall.util.common.DeviceType;
 
-public class DeviceClientFactory {
+public class ClientFactory {
 
     /**
      * returns instance of a client based on the {@link DeviceType}
@@ -13,7 +13,7 @@ public class DeviceClientFactory {
      * @param deviceType
      * @return
      */
-    public static ClientInterface getClientInstance(DeviceType deviceType) {
+    public ClientInterface getClientInstance(DeviceType deviceType) {
         ClientInterface instance = null;
         if (deviceType == DeviceType.FITBIT) {
             instance = new FitbitClient();
