@@ -1,63 +1,66 @@
 package com.bluewall.feservices.controller;
-
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.URL;
 import java.net.URLConnection;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
+import lombok.extern.slf4j.Slf4j;
 import org.json.JSONObject;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import com.bluewall.feservices.util.Constants;
 
+/**
+ * @author Jenil
+ *
+ */
+@Slf4j
 @RestController
 public class LoginController {
 	
-	private static final String SCOPE = "profile";
-	private static final String REDIRECT_URI = "http://localhost:8080/callback";
-	private static final String CLIENT_ID = "962513083976-1pv7uun6hj9ffemotrb363p1bgk8ihj4.apps.googleusercontent.com";
-	private static final String APP_SECRET = "c_BV6eZgM-3XXB1kFosTevdW";
-	private static final String DIALOG_OAUTH = "https://accounts.google.com/o/oauth2/auth";
-	private static final String ACCESS_TOKEN = "https://accounts.google.com/o/oauth2/token";
-
+	/**
+	 * @param request OAuth URL 
+	 * @param response code is generated after authorizing the user
+	 * @throws Exception
+	 */
 	@RequestMapping(value = "/signin", method = RequestMethod.GET)
-	public void signin(HttpServletRequest request, HttpServletResponse response)
-               throws Exception {
+	public void signin(HttpServletRequest request, HttpServletResponse response) {
 		try {
-			//TODO: if already have a valid access token, no need to redirect, just login
-			response.sendRedirect(DIALOG_OAUTH+"?client_id="+CLIENT_ID+
-                              "&redirect_uri="+REDIRECT_URI+
-                              "&scope="+SCOPE+
+			response.sendRedirect(Constants.DIALOG_OAUTH+"?client_id="+Constants.CLIENT_ID+
+                              "&redirect_uri="+Constants.REDIRECT_URI+
+                              "&scope="+Constants.SCOPE+
                               "&response_type=code");
-			System.out.println("Exiting oauth");
+			log.info("OAuth Request Sent to generate the code");
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.error("Exception occured during OAuth Call");
 		}
 	}
 
+	/**
+	 * @param request Code generated after calling OAuth URL
+	 * @param response Access Token, Refresh Token, Expiry time and User Details
+	 */
 	@RequestMapping(value = "/callback", params = "code", method = RequestMethod.GET)
 	@ResponseBody
 	public void accessCode(@RequestParam("code") String code,
                                 HttpServletRequest request,
                                 HttpServletResponse response) throws Exception {
 		try {
+			log.debug("Intermediate Code for Access Token: " + code);
 			response.setContentType("text/html");
-			System.out.println("entering token");
-			System.out.println("Code: " + code);
 			String urlParameters = "code="
                     + code
-                    + "&client_id=962513083976-1pv7uun6hj9ffemotrb363p1bgk8ihj4.apps.googleusercontent.com"
-                    + "&client_secret=c_BV6eZgM-3XXB1kFosTevdW"
-                    + "&redirect_uri=" +REDIRECT_URI
+                    + "&client_id="+Constants.CLIENT_ID
+                    + "&client_secret="+Constants.APP_SECRET
+                    + "&redirect_uri=" +Constants.REDIRECT_URI
                     + "&grant_type=authorization_code";
 			
-			URL url = new URL(ACCESS_TOKEN);
+			URL url = new URL(Constants.ACCESS_TOKEN);
 			URLConnection urlConn = url.openConnection();
 			urlConn.setDoOutput(true);
 			OutputStreamWriter writer = new OutputStreamWriter(
@@ -66,33 +69,26 @@ public class LoginController {
 			writer.flush();
 			
 			String line, outputString = "";
-            BufferedReader reader = new BufferedReader(new InputStreamReader(
-                    urlConn.getInputStream()));
+            BufferedReader reader = new BufferedReader(new InputStreamReader(urlConn.getInputStream()));
             while ((line = reader.readLine()) != null) {
                 outputString += line;
             }
-            System.out.println(outputString);
             
-            //get Access Token 
+            log.info("Fetching Access Token using Access Token URL");
             JSONObject json = new JSONObject(outputString);
             String access_token = json.getString("access_token").toString();
-            System.out.println(access_token);
+            log.debug("Generated Access Token: " + access_token);
 
-          //get User Info 
-            url = new URL(
-                    "https://www.googleapis.com/oauth2/v1/userinfo?access_token="
-                            + access_token);
+            log.info("Fetching User Profile Information");
+            url = new URL("https://www.googleapis.com/oauth2/v1/userinfo?access_token=" + access_token);
             urlConn = url.openConnection();
             outputString = "";
-            reader = new BufferedReader(new InputStreamReader(
-                    urlConn.getInputStream()));
+            reader = new BufferedReader(new InputStreamReader(urlConn.getInputStream()));
             while ((line = reader.readLine()) != null) {
                 outputString += line;
-            }
-            System.out.println(outputString);
-            
+            }            
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.equals("Exception Occured while fetching Access token and User details");
 		}
 	}
 }
