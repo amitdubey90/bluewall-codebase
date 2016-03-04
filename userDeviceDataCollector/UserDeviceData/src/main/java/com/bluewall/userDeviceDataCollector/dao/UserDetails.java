@@ -11,11 +11,23 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import lombok.extern.slf4j.Slf4j;
+
+/**
+ * @author Jenil
+ *
+ */
+
+@Slf4j
 public class UserDetails {
 
-	public List<UserConnectedDevice> getUserDetails() throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException{
+	/**
+	 * @return User ID and Device ID of User Connected to Device
+	 */
+	public List<UserConnectedDevice> getUserDetails(){
 		
 		List<UserConnectedDevice> userConnectedDeviceList = null;
+		log.info("Fetching SQL Db Connection");
 		SqlDBConnections dbconn = new SqlDBConnections(
 				Constants.MYSQL_CONN_URL,
 				Constants.USER_DB_NAME,
@@ -24,6 +36,7 @@ public class UserDetails {
 		
 		Connection connection = dbconn.returnSQLConnection();
 		try {
+			log.info("Fetching User ID and Device ID of all users");
 			userConnectedDeviceList = new ArrayList<UserConnectedDevice>();
 			Statement statement = connection.createStatement();
 			ResultSet resultSet = statement.executeQuery(Queries.GET_USER_DETAILS);
@@ -36,7 +49,7 @@ public class UserDetails {
 			}
 			connection.close();
 		} catch (SQLException e) {
-			e.printStackTrace();
+			log.error("SQL Exception occured while fetching user details");
 		}
 		return userConnectedDeviceList;
 	}
