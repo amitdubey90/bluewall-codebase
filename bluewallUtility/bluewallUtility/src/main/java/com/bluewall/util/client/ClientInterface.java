@@ -9,7 +9,7 @@ public interface ClientInterface {
 
     UserConnectedDevice getRefreshedAccessToken(Connection dbconn, String oldRefreshToken, int userID);
 
-    String getAccessToken(String userId);
+    String getAccessToken(String authCode);
 
     String getUserActivityInfo(String strOne, String strTwo, String strThree);
 

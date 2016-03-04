@@ -4,17 +4,14 @@ import com.bluewall.util.bean.UserConnectedDevice;
 import com.bluewall.util.client.ClientInterface;
 import com.bluewall.util.common.Constants;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.codec.binary.Base64;
+import org.glassfish.jersey.client.authentication.HttpAuthenticationFeature;
 import org.json.JSONObject;
 
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.Entity;
+import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.Form;
 import javax.ws.rs.core.MediaType;
-import java.io.BufferedReader;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -26,65 +23,51 @@ import java.sql.Statement;
 @Slf4j
 public class FitbitClient implements ClientInterface {
 
+
+    private HttpAuthenticationFeature basicAuthentication =
+            HttpAuthenticationFeature.basic(Constants.FITBIT_APP_ID, Constants.FITBIT_APP_CLIENT_SECRET);
+
+    private WebTarget fitbitTarget = ClientBuilder.newClient()
+            .register(basicAuthentication)
+            .target(Constants.FITBIT_BASE_URL);
+
     /**
      * This method fetches a new access token for a user based on the refresh
      * token. The new access token along with the new refresh token is then
      * stored in the database.
      */
     public UserConnectedDevice getRefreshedAccessToken(Connection dbconn, String oldRefreshToken, int userID) {
-        String response;
         UserConnectedDevice userDevice = new UserConnectedDevice();
-        StringBuffer jsonResponse = new StringBuffer();
         String refreshToken, accessToken = null;
         Statement stmt = null;
-        URL url;
         try {
-            url = new URL(Constants.FITBIT_REFRESH_TOKEN_URL);
 
-            log.info("Fitbit Refresh Token Url: {}", url);
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setRequestMethod(Constants.POST_METHOD);
-            conn.setRequestProperty(Constants.AUTHORIZATION, getEncodedAuthorization());
-            conn.setRequestProperty(Constants.CONTENT_TYPE, MediaType.APPLICATION_FORM_URLENCODED.toString());
-            conn.setDoOutput(true);
+            Form form = new Form();
+            form.param("grant_type", "refresh_token");
+            form.param("refresh_token", oldRefreshToken);
 
-            DataOutputStream ds = new DataOutputStream(conn.getOutputStream());
-            ds.writeBytes(Constants.GRANT_TYPE + oldRefreshToken);
-            ds.flush();
-            ds.close();
+            String response = fitbitTarget.path(Constants.FITBIT_REFRESH_TOKEN_PATH)
+                    .request()
+                    .post(Entity.entity(form, MediaType.APPLICATION_FORM_URLENCODED_TYPE), String.class);
 
-            int responseCode = conn.getResponseCode();
 
-            if (responseCode != 200) {
-                log.error(
-                        "Failed : HTTP error code : {} \n Error Stream {} \n Not able to fetch access Token and refresh token",
-                        conn.getResponseCode(), conn.getErrorStream());
+            JSONObject obj = new JSONObject(response);
+            log.info("Fetching Refresh Token for Fitbit user");
+            refreshToken = (String) obj.get(Constants.REFRESH_TOKEN_KEY);
+            log.debug("Refresh token fetched {}", refreshToken);
+            log.info("Fetching Access Token for Fitbit user");
+            accessToken = obj.getString(Constants.ACCESS_TOKEN_KEY);
+            log.debug("Access token fetched {}", accessToken);
+            userDevice.setRefreshToken(refreshToken);
+            userDevice.setAccessToken(accessToken);
+            /*TODO remove db activity from here.
+             Move it to token handler. Also, the update needs to consider device type as well*/
+            stmt = dbconn.createStatement();
+            String updateTokens = "UPDATE UserConnectedDevice SET refreshToken = " + refreshToken
+                    + ",accessToken = " + accessToken + " where userID = " + userID;
+            stmt.executeUpdate(updateTokens);
+            log.info("Refresh Token, Access token for fitbit user updated", updateTokens);
 
-            } else {
-                BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-                while ((response = br.readLine()) != null) {
-                    jsonResponse.append(response);
-                }
-                br.close();
-                conn.disconnect();
-                JSONObject obj = new JSONObject(jsonResponse.toString());
-                log.info("Fetching Refresh Token for Fitbit user");
-                refreshToken = (String) obj.get(Constants.REFRESH_TOKEN_KEY);
-                log.debug("Refresh token fetched {}", refreshToken);
-                log.info("Fetching Access Token for Fitbit user");
-                accessToken = (String) obj.getString(Constants.ACCESS_TOKEN_KEY);
-                log.debug("Access token fetched {}", accessToken);
-                userDevice.setRefreshToken(refreshToken);
-                userDevice.setAccessToken(accessToken);
-                stmt = dbconn.createStatement();
-                String updateTokens = "UPDATE UserConnectedDevice SET refreshToken = " + refreshToken
-                        + ",accessToken = " + accessToken + " where userID = " + userID;
-                stmt.executeUpdate(updateTokens);
-                log.info("Refresh Token, Access token for fitbit user updated", updateTokens);
-            }
-        } catch (IOException ioExp) {
-
-            log.error("An IO Exception has occured {}", ioExp);
         } catch (SQLException sqlExp) {
             log.error("A SQL Exception has occured {}", sqlExp);
         } catch (Exception e) {
@@ -104,57 +87,28 @@ public class FitbitClient implements ClientInterface {
         return userDevice;
     }
 
-    @Override
-    public String getAccessToken(String userId) {
-        return null;
-    }
-
-    /**
-     * This method encodes the fitbit client Id and client secret using Base64
-     * encoder. This is the Authorization String in the request header
-     *
-     * @return encodedAuthString
-     */
-    private String getEncodedAuthorization() {
-        String encodedAuthString = null;
-        try {
-            log.info("Fetching Encoded Authorization String");
-            encodedAuthString = Constants.BASIC + " " + new String(
-                    Base64.encodeBase64(Constants.FITBIT_APP_CLIENT_ID_CLIENT_SECRET.getBytes(Constants.UTF8)));
-        } catch (UnsupportedEncodingException use) {
-            log.error("UnsupportedEncodingException has occured {}", use);
-        }
-        return encodedAuthString;
-    }
-
     /**
      * This method makes a call to Fitbit API which fetches User Activity
      * Information tracked through the device
      */
     public String getUserActivityInfo(String date, String date2, String accessToken) {
-
-        StringBuffer sb = new StringBuffer();
-        URL url;
+        // TODO check why date2 is not used
         try {
-            String acitivtyURLWithParams = Constants.FITBIT_ACTIVITY_API + date + ".json";
-            url = new URL(acitivtyURLWithParams);
-            log.info("Fitbit User Activity URL: {}", url);
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setRequestMethod(Constants.GET_MEHTOD);
-            conn.setRequestProperty(Constants.AUTHORIZATION, "Bearer " + accessToken);
-            conn.setRequestProperty(Constants.CONTENT_TYPE, MediaType.APPLICATION_JSON.toString());
-
-            BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-            String inputLine;
-            while ((inputLine = in.readLine()) != null) {
-                sb.append(inputLine);
-            }
-            in.close();
-        } catch (IOException e) {
-            log.error("An IOException has occured, {}", e);
+            String response = fitbitTarget.path(Constants.FITBIT_ACTIVITY_API_PATH)
+                    .path(date + ".json")
+                    .request(MediaType.APPLICATION_JSON_TYPE)
+                    .header("Authorization", "Bearer " + accessToken)
+                    .get(String.class);
+            return response;
+        } catch (Exception e) {
+            log.error("An Exception has occurred in getUserActivityInfo, {}", e);
         }
-        log.info("Fetched user Activity Info: {}", sb.toString());
-        return sb.toString();
+        return null;
+    }
 
+    @Override
+    public String getAccessToken(String authCode) {
+        return null;
     }
 }
+
