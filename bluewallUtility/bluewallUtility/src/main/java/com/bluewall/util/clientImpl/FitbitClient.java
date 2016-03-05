@@ -3,6 +3,13 @@ package com.bluewall.util.clientImpl;
 import com.bluewall.util.bean.UserConnectedDevice;
 import com.bluewall.util.client.ClientInterface;
 import com.bluewall.util.common.Constants;
+import com.google.api.client.auth.oauth2.AuthorizationCodeTokenRequest;
+import com.google.api.client.auth.oauth2.AuthorizationRequestUrl;
+import com.google.api.client.auth.oauth2.TokenResponse;
+import com.google.api.client.http.BasicAuthentication;
+import com.google.api.client.http.GenericUrl;
+import com.google.api.client.http.javanet.NetHttpTransport;
+import com.google.api.client.json.jackson2.JacksonFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.glassfish.jersey.client.authentication.HttpAuthenticationFeature;
 import org.json.JSONObject;
@@ -12,9 +19,11 @@ import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.Form;
 import javax.ws.rs.core.MediaType;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Arrays;
 
 /**
  * This class contains methods which make calls to several fitbit APIs to fetch
@@ -106,9 +115,28 @@ public class FitbitClient implements ClientInterface {
         return null;
     }
 
+
     @Override
-    public String getAccessToken(String authCode) {
-        return null;
+    public String getAuthorizationRequestUrl(String userId, String redirectUri) {
+        return new AuthorizationRequestUrl(Constants.FITBIT_OAUTH_CODE_URL, Constants.FITBIT_APP_ID,
+                Arrays.asList("code"))
+                .set("scope", String.join(" ", Constants.FITBIT_SCOPES))
+                .setState(userId)
+                .setRedirectUri(redirectUri).build();
     }
+
+    @Override
+    public TokenResponse getAccessToken(String code, String redirectUri) throws IOException {
+
+        AuthorizationCodeTokenRequest request = new AuthorizationCodeTokenRequest(
+                new NetHttpTransport(), new JacksonFactory(),
+                new GenericUrl(Constants.FITBIT_OAUTH_TOKEN_URL), code)
+                .setRedirectUri(redirectUri)
+                .setClientAuthentication(
+                        new BasicAuthentication(Constants.FITBIT_APP_ID, Constants.FITBIT_APP_CLIENT_SECRET));
+
+        return request.execute();
+    }
+
 }
 

@@ -13,4 +13,7 @@ public class Constants {
     public static final String APP_SECRET = "Q8XEed4dP1FrhLxhzD-BP-8_";
     public static final String DIALOG_OAUTH = "https://accounts.google.com/o/oauth2/auth";
     public static final String ACCESS_TOKEN = "https://accounts.google.com/o/oauth2/token";
+
+    public static final String FITBIT_REDIRECT_URI = "http://localhost:8080/auth/redirectFitbit";
+    public static final String JAWBONE_REDIRECT_URI = "http://localhost:8080/auth/redirectJawbone";
 }

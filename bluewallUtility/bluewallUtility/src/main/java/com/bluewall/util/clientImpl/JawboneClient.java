@@ -3,6 +3,12 @@ package com.bluewall.util.clientImpl;
 import com.bluewall.util.bean.UserConnectedDevice;
 import com.bluewall.util.client.ClientInterface;
 import com.bluewall.util.common.Constants;
+import com.google.api.client.auth.oauth2.AuthorizationCodeTokenRequest;
+import com.google.api.client.auth.oauth2.AuthorizationRequestUrl;
+import com.google.api.client.auth.oauth2.TokenResponse;
+import com.google.api.client.http.GenericUrl;
+import com.google.api.client.http.javanet.NetHttpTransport;
+import com.google.api.client.json.jackson2.JacksonFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.glassfish.jersey.client.authentication.HttpAuthenticationFeature;
 import org.json.JSONObject;
@@ -12,9 +18,11 @@ import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.Form;
 import javax.ws.rs.core.MediaType;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Arrays;
 
 @Slf4j
 
@@ -26,7 +34,7 @@ import java.sql.Statement;
 public class JawboneClient implements ClientInterface {
 
     private HttpAuthenticationFeature basicAuthentication =
-            HttpAuthenticationFeature.basic(Constants.JAWBONE_APP_CLIENT_ID, Constants.JAWBONE_APP_CLIENT_SECRET);
+            HttpAuthenticationFeature.basic(Constants.JAWBONE_APP_ID, Constants.JAWBONE_APP_CLIENT_SECRET);
 
     private WebTarget jawboneTarget = ClientBuilder.newClient()
             .register(basicAuthentication)
@@ -90,8 +98,23 @@ public class JawboneClient implements ClientInterface {
     }
 
     @Override
-    public String getAccessToken(String userId) {
-        return null;
+    public String getAuthorizationRequestUrl(String userId, String redirectUri) {
+        return new AuthorizationRequestUrl(Constants.JAWBONE_OAUTH_CODE_URL, Constants.JAWBONE_APP_ID,
+                Arrays.asList("code"))
+                .set("scope", String.join(" ", Constants.JAWBONE_SCOPES))
+                .setState(userId)
+                .setRedirectUri(redirectUri).build();
+    }
+
+    @Override
+    public TokenResponse getAccessToken(String code, String redirectUri) throws IOException {
+        AuthorizationCodeTokenRequest request = new AuthorizationCodeTokenRequest(
+                new NetHttpTransport(), new JacksonFactory(),
+                new GenericUrl(Constants.JAWBONE_OAUTH_TOKEN_URL), code)
+                .setRedirectUri(redirectUri)
+                .set("client_id", Constants.JAWBONE_APP_ID)
+                .set("client_secret", Constants.JAWBONE_APP_CLIENT_SECRET);
+        return request.execute();
     }
 
     /**
