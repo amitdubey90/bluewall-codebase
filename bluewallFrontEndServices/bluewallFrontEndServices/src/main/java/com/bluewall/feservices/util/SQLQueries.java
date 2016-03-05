@@ -74,5 +74,7 @@ public class SQLQueries {
 		System.out.println("Fail");
 		return false;
 	}
-	
+
+    public static String INSERT_USER_ACCESS_TOKEN = "INSERT INTO UserConnectedDevice (userID, deviceId, accessToken, refreshToken, creationTime) values (?, ?, ?, ?, ?)";
+
 }

@@ -16,7 +16,7 @@ public class SamleController {
     public String helloRestApi() {
         return "Hello world";
     }
-    
+   /* 
    @RequestMapping("/login")
     public String login(){
 	   System.out.println("Login class");
@@ -31,6 +31,6 @@ public class SamleController {
 	   
 	   return "Invalid user";
     }
-    
+    */
     
 }
