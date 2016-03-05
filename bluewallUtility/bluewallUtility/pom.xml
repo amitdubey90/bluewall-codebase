@@ -60,7 +60,7 @@
         </dependency>
     </dependencies>
 
-    <!-- Package as an executable jar -->
+    <!-- Package as jar -->
     <build>
         <plugins>
             <plugin>
