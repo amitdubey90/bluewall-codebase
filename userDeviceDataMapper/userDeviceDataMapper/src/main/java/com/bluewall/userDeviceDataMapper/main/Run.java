@@ -14,7 +14,6 @@ public class Run {
 
         Feeder<Document> feeder = new MongoFeeder(q);
         feeder.startFeeder();
-        Thread.sleep(10000);
 
         Runtime.getRuntime().addShutdownHook(new Thread() {
             public void run() {
@@ -23,6 +22,5 @@ public class Run {
                 q.shutdown(false);
             }
         });
-
     }
 }
