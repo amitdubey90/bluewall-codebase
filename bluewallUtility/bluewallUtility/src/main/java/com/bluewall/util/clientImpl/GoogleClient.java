@@ -7,13 +7,7 @@ import com.bluewall.util.client.SocialConnectionProvidersInterface;
 public class GoogleClient implements SocialConnectionProvidersInterface {
 
 	@Override
-	public UserCredential getNewAccessToken(String accessToken, String refreshToken) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public UserCredential authorizeApp(String redirectUri, String facebookScopes) {
+	public UserCredential getNewAccessToken(String code) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -26,6 +20,12 @@ public class GoogleClient implements SocialConnectionProvidersInterface {
 
 	@Override
 	public UserCredential getAccessAndRefreshToken(String code) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String AuthorizationRequestUrl() {
 		// TODO Auto-generated method stub
 		return null;
 	}

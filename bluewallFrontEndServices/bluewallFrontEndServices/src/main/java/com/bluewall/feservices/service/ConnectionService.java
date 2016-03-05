@@ -1,9 +1,9 @@
 package com.bluewall.feservices.service;
 
+import com.bluewall.util.bean.UserCredential;
+
 public interface ConnectionService {
 
-	boolean authroizeApp(String provider, int userId);
-
-	void connectUser(String code,int userId);
+	void storeConnectionParameters(UserCredential creds);
 
 }
