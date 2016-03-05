@@ -9,7 +9,7 @@ import com.bluewall.feservices.dao.SqlDBConnections;
 import com.bluewall.feservices.util.SQLQueries;
 
 @RestController
-public class SamleController {
+public class SampleController {
 	
 	
     @RequestMapping("/hello")

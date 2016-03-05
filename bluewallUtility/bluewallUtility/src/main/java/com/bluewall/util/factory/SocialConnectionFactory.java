@@ -7,6 +7,15 @@ import com.bluewall.util.common.SocialConnectionProviders;
 
 public class SocialConnectionFactory {
 
+	public static SocialConnectionFactory socialFactory;
+
+	public static SocialConnectionFactory getSocialProviderInstance() {
+		if (socialFactory == null) {
+			socialFactory = new SocialConnectionFactory();
+		}
+		return socialFactory;
+	}
+
 	public SocialConnectionProvidersInterface getConnectionInstance(SocialConnectionProviders provider) {
 		SocialConnectionProvidersInterface connInstance = null;
 		if (provider == SocialConnectionProviders.FACEBOOK) {

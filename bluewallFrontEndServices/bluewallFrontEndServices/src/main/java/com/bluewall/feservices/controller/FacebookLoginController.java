@@ -35,17 +35,11 @@ public class FacebookLoginController {
 	@Autowired
 	ConnectionService connService;
 
-	@Autowired
-	SocialConnectionFactory socialFactory;
-
-	@Autowired
-	SocialConnectionProvidersInterface providerInstance;
-
-	@Autowired
-	UserDao userDao;
-
-	@Autowired
-	SocialProviderDaoImpl socialDao;
+//	@Autowired
+//	UserDao userDao;
+//
+//	@Autowired
+//	SocialProviderDaoImpl socialDao;
 
 	private static final String FACEBOOK_SCOPE = "email,user_about_me";
 	private static final String GOOGLE_SCOPE = "profile";
@@ -57,7 +51,7 @@ public class FacebookLoginController {
 	private static final String ACCESS_TOKEN = "https://graph.facebook.com/oauth/access_token";
 
 	@RequestMapping(value = "/register/{provider}", method = RequestMethod.GET)
-	public String register(HttpServletRequest request, HttpServletResponse response, @PathVariable String provider)
+	public void register(HttpServletRequest request, HttpServletResponse response, @PathVariable String provider)
 			throws Exception {
 		try {
 
@@ -72,7 +66,7 @@ public class FacebookLoginController {
 			e.printStackTrace();
 
 		}
-		return "view";
+
 	}
 
 	private String getRequestUrlForFacebook() {
@@ -106,25 +100,28 @@ public class FacebookLoginController {
 
 	@RequestMapping(value = "/callback", params = "code", method = RequestMethod.GET)
 	@ResponseBody
-	public String accessCode(@RequestParam("code") String code, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+	public void accessCode(@RequestParam("code") String code, HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
 		try {
 
-			TokenResponse resp = getAccessToken(code);
-			System.out.println(resp);
+			// TokenResponse resp = getAccessToken(code);
+			// System.out.println(resp);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
-		return "view";
+		// return "view";
 	}
 
-	public TokenResponse getAccessToken(String code) throws IOException {
+	public void getAccessToken(String code) throws IOException {
 
-		AuthorizationCodeTokenRequest authCodeReq = new AuthorizationCodeTokenRequest(new NetHttpTransport(),
-				new JacksonFactory(), new GenericUrl(ACCESS_TOKEN), code).setRedirectUri(REDIRECT_URI)
-						.setClientAuthentication(new BasicAuthentication(CLIENT_ID, APP_SECRET));
+		// AuthorizationCodeTokenRequest authCodeReq = new
+		// AuthorizationCodeTokenRequest(new NetHttpTransport(),
+		// new JacksonFactory(), new GenericUrl(ACCESS_TOKEN),
+		// code).setRedirectUri(REDIRECT_URI)
+		// .setClientAuthentication(new BasicAuthentication(CLIENT_ID,
+		// APP_SECRET));
 
-		return authCodeReq.execute();
+		// return authCodeReq.execute();
 	}
 }

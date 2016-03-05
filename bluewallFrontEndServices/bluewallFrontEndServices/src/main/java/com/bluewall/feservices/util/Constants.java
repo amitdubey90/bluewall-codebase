@@ -16,4 +16,5 @@ public class Constants {
 
     public static final String FITBIT_REDIRECT_URI = "http://localhost:8080/auth/redirectFitbit";
     public static final String JAWBONE_REDIRECT_URI = "http://localhost:8080/auth/redirectJawbone";
+	public static final String FACEBOOK_SCOPES = null;
 }
