@@ -16,10 +16,10 @@ public class SampleController {
     public String helloRestApi() {
         return "Hello world";
     }
-   /* 
+   
+    
    @RequestMapping("/login")
     public String login(){
-	   System.out.println("Login class");
 	   String username = "tewst@gmail.com";
 	   String passwd = "testpassword";
 	   
@@ -31,6 +31,6 @@ public class SampleController {
 	   
 	   return "Invalid user";
     }
-    */
+    
     
 }

@@ -9,7 +9,7 @@ import java.sql.Connection;
 
 public interface ClientInterface {
 
-    UserConnectedDevice getRefreshedAccessToken(Connection dbconn, String oldRefreshToken, int userID);
+    UserConnectedDevice getRefreshedAccessToken(String oldRefreshToken, int userID);
 
     String getAuthorizationRequestUrl(String userId, String accessToken);
 

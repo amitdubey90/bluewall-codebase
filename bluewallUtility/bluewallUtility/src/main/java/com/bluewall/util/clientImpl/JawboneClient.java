@@ -19,9 +19,6 @@ import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.Form;
 import javax.ws.rs.core.MediaType;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.Arrays;
 
 @Slf4j
@@ -45,11 +42,12 @@ public class JawboneClient implements ClientInterface {
      * token. The new access token along with the new refresh token is then
      * stored in the database.
      */
-    public UserConnectedDevice getRefreshedAccessToken(Connection dbconn, String oldRefreshToken, int userID) {
+    
+    public UserConnectedDevice getRefreshedAccessToken(String oldRefreshToken, int userID) {
         UserConnectedDevice userDevice = new UserConnectedDevice();
         String refreshToken, accessToken = null;
-        Statement stmt = null;
-        try {
+      
+        
             log.info("Fetching access token and refresh token for userID: {}", userID);
 
             Form form = new Form();
@@ -72,29 +70,8 @@ public class JawboneClient implements ClientInterface {
 
             userDevice.setRefreshToken(refreshToken);
             userDevice.setAccessToken(accessToken);
-            // TODO remove DB activity
-            stmt = dbconn.createStatement();
-            String updateTokens = "UPDATE UserConnectedDevice SET refreshToken = " + refreshToken
-                    + ",accessToken = " + accessToken + " where userID = " + userID;
-            stmt.executeUpdate(updateTokens);
-            log.info("Refresh Token, Access token for fitbit user updated", updateTokens);
-        } catch (SQLException sqlExp) {
-            log.error("A SQL Exception has occured {}", sqlExp);
-        } catch (Exception e) {
-            log.error("An  Exception has occured {}", e);
-        } finally {
-            if (dbconn != null)
-                try {
-                    dbconn.close();
-                    if (stmt != null) {
-                        stmt.close();
-                    }
-                } catch (SQLException sExp) {
-                    log.error("SQL Excpetion in finally block {}", sExp);
-                }
-
-        }
-        return userDevice;
+            userDevice.setDeviceID(11);
+            return userDevice;
     }
 
     @Override

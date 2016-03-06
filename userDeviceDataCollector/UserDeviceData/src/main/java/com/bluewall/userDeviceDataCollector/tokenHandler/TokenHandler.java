@@ -7,6 +7,8 @@ import com.bluewall.util.client.ClientInterface;
 import com.bluewall.util.common.DeviceType;
 import com.bluewall.util.factory.DeviceClientFactory;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -14,12 +16,17 @@ import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.Date;
 
+
+@Slf4j
+
 public class TokenHandler {
 
 	DeviceClientFactory devFac = new DeviceClientFactory();
 	ClientInterface devClient = null;
 
 	// Get access token after refreshing.
+	//Initial method to be called.
+	
 	public String getAccessToken(int userID, int deviceID)
 			throws InstantiationException, IllegalAccessException,
 			ClassNotFoundException, SQLException {
@@ -27,37 +34,51 @@ public class TokenHandler {
 		String accessToken = null;
 		Statement stmt = null;
 		ResultSet rs = null;
+		Timestamp creationTime = null;
+		String refreshToken = null;
 		
 		SqlDBConnections dbconn = new SqlDBConnections(
 				Constants.MYSQL_CONN_URL, Constants.USER_DB_NAME,
 				Constants.USERNAME, Constants.PASSWORD);
 		
 		Connection conn = dbconn.returnSQLConnection();
+		
 		try {
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery("select accessToken, refreshToken, creationTime"
+									+ "from UserConnectedDevice"
+									+ "where userID = " + userID);
+			while (rs.next()){
+				accessToken = rs.getString("accessToken");
+				refreshToken = rs.getString("refreshToken");
+				creationTime = rs.getTimestamp("creationTime");
+			}
+			
 			// check for token expiry before refreshing the token
-			if (checkTokenExpiry(conn, userID)) {
-				String old_refreshToken = getRefreshToken(conn, userID);
+			if (checkTokenExpiry(creationTime)) {
+				String old_refreshToken = refreshToken;
 
 				// Device id 10 - Fitbit, 11 -Jawbone
 				if (deviceID == 10) {
-					devClient = devFac.getClientInstance(DeviceType.FITBIT);
+					devClient = DeviceClientFactory.getClientInstance(DeviceType.FITBIT);
 				} else {
-					devClient = devFac.getClientInstance(DeviceType.JAWBONE);
+					devClient = DeviceClientFactory.getClientInstance(DeviceType.JAWBONE);
 				}
 
-				UserConnectedDevice userdevice = devClient.getRefreshedAccessToken(conn, old_refreshToken, userID);
+				UserConnectedDevice userdevice = devClient.getRefreshedAccessToken(old_refreshToken,userID);
+				
+				String updateTokens = "UPDATE UserConnectedDevice SET refreshToken = " + userdevice.getRefreshToken()
+	                    + ",accessToken = " + userdevice.getAccessToken() 
+	                    + " where userID = " + userID + "and deviceID = "
+	                    + userdevice.getDeviceID();
+				
+	            stmt.executeUpdate(updateTokens);
+	            
+	            log.info("Refresh Token: "+userdevice.getRefreshToken()+", Access token: "+userdevice.getAccessToken()+" for device "+ userdevice.getDeviceID() +" and user " +userID+ " updated");
+	            
 				return userdevice.getAccessToken();
-			} else {
-				stmt = conn.createStatement();
-				rs = stmt.executeQuery("select accessToken from UserConnectedDevice where userID = " + userID);
-				while (rs.next()) {
-					try {
-						accessToken = rs.getString("accessToken");
-					} catch (SQLException e) {
-						e.printStackTrace();
-					}
-				}
-			}
+			} 
+			
 		} catch (SQLException e1) {
 			e1.printStackTrace();
 		}
@@ -82,69 +103,15 @@ public class TokenHandler {
 				e.printStackTrace();
 			}
 		}
-
+		
+		log.info("Token did not expiry, hence it is not refreshed.");
 		return accessToken;
 	}
 
-	// Fetch refresh token from database to refresh access token.
-	public String getRefreshToken(Connection conn, int userID) {
-		Statement stmt = null;
-		ResultSet rs = null;
-		String refreshToken = null;
-
-		try {
-			stmt = conn.createStatement();
-			rs = stmt
-					.executeQuery("select refreshToken from UserConnectedDevice where userID = "
-							+ userID);
-			;
-
-			while (rs.next()) {
-				refreshToken = rs.getString("refreshToken");
-			}
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-
-		finally {
-			try {
-				if (rs != null)
-					rs.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-			try {
-				if (stmt != null)
-					stmt.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-			try {
-				if (conn != null)
-					conn.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
-
-		return refreshToken;
-	}
 
 	// Module to check whether to refresh access token or not.
 	@SuppressWarnings("deprecation")
-	public boolean checkTokenExpiry(Connection conn, int userID) {
-		ResultSet rs = null;
-		Statement stmt = null;
-		Timestamp creationTime = null;
-
-		try {
-			stmt = conn.createStatement();
-			rs = stmt.executeQuery("select creationTime from UserConnectedDevice where userID = " + userID);
-			while (rs.next()) {
-				creationTime = rs.getTimestamp("creationTime");
-			}
-
+	public boolean checkTokenExpiry(Timestamp creationTime) {
 			Date date = new Date();
 			long time = date.getTime();
 			Timestamp ts = new Timestamp(time);
@@ -154,31 +121,6 @@ public class TokenHandler {
 					return true;
 				}
 			}
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-
-		finally {
-			try {
-				if (rs != null)
-					rs.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-			try {
-				if (stmt != null)
-					stmt.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-			try {
-				if (conn != null)
-					conn.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
 		return false;
 	}
 
