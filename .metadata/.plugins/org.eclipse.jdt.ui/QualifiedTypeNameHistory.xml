@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="com.bluewall.feservices.bean.FoodLog"/>
+<fullyQualifiedTypeName name="java.util.List"/>
+<fullyQualifiedTypeName name="com.bluewall.feservcies.daoImpl.SqlDBConnections"/>
+<fullyQualifiedTypeName name="groovy.util.logging.Slf4j"/>
+<fullyQualifiedTypeName name="com.bluewall.feservices.dao.SqlDBConnections"/>
+<fullyQualifiedTypeName name="com.bluewall.feservices.dao.CalorieDao"/>
+<fullyQualifiedTypeName name="org.springframework.stereotype.Service"/>
+<fullyQualifiedTypeName name="org.springframework.web.bind.annotation.RestController"/>
+<fullyQualifiedTypeName name="lombok.extern.slf4j.Slf4j"/>
+<fullyQualifiedTypeName name="com.bluewall.feservices.service.CalorieService"/>
+<fullyQualifiedTypeName name="org.springframework.beans.factory.annotation.Autowired"/>
+<fullyQualifiedTypeName name="java.sql.ResultSet"/>
+<fullyQualifiedTypeName name="org.springframework.context.annotation.ComponentScan"/>
+<fullyQualifiedTypeName name="org.springframework.beans.factory.annotation.Qualifier"/>
+<fullyQualifiedTypeName name="com.bluewall.feservices.serviceImpl.CalorieServiceImpl"/>
+<fullyQualifiedTypeName name="org.springframework.boot.autoconfigure.EnableAutoConfiguration"/>
+<fullyQualifiedTypeName name="org.springframework.web.servlet.config.annotation.EnableWebMvc"/>
+<fullyQualifiedTypeName name="org.springframework.context.annotation.Configuration"/>
+<fullyQualifiedTypeName name="org.springframework.stereotype.Component"/>
+<fullyQualifiedTypeName name="org.springframework.stereotype.Repository"/>
+<fullyQualifiedTypeName name="org.jvnet.hk2.annotations.Service"/>
+<fullyQualifiedTypeName name="com.bluewall.feservices.util.Queries"/>
+<fullyQualifiedTypeName name="java.sql.PreparedStatement"/>
+<fullyQualifiedTypeName name="com.bluewall.feservices.dao.DeviceAuthorizationDaoIfc"/>
+<fullyQualifiedTypeName name="java.util.Date"/>
+<fullyQualifiedTypeName name="java.util.Calendar"/>
+<fullyQualifiedTypeName name="java.text.DateFormat"/>
+<fullyQualifiedTypeName name="java.text.SimpleDateFormat"/>
+</qualifiedTypeNameHistroy>
