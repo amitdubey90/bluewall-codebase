@@ -24,6 +24,9 @@ public class Constants {
 
     // Fitbit api keys
     public static final String FITBIT_CALORIES_BURNT_KEY = "caloriesOut";
+    public static final String FITBIT_USERID_KEY = "user_id";
     public static final double FITBIT_DEFAULT_DISTANCE = 0;
     public static final int FITBIT_LOGGED_FROM = 10;
+
+    public static final String DOC_ID_KEY = "doc_id";
 }

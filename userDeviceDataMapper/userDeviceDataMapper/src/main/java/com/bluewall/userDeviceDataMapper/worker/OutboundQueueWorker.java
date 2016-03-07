@@ -26,6 +26,7 @@ public class OutboundQueueWorker extends Thread {
         this.queue = queue;
         this.workerId = workerId;
         this.forever = true;
+        this.setName("OutboundWorker-"+workerId);
 
         if (queue == null) {
             throw new RuntimeException("Queue manager is null");
@@ -53,7 +54,7 @@ public class OutboundQueueWorker extends Thread {
                         log.info("Outbound {}", activityLog.toString());
                         int colIndex = 1;
 
-                        //TODO add logID
+                        pst.setInt(colIndex++, activityLog.getUserID());
                         pst.setInt(colIndex++, activityLog.getType());
                         pst.setInt(colIndex++, activityLog.getDistance());
                         pst.setTimestamp(colIndex++, activityLog.getStartTime());

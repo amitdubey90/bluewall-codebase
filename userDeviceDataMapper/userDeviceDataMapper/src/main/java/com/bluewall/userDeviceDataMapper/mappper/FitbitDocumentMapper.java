@@ -17,8 +17,8 @@ public class FitbitDocumentMapper implements ActivityLogMapper<Document> {
         ActivityLog output = null;
 
         try {
-            //TODO add userId and logID
             output = ActivityLog.builder()
+                    .userID(getUserId(doc))
                     .loggedFrom(Constants.FITBIT_LOGGED_FROM)
                     .type(Constants.DEFAULT_MAPPER_TYPE)
                     .caloriesBurnt(getCaloriesBurnt(doc))
@@ -27,6 +27,11 @@ public class FitbitDocumentMapper implements ActivityLogMapper<Document> {
             log.debug("Could not map {} to ActivityLog.\\n{}", doc.toJson(), t);
         }
         return output;
+    }
+
+    private int getUserId(Document doc) {
+        return doc.get("summary", Document.class)
+                .getInteger(Constants.FITBIT_USERID_KEY);
     }
 
     private int getCaloriesBurnt(Document doc) {

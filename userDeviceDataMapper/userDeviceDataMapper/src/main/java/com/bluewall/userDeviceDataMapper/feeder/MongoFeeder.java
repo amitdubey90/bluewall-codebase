@@ -1,7 +1,9 @@
 package com.bluewall.userDeviceDataMapper.feeder;
 
 import com.bluewall.userDeviceDataMapper.queue.QueueManager;
+import com.bluewall.userDeviceDataMapper.sql.Queries;
 import com.bluewall.userDeviceDataMapper.util.MongoConnectionManager;
+import com.bluewall.userDeviceDataMapper.util.MySqlConnectionManager;
 import com.mongodb.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
@@ -10,21 +12,28 @@ import com.mongodb.client.model.Filters;
 import lombok.extern.slf4j.Slf4j;
 import org.bson.Document;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 /**
  * Feeder implementation with MongoDB as a source.
  */
 @Slf4j
-public class MongoFeeder extends Thread implements Feeder<Document>  {
+public class MongoFeeder extends Thread implements Feeder<Document> {
 
     private QueueManager<Document> queueManager;
     private MongoConnectionManager connectionManager;
     private MongoCursor<Document> cursor;
 
     private boolean forever;
+    private boolean lastIDInitialized;
     private long lastID;
 
     public MongoFeeder(QueueManager<Document> queueManager) {
         this.queueManager = queueManager;
+        this.setName("MongoFeeder");
     }
 
     @Override
@@ -36,14 +45,15 @@ public class MongoFeeder extends Thread implements Feeder<Document>  {
     public void startFeeder() {
         connectionManager = new MongoConnectionManager();
         forever = true;
+        initializeLastID();
         this.start();
-        lastID = getLastProcessedID();
         log.info("Mongo string feeder started!");
     }
 
     @Override
     public void stopFeeder(boolean hard) {
-        if(hard) {
+        log.info("Mongo feeder shut down started");
+        if (hard) {
             closeCursor();
         }
         forever = false;
@@ -60,41 +70,70 @@ public class MongoFeeder extends Thread implements Feeder<Document>  {
         MongoClient mongoClient = connectionManager.getConnection();
         MongoDatabase db = mongoClient.getDatabase("user-activity-raw");
         MongoCollection<Document> collection = db.getCollection("user-activity-raw_collection");
-        Filters.gt("","");
-        //TODO add filter for last doc id
-
 
         while (forever) {
             try {
-                cursor = collection.find().iterator();
-                while (cursor.hasNext()) {
-                    Document document = cursor.next();
-                    log.debug("Receive doc - {}", document.toJson());
-                    enqueueToMapperQueue(document);
+                if (lastIDInitialized) {
+                    cursor = collection.find(Filters.gt("doc_id", lastID)).iterator();
+                    while (cursor.hasNext()) {
+                        Document document = cursor.next();
+                        log.debug("Receive doc - {}", document.toJson());
+                        enqueueToMapperQueue(document);
+                        lastID = document.getInteger("doc_id");
+                    }
+                } else {
+                    initializeLastID();
                 }
-                sleep(1000);
+                //sleep for a minute
+                sleep(60 * 1000);
             } catch (Exception e) {
                 log.error("Exception while running feeder. {}", e);
             }
-
         }
+        closeCursor();
+        log.info("Feeder shut down complete!");
     }
 
     /**
      * Close cursor
      */
     private void closeCursor() {
-        if(cursor != null) {
+        if (cursor != null) {
             cursor.close();
         }
     }
 
     /**
-     * Returns the last ID present in the database
+     * Initializes lastId
+     */
+    private void initializeLastID() {
+        lastID = getLastProcessedID();
+    }
+
+    /**
+     * Returns the last ID present in the database inserted through
+     * the mapper module
+     *
      * @return long
      */
-    private long getLastProcessedID() {
-        //TODO init last ID
+    public long getLastProcessedID() {
+        log.info("Fetching last id from database");
+        try (MySqlConnectionManager sqlConnectionMgr = new MySqlConnectionManager()) {
+            Connection connection = sqlConnectionMgr.getConnection();
+            PreparedStatement pst = connection.prepareStatement(Queries.MAX_LOG_ID_FROM_DEVICE);
+
+            ResultSet rs = pst.executeQuery();
+            rs.next();
+            int lastId = rs.getInt("maxId");
+            log.info("Last Id retrieved : {}", lastId);
+
+            lastIDInitialized = true;
+
+            return lastId;
+        } catch (SQLException e) {
+            log.error("Error in getting last id. ", e);
+            e.printStackTrace();
+        }
         return 0;
     }
 }

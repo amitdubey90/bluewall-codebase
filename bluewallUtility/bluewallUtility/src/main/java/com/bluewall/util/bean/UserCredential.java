@@ -1,8 +1,5 @@
 package com.bluewall.util.bean;
 
-import java.sql.Timestamp;
-import java.util.Date;
-
 public class UserCredential {
 
 	private int connectionID;
@@ -10,7 +7,7 @@ public class UserCredential {
 	private int deviceID;
 	private String refreshToken;
 	private String accessToken;
-	private Timestamp creationTime;
+	private String expirationTime;
 
 	public int getConnectionID() {
 		return connectionID;
@@ -52,12 +49,13 @@ public class UserCredential {
 		this.accessToken = accessToken;
 	}
 
-	public Date getCreationTime() {
-		return creationTime;
+	public String getExpirationTime() {
+		return expirationTime;
 	}
 
-	public void setCreationTime(Timestamp creationTime) {
-		this.creationTime = creationTime;
+	public void setExpirationTime(String expirationTime) {
+		this.expirationTime = expirationTime;
 	}
 
+	
 }

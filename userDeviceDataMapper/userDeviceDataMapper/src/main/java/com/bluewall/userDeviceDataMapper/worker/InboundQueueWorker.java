@@ -27,6 +27,7 @@ public class InboundQueueWorker extends Thread {
         this.queue = queue;
         this.workerId = workerId;
         this.forever = true;
+        this.setName("InboundWorker-"+workerId);
 
         if (queue == null) {
             throw new RuntimeException("Queue manager is null");
@@ -52,8 +53,12 @@ public class InboundQueueWorker extends Thread {
                         log.debug("Could not find a mapper for input {}", input.toJson());
                     } else {
                         ActivityLog response = mapper.map(input);
-                        log.debug("Enqueuing to out queue {}", response);
-                        queue.enqueueOutbound(response);
+                        if (response != null) {
+                            log.debug("Enqueuing to out queue {}", response);
+                            queue.enqueueOutbound(response);
+                        } else {
+                            log.debug("Input could not be mapped. Skipping. :{}", input);
+                        }
                     }
                 }
 
