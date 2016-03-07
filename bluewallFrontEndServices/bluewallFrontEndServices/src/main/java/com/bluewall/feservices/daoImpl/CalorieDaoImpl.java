@@ -42,7 +42,7 @@ public class CalorieDaoImpl implements CalorieDao {
 		date.setSeconds(00);
 		String startDateTime = dateFormat.format(date);
 		
-		try (ResultSet resultSet = dataSource.getConnection().prepareStatement(Queries.GET_TOTAL_CALORIE_BURNT + " where startTime >= '"+startDateTime+"' and startTime <= '"+currentDateTime+"'").executeQuery()){
+		try (ResultSet resultSet = dataSource.getConnection().prepareStatement(Queries.GET_TOTAL_CALORIE_BURNT + " where userID = "+userID+" and startTime >= '"+startDateTime+"' and startTime <= '"+currentDateTime+"'").executeQuery()){
 			if(resultSet.next())
 				totalCaloriesBurnt = resultSet.getInt("caloriesBurnt");
 		}
@@ -70,8 +70,7 @@ public class CalorieDaoImpl implements CalorieDao {
 		date.setSeconds(00);
 		
 		String startDateTime = dateFormat.format(date);
-		
-		try (ResultSet resultSet = dataSource.getConnection().prepareStatement(Queries.GET_TOTAL_CALORIE_BURNT +  " where startTime >= '"+startDateTime+"' and startTime <= '"+currentDateTime+"'").executeQuery()) {
+		try (ResultSet resultSet = dataSource.getConnection().prepareStatement(Queries.GET_TOTAL_CALORIE_CONSUMED +  " where userID = "+userID+" and foodLogTime >= '"+startDateTime+"' and foodLogTime <= '"+currentDateTime+"'").executeQuery()) {
 			if(resultSet.next())
 				totalCaloriesConsumed = resultSet.getInt("weightConsumed");
 		} catch (SQLException e) {
