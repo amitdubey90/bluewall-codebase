@@ -24,14 +24,13 @@ public class FitbitDocumentMapper implements ActivityLogMapper<Document> {
                     .caloriesBurnt(getCaloriesBurnt(doc))
                     .build();
         } catch (Throwable t) {
-            log.debug("Could not map {} to ActivityLog.\\n{}", doc.toJson(), t);
+            log.debug("Could not map {} to ActivityLog.\n{}", doc.toJson(), t);
         }
         return output;
     }
 
     private int getUserId(Document doc) {
-        return doc.get("summary", Document.class)
-                .getInteger(Constants.FITBIT_USERID_KEY);
+        return doc.getInteger(Constants.FITBIT_USERID_KEY);
     }
 
     private int getCaloriesBurnt(Document doc) {

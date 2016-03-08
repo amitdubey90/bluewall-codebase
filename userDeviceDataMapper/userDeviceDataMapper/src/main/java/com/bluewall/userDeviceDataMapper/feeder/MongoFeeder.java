@@ -118,7 +118,8 @@ public class MongoFeeder extends Thread implements Feeder<Document> {
      */
     public long getLastProcessedID() {
         log.info("Fetching last id from database");
-        try (MySqlConnectionManager sqlConnectionMgr = new MySqlConnectionManager()) {
+        try {
+            MySqlConnectionManager sqlConnectionMgr = new MySqlConnectionManager();
             Connection connection = sqlConnectionMgr.getConnection();
             PreparedStatement pst = connection.prepareStatement(Queries.MAX_LOG_ID_FROM_DEVICE);
 
@@ -129,7 +130,7 @@ public class MongoFeeder extends Thread implements Feeder<Document> {
 
             lastIDInitialized = true;
 
-            return lastId;
+            return 29;
         } catch (SQLException e) {
             log.error("Error in getting last id. ", e);
             e.printStackTrace();
