@@ -116,7 +116,7 @@ public class TokenHandler {
 			long time = date.getTime();
 			Timestamp ts = new Timestamp(time);
 			
-			// check if current timestamp is greater than expiration timestamp
+			// check if current timestamp is greater than token's expiration timestamp
 			if (ts.after(expirationTime)){
 				return true;
 			}
