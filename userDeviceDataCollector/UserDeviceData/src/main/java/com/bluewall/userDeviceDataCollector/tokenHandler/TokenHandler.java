@@ -45,9 +45,9 @@ public class TokenHandler {
 		
 		try {
 			stmt = conn.createStatement();
-			rs = stmt.executeQuery("select accessToken, refreshToken, expirationTime"
-									+ "from UserConnectedDevice"
-									+ "where userID = " + userID);
+			rs = stmt.executeQuery("select accessToken, refreshToken, expirationTime "
+					+ "from UserConnectedDevice "
+						+ "where userID = " + userID);
 			while (rs.next()){
 				accessToken = rs.getString("accessToken");
 				refreshToken = rs.getString("refreshToken");
@@ -68,9 +68,10 @@ public class TokenHandler {
 				UserConnectedDevice userdevice = devClient.getRefreshedAccessToken(old_refreshToken,userID);
 				
 				//TODO code to add expiration timestamp. 
-				String updateTokens = "UPDATE UserConnectedDevice SET refreshToken = " + userdevice.getRefreshToken()
-	                    + ",accessToken = " + userdevice.getAccessToken() 
-	                    + " where userID = " + userID + "and deviceID = "
+				String updateTokens = "UPDATE UserConnectedDevice SET refreshToken = " 
+						+ userdevice.getRefreshToken() + ",accessToken = " 
+						+ userdevice.getAccessToken() + " where userID = " 
+						+ userID + " and deviceID = "
 	                    + userdevice.getDeviceID();
 				
 	            stmt.executeUpdate(updateTokens);
@@ -111,7 +112,7 @@ public class TokenHandler {
 
 
 	// Module to check whether to refresh access token or not.
-	public boolean checkTokenExpired(Timestamp expirationTime) {
+	public static boolean checkTokenExpired(Timestamp expirationTime) {
 			Date date = new Date();
 			long time = date.getTime();
 			Timestamp ts = new Timestamp(time);
@@ -120,7 +121,7 @@ public class TokenHandler {
 			if (ts.after(expirationTime)){
 				return true;
 			}
+			
 		return false;
 	}
-
 }
