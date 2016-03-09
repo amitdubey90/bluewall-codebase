@@ -1,9 +1,5 @@
 package com.bluewall.feservices.controller;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,12 +13,19 @@ import com.bluewall.feservices.service.UserServices;
 import com.bluewall.util.bean.UserProfile;
 
 @Controller
-public class Controllers {
+@RequestMapping("/register")
+public class RegistrationController {
 
 	@Autowired
 	private UserServices userService;
 
-	@RequestMapping("/register")
+	/**
+	 * Returns a view for registration form, allowing the user to manually fill
+	 * in details or pull the information from social connection providers
+	 * 
+	 * @return View - registration
+	 */
+	@RequestMapping("/social")
 	public ModelAndView getRegistrationView() {
 
 		UserProfile profile = new UserProfile();
@@ -32,7 +35,7 @@ public class Controllers {
 		return model;
 	}
 
-	@RequestMapping(value = "/registerUser", method = RequestMethod.POST)
+	@RequestMapping(value = "/createUser", method = RequestMethod.POST)
 	public String processRegistration(@Valid @ModelAttribute("userProfileData") UserProfile profile) {
 
 		if (null!= profile) {

@@ -5,31 +5,32 @@
 <title>Registration</title>
 </head>
 <body>
+	<h1>WELCOME TO FITNESS MONITORING APP</h1>
 	<div align="center">
-		<form th:action="@{/registerUser}" method="post"
+		<form th:action="@{/register/createUser}" method="post"
 			th:object="${userProfileData}">
 			<table border="0">
 				<tr>
-					<td colspan="2" align="center"><h2>Spring MVC Form Demo -
-							Registration</h2></td>
+					<h2>
+							Registration</h2>
 				</tr>
 				<tr>
-					<td>First Name:</td>
+					<td>First Name*:</td>
 					<td><input type="text" name="firstName"
-						th:field="*{firstName}" /></td>
+						th:field="*{firstName}" required="required" /></td>
 				</tr>
 				<tr>
-					<td>Last Name:</td>
-					<td><input type="text" name="lastName" th:field="*{lastName}" /></td>
+					<td>Last Name*:</td>
+					<td><input type="text" name="lastName" th:field="*{lastName}" required="required" /></td>
 				</tr>
 				<tr>
-					<td>E-mail:</td>
-					<td><input type="text" name="emailID" th:field="*{emailID}" /></td>
+					<td>E-mail*:</td>
+					<td><input type="text" name="emailID" th:field="*{emailID}" required="required" /></td>
 				</tr>
 
 				<tr>
-					<td>Password:</td>
-					<td><input type="password" th:field="*{password}" /></td>
+					<td>Password*:</td>
+					<td><input type="password" th:field="*{password}" required="required" /></td>
 				</tr>
 
 
@@ -44,27 +45,27 @@
 					<td><input type="text" th:field="*{contactNumber}" /></td>
 				</tr>
 				<tr>
-					<td>Age:</td>
-					<td><input type="text" th:field="*{age}" /></td>
+					<td>Age*:</td>
+					<td><input type="text" th:field="*{age}" required="required"/></td>
 				</tr>
 				<tr>
-					<td>Gender:</td>
-					<td><select name="gender" th:field="*{gender}">
+					<td>Gender*:</td>
+					<td><select name="gender" th:field="*{gender}" required="required">
 							<option value="female">Female</option>
 							<option value="male">Male</option>
 					</select></td>
 				</tr>
 				<tr>
-					<td>Height (inches):</td>
-					<td><input type="text" th:field="*{height}" /></td>
+					<td>Height (inches)*:</td>
+					<td><input type="text" th:field="*{height}" required="required"/></td>
 				</tr>
 				<tr>
-					<td>Weight (pounds):</td>
-					<td><input type="text" th:field="*{weight}" /></td>
+					<td>Weight (pounds)*:</td>
+					<td><input type="text" th:field="*{weight}" required="required"/></td>
 				</tr>
 				<tr>
-					<td>Activity Level:</td>
-					<td><select name="actLevel" th:field="*{activityLevel}">
+					<td>Activity Level*:</td>
+					<td><select name="actLevel" th:field="*{activityLevel}" required="required">
 							<option value="veryActive">Very Active</option>
 							<option value="active">Active</option>
 							<option value="moderateActive">Moderate</option>
@@ -72,8 +73,8 @@
 					</select></td>
 				</tr>
 				<tr>
-					<td>Current Location:</td>
-					<td><input type="text" th:field="*{currentLocation}" /></td>
+					<td>Current Location*:</td>
+					<td><input type="text" th:field="*{currentLocation}" required="required"/></td>
 				</tr>
 				<tr>
 					<td>Goal Type:</td>
@@ -88,7 +89,7 @@
 					<td>Target Weight:</td>
 					<td><input type="text" th:field="*{targetWeight}" /></td>
 				</tr>
-				<tr>
+				<!-- <tr>
 					<td>Start Date:</td>
 					<td><input type="text" th:field="*{startDate}"
 						placeholder="MM-DD-YYYYY" /></td>
@@ -97,13 +98,17 @@
 					<td>End Date:</td>
 					<td><input type="text" th:field="*{endDate}"
 						placeholder="MM-DD-YYYYY" /></td>
-				</tr>
+				</tr> -->
 				<tr>
 					<td colspan="2" align="center"><input type="submit"
 						value="Register" /></td>
 				</tr>
 			</table>
 		</form>
+		<br />
+		<br /> <a th:href="@{/register/social/facebook}">Connect to
+			facebook</a> <br /> <a th:href="@{/register/social/google}">Connect
+			to google</a>
 	</div>
 </body>
 </html>

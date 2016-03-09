@@ -11,6 +11,4 @@ public interface SocialConnectionProvidersInterface {
 
 	UserProfile fetchUserProfile(UserCredential newUserCreds);
 
-	UserCredential getAccessAndRefreshToken(String code);
-
 }
