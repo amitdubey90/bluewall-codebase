@@ -78,10 +78,10 @@ public class GoogleClient implements SocialConnectionProvidersInterface {
 	        user.setLastName(json.getString("family_name").toString());
 	        user.setGender(json.getString("gender").toString());
 	        System.out.println(outputString);
-		} catch (MalformedURLException e) {
-			e.printStackTrace();
+		}  catch (MalformedURLException e) {
+			log.error("Malformed URL Exception Occured in Google Client");
 		} catch (IOException e) {
-			e.printStackTrace();
+			log.error("IO Exception Occured in Google Client");
 		}
 		
 		return null;

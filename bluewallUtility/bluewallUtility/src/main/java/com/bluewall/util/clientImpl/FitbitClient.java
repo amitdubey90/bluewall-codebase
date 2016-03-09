@@ -43,7 +43,7 @@ public class FitbitClient implements ClientInterface {
      * stored in the database.
      */
     public UserConnectedDevice getRefreshedAccessToken(String oldRefreshToken, int userID) {
-		UserConnectedDevice userDevice = new UserConnectedDevice();
+		UserConnectedDevice userDevice = UserConnectedDevice.builder().build();
 		String refreshToken, accessToken = null;
 		
 	    Form form = new Form();

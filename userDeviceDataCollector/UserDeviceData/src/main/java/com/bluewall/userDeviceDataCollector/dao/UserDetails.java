@@ -42,7 +42,7 @@ public class UserDetails {
 			ResultSet resultSet = statement.executeQuery(Queries.GET_USER_DETAILS);
 
 			while (resultSet.next()) {
-				UserConnectedDevice userConnectedDevice = new UserConnectedDevice();
+				UserConnectedDevice userConnectedDevice = UserConnectedDevice.builder().build();
 				userConnectedDevice.setUserID(resultSet.getInt("userID"));
 				userConnectedDevice.setDeviceID(resultSet.getInt("deviceID"));
 				userConnectedDeviceList.add(userConnectedDevice);

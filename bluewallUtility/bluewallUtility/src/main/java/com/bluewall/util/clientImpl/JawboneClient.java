@@ -44,7 +44,7 @@ public class JawboneClient implements ClientInterface {
      */
     
     public UserConnectedDevice getRefreshedAccessToken(String oldRefreshToken, int userID) {
-        UserConnectedDevice userDevice = new UserConnectedDevice();
+        UserConnectedDevice userDevice = UserConnectedDevice.builder().build();
         String refreshToken, accessToken = null;
       
         

@@ -1,0 +1,109 @@
+
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Registration</title>
+</head>
+<body>
+	<div align="center">
+		<form th:action="@{/registerUser}" method="post"
+			th:object="${userProfileData}">
+			<table border="0">
+				<tr>
+					<td colspan="2" align="center"><h2>Spring MVC Form Demo -
+							Registration</h2></td>
+				</tr>
+				<tr>
+					<td>First Name:</td>
+					<td><input type="text" name="firstName"
+						th:field="*{firstName}" /></td>
+				</tr>
+				<tr>
+					<td>Last Name:</td>
+					<td><input type="text" name="lastName" th:field="*{lastName}" /></td>
+				</tr>
+				<tr>
+					<td>E-mail:</td>
+					<td><input type="text" name="emailID" th:field="*{emailID}" /></td>
+				</tr>
+
+				<tr>
+					<td>Password:</td>
+					<td><input type="password" th:field="*{password}" /></td>
+				</tr>
+
+
+				<!-- trigger javascript event to validate both pwd fields -->
+				<!-- <tr>
+					<td>Confirm Password:</td>
+					<td><form:password path="password" /></td>
+				</tr> -->
+
+				<tr>
+					<td>Contact Number:</td>
+					<td><input type="text" th:field="*{contactNumber}" /></td>
+				</tr>
+				<tr>
+					<td>Age:</td>
+					<td><input type="text" th:field="*{age}" /></td>
+				</tr>
+				<tr>
+					<td>Gender:</td>
+					<td><select name="gender" th:field="*{gender}">
+							<option value="female">Female</option>
+							<option value="male">Male</option>
+					</select></td>
+				</tr>
+				<tr>
+					<td>Height (inches):</td>
+					<td><input type="text" th:field="*{height}" /></td>
+				</tr>
+				<tr>
+					<td>Weight (pounds):</td>
+					<td><input type="text" th:field="*{weight}" /></td>
+				</tr>
+				<tr>
+					<td>Activity Level:</td>
+					<td><select name="actLevel" th:field="*{activityLevel}">
+							<option value="veryActive">Very Active</option>
+							<option value="active">Active</option>
+							<option value="moderateActive">Moderate</option>
+							<option value="noActivity">No Activity</option>
+					</select></td>
+				</tr>
+				<tr>
+					<td>Current Location:</td>
+					<td><input type="text" th:field="*{currentLocation}" /></td>
+				</tr>
+				<tr>
+					<td>Goal Type:</td>
+					<td><select name="goalType" th:field="*{goalType}">
+							<option value="gain">Gain Weight</option>
+							<option value="lose">Lose Weight</option>
+							<option value="maintain">Maintain Weight</option>
+
+					</select></td>
+				</tr>
+				<tr>
+					<td>Target Weight:</td>
+					<td><input type="text" th:field="*{targetWeight}" /></td>
+				</tr>
+				<tr>
+					<td>Start Date:</td>
+					<td><input type="text" th:field="*{startDate}"
+						placeholder="MM-DD-YYYYY" /></td>
+				</tr>
+				<tr>
+					<td>End Date:</td>
+					<td><input type="text" th:field="*{endDate}"
+						placeholder="MM-DD-YYYYY" /></td>
+				</tr>
+				<tr>
+					<td colspan="2" align="center"><input type="submit"
+						value="Register" /></td>
+				</tr>
+			</table>
+		</form>
+	</div>
+</body>
+</html>
