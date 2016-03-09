@@ -1,7 +1,6 @@
 package com.bluewall.feservices.dao;
-
-
 import com.bluewall.util.bean.AccessCredentials;
+import com.bluewall.util.bean.UserCredential;
 
 public interface DeviceAuthorizationDaoIfc {
     /**

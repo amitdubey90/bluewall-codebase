@@ -4,7 +4,7 @@ import com.bluewall.util.bean.UserCredential;
 
 public interface ConnectionService {
 
-	void storeConnectionParameters(UserCredential creds);
+	boolean storeConnectionParameters(UserCredential creds);
 
 	void fetchUserProfile(UserCredential creds);
 
