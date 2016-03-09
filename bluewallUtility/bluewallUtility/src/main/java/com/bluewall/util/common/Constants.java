@@ -34,10 +34,10 @@ public class Constants {
 			"meal_read" };
 
 	/* Facebook SignIn Api Details */
-	public static final String REDIRECT_URI = "http://localhost:8080/callback";
+	public static final String REDIRECT_URI = "http://localhost:8080/register/callback/facebook";
 	public static final String FACEBOOK_SCOPE = "email,user_about_me";
 	public static final String FACEBOOK_CLIENT_ID = "1690293301249102";
 	public static final String FACEBOOK_APP_SECRET = "316eb6df004a0575ce9961815724ede9";
 	public static final String FACEBOOK_DIALOG_OAUTH = "https://www.facebook.com/dialog/oauth";
-	public static final String FACEBOOK_ACCESS_TOKEN = "https://graph.facebook.com/oauth/access_token";
+	public static final String FACEBOOK_ACCESS_TOKEN = "https://graph.facebook.com/v2.3/oauth/access_token";
 }

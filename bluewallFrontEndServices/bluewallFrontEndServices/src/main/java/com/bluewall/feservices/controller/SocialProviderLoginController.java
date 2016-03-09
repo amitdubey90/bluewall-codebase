@@ -4,27 +4,38 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.bluewall.feservices.service.ConnectionService;
 import com.bluewall.util.bean.UserCredential;
+import com.bluewall.util.bean.UserProfile;
 import com.bluewall.util.client.SocialConnectionProvidersInterface;
 import com.bluewall.util.common.SocialConnectionProviders;
 import com.bluewall.util.factory.SocialConnectionFactory;
 
-@RestController
-@RequestMapping("/social")
+@Controller
+@RequestMapping("/register")
 public class SocialProviderLoginController {
 
 	@Autowired
 	ConnectionService connService;
 
-	@RequestMapping(value = "/register/{provider}", method = RequestMethod.GET)
+	@RequestMapping(value = "/social/{provider}")
+
+	public String getSocialLoginView() {
+
+		return "socialLogin";
+	}
+
+	@RequestMapping(value = "/social/{provider}", method = RequestMethod.GET)
 	public void register(HttpServletRequest request, HttpServletResponse response, @PathVariable String provider)
 			throws Exception {
 		SocialConnectionProvidersInterface socialProvider = null;
@@ -51,26 +62,30 @@ public class SocialProviderLoginController {
 	}
 
 	@RequestMapping(value = "/callback/{provider}", params = "code", method = RequestMethod.GET)
-	@ResponseBody
-	public void accessCode(@RequestParam("code") String code, @PathVariable String provider) throws Exception {
+	
+	public String accessCode(@RequestParam("code") String code, @PathVariable String provider, Model model) throws Exception {
+		UserProfile userProfile = null;
 		try {
 
 			if (provider.equals(SocialConnectionProviders.FACEBOOK.getName())) {
 				SocialConnectionProvidersInterface facebook = SocialConnectionFactory.getSocialProviderInstance()
 						.getConnectionInstance(SocialConnectionProviders.FACEBOOK);
 				UserCredential creds = facebook.getNewAccessToken(code);
-				connService.storeConnectionParameters(creds);
+				userProfile = facebook.fetchUserProfile(creds);
 
 			} else if (provider.equals(SocialConnectionProviders.GOOGLE.getName())) {
 				SocialConnectionFactory.getSocialProviderInstance()
-						.getConnectionInstance(SocialConnectionProviders.FACEBOOK);
+						.getConnectionInstance(SocialConnectionProviders.GOOGLE);
 			}
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
-		// return "view";
+//		 model.addAttribute("userProfileData", userProfile) ;
+		
+
+		return "registration";
 	}
 
 }

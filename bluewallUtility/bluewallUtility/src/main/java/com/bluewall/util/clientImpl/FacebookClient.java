@@ -34,9 +34,10 @@ public class FacebookClient implements SocialConnectionProvidersInterface {
 				.queryParam("grant_type", "fb_exchange_token");
 
 		UserCredential creds = new UserCredential();
-		JSONObject jsonObj = new JSONObject(longLivedAccessTokenReq);
+		String longAccessTokenString = longLivedAccessTokenReq.request().get(String.class);
+		JSONObject jsonObj = new JSONObject(longAccessTokenString);
 		creds.setAccessToken(jsonObj.getString("access_token"));
-		creds.setExpirationTime(jsonObj.getString("expires_in"));
+		creds.setExpirationTime(jsonObj.getLong("expires_in"));
 		return creds;
 	}
 

@@ -6,4 +6,6 @@ public interface ConnectionService {
 
 	void storeConnectionParameters(UserCredential creds);
 
+	void fetchUserProfile(UserCredential creds);
+
 }

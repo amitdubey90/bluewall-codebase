@@ -1,6 +1,5 @@
 package com.bluewall.feservices.daoImpl;
 
-
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -9,6 +8,7 @@ import java.util.Calendar;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
@@ -20,19 +20,19 @@ import com.bluewall.util.bean.UserProfile;
 
 import lombok.extern.slf4j.Slf4j;
 
-
 @Configuration
 @Component
 @Service
 @Repository("userDao")
+
 @Slf4j
 
 public class UserDaoImpl implements UserDao {
 	@Autowired
 	DataSource datasource;
-	
+
 	@Override
-	public UserCredential getUserConnectionCredsById(int userId,int providerId) {
+	public UserCredential getUserConnectionCredsById(int userId, int providerId) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -40,17 +40,18 @@ public class UserDaoImpl implements UserDao {
 	@Override
 	public void updateUserCredentials(UserCredential newUserCreds) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void insertUserCredentials(UserCredential newUserCreds) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void createUser(UserProfile user) {
+
 		int userID;
 		Calendar calendar = Calendar.getInstance();
 		java.sql.Timestamp loginTime = new java.sql.Timestamp(calendar.getTime().getTime());
@@ -79,8 +80,7 @@ public class UserDaoImpl implements UserDao {
 				userID = rs.getInt("userID");
 				log.info("New user registered with user id: "+userID);
 				
-				int count = datasource.getConnection().prepareStatement("insert into UserGoal(userID, goalType, targetWeight, "
-						+ "startDate, endDate) values("+userID+",'"+user.getGoalType()+"',"+user.getTargetWeight()+","
+				int count = datasource.getConnection().prepareStatement("insert into UserGoal(userID, goalType, targetWeight,startDate, endDate) values ("+userID+",'"+user.getGoalType()+"',"+user.getTargetWeight()+","
 								+ user.getStartDate() +","+user.getEndDate()+")").executeUpdate();
 				System.out.println("data in goal detail: "+count);
 				
@@ -93,7 +93,7 @@ public class UserDaoImpl implements UserDao {
 				String insLoginDetailsql = "insert into LoginDetail values(?,?,?,?)";
 				PreparedStatement prepStatement = datasource.getConnection().prepareStatement(insLoginDetailsql);
 				prepStatement.setString(1, user.getEmailID());
-				prepStatement.setString(2, user.getPasswd());
+				prepStatement.setString(2, user.getPassword());
 				prepStatement.setTimestamp(3, loginTime);
 				prepStatement.setInt(4, userID);
 				int rowUpdateCount = prepStatement.executeUpdate();
@@ -108,6 +108,9 @@ public class UserDaoImpl implements UserDao {
 			e.printStackTrace();
 		}
 				
+
+		// TODO Auto-generated method stub
+
 		
 	}
 

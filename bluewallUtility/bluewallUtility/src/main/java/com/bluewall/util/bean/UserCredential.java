@@ -7,7 +7,7 @@ public class UserCredential {
 	private int deviceID;
 	private String refreshToken;
 	private String accessToken;
-	private String expirationTime;
+	private Long expirationTime;
 
 	public int getConnectionID() {
 		return connectionID;
@@ -49,13 +49,12 @@ public class UserCredential {
 		this.accessToken = accessToken;
 	}
 
-	public String getExpirationTime() {
+	public Long getExpirationTime() {
 		return expirationTime;
 	}
 
-	public void setExpirationTime(String expirationTime) {
+	public void setExpirationTime(Long expirationTime) {
 		this.expirationTime = expirationTime;
 	}
 
-	
 }
