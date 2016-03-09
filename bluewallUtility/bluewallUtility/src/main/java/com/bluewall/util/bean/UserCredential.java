@@ -2,20 +2,11 @@ package com.bluewall.util.bean;
 
 public class UserCredential {
 
-	private int connectionID;
 	private int userID;
 	private int deviceID;
 	private String refreshToken;
 	private String accessToken;
-	private String expirationTime;
-
-	public int getConnectionID() {
-		return connectionID;
-	}
-
-	public void setConnectionID(int connectionID) {
-		this.connectionID = connectionID;
-	}
+	private long expirationTime;
 
 	public int getUserID() {
 		return userID;
@@ -49,11 +40,11 @@ public class UserCredential {
 		this.accessToken = accessToken;
 	}
 
-	public String getExpirationTime() {
+	public long getExpirationTime() {
 		return expirationTime;
 	}
 
-	public void setExpirationTime(String expirationTime) {
+	public void setExpirationTime(long expirationTime) {
 		this.expirationTime = expirationTime;
 	}
 

@@ -19,7 +19,9 @@ public class ConnectionServiceImpl implements ConnectionService {
 //	UserDao userDao;
 	
 	@Override
-	public void storeConnectionParameters(UserCredential creds) {
+	public boolean storeConnectionParameters(UserCredential creds) {
+		
+		return false;
 		
 		
 	}

@@ -34,10 +34,20 @@ public class Constants {
 			"meal_read" };
 
 	/* Facebook SignIn Api Details */
-	public static final String REDIRECT_URI = "http://localhost:8080/callback";
+	public static final String FACEBOOK_REDIRECT_URI = "http://localhost:8080/callback";
 	public static final String FACEBOOK_SCOPE = "email,user_about_me";
 	public static final String FACEBOOK_CLIENT_ID = "1690293301249102";
 	public static final String FACEBOOK_APP_SECRET = "316eb6df004a0575ce9961815724ede9";
 	public static final String FACEBOOK_DIALOG_OAUTH = "https://www.facebook.com/dialog/oauth";
 	public static final String FACEBOOK_ACCESS_TOKEN = "https://graph.facebook.com/oauth/access_token";
+	
+	/* Google SignIn Api Details */
+	public static final String GMAIL_SCOPE = "email profile";
+	public static final String GMAIL_REDIRECT_URI = "http://localhost:8080/register/callback/google";
+	public static final String GMAIL_CLIENT_ID = "604637540969-1qp88ujp4omksdomc0iit5ct3v4r4ecu.apps.googleusercontent.com";
+	public static final String GMAIL_APP_SECRET = "B_rAfENeQ9ORYVqxeNEpCmz8";
+	public static final String GMAIL_DIALOG_OAUTH = "https://accounts.google.com/o/oauth2/auth";
+	public static final String GMAIL_ACCESS_TOKEN = "https://accounts.google.com/o/oauth2/token";
+	public static final String GMAIL_USER_INFO = "https://www.googleapis.com/oauth2/v1/userinfo";
+	
 }

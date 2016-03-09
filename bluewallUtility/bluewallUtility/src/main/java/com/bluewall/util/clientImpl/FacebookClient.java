@@ -21,7 +21,7 @@ public class FacebookClient implements SocialConnectionProvidersInterface {
 		WebTarget accessTokenReq = ClientBuilder.newClient().target(Constants.FACEBOOK_ACCESS_TOKEN)
 				.queryParam("client_id", Constants.FACEBOOK_CLIENT_ID)
 				.queryParam("client_secret", Constants.FACEBOOK_APP_SECRET).queryParam("code", code)
-				.queryParam("redirect_uri", Constants.REDIRECT_URI);
+				.queryParam("redirect_uri", Constants.FACEBOOK_REDIRECT_URI);
 
 		String response = accessTokenReq.request().get(String.class);
 		JSONObject json = new JSONObject(response);
@@ -36,7 +36,7 @@ public class FacebookClient implements SocialConnectionProvidersInterface {
 		UserCredential creds = new UserCredential();
 		JSONObject jsonObj = new JSONObject(longLivedAccessTokenReq);
 		creds.setAccessToken(jsonObj.getString("access_token"));
-		creds.setExpirationTime(jsonObj.getString("expires_in"));
+		//creds.setExpirationTime(jsonObj.getString("expires_in"));
 		return creds;
 	}
 
@@ -55,7 +55,7 @@ public class FacebookClient implements SocialConnectionProvidersInterface {
 	@Override
 	public String AuthorizationRequestUrl() {
 		return new AuthorizationRequestUrl(Constants.FACEBOOK_DIALOG_OAUTH, Constants.FACEBOOK_CLIENT_ID,
-				Arrays.asList("code")).set("scope", Constants.FACEBOOK_SCOPE).setRedirectUri(Constants.REDIRECT_URI)
+				Arrays.asList("code")).set("scope", Constants.FACEBOOK_SCOPE).setRedirectUri(Constants.FACEBOOK_REDIRECT_URI)
 						.build();
 	}
 
