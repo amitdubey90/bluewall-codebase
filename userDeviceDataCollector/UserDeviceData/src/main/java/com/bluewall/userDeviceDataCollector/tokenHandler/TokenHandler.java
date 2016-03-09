@@ -34,7 +34,7 @@ public class TokenHandler {
 		String accessToken = null;
 		Statement stmt = null;
 		ResultSet rs = null;
-		Timestamp creationTime = null;
+		Timestamp expirationTime = null;
 		String refreshToken = null;
 		
 		SqlDBConnections dbconn = new SqlDBConnections(
@@ -45,17 +45,17 @@ public class TokenHandler {
 		
 		try {
 			stmt = conn.createStatement();
-			rs = stmt.executeQuery("select accessToken, refreshToken, creationTime"
+			rs = stmt.executeQuery("select accessToken, refreshToken, expirationTime"
 									+ "from UserConnectedDevice"
 									+ "where userID = " + userID);
 			while (rs.next()){
 				accessToken = rs.getString("accessToken");
 				refreshToken = rs.getString("refreshToken");
-				creationTime = rs.getTimestamp("creationTime");
+				expirationTime = rs.getTimestamp("expirationTime");
 			}
 			
 			// check for token expiry before refreshing the token
-			if (checkTokenExpiry(creationTime)) {
+			if (checkTokenExpired(expirationTime)) {
 				String old_refreshToken = refreshToken;
 
 				// Device id 10 - Fitbit, 11 -Jawbone
@@ -67,6 +67,7 @@ public class TokenHandler {
 
 				UserConnectedDevice userdevice = devClient.getRefreshedAccessToken(old_refreshToken,userID);
 				
+				//TODO code to add expiration timestamp. 
 				String updateTokens = "UPDATE UserConnectedDevice SET refreshToken = " + userdevice.getRefreshToken()
 	                    + ",accessToken = " + userdevice.getAccessToken() 
 	                    + " where userID = " + userID + "and deviceID = "
@@ -110,16 +111,14 @@ public class TokenHandler {
 
 
 	// Module to check whether to refresh access token or not.
-	@SuppressWarnings("deprecation")
-	public boolean checkTokenExpiry(Timestamp creationTime) {
+	public boolean checkTokenExpired(Timestamp expirationTime) {
 			Date date = new Date();
 			long time = date.getTime();
 			Timestamp ts = new Timestamp(time);
-
-			if (ts.getDate() == creationTime.getDate()) {
-				if ((ts.getHours() - creationTime.getHours()) > 1) {
-					return true;
-				}
+			
+			// check if current timestamp is greater than expiration timestamp
+			if (ts.after(expirationTime)){
+				return true;
 			}
 		return false;
 	}
