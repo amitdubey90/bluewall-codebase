@@ -28,7 +28,7 @@ public class SocialProviderLoginController {
 	@Autowired
 	ConnectionService connService;
 
-	@RequestMapping(value = "/social/{provider}")
+	@RequestMapping(value = "/social")
 
 	public String getSocialLoginView() {
 
@@ -62,9 +62,10 @@ public class SocialProviderLoginController {
 	}
 
 	@RequestMapping(value = "/callback/{provider}", params = "code", method = RequestMethod.GET)
-	
-	public String accessCode(@RequestParam("code") String code, @PathVariable String provider, Model model) throws Exception {
-		UserProfile userProfile = null;
+
+	public ModelAndView accessCode(@RequestParam("code") String code, @PathVariable String provider, Model model)
+			throws Exception {
+		UserProfile userProfile = new UserProfile();
 		try {
 
 			if (provider.equals(SocialConnectionProviders.FACEBOOK.getName())) {
@@ -82,10 +83,11 @@ public class SocialProviderLoginController {
 			e.printStackTrace();
 		}
 
-//		 model.addAttribute("userProfileData", userProfile) ;
-		
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("userProfileData", userProfile);
+		mv.setViewName("registration");
 
-		return "registration";
+		return mv;
 	}
 
 }

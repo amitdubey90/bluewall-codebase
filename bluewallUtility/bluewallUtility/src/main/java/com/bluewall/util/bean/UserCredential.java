@@ -1,5 +1,14 @@
 package com.bluewall.util.bean;
 
+import java.util.Date;
+
+import lombok.Builder;
+import lombok.Data;
+import lombok.ToString;
+
+//@Data
+//@ToString
+//@Builder
 public class UserCredential {
 
 	private int connectionID;
@@ -7,7 +16,7 @@ public class UserCredential {
 	private int deviceID;
 	private String refreshToken;
 	private String accessToken;
-	private Long expirationTime;
+	private Date expirationTime;
 
 	public int getConnectionID() {
 		return connectionID;
@@ -49,12 +58,14 @@ public class UserCredential {
 		this.accessToken = accessToken;
 	}
 
-	public Long getExpirationTime() {
+	public Date getExpirationTime() {
 		return expirationTime;
 	}
 
-	public void setExpirationTime(Long expirationTime) {
+	public void setExpirationTime(Date expirationTime) {
 		this.expirationTime = expirationTime;
 	}
+
+	
 
 }

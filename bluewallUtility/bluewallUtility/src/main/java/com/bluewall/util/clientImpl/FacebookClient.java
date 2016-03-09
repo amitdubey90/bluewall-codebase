@@ -37,14 +37,22 @@ public class FacebookClient implements SocialConnectionProvidersInterface {
 		String longAccessTokenString = longLivedAccessTokenReq.request().get(String.class);
 		JSONObject jsonObj = new JSONObject(longAccessTokenString);
 		creds.setAccessToken(jsonObj.getString("access_token"));
-		creds.setExpirationTime(jsonObj.getLong("expires_in"));
+		// creds.setExpirationTime(jsonObj.getLong("expires_in"));
 		return creds;
 	}
 
 	@Override
 	public UserProfile fetchUserProfile(UserCredential newUserCreds) {
-		// TODO Auto-generated method stub
-		return null;
+		WebTarget profileInfo = ClientBuilder.newClient().target(Constants.FACEBOOK_USER_PROFILE)
+				.queryParam("access_token", newUserCreds.getAccessToken());
+		UserProfile profile = new UserProfile();
+
+		String profileInfoString = profileInfo.request().get(String.class);
+		JSONObject obj = new JSONObject(profileInfoString);
+		String name[] = obj.get("name").toString().split(" ");
+		profile.setFirstName(name[0]);
+		profile.setLastName(name[1]);
+		return profile;
 	}
 
 	@Override

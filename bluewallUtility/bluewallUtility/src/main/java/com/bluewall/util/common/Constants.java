@@ -40,4 +40,5 @@ public class Constants {
 	public static final String FACEBOOK_APP_SECRET = "316eb6df004a0575ce9961815724ede9";
 	public static final String FACEBOOK_DIALOG_OAUTH = "https://www.facebook.com/dialog/oauth";
 	public static final String FACEBOOK_ACCESS_TOKEN = "https://graph.facebook.com/v2.3/oauth/access_token";
+	public static final String FACEBOOK_USER_PROFILE = "https://graph.facebook.com/v2.5/me";
 }
