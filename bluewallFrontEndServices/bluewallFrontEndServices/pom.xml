@@ -24,8 +24,8 @@
 			<artifactId>spring-boot-starter-web</artifactId>
 			<exclusions>
 				<exclusion>
-      				<groupId>org.springframework.boot</groupId>
-      				<artifactId>spring-boot-starter-logging</artifactId>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-starter-logging</artifactId>
 				</exclusion>
 			</exclusions>
 		</dependency>
@@ -35,8 +35,8 @@
 			<artifactId>spring-boot-starter-thymeleaf</artifactId>
 			<exclusions>
 				<exclusion>
-      				<groupId>org.springframework.boot</groupId>
-      				<artifactId>spring-boot-starter-logging</artifactId>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-starter-logging</artifactId>
 				</exclusion>
 			</exclusions>
 		</dependency>
@@ -56,11 +56,11 @@
 			<artifactId>json</artifactId>
 			<version>20151123</version>
 		</dependency>
-		
-		 <dependency> 
+
+		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-security</artifactId> 
-		</dependency> 
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
 
 		<!-- Lombok to remove boilerplate code -->
 		<dependency>
@@ -78,6 +78,18 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-mongodb</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.google.inject</groupId>
+			<artifactId>guice</artifactId>
+			<version>2.0</version>
+		</dependency>
+		
+		<!-- JSON to Java Object Mapper -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>2.6.3</version>
 		</dependency>
 	</dependencies>
 

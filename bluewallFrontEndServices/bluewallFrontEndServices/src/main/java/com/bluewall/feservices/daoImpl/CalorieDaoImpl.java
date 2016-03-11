@@ -25,15 +25,15 @@ import com.bluewall.feservices.util.Queries;
 public class CalorieDaoImpl implements CalorieDao {
 
 	@Autowired
- 	DataSource dataSource;
-	 
+	DataSource dataSource;
+
 	@SuppressWarnings("deprecation")
 	@Override
-	public int getSumCaloriesBurnt(int userID) {
-		 
+	public int getSumCaloriesBurnt(String userID) {
+
 		int totalCaloriesBurnt = 0;
 		log.info("Fetching Sum of Caloreies Burnt for a day");
-		
+
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSSSSS");
 		Date date = new Date();
 		String currentDateTime = dateFormat.format(date);
@@ -41,42 +41,47 @@ public class CalorieDaoImpl implements CalorieDao {
 		date.setMinutes(00);
 		date.setSeconds(00);
 		String startDateTime = dateFormat.format(date);
-		
-		try (ResultSet resultSet = dataSource.getConnection().prepareStatement(Queries.GET_TOTAL_CALORIE_BURNT + " where userID = "+userID+" and startTime >= '"+startDateTime+"' and startTime <= '"+currentDateTime+"'").executeQuery()){
-			if(resultSet.next())
+
+		try (ResultSet resultSet = dataSource
+				.getConnection().prepareStatement(Queries.GET_TOTAL_CALORIE_BURNT + " where userID = " + userID
+						+ " and startTime >= '" + startDateTime + "' and startTime <= '" + currentDateTime + "'")
+				.executeQuery()) {
+			if (resultSet.next())
 				totalCaloriesBurnt = resultSet.getInt("caloriesBurnt");
-		}
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			log.error("SQL Exception occured while fetching user details");
 		}
-		
+
 		return totalCaloriesBurnt;
 	}
 
 	@SuppressWarnings("deprecation")
 	@Override
-	public int getSumCaloriesConsumed(int userID) {
-		
+	public int getSumCaloriesConsumed(String userID) {
+
 		int totalCaloriesConsumed = 0;
 
 		log.info("Fetching Sum of Caloreies Consumed for a day");
-		
-		/*Calculating Start time and current time of the date*/
+
+		/* Calculating Start time and current time of the date */
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSSSSS");
 		Date date = new Date();
 		String currentDateTime = dateFormat.format(date);
 		date.setHours(00);
 		date.setMinutes(00);
 		date.setSeconds(00);
-		
+
 		String startDateTime = dateFormat.format(date);
-		try (ResultSet resultSet = dataSource.getConnection().prepareStatement(Queries.GET_TOTAL_CALORIE_CONSUMED +  " where userID = "+userID+" and foodLogTime >= '"+startDateTime+"' and foodLogTime <= '"+currentDateTime+"'").executeQuery()) {
-			if(resultSet.next())
+		try (ResultSet resultSet = dataSource.getConnection()
+				.prepareStatement(Queries.GET_TOTAL_CALORIE_CONSUMED + " where userID = " + userID
+						+ " and foodLogTime >= '" + startDateTime + "' and foodLogTime <= '" + currentDateTime + "'")
+				.executeQuery()) {
+			if (resultSet.next())
 				totalCaloriesConsumed = resultSet.getInt("weightConsumed");
 		} catch (SQLException e) {
 			log.error("SQL Exception occured while fetching user details");
 		}
-		
+
 		return totalCaloriesConsumed;
 	}
 

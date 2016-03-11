@@ -120,4 +120,10 @@ public class JawboneClient implements ClientInterface {
         return null;
     }
 
+	@Override
+	public String getRecentUserActivity(String accessToken) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

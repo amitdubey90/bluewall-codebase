@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.bluewall.feservices.service.ConnectionService;
+import com.bluewall.feservices.service.DeviceDataService;
 import com.bluewall.util.bean.UserCredential;
 import com.bluewall.util.bean.UserProfile;
 import com.bluewall.util.client.SocialConnectionProvidersInterface;
@@ -34,7 +34,7 @@ import lombok.extern.slf4j.Slf4j;
 public class SocialProviderLoginController {
 
 	@Autowired
-	ConnectionService connService;
+	DeviceDataService connService;
 
 	/**
 	 * This method fetches authorization request url based on the provider in

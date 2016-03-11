@@ -16,21 +16,22 @@ public class CalorieController {
 
 	@Autowired
 	CalorieService calorieService;
-	
+
 	/**
-	 * Calorie Service to calculate total Calories Burnt and Consumed by the user in a day
+	 * Calorie Service to calculate total Calories Burnt and Consumed by the
+	 * user in a day
 	 */
 	@RequestMapping(value = "/calorieDetails/{userID}", method = RequestMethod.GET)
-	public void getCalorieDetails(@PathVariable("userID") int userID) {
+	public void getCalorieDetails(@PathVariable("userID") String userID) {
 		try {
 			int sumCalorieBurnt = calorieService.getSumCaloriesBurnt(userID);
 			int sumCalorieConsumed = calorieService.getSumCaloriesConsumed(userID);
-			
+
 			System.out.println(sumCalorieBurnt);
 			System.out.println(sumCalorieConsumed);
 		} catch (Exception e) {
 			log.error("Exception occured");
 		}
 	}
-	
+
 }

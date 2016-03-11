@@ -10,10 +10,10 @@ public interface CalorieDao {
 	 * @param userID
 	 * @return Sum of Calories Burnt for a day
 	 */
-	public int getSumCaloriesBurnt(int userID);
+	public int getSumCaloriesBurnt(String userID);
 	/**
 	 * @param userID
 	 * @return Sum of Calories Consumed for a day
 	 */
-	public int getSumCaloriesConsumed(int userID);
+	public int getSumCaloriesConsumed(String userID);
 }

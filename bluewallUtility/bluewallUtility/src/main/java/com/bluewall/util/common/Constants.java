@@ -12,9 +12,10 @@ public class Constants {
 
 	public static final String FITBIT_REFRESH_TOKEN_PATH = "oauth2/token";
 	public static final String FITBIT_ACTIVITY_API_PATH = "1/user/-/activities/date/";
+	public static final String FITBIT_RECENT_ACTIVITY_API_PATH = "1/user/-/activities/recent.json";
 
-	public static final String FITBIT_APP_ID = "227GV3";
-	public static final String FITBIT_APP_CLIENT_SECRET = "15fb64d970f586701c20aee5fac1e58f";
+	public static final String FITBIT_APP_ID = "229WBX";
+	public static final String FITBIT_APP_CLIENT_SECRET = "a5e08a68db05625a2578ce37f7639ad4";
 
 	public static final String[] FITBIT_SCOPES = new String[] { "activity", "nutrition", "heartrate", "location",
 			"nutrition", "profile", "settings", "sleep", "social", "weight" };
@@ -43,7 +44,6 @@ public class Constants {
 	public static final String FACEBOOK_ACCESS_TOKEN = "https://graph.facebook.com/v2.3/oauth/access_token";
 	public static final String FACEBOOK_USER_PROFILE = "https://graph.facebook.com/v2.5/me";
 	public static final String FB_PROFILE_FIELDS = "email,first_name,last_name,location,gender";
-
 
 	/* Google SignIn Api Details */
 	public static final String GMAIL_SCOPE = "email profile";
