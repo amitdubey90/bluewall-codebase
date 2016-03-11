@@ -54,4 +54,8 @@ public class Constants {
 	public static final String GMAIL_ACCESS_TOKEN = "https://accounts.google.com/o/oauth2/token";
 	public static final String GMAIL_USER_INFO = "https://www.googleapis.com/oauth2/v1/userinfo";
 
+	/* DATE FORMATS*/
+	
+	public static final String SIMPLE_DATE_FORMAT="dd-MM-yyyy hh:mm:ss";
+	
 }

@@ -22,7 +22,7 @@ public class CalorieController {
 	 * user in a day
 	 */
 	@RequestMapping(value = "/calorieDetails/{userID}", method = RequestMethod.GET)
-	public void getCalorieDetails(@PathVariable("userID") String userID) {
+	public void getCalorieDetails(@PathVariable("userID") int userID) {
 		try {
 			int sumCalorieBurnt = calorieService.getSumCaloriesBurnt(userID);
 			int sumCalorieConsumed = calorieService.getSumCaloriesConsumed(userID);

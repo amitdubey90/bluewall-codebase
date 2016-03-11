@@ -1,6 +1,8 @@
 package com.bluewall.feservices.service;
 
 import java.util.List;
+
+import com.bluewall.util.bean.ActivityInfo;
 import com.bluewall.util.bean.UserActivityLog;
 
 
@@ -13,5 +15,7 @@ public interface ActivityService {
 	 */
 	
 	public List<UserActivityLog> getUserActivityLogs(int userID);
+	
+	List<ActivityInfo> fetchUserActivityFeedFromDevice(int userId);
 	
 }

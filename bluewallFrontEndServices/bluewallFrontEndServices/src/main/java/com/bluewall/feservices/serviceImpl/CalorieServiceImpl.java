@@ -13,12 +13,12 @@ public class CalorieServiceImpl implements CalorieService {
 	CalorieDao calorieDao;
 	
 	@Override
-	public int getSumCaloriesBurnt(String userID) {
+	public int getSumCaloriesBurnt(int userID) {
 		return calorieDao.getSumCaloriesBurnt(userID);
 	}
 
 	@Override
-	public int getSumCaloriesConsumed(String userID) {
+	public int getSumCaloriesConsumed(int userID) {
 		return calorieDao.getSumCaloriesConsumed(userID);
 	}
 

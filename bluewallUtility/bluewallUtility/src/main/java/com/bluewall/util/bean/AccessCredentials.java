@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.ToString;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 @Data
 @Builder
@@ -16,5 +17,5 @@ public class AccessCredentials {
     private String accessToken;
     private String refreshToken;
     private int deviceId;
-    private Date expirationTime;
+    private Timestamp expirationTime;
 }

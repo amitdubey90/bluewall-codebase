@@ -19,7 +19,10 @@ import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.Form;
 import javax.ws.rs.core.MediaType;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Date;
 
 @Slf4j
 
@@ -30,100 +33,95 @@ import java.util.Arrays;
  */
 public class JawboneClient implements ClientInterface {
 
-    private HttpAuthenticationFeature basicAuthentication =
-            HttpAuthenticationFeature.basic(Constants.JAWBONE_APP_ID, Constants.JAWBONE_APP_CLIENT_SECRET);
+	private HttpAuthenticationFeature basicAuthentication = HttpAuthenticationFeature.basic(Constants.JAWBONE_APP_ID,
+			Constants.JAWBONE_APP_CLIENT_SECRET);
 
-    private WebTarget jawboneTarget = ClientBuilder.newClient()
-            .register(basicAuthentication)
-            .target(Constants.JAWBONE_BASE_URL);
+	private WebTarget jawboneTarget = ClientBuilder.newClient().register(basicAuthentication)
+			.target(Constants.JAWBONE_BASE_URL);
 
-    /**
-     * This method fetches a new access token for a user based on the refresh
-     * token. The new access token along with the new refresh token is then
-     * stored in the database.
-     */
-    
-    public UserConnectedDevice getRefreshedAccessToken(String oldRefreshToken, int userID) {
-        UserConnectedDevice userDevice = UserConnectedDevice.builder().build();
-        String refreshToken, accessToken = null;
-      
-        
-            log.info("Fetching access token and refresh token for userID: {}", userID);
+	/**
+	 * This method fetches a new access token for a user based on the refresh
+	 * token. The new access token along with the new refresh token is then
+	 * stored in the database.
+	 */
 
-            Form form = new Form();
-            form.param("grant_type", "refresh_token");
-            form.param("refresh_token", oldRefreshToken);
+	public UserConnectedDevice getRefreshedAccessToken(String oldRefreshToken, int userID) {
+		UserConnectedDevice userDevice = UserConnectedDevice.builder().build();
+		String refreshToken, accessToken = null;
 
-            String response = jawboneTarget.path(Constants.JAWBONE_REFRESH_TOKEN_PATH)
-                    .request()
-                    .post(Entity.entity(form, MediaType.APPLICATION_FORM_URLENCODED_TYPE), String.class);
+		log.info("Fetching access token and refresh token for userID: {}", userID);
 
+		Form form = new Form();
+		form.param("grant_type", "refresh_token");
+		form.param("refresh_token", oldRefreshToken);
 
-            JSONObject obj = new JSONObject(response);
+		String response = jawboneTarget.path(Constants.JAWBONE_REFRESH_TOKEN_PATH).request()
+				.post(Entity.entity(form, MediaType.APPLICATION_FORM_URLENCODED_TYPE), String.class);
 
-            log.info("Fetching Refresh Token for Jawbone user");
-            refreshToken = (String) obj.get(Constants.REFRESH_TOKEN_KEY);
-            log.debug("Refresh token fetched {}", refreshToken);
-            log.info("Fetching Access Token for Jawbone user");
-            accessToken = (String) obj.getString(Constants.ACCESS_TOKEN_KEY);
-            log.debug("Access token fetched {}", accessToken);
+		JSONObject obj = new JSONObject(response);
 
-            userDevice.setRefreshToken(refreshToken);
-            userDevice.setAccessToken(accessToken);
-            userDevice.setDeviceID(11);
-            return userDevice;
-    }
+		log.info("Fetching Refresh Token for Jawbone user");
+		refreshToken = (String) obj.get(Constants.REFRESH_TOKEN_KEY);
+		log.debug("Refresh token fetched {}", refreshToken);
+		log.info("Fetching Access Token for Jawbone user");
+		accessToken = (String) obj.getString(Constants.ACCESS_TOKEN_KEY);
+		log.debug("Access token fetched {}", accessToken);
 
-    @Override
-    public String getAuthorizationRequestUrl(String userId, String redirectUri) {
-        return new AuthorizationRequestUrl(Constants.JAWBONE_OAUTH_CODE_URL, Constants.JAWBONE_APP_ID,
-                Arrays.asList("code"))
-                .set("scope", String.join(" ", Constants.JAWBONE_SCOPES))
-                .setState(userId)
-                .setRedirectUri(redirectUri).build();
-    }
+		userDevice.setRefreshToken(refreshToken);
+		userDevice.setAccessToken(accessToken);
+		userDevice.setDeviceID(11);
+		return userDevice;
+	}
 
-    @Override
-    public TokenResponse getAccessToken(String code, String redirectUri) throws IOException {
-        AuthorizationCodeTokenRequest request = new AuthorizationCodeTokenRequest(
-                new NetHttpTransport(), new JacksonFactory(),
-                new GenericUrl(Constants.JAWBONE_OAUTH_TOKEN_URL), code)
-                .setRedirectUri(redirectUri)
-                .set("client_id", Constants.JAWBONE_APP_ID)
-                .set("client_secret", Constants.JAWBONE_APP_CLIENT_SECRET);
-        return request.execute();
-    }
+	@Override
+	public String getAuthorizationRequestUrl(String userId, String redirectUri) {
+		return new AuthorizationRequestUrl(Constants.JAWBONE_OAUTH_CODE_URL, Constants.JAWBONE_APP_ID,
+				Arrays.asList("code")).set("scope", String.join(" ", Constants.JAWBONE_SCOPES)).setState(userId)
+						.setRedirectUri(redirectUri).build();
+	}
 
-    /**
-     * This method makes a call to Jawbone API which fetches User Activity
-     * Information tracked through the device
-     */
-    public String getUserActivityInfo(String startTime, String endTime, String accessToken) {
+	@Override
+	public TokenResponse getAccessToken(String code, String redirectUri) throws IOException {
+		AuthorizationCodeTokenRequest request = new AuthorizationCodeTokenRequest(new NetHttpTransport(),
+				new JacksonFactory(), new GenericUrl(Constants.JAWBONE_OAUTH_TOKEN_URL), code)
+						.setRedirectUri(redirectUri).set("client_id", Constants.JAWBONE_APP_ID)
+						.set("client_secret", Constants.JAWBONE_APP_CLIENT_SECRET);
+		return request.execute();
+	}
 
-        try {
-            // TODO why long?
-            Long sTime = new Long(startTime);
-            Long eTime = new Long(endTime);
+	/**
+	 * This method makes a call to Jawbone API which fetches User Activity
+	 * Information tracked through the device
+	 */
+	public String getUserActivityInfo(String startTime, String endTime, String accessToken) {
 
-            String response = jawboneTarget.path(Constants.JAWBONE_ACTIVITY_PATH)
-                    .queryParam("start_time", sTime)
-                    .queryParam("end_time", eTime)
-                    .request(MediaType.APPLICATION_JSON_TYPE)
-                    .header("Authorization", "Bearer " + accessToken)
-                    .get(String.class);
-            log.info("Fetched user Activity Info: {}", response);
-            return response;
-        } catch (Exception e) {
+		try {
+			// TODO why long?
 
-            log.error("An exception has occurred in getUserActivityInfo, {}", e);
-        }
-        return null;
-    }
+			Long sTime = new SimpleDateFormat("yyyy-MM-dd-hh.mm.ss").parse(startTime).getTime();
+
+			Long eTime = new SimpleDateFormat("yyyy-MM-dd-hh.mm.ss").parse(endTime).getTime();
+
+			String response = jawboneTarget.path(Constants.JAWBONE_ACTIVITY_PATH).queryParam("start_time", sTime)
+					.queryParam("end_time", eTime).request(MediaType.APPLICATION_JSON_TYPE)
+					.header("Authorization", "Bearer " + accessToken).get(String.class);
+
+			log.info("Fetched user Activity Info: {}", response);
+			return response;
+		} catch (Exception e) {
+
+			log.error("An exception has occurred in getUserActivityInfo, {}", e);
+		}
+		return null;
+	}
 
 	@Override
 	public String getRecentUserActivity(String accessToken) {
-		// TODO Auto-generated method stub
-		return null;
+
+		SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd-hh.mm.ss");
+
+		return getUserActivityInfo(dateformat.format(new Date().getTime() - (3600 * 1000)).toString(),
+				dateformat.format(new Date()).toString(), accessToken);
 	}
 
 }

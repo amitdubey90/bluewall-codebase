@@ -2,7 +2,6 @@ package com.bluewall.util.clientImpl;
 
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.Set;
 
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;

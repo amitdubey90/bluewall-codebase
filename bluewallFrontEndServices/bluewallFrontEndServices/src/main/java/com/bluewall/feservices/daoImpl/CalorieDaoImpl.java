@@ -29,7 +29,7 @@ public class CalorieDaoImpl implements CalorieDao {
 
 	@SuppressWarnings("deprecation")
 	@Override
-	public int getSumCaloriesBurnt(String userID) {
+	public int getSumCaloriesBurnt(int userID) {
 
 		int totalCaloriesBurnt = 0;
 		log.info("Fetching Sum of Caloreies Burnt for a day");
@@ -57,7 +57,7 @@ public class CalorieDaoImpl implements CalorieDao {
 
 	@SuppressWarnings("deprecation")
 	@Override
-	public int getSumCaloriesConsumed(String userID) {
+	public int getSumCaloriesConsumed(int userID) {
 
 		int totalCaloriesConsumed = 0;
 
