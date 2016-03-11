@@ -27,7 +27,7 @@ public class DeviceAuthorizationDaoImpl implements DeviceAuthorizationDaoIfc {
             pst.setInt(colId++, credentials.getDeviceId());
             pst.setString(colId++, credentials.getAccessToken());
             pst.setString(colId++, credentials.getRefreshToken());
-            pst.setDate(colId++, credentials.getExpirationTime());
+            pst.setTimestamp(colId++, credentials.getExpirationTime());
 
             pst.execute();
             log.info("storeUserAccessToken successful");
