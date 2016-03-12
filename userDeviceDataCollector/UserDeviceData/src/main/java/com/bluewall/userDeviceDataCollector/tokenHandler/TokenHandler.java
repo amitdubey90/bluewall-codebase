@@ -68,9 +68,9 @@ public class TokenHandler {
 				UserConnectedDevice userdevice = devClient.getRefreshedAccessToken(old_refreshToken,userID);
 				
 				//TODO code to add expiration timestamp. 
-				String updateTokens = "UPDATE UserConnectedDevice SET refreshToken = " 
-						+ userdevice.getRefreshToken() + ",accessToken = " 
-						+ userdevice.getAccessToken() + " where userID = " 
+				String updateTokens = "UPDATE UserConnectedDevice SET refreshToken = '" 
+						+ userdevice.getRefreshToken() + "',accessToken = '" 
+						+ userdevice.getAccessToken() + "' where userID = " 
 						+ userID + " and deviceID = "
 	                    + userdevice.getDeviceID();
 				
