@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
@@ -20,16 +21,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	 @Override
 		protected void configure(HttpSecurity http) throws Exception { 
 		 	http
-		 		.authorizeRequests()
-	            .antMatchers("/", "/home","/register/**","/fitnessApp/**").permitAll()
-	            .anyRequest().authenticated()
-	            .and()
-		            .formLogin()
-		            .loginPage("/login").usernameParameter("username").passwordParameter("password")
-		            .permitAll()
-		            .and()
-		            	.logout()
-		            	.permitAll();
+				.httpBasic()
+				.and()
+				.authorizeRequests()
+				.antMatchers("/", "/home","/register/**","/fitnessApp/**").permitAll()
+				.anyRequest().authenticated()
+				.and()
+				.logout().permitAll()
+				.and()
+				.csrf().disable();
+		 		//TODO enable CSRF for better security.
 		}
 	 
 	 @Autowired
@@ -39,4 +40,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 					.authoritiesByUsernameQuery("select username, role from user_roles where username=?");
 		}
 
+	//To disable mime type checking on public resources
+	@Override
+	public void configure(WebSecurity web) throws Exception {
+		web.ignoring().antMatchers("/js/**");
+		web.ignoring().antMatchers("/css/**");
+		web.ignoring().antMatchers("/partials/**");
+		web.ignoring().antMatchers("/fonts/**");
+		web.ignoring().antMatchers("/images/**");
+	}
 }
