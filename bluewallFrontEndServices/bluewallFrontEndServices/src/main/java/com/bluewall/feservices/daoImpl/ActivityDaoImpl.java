@@ -29,8 +29,6 @@ public class ActivityDaoImpl implements ActivityDao {
 	@Autowired
 	DataSource dataSource;
 
-	List<UserActivityLog> userActivityList = new ArrayList<UserActivityLog>();
-
 	/**
 	 * @param userID
 	 * @return List of UserActivityLog objects
@@ -73,7 +71,7 @@ public class ActivityDaoImpl implements ActivityDao {
 					rs.close();
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
-					e.printStackTrace();
+					log.info("Could not close result set object");
 				}
 			}
 		}

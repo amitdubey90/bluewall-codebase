@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.bluewall.feservices.service.ActivityService;
 import com.bluewall.util.bean.ActivityInfo;
@@ -28,6 +29,7 @@ public class ActivityController {
 	 */
 
 	@RequestMapping(value = "/activityLog/{userID}", method = RequestMethod.GET)
+	@ResponseBody
 	public void getActivityLog(@PathVariable("userID") int userID) {
 
 		log.info("UserActivityLog service called");
