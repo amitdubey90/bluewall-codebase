@@ -1,5 +1,6 @@
 package com.bluewall.feservices.daoImpl;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -8,7 +9,6 @@ import java.util.Calendar;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
@@ -53,6 +53,8 @@ public class UserDaoImpl implements UserDao {
 	public void createUser(UserProfile user) {
 
 		int userID;
+		ResultSet rs =null;
+		
 		Calendar calendar = Calendar.getInstance();
 		java.sql.Timestamp loginTime = new java.sql.Timestamp(calendar.getTime().getTime());
 		
@@ -62,7 +64,12 @@ public class UserDaoImpl implements UserDao {
 				+ user.getContactNumber()+","+user.getAge()+",'"+user.getGender()+"',"+user.getHeight()
 				+ "," + user.getWeight() + ",'"+user.getActivityLevel()+"','"+user.getCurrentLocation()+"')";
 		
+		Connection conn;
+
 		try {
+			conn = datasource.getConnection();
+			conn.setAutoCommit(false);
+			
 			int rowCount = datasource.getConnection().prepareStatement(insrtUserInfosql).executeUpdate();
 			System.out.println("data in userinfo detail: "+rowCount);
 			
@@ -73,7 +80,7 @@ public class UserDaoImpl implements UserDao {
 				log.info("Fail to register the user");
 			}
 			
-			ResultSet rs = datasource.getConnection().prepareStatement("select userID from UserInfo where emailID ="
+			rs = datasource.getConnection().prepareStatement("select userID from UserInfo where emailID ="
 					+ "'"+user.getEmailID()+"'").executeQuery();
 			
 			if (rs.next()){
@@ -96,8 +103,8 @@ public class UserDaoImpl implements UserDao {
 				prepStatement.setString(2, user.getPassword());
 				prepStatement.setTimestamp(3, loginTime);
 				prepStatement.setInt(4, userID);
-				int rowUpdateCount = prepStatement.executeUpdate();
-				System.out.println("data in login detail: "+rowUpdateCount);
+				prepStatement.executeUpdate();
+				conn.commit();
 			}
 			else{
 				log.info("Unable to fetch registered user");
@@ -106,11 +113,16 @@ public class UserDaoImpl implements UserDao {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} finally {
+			if (rs!=null){
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					log.info("Result set object is not closed in createUser module");
+				}
+			}
 		}
-				
-
-		// TODO Auto-generated method stub
-
 		
 	}
 

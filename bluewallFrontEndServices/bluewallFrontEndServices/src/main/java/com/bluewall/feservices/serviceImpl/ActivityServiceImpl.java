@@ -84,4 +84,11 @@ public class ActivityServiceImpl implements ActivityService {
 		return activityInfoList;
 	}
 
+	@Override
+	public void createActivity(UserActivityLog userActivity, int userId) {
+		
+		activityDao.createActivity(userActivity, userId);
+		
+	}
+
 }

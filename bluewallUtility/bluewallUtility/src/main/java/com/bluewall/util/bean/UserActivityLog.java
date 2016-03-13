@@ -8,12 +8,14 @@ import java.sql.Timestamp;
 
 public class UserActivityLog {
 	private int userID;
-	private int type;
 	private float distance;
 	private Timestamp startTime;
 	private int duration;
 	private int caloriesBurnt;
 	private String name;
+	private String MET;
+	private int activityID;
+	private String type;
 	
 	public int getUserID() {
 		return userID;
@@ -23,13 +25,6 @@ public class UserActivityLog {
 		this.userID = userID;
 	}
 	
-	public int getType() {
-		return type;
-	}
-	
-	public void setType(int type) {
-		this.type = type;
-	}
 	
 	public float getDistance() {
 		return distance;
@@ -69,6 +64,30 @@ public class UserActivityLog {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public String getMET() {
+		return MET;
+	}
+
+	public void setMET(String mET) {
+		MET = mET;
+	}
+
+	public int getActivityID() {
+		return activityID;
+	}
+
+	public void setActivityID(int activityID) {
+		this.activityID = activityID;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 	
 }

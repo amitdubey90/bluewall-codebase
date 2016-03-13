@@ -13,9 +13,14 @@ public interface ActivityService {
 	 * @param userID
 	 * @return List of UserActivityLog objects
 	 */
-	
 	public List<UserActivityLog> getUserActivityLogs(int userID);
 	
 	List<ActivityInfo> fetchUserActivityFeedFromDevice(int userId);
+	
+	/*
+	 * @param userID
+	 * @param UserActivityLog bean object
+	 */
+	public void createActivity(UserActivityLog userActivity, int userId);
 	
 }
