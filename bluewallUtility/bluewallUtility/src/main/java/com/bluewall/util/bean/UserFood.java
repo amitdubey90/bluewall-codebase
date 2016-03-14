@@ -3,7 +3,7 @@ package com.bluewall.util.bean;
 import java.sql.Timestamp;
 
 /*
- * POJO for fetching user's food log.
+ * POJO for user's food log.
  */
 
 public class UserFood {
