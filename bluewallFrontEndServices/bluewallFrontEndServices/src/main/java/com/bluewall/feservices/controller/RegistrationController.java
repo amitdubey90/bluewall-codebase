@@ -1,5 +1,6 @@
 package com.bluewall.feservices.controller;
 
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,5 +45,6 @@ public class RegistrationController {
 
 		return "deviceDashboard";
 	}
+	
 
 }

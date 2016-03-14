@@ -13,4 +13,6 @@ public class Queries {
 													+ "foodID, weightConsumed, timeConsumed, loggedFrom, calories, foodLogTime)"
 													+ " values(?, ?, ?, ?, ?, ?, ?, ?)";
 	public static final String INS_USERS = "insert into users(username, password) values(?,?)";
+	public static final String INS_USER_GOALS = "insert into UserGoal(userID, goalType, targetWeight,startDate, endDate) "
+												+ "values(?, ?, ?, ?, ?)";
 }

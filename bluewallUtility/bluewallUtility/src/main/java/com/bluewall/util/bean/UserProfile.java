@@ -1,5 +1,7 @@
 package com.bluewall.util.bean;
 
+import java.sql.Timestamp;
+
 
 public class UserProfile {
 
@@ -16,8 +18,8 @@ public class UserProfile {
 	private String currentLocation;
 	private String goalType;
 	private int targetWeight;
-	private String startDate;
-	private String endDate;
+	private Timestamp startDate;
+	private Timestamp endDate;
 
 	public String getFirstName() {
 		return firstName;
@@ -124,19 +126,19 @@ public class UserProfile {
 		this.targetWeight = targetWeight;
 	}
 
-	public String getStartDate() {
+	public Timestamp getStartDate() {
 		return startDate;
 	}
 
-	public void setStartDate(String startDate) {
+	public void setStartDate(Timestamp startDate) {
 		this.startDate = startDate;
 	}
 
-	public String getEndDate() {
+	public Timestamp getEndDate() {
 		return endDate;
 	}
 
-	public void setEndDate(String endDate) {
+	public void setEndDate(Timestamp endDate) {
 		this.endDate = endDate;
 	}
 

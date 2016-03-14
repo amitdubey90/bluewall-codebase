@@ -67,7 +67,7 @@ public class UserDaoImpl implements UserDao {
 			//conn.setAutoCommit(false);
 			
 			int rowCount = datasource.getConnection().prepareStatement(insrtUserInfosql).executeUpdate();
-			System.out.println("data in userinfo detail: "+rowCount);
+			System.out.println("data in userinfo detail");
 			
 			if (rowCount != 0){
 				log.info("User succesfully registered, Data inserted in UserInfo!");
@@ -83,17 +83,21 @@ public class UserDaoImpl implements UserDao {
 				userID = rs.getInt("userID");
 				log.info("New user registered with user id: "+userID);
 				
-				int count = datasource.getConnection().prepareStatement("insert into UserGoal(userID, goalType, targetWeight,startDate, endDate) values ("+userID+",'"+user.getGoalType()+"',"+user.getTargetWeight()+","
-								+ user.getStartDate() +","+user.getEndDate()+")").executeUpdate();
-				
-				System.out.println("data in goal detail: "+count);
-				
-				if (count != 0){
-					log.info("New user's goal information inserted successfully, Data inserted in UserGoal!");
+				//check to see if user enters a goal
+				if (user.getGoalType() != null){
+					
+					PreparedStatement preparedStatement = datasource.getConnection().prepareStatement(Queries.INS_USER_GOALS);
+					preparedStatement.setInt(1, userID);
+					preparedStatement.setString(2, user.getGoalType());
+					preparedStatement.setDouble(3, user.getTargetWeight());
+					preparedStatement.setTimestamp(4, user.getStartDate());
+					preparedStatement.setTimestamp(5, user.getEndDate());
+					preparedStatement.executeUpdate();
+					
+					log.info("User goals inserted");
+
 				}
-				else
-					log.info("Unable to add new user's goal info");
-				
+								
 				PreparedStatement prepStatement = datasource.getConnection().prepareStatement(Queries.INS_USERS);
 				prepStatement.setString(1, user.getEmailID());
 				prepStatement.setString(2, user.getPassword());
@@ -105,6 +109,7 @@ public class UserDaoImpl implements UserDao {
 			}
 			
 		} catch (SQLException e) {
+			e.printStackTrace();
 			log.info("CREATE USER SERVICE: SQL Exception");
 		} finally {
 			if (rs!=null){
