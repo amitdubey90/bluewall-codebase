@@ -2,10 +2,11 @@ package com.bluewall.feservices.dao;
 
 import java.util.List;
 
-import com.bluewall.util.bean.UserFoodLog;
+import com.bluewall.util.bean.UserFood;
 
 public interface FoodDao {
 	
-	public List<UserFoodLog> getUserFoodLog(int userID);
+	public List<UserFood> getUserFoodLog(int userID);
 	
+	public void createFoodPlate(UserFood createFood, int userID);
 }

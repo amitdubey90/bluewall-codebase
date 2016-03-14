@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.bluewall.feservices.dao.FoodDao;
 import com.bluewall.feservices.service.FoodService;
-import com.bluewall.util.bean.UserFoodLog;
+import com.bluewall.util.bean.UserFood;
 
 @Service
 public class FoodServiceImpl implements FoodService{
@@ -16,9 +16,13 @@ public class FoodServiceImpl implements FoodService{
 	FoodDao foodDao;
 	
 	@Override
-	public List<UserFoodLog> getUserFoodLog(int userID) {
-		// TODO Auto-generated method stub
+	public List<UserFood> getUserFoodLog(int userID) {
 		return foodDao.getUserFoodLog(userID);
+	}
+
+	@Override
+	public void createFoodPlate(UserFood createFood, int userID) {
+			foodDao.createFoodPlate(createFood, userID);
 	}
 	
 }

@@ -6,13 +6,16 @@ import java.sql.Timestamp;
  * POJO for fetching user's food log.
  */
 
-public class UserFoodLog {
+public class UserFood {
 	
 	private String name;
+	private String category;
+	private String manufacturer;
 	private String type;
 	private float calories;
 	private float weightConsumed;
 	private Timestamp timeConsumed;
+	private Timestamp foodLogTime;
 	
 	public String getType() {
 		return type;
@@ -52,6 +55,30 @@ public class UserFoodLog {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
+	}
+
+	public String getManufacturer() {
+		return manufacturer;
+	}
+
+	public void setManufacturer(String manufacturer) {
+		this.manufacturer = manufacturer;
+	}
+
+	public Timestamp getFoodLogTime() {
+		return foodLogTime;
+	}
+
+	public void setFoodLogTime(Timestamp foodLogTime) {
+		this.foodLogTime = foodLogTime;
 	}
 	
 } 
