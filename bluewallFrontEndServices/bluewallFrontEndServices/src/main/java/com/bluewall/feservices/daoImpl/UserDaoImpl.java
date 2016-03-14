@@ -1,10 +1,8 @@
 package com.bluewall.feservices.daoImpl;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Calendar;
 
 import javax.sql.DataSource;
 
@@ -15,6 +13,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import com.bluewall.feservices.dao.UserDao;
+import com.bluewall.feservices.util.Queries;
 import com.bluewall.util.bean.UserCredential;
 import com.bluewall.util.bean.UserProfile;
 
@@ -55,20 +54,17 @@ public class UserDaoImpl implements UserDao {
 		int userID;
 		ResultSet rs =null;
 		
-		Calendar calendar = Calendar.getInstance();
-		java.sql.Timestamp loginTime = new java.sql.Timestamp(calendar.getTime().getTime());
-		
 		String insrtUserInfosql = "insert into UserInfo(firstName, lastName, emailID, contactNumber, age, gender, height,"
 				+ " weight, activityLevel, currentLocation) "
 				+ "values ('"+user.getFirstName()+"', '"+user.getLastName()+"','"+user.getEmailID()+"'," 
 				+ user.getContactNumber()+","+user.getAge()+",'"+user.getGender()+"',"+user.getHeight()
 				+ "," + user.getWeight() + ",'"+user.getActivityLevel()+"','"+user.getCurrentLocation()+"')";
 		
-		Connection conn;
+		//Connection conn;
 
 		try {
-			conn = datasource.getConnection();
-			conn.setAutoCommit(false);
+			//conn = datasource.getConnection();
+			//conn.setAutoCommit(false);
 			
 			int rowCount = datasource.getConnection().prepareStatement(insrtUserInfosql).executeUpdate();
 			System.out.println("data in userinfo detail: "+rowCount);
@@ -89,6 +85,7 @@ public class UserDaoImpl implements UserDao {
 				
 				int count = datasource.getConnection().prepareStatement("insert into UserGoal(userID, goalType, targetWeight,startDate, endDate) values ("+userID+",'"+user.getGoalType()+"',"+user.getTargetWeight()+","
 								+ user.getStartDate() +","+user.getEndDate()+")").executeUpdate();
+				
 				System.out.println("data in goal detail: "+count);
 				
 				if (count != 0){
@@ -97,29 +94,25 @@ public class UserDaoImpl implements UserDao {
 				else
 					log.info("Unable to add new user's goal info");
 				
-				String insLoginDetailsql = "insert into LoginDetail values(?,?,?,?)";
-				PreparedStatement prepStatement = datasource.getConnection().prepareStatement(insLoginDetailsql);
+				PreparedStatement prepStatement = datasource.getConnection().prepareStatement(Queries.INS_USERS);
 				prepStatement.setString(1, user.getEmailID());
 				prepStatement.setString(2, user.getPassword());
-				prepStatement.setTimestamp(3, loginTime);
-				prepStatement.setInt(4, userID);
 				prepStatement.executeUpdate();
-				conn.commit();
+				//conn.commit();
 			}
 			else{
 				log.info("Unable to fetch registered user");
 			}
 			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			log.info("CREATE USER SERVICE: SQL Exception");
 		} finally {
 			if (rs!=null){
 				try {
 					rs.close();
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
-					log.info("Result set object is not closed in createUser module");
+					log.info("CREATE USER SERVICE: Result set object is not closed.");
 				}
 			}
 		}
