@@ -1,13 +1,18 @@
-<div class="container">
-  <div class="row row-offcanvas row-offcanvas-left">
+<span class="container">
+  <span class="row row-offcanvas row-offcanvas-left">
     <!-- include sidebar. Always include inside a row element -->
     <div ng-include src="'partials/sidebar.html'" />
-
+	<div ng-include src="'js/commons/datepicker.js'" />
     <div class="col-xs-12 col-sm-9">
       <div class="row">
         <p>Calories Summary</p>
-      </div>
-      <div class="row">
+			<div id="reportrange" class="pull-right"
+				style="background: #fff; cursor: pointer; text-align: -webkit-center; border: 2px solid #52d3aa; width: 100%; border-radius: 35px">
+				<i class="glyphicon glyphicon-calendar fa fa-calendar"></i>&nbsp; <span></span>
+				<b class="caret"></b>
+			</div>
+	  </div>
+      <!-- <div class="row">
         <p>Food Suggestions</p>
       </div>
       <div class="row">
@@ -17,7 +22,7 @@
         <div class="col-sm-4">
           <p>Nutrient chart</p>
         </div>
-      </div>
+      </div> -->
     </div>
-  </div>
-</div>
+  </span>
+</span>
