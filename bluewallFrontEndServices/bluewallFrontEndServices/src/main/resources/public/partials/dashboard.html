@@ -3,6 +3,7 @@
     <!-- include sidebar. Always include inside a row element -->
     <div ng-include src="'partials/sidebar.html'" />
 	<div ng-include src="'js/commons/datepicker.js'" />
+	<div ng-include src="'js/commons/circle.js'" />
     <div class="col-xs-12 col-sm-9">
       <div class="row">
         <p>Calories Summary</p>
@@ -11,6 +12,31 @@
 				<i class="glyphicon glyphicon-calendar fa fa-calendar"></i>&nbsp; <span></span>
 				<b class="caret"></b>
 			</div>
+			<div id="stats" class="clearfix">
+			    <div class="wrap">
+			    <div class="row">
+			      <div class="circle-container">
+			        <h3>Calories Consumed</h3>
+			        <div class="circlestat" data-dimension="200" data-text="55%" data-width="30" data-fontsize="38" data-percent="55" data-fgcolor="#61a9dc" data-bgcolor="#eee" data-fill="#ddd"></div>
+			      </div>
+			      
+			      <div class="circle-container">
+			        <h3>Calories Burnt</h3>
+			        <div class="circlestat" data-dimension="200" data-text="75%" data-width="30" data-fontsize="38" data-percent="75" data-fgcolor="#61a9dc" data-bgcolor="#eee" data-fill="#ddd"></div>
+			      </div>
+			      
+			      <div class="circle-container">
+			        <h3>Net Calories</h3>
+			        <div class="circlestat" data-dimension="200" data-text="35%" data-width="30" data-fontsize="38" data-percent="35" data-fgcolor="#61a9dc" data-bgcolor="#eee" data-fill="#ddd"></div>
+			      </div>
+			      
+			       <div class="circle-container">
+			        <h3>Calorie %</h3>
+			        <div class="circlestat" data-dimension="200" data-text="25%" data-width="30" data-fontsize="38" data-percent="35" data-fgcolor="#61a9dc" data-bgcolor="#eee" data-fill="#ddd"></div>
+			      </div>
+			    </div><!-- @end .row -->
+			    </div><!-- @end .wrap -->
+			  </div><!-- @end #stats -->
 	  </div>
       <!-- <div class="row">
         <p>Food Suggestions</p>

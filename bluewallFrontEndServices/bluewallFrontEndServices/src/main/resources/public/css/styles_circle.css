@@ -1,0 +1,17 @@
+.circle-container {
+  display: block;
+  float: left;
+  margin-right: 55px;
+  margin-bottom: 45px;
+}
+
+.circle-container h3 {
+    display: block;
+    text-align: center;
+    font-size: 20px;
+    font-family: "Source Sans Pro", Arial, sans-serif;
+    line-height: 1.4em;
+    color: #52d3aa;
+    text-shadow: 1px 1px 0 #fff;
+    margin-top: 30px;
+}
