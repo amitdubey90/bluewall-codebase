@@ -1,5 +1,6 @@
 package com.bluewall.feservices.daoImpl;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -78,25 +79,27 @@ public class FoodDaoImpl implements FoodDao{
 		
 		int foodID;
 		ResultSet rs = null;
-		//Connection conn = null;
+		Connection connection = null;
 		String sqlStatement = "insert into FoodInfo(name, category, manufacturer)"
 						+ " values('"+createFood.getName()+"', '"
 						+ createFood.getCategory()+"', '" + createFood.getManufacturer() + "')";
 		
 		
 		try {
-			//conn = dataSource.getConnection();
-			//conn.setAutoCommit(false);
-			int rowUpdated = dataSource.getConnection().prepareStatement(sqlStatement).executeUpdate();
+			connection = dataSource.getConnection();
 			
-			if (rowUpdated != 0){
+			connection.setAutoCommit(false);
+			
+			int rowUpdated = connection.prepareStatement(sqlStatement).executeUpdate();
+			
+			if (rowUpdated == 1){
 				log.info("Food plate created, Data inserted in ActivityInfo!");
 			}
 			else{
 				log.info("Fail to create food plate for the user");
 			}
 			
-			rs = dataSource.getConnection().prepareStatement("select max(foodId) as id from FoodInfo").executeQuery();
+			rs = connection.prepareStatement("select max(foodId) as id from FoodInfo").executeQuery();
 			
 			if (rs.next()){
 				foodID = rs.getInt("id");
@@ -112,15 +115,20 @@ public class FoodDaoImpl implements FoodDao{
 				preparedStatement.setFloat(7, createFood.getCalories());
 				preparedStatement.setTimestamp(8, createFood.getFoodLogTime());
 				preparedStatement.executeUpdate();
-				//conn.commit();
+				connection.commit();
 				log.info("Food plate ready for user ID: " + userID);
 			}
 			
 			
 		} catch (SQLException e) {
-			e.printStackTrace();
-			log.info("Create Food Service: SQL Exception");
-		} 
+			try {
+				connection.rollback();
+				log.info("Create Food Service: Successfully rolled back changes from the database!");
+			  } catch (SQLException e1) {
+				  log.info("Create Food Service:: Could not rollback updates " + e1.getMessage());
+			  }
+		}
+			
 		finally {
 			if (rs != null){
 				try {
@@ -129,16 +137,14 @@ public class FoodDaoImpl implements FoodDao{
 					log.info("Create Food Service: Result set object is not closed.");
 				}
 			}
-			/* if (conn != null){
+			 if (connection != null){
 				try {
-					conn.close();
+					connection.close();
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
-					e.printStackTrace();
+					log.info("Create Food Service: Error closing connection object " + e.getMessage());
 				}
-			}*/
+			}
 		}
-		
 	}
-
 }

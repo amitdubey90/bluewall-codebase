@@ -60,10 +60,10 @@ public class FoodController {
 		
 		java.util.Date date= new java.util.Date();
 		UserFood createFood = new UserFood();
-		createFood.setName("Subway");
-		createFood.setType("Sandwich");
-		createFood.setManufacturer("Subway");
-		createFood.setCategory("Subway");
+		createFood.setName("Subway2");
+		createFood.setType("Sandwich2");
+		createFood.setManufacturer("Subway2");
+		createFood.setCategory("Subway2");
 		createFood.setCalories(200);
 		createFood.setTimeConsumed(new Timestamp(date.getTime()));
 		createFood.setWeightConsumed(2);
