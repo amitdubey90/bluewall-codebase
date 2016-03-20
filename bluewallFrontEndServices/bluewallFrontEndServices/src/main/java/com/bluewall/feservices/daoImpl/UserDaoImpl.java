@@ -1,5 +1,6 @@
 package com.bluewall.feservices.daoImpl;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -52,21 +53,21 @@ public class UserDaoImpl implements UserDao {
 	public void createUser(UserProfile user) {
 
 		int userID;
-		ResultSet rs =null;
+		ResultSet rs = null;
+		Connection connection = null;
 		
 		String insrtUserInfosql = "insert into UserInfo(firstName, lastName, emailID, contactNumber, age, gender, height,"
 				+ " weight, activityLevel, currentLocation) "
 				+ "values ('"+user.getFirstName()+"', '"+user.getLastName()+"','"+user.getEmailID()+"'," 
 				+ user.getContactNumber()+","+user.getAge()+",'"+user.getGender()+"',"+user.getHeight()
 				+ "," + user.getWeight() + ",'"+user.getActivityLevel()+"','"+user.getCurrentLocation()+"')";
-		
-		//Connection conn;
 
 		try {
-			//conn = datasource.getConnection();
-			//conn.setAutoCommit(false);
+			connection = datasource.getConnection();
 			
-			int rowCount = datasource.getConnection().prepareStatement(insrtUserInfosql).executeUpdate();
+			connection.setAutoCommit(false);
+			
+			int rowCount = connection.prepareStatement(insrtUserInfosql).executeUpdate();
 			System.out.println("data in userinfo detail");
 			
 			if (rowCount != 0){
@@ -76,8 +77,9 @@ public class UserDaoImpl implements UserDao {
 				log.info("Fail to register the user");
 			}
 			
-			rs = datasource.getConnection().prepareStatement("select userID from UserInfo where emailID ="
-					+ "'"+user.getEmailID()+"'").executeQuery();
+			rs = connection.prepareStatement("select userID from UserInfo where emailID = "
+					+ "'"+user.getEmailID()+"'")
+					.executeQuery();
 			
 			if (rs.next()){
 				userID = rs.getInt("userID");
@@ -86,32 +88,37 @@ public class UserDaoImpl implements UserDao {
 				//check to see if user enters a goal
 				if (user.getGoalType() != null){
 					
-					PreparedStatement preparedStatement = datasource.getConnection().prepareStatement(Queries.INS_USER_GOALS);
+					PreparedStatement preparedStatement = connection.prepareStatement(Queries.INS_USER_GOALS);
 					preparedStatement.setInt(1, userID);
 					preparedStatement.setString(2, user.getGoalType());
 					preparedStatement.setDouble(3, user.getTargetWeight());
 					preparedStatement.setTimestamp(4, user.getStartDate());
 					preparedStatement.setTimestamp(5, user.getEndDate());
 					preparedStatement.executeUpdate();
-					
 					log.info("User goals inserted");
 
 				}
 								
-				PreparedStatement prepStatement = datasource.getConnection().prepareStatement(Queries.INS_USERS);
+				PreparedStatement prepStatement = connection.prepareStatement(Queries.INS_USERS);
 				prepStatement.setString(1, user.getEmailID());
 				prepStatement.setString(2, user.getPassword());
 				prepStatement.executeUpdate();
-				//conn.commit();
+				connection.commit();
 			}
 			else{
 				log.info("Unable to fetch registered user");
 			}
 			
 		} catch (SQLException e) {
-			e.printStackTrace();
-			log.info("CREATE USER SERVICE: SQL Exception");
-		} finally {
+			try {
+				connection.rollback();
+				log.info("Create User Service: Successfully rolled back changes from the database!");
+			  } catch (SQLException e1) {
+				  log.info("Create User Service: Could not rollback updates " + e1.getMessage());
+			  }
+		} 
+		
+		finally {
 			if (rs!=null){
 				try {
 					rs.close();
@@ -120,8 +127,14 @@ public class UserDaoImpl implements UserDao {
 					log.info("CREATE USER SERVICE: Result set object is not closed.");
 				}
 			}
+			if (connection != null){
+				try {
+					connection.close();
+				} catch (SQLException e) {
+					log.info("Create Activity Service: Error closing connection object " + e.getMessage());
+				}
+			}
 		}
-		
 	}
 
 }
