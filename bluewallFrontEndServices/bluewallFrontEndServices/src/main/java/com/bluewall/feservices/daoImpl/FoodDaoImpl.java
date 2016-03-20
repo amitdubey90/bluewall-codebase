@@ -105,7 +105,7 @@ public class FoodDaoImpl implements FoodDao{
 				foodID = rs.getInt("id");
 				log.info("New food created with food id: "+foodID);
 				
-				PreparedStatement preparedStatement = dataSource.getConnection().prepareStatement(Queries.INS_USER_FOOD_LOG);
+				PreparedStatement preparedStatement = connection.prepareStatement(Queries.INS_USER_FOOD_LOG);
 				preparedStatement.setInt(1, userID);
 				preparedStatement.setString(2, createFood.getType());
 				preparedStatement.setInt(3, foodID);
@@ -118,7 +118,6 @@ public class FoodDaoImpl implements FoodDao{
 				connection.commit();
 				log.info("Food plate ready for user ID: " + userID);
 			}
-			
 			
 		} catch (SQLException e) {
 			try {

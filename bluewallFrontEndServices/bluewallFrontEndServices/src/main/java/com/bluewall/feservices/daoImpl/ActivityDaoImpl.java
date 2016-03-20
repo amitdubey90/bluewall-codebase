@@ -1,5 +1,6 @@
 package com.bluewall.feservices.daoImpl;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -104,16 +105,19 @@ public class ActivityDaoImpl implements ActivityDao {
 		
 		int activityID;
 		ResultSet rs = null;
-		//Connection conn = null;
+		Connection connection = null;
+		
 		String sqlStatement = "insert into ActivityInfo(name, type, MET)"
 				+ " values('"+userActivity.getName()+"', '"
 				+userActivity.getType()+"', '" + userActivity.getMET() + "')";
 		
 		
 		try {
-			//conn = dataSource.getConnection();
-			//conn.setAutoCommit(false);
-			int rowUpdated = dataSource.getConnection().prepareStatement(sqlStatement).executeUpdate();
+			connection = dataSource.getConnection();
+			
+			connection.setAutoCommit(false);
+			
+			int rowUpdated = connection.prepareStatement(sqlStatement).executeUpdate();
 			
 			if (rowUpdated != 0){
 				log.info("Activity created, Data inserted in ActivityInfo!");
@@ -122,28 +126,32 @@ public class ActivityDaoImpl implements ActivityDao {
 				log.info("Fail to create activity for the user");
 			}
 			
-			rs = dataSource.getConnection().prepareStatement("select max(activityID) as id from ActivityInfo").executeQuery();
+			rs = connection.prepareStatement("select max(activityID) as id from ActivityInfo").executeQuery();
 			
 			if (rs.next()){
 				activityID = rs.getInt("id");
-				log.info("New activity created with activity id: "+activityID);
+				log.info("New activity created with activity id: " + activityID);
 				
-				PreparedStatement ps = dataSource.getConnection().prepareStatement(Queries.INS_USER_ACTIVITY_LOG);
-				ps.setInt(1, userId);
-				ps.setFloat(2, userActivity.getDistance());
-				ps.setTimestamp(3, userActivity.getStartTime());
-				ps.setInt(4, 14);
-				ps.setInt(5, userActivity.getDuration());
-				ps.setInt(6, userActivity.getCaloriesBurnt());
-				ps.setInt(7, activityID);
-				ps.executeUpdate();
-				//conn.commit();
-				log.info("Activity Successfully creates for user ID: " + userId);
+				PreparedStatement prepStatement = connection.prepareStatement(Queries.INS_USER_ACTIVITY_LOG);
+				prepStatement.setInt(1, userId);
+				prepStatement.setFloat(2, userActivity.getDistance());
+				prepStatement.setTimestamp(3, userActivity.getStartTime());
+				prepStatement.setInt(4, 14);
+				prepStatement.setInt(5, userActivity.getDuration());
+				prepStatement.setInt(6, userActivity.getCaloriesBurnt());
+				prepStatement.setInt(7, activityID);
+				prepStatement.executeUpdate();
+				connection.commit();
+				log.info("Activity Successfully created for user ID: " + userId);
 			}
 			
-			
 		} catch (SQLException e) {
-			log.info("Create Activty Service: SQL Exception");
+			try {
+				connection.rollback();
+				log.info("Create Activity Service: Successfully rolled back changes from the database!");
+			  } catch (SQLException e1) {
+				  log.info("Create Activity Service: Could not rollback updates " + e1.getMessage());
+			  }
 		} 
 		finally {
 			if (rs != null){
@@ -153,14 +161,13 @@ public class ActivityDaoImpl implements ActivityDao {
 					log.info("Create Actvity Service: Result set object is not closed.");
 				}
 			}
-			/* if (conn != null){
+			if (connection != null){
 				try {
-					conn.close();
+					connection.close();
 				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					log.info("Create Activity Service: Error closing connection object " + e.getMessage());
 				}
-			}*/
+			}
 		}
 	}
 
