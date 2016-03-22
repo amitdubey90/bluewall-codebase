@@ -16,6 +16,6 @@ public class UserConnectedDevice {
 	private int deviceID;
 	private String refreshToken;
 	private String accessToken;
-	private Date creationTime;
+	private Date expirationTime;
 
 }

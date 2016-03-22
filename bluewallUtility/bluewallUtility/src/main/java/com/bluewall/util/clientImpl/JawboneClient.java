@@ -3,6 +3,7 @@ package com.bluewall.util.clientImpl;
 import com.bluewall.util.bean.UserConnectedDevice;
 import com.bluewall.util.client.ClientInterface;
 import com.bluewall.util.common.Constants;
+import com.bluewall.util.utility.GenericUtil;
 import com.google.api.client.auth.oauth2.AuthorizationCodeTokenRequest;
 import com.google.api.client.auth.oauth2.AuthorizationRequestUrl;
 import com.google.api.client.auth.oauth2.TokenResponse;
@@ -69,6 +70,7 @@ public class JawboneClient implements ClientInterface {
 
 		userDevice.setRefreshToken(refreshToken);
 		userDevice.setAccessToken(accessToken);
+		userDevice.setExpirationTime(GenericUtil.calculateExpirationTime(obj.getLong(Constants.EXPIRES_IN)));
 		userDevice.setDeviceID(11);
 		return userDevice;
 	}

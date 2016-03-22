@@ -15,6 +15,7 @@ import org.json.JSONObject;
 import com.bluewall.util.bean.UserConnectedDevice;
 import com.bluewall.util.client.ClientInterface;
 import com.bluewall.util.common.Constants;
+import com.bluewall.util.utility.GenericUtil;
 import com.google.api.client.auth.oauth2.AuthorizationCodeTokenRequest;
 import com.google.api.client.auth.oauth2.AuthorizationRequestUrl;
 import com.google.api.client.auth.oauth2.TokenResponse;
@@ -61,6 +62,7 @@ public class FitbitClient implements ClientInterface {
 		log.info("Fetching Access Token for Fitbit user");
 		accessToken = obj.getString(Constants.ACCESS_TOKEN_KEY);
 		log.debug("Access token fetched {}", accessToken);
+		userDevice.setExpirationTime(GenericUtil.calculateExpirationTime(obj.getLong(Constants.EXPIRES_IN)));
 		userDevice.setRefreshToken(refreshToken);
 		userDevice.setAccessToken(accessToken);
 		userDevice.setDeviceID(10);
@@ -106,12 +108,15 @@ public class FitbitClient implements ClientInterface {
 	@Override
 	public String getRecentUserActivity(String accessToken) {
 		try {
-			 String response =
-			 fitbitTarget.path(Constants.FITBIT_RECENT_ACTIVITY_API_PATH)
-			 .request(MediaType.APPLICATION_JSON_TYPE)
-.header("Authorization", "Bearer " + accessToken)
+			String response = fitbitTarget.path(Constants.FITBIT_RECENT_ACTIVITY_API_PATH)
+					.request(MediaType.APPLICATION_JSON_TYPE).header("Authorization", "Bearer " + accessToken)
 					.get(String.class);
-			//String response = "[ { \"activityId\":1030, \"calories\":1721, \"description\":\"Moderate - 12 to 13.9mph\", \"distance\":1, \"duration\":3723000, \"name\":\"Bicycling\" }, { \"activityId\":12030, \"calories\":1124, \"description\":\"Running - 5 mph (12 min/mile)\", \"distance\":2, \"duration\":7322000, \"name\":\"Running\" } ]";
+			// String response = "[ { \"activityId\":1030, \"calories\":1721,
+			// \"description\":\"Moderate - 12 to 13.9mph\", \"distance\":1,
+			// \"duration\":3723000, \"name\":\"Bicycling\" }, {
+			// \"activityId\":12030, \"calories\":1124,
+			// \"description\":\"Running - 5 mph (12 min/mile)\",
+			// \"distance\":2, \"duration\":7322000, \"name\":\"Running\" } ]";
 			return response;
 		} catch (Exception e) {
 			log.error("An Exception has occurred in getRecentUserActivity, {}", e);

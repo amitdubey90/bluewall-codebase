@@ -57,5 +57,6 @@ public class Constants {
 	/* DATE FORMATS*/
 	
 	public static final String SIMPLE_DATE_FORMAT="dd-MM-yyyy hh:mm:ss";
+	public static final String EXPIRES_IN = "expires_in";
 	
 }
