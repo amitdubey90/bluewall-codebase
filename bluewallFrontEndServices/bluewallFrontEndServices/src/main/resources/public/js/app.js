@@ -31,7 +31,8 @@ app.config([
     })
     .state('userDashboard', {
       url: '/user/dashboard',
-      templateUrl: 'partials/dashboard.html'
+      templateUrl: 'partials/dashboard.html',
+      controller: 'userDashboardController'
     })
     .state('haha', {
       url: '/haha',
