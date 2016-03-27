@@ -1,6 +1,8 @@
 package com.bluewall.feservices.controller;
 
 import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -53,22 +56,16 @@ public class FoodController {
 	
 	@RequestMapping(value = "/createFoodPlate")
 	@ResponseBody
-	public void createFoodPlate(){
+	public void createFoodPlate(@RequestBody UserFood food) throws ParseException{
 		
 		//fetch user id from session
 		int userID = 1;
 		
 		java.util.Date date= new java.util.Date();
-		UserFood createFood = new UserFood();
-		createFood.setName("Subway2");
-		createFood.setType("Sandwich2");
-		createFood.setManufacturer("Subway2");
-		createFood.setCategory("Subway2");
-		createFood.setCalories(200);
-		createFood.setTimeConsumed(new Timestamp(date.getTime()));
-		createFood.setWeightConsumed(2);
-		createFood.setFoodLogTime(new Timestamp(date.getTime()));
-		foodService.createFoodPlate(createFood, userID);
+		
+		//TODO: check timeConsumed date
+		food.setFoodLogTime(new Timestamp(date.getTime()));
+		foodService.createFoodPlate(food, userID);
 	}
 	
 }

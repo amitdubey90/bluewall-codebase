@@ -1,4 +1,4 @@
-var app = angular.module('eatRightApp',['ui.router', 'oc.lazyLoad']);
+var app = angular.module('eatRightApp',['ui.router', 'oc.lazyLoad','ui-rangeSlider']);
 
 app.config([
   '$stateProvider',
@@ -33,6 +33,11 @@ app.config([
       url: '/user/dashboard',
       templateUrl: 'partials/dashboard.html',
       controller: 'userDashboardController'
+    })
+     .state('getFoodLogForm', {
+      url: '/getFoodLogForm',
+      templateUrl: 'partials/logFood.html',
+      controller: 'logFoodController'
     })
     .state('haha', {
       url: '/haha',

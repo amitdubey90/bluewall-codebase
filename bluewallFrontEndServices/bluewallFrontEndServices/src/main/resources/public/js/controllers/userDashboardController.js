@@ -1,4 +1,4 @@
-app.controller('userDashboardController', function($scope, $ocLazyLoad, $state,userDashboardService) {
+app.controller('userDashboardController', function($scope,userDashboardService) {
 	console.log("In userDashboardController");
 	
 	 userDashboardService.populateUserActivityFeed().then(function(activityFeed){

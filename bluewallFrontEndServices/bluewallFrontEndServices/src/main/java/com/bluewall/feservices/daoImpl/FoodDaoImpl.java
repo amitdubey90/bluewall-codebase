@@ -80,6 +80,7 @@ public class FoodDaoImpl implements FoodDao{
 		int foodID;
 		ResultSet rs = null;
 		Connection connection = null;
+		//TODO: check if we need to insert in this table.
 		String sqlStatement = "insert into FoodInfo(name, category, manufacturer)"
 						+ " values('"+createFood.getName()+"', '"
 						+ createFood.getCategory()+"', '" + createFood.getManufacturer() + "')";
@@ -111,6 +112,7 @@ public class FoodDaoImpl implements FoodDao{
 				preparedStatement.setInt(3, foodID);
 				preparedStatement.setFloat(4, createFood.getWeightConsumed());
 				preparedStatement.setTimestamp(5, createFood.getTimeConsumed());
+				//TODO: put a check to identify user's device
 				preparedStatement.setInt(6, 14);
 				preparedStatement.setFloat(7, createFood.getCalories());
 				preparedStatement.setTimestamp(8, createFood.getFoodLogTime());
