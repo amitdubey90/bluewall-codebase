@@ -9,10 +9,10 @@ public class Queries {
 	public static final String INS_USER_ACTIVITY_LOG = "insert into ActivityLog(userID, distance, "
 														+ "startTime, loggedFrom, duration, caloriesBurnt, activityID)"
 														+ " values(?, ?, ?, ?, ?, ?, ?)";
-	public static final String INS_USER_FOOD_LOG = "insert into FoodLog(userID, type, "
-													+ "foodID, weightConsumed, timeConsumed, loggedFrom, calories, foodLogTime)"
-													+ " values(?, ?, ?, ?, ?, ?, ?, ?)";
+	public static final String INS_USER_FOOD_LOG = "insert into FoodLog(userID, type, foodID, weightConsumed, loggedFrom, calories, foodLogTime)"
+													+ " values(?, ?, ?, ?, ?, ?, ?)";
 	public static final String INS_USERS = "insert into users(username, password) values(?,?)";
 	public static final String INS_USER_GOALS = "insert into UserGoal(userID, goalType, targetWeight,startDate, endDate) "
 												+ "values(?, ?, ?, ?, ?)";
+	public static final String GET_FOODID = "select foodId from FoodInfo";
 }

@@ -1,9 +1,10 @@
 package com.bluewall.feservices.controller;
 
-import java.sql.Timestamp;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import lombok.extern.slf4j.Slf4j;
@@ -34,7 +35,7 @@ public class FoodController {
 	@RequestMapping(value = "/foodLog/{userID}", method = RequestMethod.GET)
 	@ResponseBody
 	public void getUserFoodLog(@PathVariable("userID") int userID){
-		
+					
 			List<UserFood> userFoodLogList = new ArrayList<UserFood>();
 			
 			log.info("User food log service called");
@@ -54,17 +55,16 @@ public class FoodController {
 	 * create food logs for the user
 	 */
 	
-	@RequestMapping(value = "/createFoodPlate")
+	@RequestMapping(value = "/createFoodPlate", method = RequestMethod.POST, consumes="application/json")
 	@ResponseBody
 	public void createFoodPlate(@RequestBody UserFood food) throws ParseException{
 		
 		//fetch user id from session
 		int userID = 1;
 		
-		java.util.Date date= new java.util.Date();
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		
-		//TODO: check timeConsumed date
-		food.setFoodLogTime(new Timestamp(date.getTime()));
+		food.setFoodLogTime(dateFormat.format(new Date()));
 		foodService.createFoodPlate(food, userID);
 	}
 	

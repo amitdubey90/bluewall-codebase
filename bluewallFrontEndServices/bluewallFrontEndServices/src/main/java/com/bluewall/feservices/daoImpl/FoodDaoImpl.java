@@ -80,54 +80,36 @@ public class FoodDaoImpl implements FoodDao{
 		int foodID;
 		ResultSet rs = null;
 		Connection connection = null;
-		//TODO: check if we need to insert in this table.
-		String sqlStatement = "insert into FoodInfo(name, category, manufacturer)"
-						+ " values('"+createFood.getName()+"', '"
-						+ createFood.getCategory()+"', '" + createFood.getManufacturer() + "')";
+		
+		String sqlStatement = Queries.GET_FOODID + " where name = '" + createFood.getName() + "'";
 		
 		
 		try {
 			connection = dataSource.getConnection();
 			
-			connection.setAutoCommit(false);
-			
-			int rowUpdated = connection.prepareStatement(sqlStatement).executeUpdate();
-			
-			if (rowUpdated == 1){
-				log.info("Food plate created, Data inserted in ActivityInfo!");
-			}
-			else{
-				log.info("Fail to create food plate for the user");
-			}
-			
-			rs = connection.prepareStatement("select max(foodId) as id from FoodInfo").executeQuery();
+			rs = connection.prepareStatement(sqlStatement).executeQuery();
 			
 			if (rs.next()){
-				foodID = rs.getInt("id");
-				log.info("New food created with food id: "+foodID);
+				foodID = rs.getInt("foodId");
+				log.info("Food id for " + createFood.getName()+ " : " + foodID);
 				
 				PreparedStatement preparedStatement = connection.prepareStatement(Queries.INS_USER_FOOD_LOG);
 				preparedStatement.setInt(1, userID);
 				preparedStatement.setString(2, createFood.getType());
 				preparedStatement.setInt(3, foodID);
 				preparedStatement.setFloat(4, createFood.getWeightConsumed());
-				preparedStatement.setTimestamp(5, createFood.getTimeConsumed());
 				//TODO: put a check to identify user's device
-				preparedStatement.setInt(6, 14);
-				preparedStatement.setFloat(7, createFood.getCalories());
-				preparedStatement.setTimestamp(8, createFood.getFoodLogTime());
+				preparedStatement.setInt(5, 14);
+				preparedStatement.setFloat(6, createFood.getCalories());
+				preparedStatement.setString(7, createFood.getFoodLogTime());
 				preparedStatement.executeUpdate();
-				connection.commit();
-				log.info("Food plate ready for user ID: " + userID);
+
+				log.info("Food logged for user ID: " + userID);
 			}
 			
 		} catch (SQLException e) {
-			try {
-				connection.rollback();
-				log.info("Create Food Service: Successfully rolled back changes from the database!");
-			  } catch (SQLException e1) {
-				  log.info("Create Food Service:: Could not rollback updates " + e1.getMessage());
-			  }
+			log.info("Create Food Service:: Could not rollback updates " + e.getMessage());
+			  
 		}
 			
 		finally {

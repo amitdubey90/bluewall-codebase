@@ -15,7 +15,7 @@ public class UserFood {
 	private float calories;
 	private float weightConsumed;
 	private Timestamp timeConsumed;
-	private Timestamp foodLogTime;
+	private String foodLogTime;
 	
 	public String getType() {
 		return type;
@@ -73,11 +73,11 @@ public class UserFood {
 		this.manufacturer = manufacturer;
 	}
 
-	public Timestamp getFoodLogTime() {
+	public String getFoodLogTime() {
 		return foodLogTime;
 	}
 
-	public void setFoodLogTime(Timestamp foodLogTime) {
+	public void setFoodLogTime(String foodLogTime) {
 		this.foodLogTime = foodLogTime;
 	}
 	
