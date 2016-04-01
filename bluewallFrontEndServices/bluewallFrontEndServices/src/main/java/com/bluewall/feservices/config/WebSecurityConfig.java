@@ -10,6 +10,8 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
+import com.bluewall.feservices.serviceImpl.CustomUserDetailService;
+
 
 @Configuration
 @EnableWebSecurity
@@ -17,6 +19,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     
 	 @Autowired
 	 DataSource dataSource;
+	 
+	 
 	 
 	 @Override
 		protected void configure(HttpSecurity http) throws Exception { 
@@ -34,12 +38,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		}
 	 
 	 @Autowired
-		public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+		public void configure(AuthenticationManagerBuilder auth) throws Exception {
 			auth.jdbcAuthentication().dataSource(dataSource)
 					.usersByUsernameQuery("select username,password, enabled from users where username=?")
 					.authoritiesByUsernameQuery("select username, role from user_roles where username=?");
+			auth.userDetailsService(userDetailsServiceBean());
 		}
 
+
+	    @Override
+	    public CustomUserDetailService userDetailsServiceBean() {
+	        return new CustomUserDetailService();
+	    }
+	 
 	//To disable mime type checking on public resources
 	@Override
 	public void configure(WebSecurity web) throws Exception {

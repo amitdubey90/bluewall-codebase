@@ -1,4 +1,4 @@
-var app = angular.module('eatRightApp',['ui.router', 'oc.lazyLoad','ui-rangeSlider']);
+var app = angular.module('eatRightApp',['ui.router', 'oc.lazyLoad']);
 
 app.config([
   '$stateProvider',
@@ -39,6 +39,11 @@ app.config([
       templateUrl: 'partials/logFood.html',
       controller: 'logFoodController'
     })
+    .state('getActivityLogForm', {
+        url: '/getActivityLogForm',
+        templateUrl: 'partials/logActivity.html',
+        controller: 'logActivityController'
+      })
     .state('haha', {
       url: '/haha',
       templateUrl: 'partials/haha.html'
@@ -49,3 +54,5 @@ app.config([
     $httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
 
 }]);
+
+
