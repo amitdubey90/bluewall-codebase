@@ -6,16 +6,12 @@ import java.util.Map;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.bluewall.feservices.bean.UserInfo;
 import com.bluewall.feservices.service.ActivityService;
 import com.bluewall.util.bean.ActivityInfo;
 import com.bluewall.util.bean.UserActivityLog;
@@ -54,13 +50,10 @@ public class ActivityController {
 
 	@RequestMapping("/getRecentActivity")
 	@ResponseBody
-	
 	public List<ActivityInfo> getUserActivityFeed() {
 
 		// fetch the user id from the session
 		int userId = 1;
-		
-		//System.out.println("******************"+info.getEmailID()+"******************");
 		List<ActivityInfo> recentActivityList = activityService.fetchUserActivityFeedFromDevice(userId);
 
 		return recentActivityList;
@@ -79,7 +72,7 @@ public class ActivityController {
 		activityLog.setName("FirstActivity");
 		activityLog.setType("firstType");
 		activityLog.setDistance(66);
-	//	activityLog.setDuration(4); send duration at back
+		activityLog.setDuration(4);
 		activityLog.setStartTime(new Timestamp(date.getTime()));
 		activityLog.setCaloriesBurnt(2100);
 		
