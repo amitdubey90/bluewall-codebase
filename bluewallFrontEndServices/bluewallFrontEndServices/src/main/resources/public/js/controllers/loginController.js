@@ -12,7 +12,7 @@ app.controller('loginController', function($scope, $rootScope, $http, $state, $l
     + btoa($scope.credentials.username + ":" + $scope.credentials.password)
   } : {};
 
-  $http.get('user', {headers : headers}).success(function(data) {
+  $http.post('user', {headers : headers}).success(function(data) {
     console.log("Data "+ JSON.stringify(data));
     if (data.name) {
       console.log("authenticating success!!!! "+ data)

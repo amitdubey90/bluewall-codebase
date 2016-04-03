@@ -1,5 +1,6 @@
 package com.bluewall.util.bean;
 
+import java.sql.Date;
 import java.sql.Timestamp;
 
 /*
@@ -9,13 +10,11 @@ import java.sql.Timestamp;
 public class UserFood {
 	
 	private String name;
-	private String category;
-	private String manufacturer;
 	private String type;
 	private float calories;
 	private float weightConsumed;
-	private Timestamp timeConsumed;
-	private String foodLogTime;
+	private Date foodLogTime;
+	private Timestamp logTime;
 	
 	public String getType() {
 		return type;
@@ -41,12 +40,16 @@ public class UserFood {
 		this.weightConsumed = weightConsumed;
 	}
 	
-	public Timestamp getTimeConsumed() {
-		return timeConsumed;
-	}
 	
-	public void setTimeConsumed(Timestamp timeConsumed) {
-		this.timeConsumed = timeConsumed;
+
+	
+
+	public Date getFoodLogTime() {
+		return foodLogTime;
+	}
+
+	public void setFoodLogTime(Date foodLogTime) {
+		this.foodLogTime = foodLogTime;
 	}
 
 	public String getName() {
@@ -57,28 +60,14 @@ public class UserFood {
 		this.name = name;
 	}
 
-	public String getCategory() {
-		return category;
+	public Timestamp getLogTime() {
+		return logTime;
 	}
 
-	public void setCategory(String category) {
-		this.category = category;
+	public void setLogTime(Timestamp logTime) {
+		this.logTime = logTime;
 	}
 
-	public String getManufacturer() {
-		return manufacturer;
-	}
-
-	public void setManufacturer(String manufacturer) {
-		this.manufacturer = manufacturer;
-	}
-
-	public String getFoodLogTime() {
-		return foodLogTime;
-	}
-
-	public void setFoodLogTime(String foodLogTime) {
-		this.foodLogTime = foodLogTime;
-	}
+	
 	
 } 

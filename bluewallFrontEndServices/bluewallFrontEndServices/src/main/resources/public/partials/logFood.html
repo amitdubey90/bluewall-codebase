@@ -1,74 +1,84 @@
 <div class="container">
 	<div class="row row-offcanvas row-offcanvas-left">
-		<!-- include sidebar. Always include inside a row element -->
 		<div ng-include src="'partials/sidebar.html'" />
-		<div ng-include src="'js/commons/slider.js'"/>
-		<!-- start -->
+		<div ng-include src="'js/commons/autocomplete.js'" />
+		<div ng-include src="'js/commons/futureDateBlocker.js'" />
+		<div ng-include src="'js/commons/calculateCalories.js'" />
+		<!-- <div ng-include src="'js/commons/bootstrap-select.js'"/> -->
+		<div ng-include src="'js/commons/select-dropdown.js'"/> 
+		
 		
 		<section>
-		      <div class="col-sm-8">
-		        
-				<div id="legend">
-					      <legend class=""><H2><strong>Log Food</strong></H2></legend>
-				</div>
-				<form class="form-horizontal" ng-submit="logFood()">
-			  	 <div class="form-group">
-			        <label class="col-xs-2 control-label" for="foodName">Food Name</label>
-			        <div class="col-xs-8">
-			            <input type="text" id="foodName" class="form-control" placeholder="" ng-model="food.name" required>
-			            <span class="help-block">Name of Food item consumed</span>
-			        </div>
-			    </div>			
-			    <div class="form-group">
-			        <label class="col-xs-2 control-label" for="foodType">Food Type</label>
-			        <div class="col-xs-10">
-			            <select name="foodType" id="foodType" class="form-control" placeholder="" ng-model="food.type" required>
-			            <option value="">Please select</option>
-			            <option>Breakfast</option>
-    					<option>Lunch</option>
-  						<option>Dinner</option>
-   				 		<option>Snacks</option>
-			            </select>
-			            <span class="help-block">Type of Food item consumed</span>
-			        </div>
-			    </div>	
-			    
-				<div class="form-group">
-			        <label class="col-xs-2 control-label" for="foodCalorie">Calories</label>
-				       <div class="col-xs-6">
-				       		<div range-slider min="0" max="1500" model-max="userCal.max"  pin-handle="min"></div>
-				       </div>
-			        <div class="help-block col-xs-6">Calories in food item</div>
-			        
-			    </div>
-			    
-			    <div class="form-group">
-			        <label class="col-xs-2 control-label" for="wtConsumed" required>Weight Consumed</label>
-				       	<div class="col-xs-6">
-				        	<div range-slider min="0" max="100" model-max="userWt.max"  pin-handle="min"></div>
-				        </div>	
-			        <div class="help-block col-xs-6">Weight of food item</div>
-			    </div>
-			    <div class="form-group">
-			        <label class="col-xs-2 control-label" for="time">Time</label>
-				        <div class="col-xs-6">
-		                    <input type='datetime-local' class="form-control" id="time" ng-model="food.timeConsumed" required/>
-					        <div class="help-block">Time when food item was consumed</div> 
-				       </div>
-			    </div>
-			<button class="btn btn-primary btn-block" type="submit"><strong>Log</strong></button>
+			<div class="col-xs-8">
+				<H2>
+					<center><strong>Log Food</strong></center>
+				</H2>
+			</div>
+
+			<form class="form-horizontal" ng-submit="logFood(food)">
+				<div class="row">
+					<div class="col-xs-8">
+							<label for="foodName">Food Name</label><span class="mandatory">*</span><a target="_blank" href="#" title="Name of the food. Eg.Sandwich"><img src="images/help.png" style="height: 26x;width: 26px;"/></a>
+							<input type="text" id="foodName"
+								class="form-control search" placeholder="What did you eat?" ng-model="food.name"
+								required /> 
+					</div>
+				
+				<div class="row">	
+					<div class="col-xs-3">
+							<label for="date">Date</label><span class="mandatory">*</span><a target="_blank" href="#" title="Date when food was consumed Eg. 03/10/2016"><img src="images/help.png" style="height: 3%;width: 9%;"/></a>
+							<input type='date' placeholder="When did you eat?" id="textDate"
+								class="form-control" ng-model="food.foodLogTime" value="{{food.foodLogTime}}" />
+							
+					</div>
+					<div class="col-xs-2"></div>
+					<div class="col-xs-3" style="margin-left: -1%;">
+					<label for="foodType">Food Type</label><span class="mandatory">*</span><a target="_blank" href="#" title="Type of food. Eg.Dinner"><img src="images/help.png" style="height: 3%;width: 9%;"/></a> 
+							       <select class="selectpicker form-control" id="foodType" name="foodType" ng-model="food.type"  required>
+							       <option value="">What type of meal?</option>
+							        <option>Breakfast</option>
+							        <option>Lunch</option>
+							        <option>Dinner</option>
+							        <option>Snacks</option>
+							      </select>
+					</div>
+					</div>
+					<div class="row">
+					<div class="col-xs-3"></div>
+					<div class="col-xs-3" style="margin-left:1%">
+						<label for="wtConsumed" required>Weight</label><span class="mandatory">*</span><a target="_blank" href="#" title="Weight in grams. Eg.100 gms"><img src="images/help.png" style="height: 3%;width: 9%;"/></a>
+						<div class=input-group>
+							<input type="text" id="foodWeight" ng-model="food.weightConsumed" class="form-control" placeholder="Weight of the food" value="100" required></input>
+							<span class="input-group-addon">Grams</span>
+						</div>
+					</div>
+					<div class="col-xs-2"></div>
+					<div class="col-xs-3" style="margin-left:-1%">
+						<label for="foodCalorie">Calories</label><span class="mandatory"></span><a target="_blank" href="#" title="Total calories consumed. Eg. 400 Kcals"><img src="images/help.png" style="height: 3%;width: 9%;"/></a>
+						<div class="input-group">
+							<input type="text" id="foodCalories" ng-model="food.calories" class="form-control" readonly required></input>
+							<span class="input-group-addon">Kcals</span>
+						</div>
+					</div>
+				
+					</div>
+					</div>
+					<br>
+					<div class="row">
+						<div class="col-xs-3"></div>
+						<div class="col-xs-8">
+							<div class="form-group">
+							<center>
+								<button class="btn btn-primary btn-md btn-block" type="submit" style="margin-left: 1.5%;">
+									<strong>Log</strong>
+								</button>
+								</center>
+							</div>
+						</div>
+					</div>
+					
+				
 			</form>
-		    </div>       
-		          
-		        
-		   
-		   <!-- /container -->
 		</section>
-		<!-- end -->
-		
-		
-		
-		
-		
-		</div>
-		</div>
+	</div>
+</div>

@@ -54,15 +54,9 @@ public class ActivityServiceImpl implements ActivityService {
 				} else if (credentials.getDeviceID() == 11) {
 					deviceClient = DeviceClientFactory.getClientInstance(DeviceType.JAWBONE);
 				}
-				// String recentActivity = "[ { \"activityId\":1030,
-				// \"calories\":1721, \"description\":\"Moderate - 12 to
-				// 13.9mph\", \"distance\":1, \"duration\":3723000,
-				// \"name\":\"Bicycling\" }, { \"activityId\":12030,
-				// \"calories\":1124, \"description\":\"Running - 5 mph (12
-				// min/mile)\", \"distance\":2, \"duration\":7322000,
-				// \"name\":\"Running\" } ]";
+				 String recentActivity = "[ { \"activityId\":1030, \"calories\":1721, \"description\":\"Moderate - 12 to 13.9mph\", \"distance\":1, \"duration\":3723000, \"name\":\"Bicycling\" }, { \"activityId\":12030, \"calories\":1124, \"description\":\"Running - 5 mph (12 min/mile)\", \"distance\":2, \"duration\":7322000, \"name\":\"Running\" } ]";
 				
-				String recentActivity = deviceClient.getRecentUserActivity(credentials.getAccessToken());
+			//	String recentActivity = deviceClient.getRecentUserActivity(credentials.getAccessToken());
 				if (null != recentActivity) {
 					JSONArray activityArrObj = new JSONArray(recentActivity);
 					for (Object jsonObj : activityArrObj) {
