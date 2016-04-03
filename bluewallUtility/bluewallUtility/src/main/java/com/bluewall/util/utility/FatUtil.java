@@ -15,12 +15,12 @@ public class FatUtil {
 	 *  
 	 */
 	
-	public static int calculateDailyFatNeedsInGrams(float dailyCalorieNeed){
+	public int calculateDailyFatNeedsInGrams(float dailyCalorieNeed){
 		
 		return (int)Math.round((calculateCaloriesFromFat(dailyCalorieNeed)) / 9);
 	}
 	
-	public static double calculateCaloriesFromFat(float dailyCalorieNeed){
+	public double calculateCaloriesFromFat(float dailyCalorieNeed){
 		return dailyCalorieNeed * 0.30;
 	}
 }
