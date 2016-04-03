@@ -21,6 +21,8 @@ public class FatUtil {
 	}
 	
 	public double calculateCaloriesFromFat(float dailyCalorieNeed){
+		
 		return dailyCalorieNeed * 0.30;
+		
 	}
 }
