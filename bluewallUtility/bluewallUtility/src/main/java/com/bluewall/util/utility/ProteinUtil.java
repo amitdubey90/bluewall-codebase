@@ -5,8 +5,9 @@ public class ProteinUtil {
 	/**
 	 * Calculates daily protein intake based on daily calorie
 	 *  
-	 *  1gm = 4 calories
-	 *  Protein is 15% of daily calorie need
+	 * Calculation is based on following statistics:
+	 * 	1. 1gm = 4 calories
+	 * 	2. Protein is 15% of daily calorie need
 	 *  
 	 * @param dailyCalorieNeed
 	 * 

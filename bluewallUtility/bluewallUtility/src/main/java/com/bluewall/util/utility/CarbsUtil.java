@@ -6,8 +6,9 @@ public class CarbsUtil {
 	 * 
 	 * Calculates daily carbohydrates intake based on daily calorie
 	 * 
-	 * 1gm = 4 calories
-	 * Carbohydrates is 55% of daily calorie need
+	 * Calculation is based on following statistics:
+	 * 	1. 1gm = 4 calories
+	 * 	2. Carbohydrates is 55% of daily calorie need
 	 * 
 	 * @param dailyCalorieNeed
 	 * 

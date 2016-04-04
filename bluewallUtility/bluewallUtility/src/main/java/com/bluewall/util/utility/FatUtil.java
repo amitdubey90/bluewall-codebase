@@ -11,6 +11,7 @@ public class FatUtil {
 	 * 	2. 1 gram of fat = 9 calories 
 	 * 
 	 * @param dailyCalorieNeed
+	 * 
 	 * @return Fat requirement in grams based on daily calorie requirement.
 	 * @return Fat requirement in calories.
 	 */
