@@ -11,18 +11,20 @@ public class FatUtil {
 	 * 	2. 1 gram of fat = 9 calories 
 	 * 
 	 * @param dailyCalorieNeed
+	 * 
 	 * @return Fat requirement in grams based on daily calorie requirement.
-	 *  
+	 * @return Fat requirement in calories.
 	 */
 	
-	public int calculateDailyFatNeedsInGrams(float dailyCalorieNeed){
+	public double calculateDailyFatInGrams(double dailyCalorieNeed){
 		
-		return (int)Math.round((calculateCaloriesFromFat(dailyCalorieNeed)) / 9);
+		return ((calculateDailyProteinInCalories(dailyCalorieNeed)) / 9);
 	}
 	
-	public double calculateCaloriesFromFat(float dailyCalorieNeed){
+	public double calculateDailyProteinInCalories(double dailyCalorieNeed){
 		
-		return dailyCalorieNeed * 0.30;
+		return (dailyCalorieNeed * 0.30);
 		
 	}
+	
 }

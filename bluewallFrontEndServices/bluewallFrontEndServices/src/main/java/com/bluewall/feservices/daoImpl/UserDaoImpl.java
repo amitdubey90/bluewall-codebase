@@ -1,24 +1,22 @@
 package com.bluewall.feservices.daoImpl;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-
-import javax.sql.DataSource;
-
+import com.bluewall.feservices.bean.UserPrincipal;
+import com.bluewall.feservices.dao.UserDao;
+import com.bluewall.feservices.util.Queries;
+import com.bluewall.util.bean.UserCredential;
+import com.bluewall.util.bean.UserProfile;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
-import com.bluewall.feservices.dao.UserDao;
-import com.bluewall.feservices.util.Queries;
-import com.bluewall.util.bean.UserCredential;
-import com.bluewall.util.bean.UserProfile;
-
-import lombok.extern.slf4j.Slf4j;
+import javax.sql.DataSource;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 @Configuration
 @Component
@@ -30,24 +28,6 @@ import lombok.extern.slf4j.Slf4j;
 public class UserDaoImpl implements UserDao {
 	@Autowired
 	DataSource datasource;
-
-	@Override
-	public UserCredential getUserConnectionCredsById(int userId, int providerId) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void updateUserCredentials(UserCredential newUserCreds) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void insertUserCredentials(UserCredential newUserCreds) {
-		// TODO Auto-generated method stub
-
-	}
 
 	@Override
 	public void createUser(UserProfile user) {
@@ -135,6 +115,35 @@ public class UserDaoImpl implements UserDao {
 				}
 			}
 		}
+	}
+
+	@Override
+	public UserPrincipal loadUserByName(String emailID) {
+		log.info("loadUserByName started");
+		UserPrincipal userPrincipal = null;
+
+		try (PreparedStatement pst = datasource.getConnection().prepareStatement(Queries.GET_USER_PRINCIPAL)) {
+			int colId = 1;
+
+			pst.setString(colId++, emailID);
+
+
+			ResultSet rs = pst.executeQuery();
+			if (rs.next()) {
+				String firstName = rs.getString("firstName");
+				String lastName = rs.getString("lastName");
+
+				int userId = rs.getInt("userId");
+
+				userPrincipal = new UserPrincipal(emailID,firstName,
+						lastName, userId);
+
+			}
+			log.info("loadUserByName successful");
+		} catch (SQLException e) {
+			log.error("SqlException in loadUserByName {}", e);
+		}
+		return userPrincipal;
 	}
 
 }

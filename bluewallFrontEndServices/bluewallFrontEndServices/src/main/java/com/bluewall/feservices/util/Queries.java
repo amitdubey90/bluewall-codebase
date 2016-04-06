@@ -15,4 +15,7 @@ public class Queries {
 	public static final String INS_USER_GOALS = "insert into UserGoal(userID, goalType, targetWeight,startDate, endDate) "
 												+ "values(?, ?, ?, ?, ?)";
 	public static final String GET_FOODID = "select foodId from FoodInfo";
+
+
+	public static final String GET_USER_PRINCIPAL = "SELECT userID, firstName, lastName, emailID FROM UserInfo where emailID = ?";
 }
