@@ -15,12 +15,12 @@ public class ProteinUtil {
 	 * @return Protein in calories
 	 */
 	
-	public double calculateDailyProteinInGrams(double dailyCalorieNeed){
+	public static double calculateDailyProteinInGrams(double dailyCalorieNeed){
 			
 		return ((calculateDailyProteinInCalories(dailyCalorieNeed)) / 4) ;
 	}
 	
-	public double calculateDailyProteinInCalories(double dailyCalorieNeed){
+	public static double calculateDailyProteinInCalories(double dailyCalorieNeed){
 		
 		return (dailyCalorieNeed * 0.15) ;
 	}

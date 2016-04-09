@@ -1,6 +1,6 @@
 package com.bluewall.util.bean;
 
-import java.sql.Timestamp;
+import java.sql.Date;
 
 
 public class UserProfile {
@@ -12,14 +12,14 @@ public class UserProfile {
 	private String contactNumber;
 	private int age;
 	private String gender;
-	private int height;
-	private int weight;
+	private double height;
+	private double weight;
 	private String activityLevel;
 	private String currentLocation;
 	private String goalType;
-	private int targetWeight;
-	private Timestamp startDate;
-	private Timestamp endDate;
+	private double targetWeight;
+	private Date startDate;
+	private Date endDate;
 
 	public String getFirstName() {
 		return firstName;
@@ -77,20 +77,20 @@ public class UserProfile {
 		this.gender = gender;
 	}
 
-	public int getHeight() {
+	public double getHeight() {
 		return height;
 
 	}
 
-	public void setHeight(int height) {
+	public void setHeight(double height) {
 		this.height = height;
 	}
 
-	public int getWeight() {
+	public double getWeight() {
 		return weight;
 	}
 
-	public void setWeight(int weight) {
+	public void setWeight(double weight) {
 		this.weight = weight;
 	}
 
@@ -118,27 +118,27 @@ public class UserProfile {
 		this.goalType = goalType;
 	}
 
-	public int getTargetWeight() {
+	public double getTargetWeight() {
 		return targetWeight;
 	}
 
-	public void setTargetWeight(int targetWeight) {
+	public void setTargetWeight(double targetWeight) {
 		this.targetWeight = targetWeight;
 	}
 
-	public Timestamp getStartDate() {
+	public Date getStartDate() {
 		return startDate;
 	}
 
-	public void setStartDate(Timestamp startDate) {
+	public void setStartDate(Date startDate) {
 		this.startDate = startDate;
 	}
 
-	public Timestamp getEndDate() {
+	public Date getEndDate() {
 		return endDate;
 	}
 
-	public void setEndDate(Timestamp endDate) {
+	public void setEndDate(Date endDate) {
 		this.endDate = endDate;
 	}
 

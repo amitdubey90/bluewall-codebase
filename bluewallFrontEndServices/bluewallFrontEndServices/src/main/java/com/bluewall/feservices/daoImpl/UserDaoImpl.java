@@ -1,11 +1,24 @@
 package com.bluewall.feservices.daoImpl;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
 import com.bluewall.feservices.bean.UserPrincipal;
 import com.bluewall.feservices.dao.UserDao;
 import com.bluewall.feservices.util.Queries;
-import com.bluewall.util.bean.UserCredential;
 import com.bluewall.util.bean.UserProfile;
+
+import com.bluewall.util.bean.UserDailyNutritionPlan;
+
 import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
@@ -13,10 +26,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+
 
 @Configuration
 @Component
@@ -29,10 +39,28 @@ public class UserDaoImpl implements UserDao {
 	@Autowired
 	DataSource datasource;
 
-	@Override
-	public void createUser(UserProfile user) {
+	/*@Override
+	public UserCredential getUserConnectionCredsById(int userId, int providerId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
-		int userID;
+	@Override
+	public void updateUserCredentials(UserCredential newUserCreds) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void insertUserCredentials(UserCredential newUserCreds) {
+		// TODO Auto-generated method stub
+
+	}*/
+
+	@Override
+	public int createUser(UserProfile user) {
+
+		int userID = 0;
 		ResultSet rs = null;
 		Connection connection = null;
 		
@@ -72,13 +100,14 @@ public class UserDaoImpl implements UserDao {
 					preparedStatement.setInt(1, userID);
 					preparedStatement.setString(2, user.getGoalType());
 					preparedStatement.setDouble(3, user.getTargetWeight());
-					preparedStatement.setTimestamp(4, user.getStartDate());
-					preparedStatement.setTimestamp(5, user.getEndDate());
+					preparedStatement.setDate(4, user.getStartDate());
+					preparedStatement.setDate(5, user.getEndDate());
 					preparedStatement.executeUpdate();
 					log.info("User goals inserted");
 
 				}
-								
+				
+				log.info("Now inserting in users database");
 				PreparedStatement prepStatement = connection.prepareStatement(Queries.INS_USERS);
 				prepStatement.setString(1, user.getEmailID());
 				prepStatement.setString(2, user.getPassword());
@@ -93,6 +122,7 @@ public class UserDaoImpl implements UserDao {
 			try {
 				connection.rollback();
 				log.info("Create User Service: Successfully rolled back changes from the database!");
+				e.printStackTrace();
 			  } catch (SQLException e1) {
 				  log.info("Create User Service: Could not rollback updates " + e1.getMessage());
 			  }
@@ -115,6 +145,97 @@ public class UserDaoImpl implements UserDao {
 				}
 			}
 		}
+		
+		return userID;
+	}
+
+	@Override
+	public List<UserProfile> getUserDetails(int userID) {
+		
+		ResultSet rs = null;
+		Connection connection = null;
+		List<UserProfile> userProfileList = new ArrayList<UserProfile>();
+		
+		try {
+			connection = datasource.getConnection();
+			rs = connection.prepareStatement(Queries.GET_USER_INFO + " where userID = " + userID).executeQuery();
+			
+			while (rs.next()){
+				UserProfile userProfile = new UserProfile();
+				userProfile.setFirstName(rs.getString("firstName"));
+				userProfile.setLastName(rs.getString("lastName"));
+				userProfile.setEmailID(rs.getString("emailID"));
+				userProfile.setContactNumber(rs.getString("contactNumber"));
+				userProfile.setAge(rs.getInt("age"));
+				userProfile.setGender(rs.getString("gender"));
+				userProfile.setHeight(rs.getInt("height"));
+				userProfile.setWeight(rs.getInt("weight"));
+				userProfile.setActivityLevel(rs.getString("activityLevel"));
+				userProfile.setCurrentLocation(rs.getString("currentLocation"));
+				userProfileList.add(userProfile);
+			}
+			
+		} catch (SQLException e) {
+			log.info("GET USER DETAILS: SQL Exception - Check the sql query or the connection string");
+			e.printStackTrace();
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					log.info("Could not close result set object");
+				}
+			}
+			if (connection != null) {
+				try {
+					connection.close();
+				} catch (SQLException e) {
+					log.info("GET USER DETAILS: Error closing connection object " + e.getMessage());
+				}
+			}
+		}
+		
+		return userProfileList;
+		
+	}
+
+	@Override
+	public void createNutrientPlan(UserDailyNutritionPlan dailyPlan, int userID) {
+		
+		Connection connection = null;
+		log.info("Now inserting nutrition plan in database for user id: " + userID);
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		
+		try {
+			connection = datasource.getConnection();
+			PreparedStatement prepStatement = connection.prepareStatement(Queries.INS_DAILY_NUTRITION_PLAN);
+			
+			prepStatement.setInt(1, userID);
+			prepStatement.setDouble(2, dailyPlan.getDailyCalories());
+			prepStatement.setDouble(3, dailyPlan.getFatInGms());
+			prepStatement.setDouble(4, dailyPlan.getFatInCalories());
+			prepStatement.setDouble(5, dailyPlan.getCarbInGms());
+			prepStatement.setDouble(6, dailyPlan.getCarbInCalories());
+			prepStatement.setDouble(7, dailyPlan.getProteinInGms());
+			prepStatement.setDouble(8, dailyPlan.getProteinInCalories());
+			prepStatement.setString(9, dateFormat.format(new Date()));
+			prepStatement.executeUpdate();
+			
+			log.info("Nutrient plan saved succeefully for user id: " + userID);
+			
+		} catch (SQLException e) {
+			log.info("CREATE NUTRIENT PLAN: SQL Exception - Check the sql query or the connection string");
+			e.printStackTrace();
+		} finally {
+			if (connection != null) {
+				try {
+					connection.close();
+				} catch (SQLException e) {
+					log.info("CREATE NUTRIENT PLAN: Error closing connection object " + e.getMessage());
+				}
+			}
+		}
+		
 	}
 
 	@Override
