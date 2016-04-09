@@ -6,7 +6,7 @@ package com.bluewall.userDeviceDataMapper.util;
 public class Constants {
 
     // MySql Connection Settings
-    public static final String MYSQL_RDS_URI = "jdbc:mysql://user-db-instance.cqqcnirpnrkg.us-west-1.rds.amazonaws.com";
+    public static final String MYSQL_RDS_URI = "jdbc:mysql://userdatabase.cjydixq0uvpi.us-west-1.rds.amazonaws.com/userDatabase";
     public static final String MYSQL_RDS_USER = "root";
     public static final String MYSQL_RDS_PASSWORD = "q1w2e3r4t5y6";
     public static final String MYSQL_DRIVER = "com.mysql.jdbc.Driver";

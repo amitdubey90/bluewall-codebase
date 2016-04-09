@@ -5,7 +5,7 @@ public class Constants {
 	public static final String FITBIT = "fitbit";
 	public static final String JAWBONE = "jawbone";
 	public static final String DRIVER_CLASS = "com.mysql.jdbc.Driver";
-	public static final String MYSQL_CONN_URL = "jdbc:mysql://user-db-instance.cqqcnirpnrkg.us-west-1.rds.amazonaws.com:3306";
+	public static final String MYSQL_CONN_URL = "jdbc:mysql://userdatabase.cjydixq0uvpi.us-west-1.rds.amazonaws.com/userDatabase";
 	public static final String USER_DB_NAME = "userDatabase";
 	public static final String FOOD_DB_NAME = "foodDatabase";
 	public static final String USERNAME = "root";
