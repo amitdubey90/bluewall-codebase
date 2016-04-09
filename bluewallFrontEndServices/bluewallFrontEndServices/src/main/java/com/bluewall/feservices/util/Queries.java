@@ -7,7 +7,7 @@ public class Queries {
 	public static final String GET_TOTAL_CALORIE_BURNT = "select sum(caloriesBurnt) as caloriesBurnt from ActivityLog";
 	public static final String GET_TOTAL_CALORIE_CONSUMED = "select sum(weightConsumed) as weightConsumed from FoodLog";
 	public static final String INS_USER_ACTIVITY_LOG = "insert into ActivityLog(userID, distance, "
-														+ "startTime, loggedFrom, duration, caloriesBurnt, activityID)"
+														+ "duration, caloriesBurnt,loggedFrom)"
 														+ " values(?, ?, ?, ?, ?, ?, ?)";
 	public static final String INS_USER_FOOD_LOG = "insert into FoodLog(userID, type, foodID, weightConsumed, loggedFrom, calories, logTime, foodLogDate)"
 													+ " values(?, ?, ?, ?, ?, ?, ?,?)";

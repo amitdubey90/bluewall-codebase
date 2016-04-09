@@ -1,61 +1,64 @@
-//app
-//		.controller(
-//				'logActivityController',
-//				function($scope, logActivityService, $filter,$http,limitToFilter) {
-//					console.log("In ActivityController");
-//
-//				
-//
-//					// for populating typeahead
-//					
-//					
-//					$scope.foods = function(){
-//						var op = [];
-////						return logActivityService.getFoodList('/user/food/getFoodItems').then(function(response){
-////							op=response;
-////							//return response;
-//						$http({
-//					        method: 'GET',
-//					        url: '/user/food/getFoodItems'
-//					    }).error(function ($data) {
-//					        console.log("failed to fetch typeahead data");
-//					    }).success(function ($data) {            
-//					        $data.objects.forEach(function (person)
-//					        {
-//					            output.push(person.foodName);
-//					        });
-//					        console.log(op);        
-//					    });
-//					    return op;
-//					}
-//						
-//						
-//						
-//						
-//						
-//						
-//					});
-//// $scope.foods = function(){
-//// return http.get('/user/food/getFoodItems').then(function(response){
-//// return limitToFilter(response.data, 15);
-//// });
-////						
-//// };
-//					
-//					
-//
-//					// ON submitting food log
-//				});			
-//
-//app.service('logActivityService', function($http, $state) {
-//	console.log("in Activity service");
-//	
-//	this.getFoodList = function(url) {
-//		console.log("Get food list");
-//		return $http.get(url).then(function(response) {
-//			
-//			return response.data;
-//		});
-//	}
-//});
-//
+app.controller('logActivityController', function($scope, $filter, $http,
+		logActivityService, $rootScope, $state, limitToFilter) {
+	console.log("In ActivityController");
+
+	// $scope.activitesType = function(){
+	// var act = [{name:"Running", met:34},{name:"Sleeping",met:45}]
+	// alert(act);
+	// return act;
+	// }
+
+	$scope.activitiesType = [ {
+		name : 'Running',
+		met : 34
+	}, {
+		name : 'Sleeping',
+		value : 44
+	}, {
+		name : 'Walking',
+		value : 33
+	} ];
+
+	$scope.logActivity = function(activity) {
+
+		
+		activity.type = document.getElementById('activityType').options[document.getElementById('activityType').selectedIndex].text;
+		if(activity.type !== 'Other'){
+			activity.name = activity.type;
+		}
+		console.log(activity);
+//						logActivityService.logUserActivity(activity).then(
+//								function(data) {
+//									$rootScope.authenticated = true;
+//									$state.go('userDashboard');
+//								}, function(error) {
+//									console.log("error");
+//								});
+	}
+	
+	$scope.change = function() {
+		console.log('from change')
+		var hours = parseInt($('#hours :selected').text()*60);
+		if(isNaN(hours)){
+			hours=0;
+		}
+		var minutes = parseInt($('#min :selected').text());
+		if(isNaN(minutes)){
+			minutes=0;
+		}
+		var time =  hours+minutes;
+		var met = $('#activityType :selected').val();
+		var calExp = 0.0175*met*30*time;
+		$scope.activity.caloriesBurnt = calExp.toFixed(2);
+	}
+});
+
+app.service('logActivityService', function($http, $state) {
+	this.logUserActivity = function(activity) {
+		return $http.post("/user/activity/createActivity", activity).then(
+				function(data) {
+					console.log("response from backend service: " + data);
+					return data;
+				});
+	}
+});

@@ -1,31 +1,187 @@
 <div class="container">
 	<div class="row row-offcanvas row-offcanvas-left">
-		<!-- include sidebar. Always include inside a row element -->
 		<div ng-include src="'partials/sidebar.html'" />
-		<section>
-			<div class="col-sm-8">
+		<div ng-include src="'js/commons/loadDependencies.js'" />
+		<div ng-include src="'js/commons/calculateCalories.js'" />
 
-				<div id="legend">
-					<legend class="">
-						<H2>
-							<strong>Log Food</strong>
-						</H2>
-					</legend>
-				</div>
-				
-				<form class="form-horizontal" ng-submit="logActivity()">
-					<div class="form-group">
-						Food Name:
-							
-						<div class="col-xs-8">
-							{{foods}}
-							<input name="foods" id="foodName" type="text" class="form-control"
-								placeholder="Search for a food item" ng-model="selectedFoodItem"
-								typeahead="food in foods | filter:$viewValue | limitTo:6"> 	
+
+		<section>
+			<div class="col-xs-8">
+				<H2>
+					<center>
+						<strong>Log Activity</strong>
+					</center>
+				</H2>
+			</div>
+
+			<form ng-submit="logActivity(activity)">
+				<div class="row">
+					<div class="col-xs-8">
+						<div class="form-align" style="margin-left: 16%;">
+							<div class="form-group row">
+								<label for="activityType"
+									class="col-xs-4 form-control-label label-width">Activity
+									Type<span class="mandatory">*</span>
+								</label>
+								<div class="col-xs-6">
+									<select class="selectpicker form-control" id="activityType"
+										ng-model="activity.type" 
+										ng-change="change()"
+										required>
+										<option value="">What type of activity?</option>
+										<option value=0.34>Running</option>
+										<option value=1.4>Walking</option>
+										<option value=4.5>Sleeping</option>
+										<option value=2.2>Jumping</option>
+										<option>Other</option>
+									</select>
+
+								</div>
+								<a target="_blank" href="#"
+									title="Name of the activity. Eg.Sandwich"><img
+									src="images/help.png" style="height: 26x; width: 26px;" /></a>
+							</div>
+
+							<div class="form-group row" ng-show="activity.type=='Other'">
+								<label for="activtyName"
+									class="col-sm-4 form-control-label label-width">Activity
+									Name</label>
+								<div class="col-xs-6">
+									<input type="text" class="form-control" id="activtyName"
+										ng-model="activity.name" placeholder="Name of the activity">
+								</div>
+								<a target="_blank" href="#"
+									title="Name of the Activity. Eg.Playing outdoor sports"><img
+									src="images/help.png" style="height: 26x; width: 26px;" /></a>
+							</div>
+
+
+							<div class="form-group row">
+								<label for="distance"
+									class="col-sm-4 form-control-label label-width">Distance</label>
+								<div class="col-sm-6">
+									<div class="input-group">
+										<input type="text" class="form-control" id="distance"
+											ng-model="activity.distance" placeholder="Distance">
+										<span class="input-group-addon">Meter</span>
+									</div>
+								</div>
+								<a target="_blank" href="#" title="Distance covered"><img
+									src="images/help.png" style="height: 26x; width: 26px;" /></a>
+							</div>
+
+							<div class="form-group row">
+								<label for="activityLogDate"
+									class="col-sm-4 form-control-label label-width">Date <span
+									class="mandatory">*</span>
+								</label>
+								<div class="col-sm-6">
+									<input type='date' class="form-control"
+										placeholder="Start time of the activity" id="activityLogDate" ng-model="activity.activityLogDate"/>
+								</div>
+								<a target="_blank" href="#"
+									title="Date when activity was performed"><img
+									src="images/help.png" style="height: 26x; width: 26px;" /></a>
+							</div>
+
+							<div class="form-group row">
+
+								<label class="col-xs-4 form-control-label label-width">Duration
+									<span class="mandatory">*</span>
+								</label>
+								<div class="col-sm-3">
+									<!-- <small>Hours:</small> -->
+									<select class="selectpicker form-control" id="hours"
+										ng-model="activity.hours"
+										ng-change="change()" required>
+										<option value="">HOURS</option>
+										<option>1</option>
+										<option>2</option>
+										<option>3</option>
+										<option>4</option>
+										<option>6</option>
+									</select>
+								</div>
+								<span>
+									<div class="col-sm-3">
+										<!-- 	<small>Mins:</small> -->
+										<select class="selectpicker form-control" id="min"
+											ng-model="activity.mins"
+											ng-change="change()" required>
+											<option value="">MINS</option>
+											<option>1</option>
+											<option>2</option>
+											<option>3</option>
+											<option>4</option>
+											<option>4</option>
+											<option>6</option>
+											<option>7</option>
+										</select>
+
+									</div>
+								</span> <a target="_blank" href="#"
+									title="Duration of physical activity"><img
+									src="images/help.png" style="height: 26x; width: 26px;" /></a>
+							</div>
+
+							<!-- <div class="form-group row">
+								<label for="startDateTiempicker"
+									class="col-sm-4 form-control-label label-width">Start
+									Time<span class="mandatory">*</span>
+								</label>
+								<div class="col-sm-6">
+									<input type='datetime-local' class="form-control"
+										placeholder="Start time of the activity" id="start" />
+								</div>
+								<a target="_blank" href="#"
+									title="Name of the food. Eg.Sandwich"><img
+									src="images/help.png" style="height: 26x; width: 26px;" /></a>
+							</div>
+							<div class="form-group row">
+								<label for="endDateTiempicker"
+									class="col-sm-4 form-control-label label-width">End
+									Time<span class="mandatory">*</span>
+								</label>
+								<div class="col-sm-6">
+									<input type='datetime-local' class="form-control"
+										placeholder="End time of the activity" id="end" />
+								</div>
+								<a target="_blank" href="#"
+									title="Name of the food. Eg.Sandwich"><img
+									src="images/help.png" style="height: 26x; width: 26px;" /></a>
+							</div> -->
+							<div class="form-group row">
+								<label for="activityCal"
+									class="col-sm-4 form-control-label label-width">Calories
+									expenditure</label>
+
+								<div class="col-sm-6">
+									<div class="input-group">
+										<input type="text" class="form-control" id="activityCal"
+											ng-model="activity.caloriesBurnt"
+											placeholder="Calories burnt">
+											<span class="input-group-addon">Kcals</span> 
+									</div>
+								</div>
+								<a target="_blank"
+									href="#" title="Calories burnt"><img src="images/help.png"
+									style="height: 26x; width: 26px;" /></a>
+							</div>
+
+							<div class="form-group row">
+								<div class="col-sm-offset-3 col-sm-8">
+
+									<button class="btn btn-primary btn-md btn-block activity"
+										type="submit">
+										<strong>Log</strong>
+									</button>
+
+								</div>
+							</div>
 						</div>
 					</div>
-				</form>
-			</div>
+				</div>
+			</form>
 		</section>
 	</div>
 </div>

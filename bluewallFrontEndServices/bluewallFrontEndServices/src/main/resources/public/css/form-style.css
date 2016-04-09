@@ -1,0 +1,23 @@
+.label-width {
+	padding-left: 10%
+}
+
+.food {
+	margin-left: 1.5%
+}
+
+.activity {
+	margin-left: -27%;
+	width: 114%;
+}
+
+}
+.form-align {
+	margin-left: 16%
+}
+
+.mandatory{
+	color:red;
+	font-size:xx-large;
+	position: inherit;
+}

@@ -1,44 +1,39 @@
-app.controller('logFoodController', function($scope,logFoodService,$filter) {
+app.controller('logFoodController', function($scope, logFoodService, $filter,$rootScope,$state) {
 	console.log("In logFoodController");
 
-	$scope.userWt= {
-		max:5
+	$scope.userWt = {
+		max : 5
 	};
-	
-	$scope.userCal= {
-			max:500
-		};
-	
-	$scope.logFood = function(){
-		console.log("logging");
-		$scope.food.calories = $scope.userCal.max;
-		$scope.food.weightConsumed = $scope.userWt.max;
-		var result = $filter('date')($scope.food.timeConsumed, 'yyyy-MM-ddTHH:mm:ss');
-		$scope.food.timeConsumed = result;
-		var f=$scope.food;
-		logFoodService.logFood($scope.food).then(function(data){
-			console.log("return");
-		},function(error){
+
+	$scope.userCal = {
+		max : 500
+	};
+
+	$scope.logFood = function(food) {
+		var name = document.getElementById("foodName").value;
+		food.name = name.split(":")[1].trim();
+		food.calories = document.getElementById("foodCalories").value;
+//		var foodObj = angular.copy(food);
+//		console.log(foodObj + " " + food);
+		logFoodService.logFood(food).then(function(data) {
+			$rootScope.authenticated = true;
+			$state.go('userDashboard');
+		}, function(error) {
 			console.log("error");
 		});
-		
-		
-}
+	}
+
 });
 
-
-
-
-app.service('logFoodService', function($http,$state) {
-console.log("in log food service");
-	this.logFood = function(food){
-		console.log(food.name+" "+food.calories+" "+food.timeConsumed+" "+food.weightConsumed+" "+food.type);
-		 return $http.post("/user/food/createFoodPlate",food).then(function(data){
-			 console.log("response from backend service: "+data);
-			 return data;
-		 });
-		
-		
-		
+app.service('logFoodService', function($http, $state) {
+	console.log("in log food service");
+	this.logFood = function(food) {
+		console.log(food.name + " " + food.calories + " " + food.foodLogTime
+				+ " " + food.weightConsumed + " " + food.type);
+		return $http.post("/user/food/createFoodPlate", food).then(
+				function(data) {
+					console.log("response from backend service: " + data);
+					return data;
+				});
 	}
 });
