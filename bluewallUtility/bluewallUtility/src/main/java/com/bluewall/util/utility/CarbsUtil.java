@@ -17,12 +17,12 @@ public class CarbsUtil {
 	 */
 	
 	
-	public double calculateDailyCarbohydratesInGrams(double dailyCalorieNeed){
+	public static double calculateDailyCarbohydratesInGrams(double dailyCalorieNeed){
 		
 		return ((calculateDailyCarbohydratesInCalories(dailyCalorieNeed)) / 4) ;
 	}
 	
-	public double calculateDailyCarbohydratesInCalories(double dailyCalorieNeed){
+	public static double calculateDailyCarbohydratesInCalories(double dailyCalorieNeed){
 		
 		return (dailyCalorieNeed * 0.55);
 	}

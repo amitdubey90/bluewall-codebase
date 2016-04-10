@@ -15,7 +15,15 @@ public class Queries {
 	public static final String INS_USER_GOALS = "insert into UserGoal(userID, goalType, targetWeight,startDate, endDate) "
 												+ "values(?, ?, ?, ?, ?)";
 	public static final String GET_FOODID = "select foodId from FoodInfo";
-
-
+	
+	
+	public static final String GET_USER_INFO = "select * from UserInfo";
+	public static final String INS_DAILY_NUTRITION_PLAN = "insert into UserDailyNutrientPlan(userID, dailyCalories, fatInGms, "
+															+ " fatInCalories, carbsInGms, carbsInCalories, proteinInGms, "
+															+ "proteinInCalories, planDate)"
+															+ " values(?, ?, ?, ?, ?, ?, ?, ?, ?)";
+	public static final String GET_DAILY_NUTRITION_PLAN = "select dailyCalories, fatInGms, fatInCalories, carbsInGms, "
+															+ "carbsInCalories, proteinInGms, proteinInCalories"
+															+ " from UserDailyNutrientPlan";
 	public static final String GET_USER_PRINCIPAL = "SELECT userID, firstName, lastName, emailID FROM UserInfo where emailID = ?";
 }

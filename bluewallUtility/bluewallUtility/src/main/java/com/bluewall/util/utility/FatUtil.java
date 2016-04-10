@@ -16,12 +16,12 @@ public class FatUtil {
 	 * @return Fat requirement in calories.
 	 */
 	
-	public double calculateDailyFatInGrams(double dailyCalorieNeed){
+	public static double calculateDailyFatInGrams(double dailyCalorieNeed){
 		
-		return ((calculateDailyProteinInCalories(dailyCalorieNeed)) / 9);
+		return ((calculateDailyFatInCalories(dailyCalorieNeed)) / 9);
 	}
 	
-	public double calculateDailyProteinInCalories(double dailyCalorieNeed){
+	public static double calculateDailyFatInCalories(double dailyCalorieNeed){
 		
 		return (dailyCalorieNeed * 0.30);
 		
