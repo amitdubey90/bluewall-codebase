@@ -22,12 +22,12 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
-			<!-- <exclusions>
+			<exclusions>
 				<exclusion>
 					<groupId>org.springframework.boot</groupId>
 					<artifactId>spring-boot-starter-logging</artifactId>
 				</exclusion>
-			</exclusions> -->
+			</exclusions>
 		</dependency>
 
 		<dependency>
@@ -39,6 +39,11 @@
 					<artifactId>spring-boot-starter-logging</artifactId>
 				</exclusion>
 			</exclusions>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-log4j</artifactId>
 		</dependency>
 
 		<dependency>
@@ -73,6 +78,9 @@
 			<groupId>com.bluewall</groupId>
 			<artifactId>bluewallUtility</artifactId>
 			<version>1.0-SNAPSHOT</version>
+			<exclusions>
+				<exclusion></exclusion>
+			</exclusions>
 		</dependency>
 		
 		<!-- JSON to Java Object Mapper -->
