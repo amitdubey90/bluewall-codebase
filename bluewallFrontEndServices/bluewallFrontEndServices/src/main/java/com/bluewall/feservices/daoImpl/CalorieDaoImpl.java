@@ -29,24 +29,26 @@ public class CalorieDaoImpl implements CalorieDao {
 	DataSource dataSource;
 
 	@Override
-	public int getSumCaloriesBurnt(int userID) {
+	public int getSumCaloriesBurnt(int userID, String date) {
 
 		int totalCaloriesBurnt = 0;
 		log.info("Fetching Sum of Caloreies Burnt for a day");
-		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSSSSS");
+		/*DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		
-		Calendar calendar = Calendar.getInstance();
-		String currentDateTime = dateFormat.format(calendar.getTime());
-		try {
+		Calendar calendar = Calendar.getInstance();*/
+		String currentDateTime = date + " 23:59:59";
+		System.out.println("currentDateTime: " + currentDateTime);
+		/*try {
 			calendar.setTime(dateFormat.parse(currentDateTime));
 		} catch (ParseException e1) {
 			log.error("Exception occured while parsing Date",e1);
-		}
-		calendar.set(Calendar.HOUR_OF_DAY, 00);
+		}*/
+		/*calendar.set(Calendar.HOUR_OF_DAY, 00);
 		calendar.set(Calendar.MINUTE, 00);
 		calendar.set(Calendar.SECOND, 00);
-		calendar.set(Calendar.MILLISECOND, 00);
-		String startDateTime = dateFormat.format(calendar.getTime());
+		calendar.set(Calendar.MILLISECOND, 00);*/
+		String startDateTime = date + " 00:00:00";
+		System.out.println("SQL: " + Queries.GET_TOTAL_CALORIE_BURNT + " where userID = " + userID	+ " and startTime >= '" + startDateTime + "' and startTime <= '" + currentDateTime + "'");
 		try (ResultSet resultSet = dataSource.getConnection().prepareStatement(Queries.GET_TOTAL_CALORIE_BURNT + " where userID = " + userID
 						+ " and startTime >= '" + startDateTime + "' and startTime <= '" + currentDateTime + "'").executeQuery()) {
 			log.info("Data fetched from database successfully");
@@ -60,26 +62,27 @@ public class CalorieDaoImpl implements CalorieDao {
 	}
 
 	@Override
-	public int getSumCaloriesConsumed(int userID) {
+	public int getSumCaloriesConsumed(int userID, String date) {
 
 		int totalCaloriesConsumed = 0;
 
 		log.info("Fetching Sum of Caloreies Consumed for a day");
-		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSSSSS");
-		Calendar calendar = Calendar.getInstance();
-		String currentDateTime = dateFormat.format(calendar.getTime());
-		try {
+		/*DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		Calendar calendar = Calendar.getInstance();*/
+		String currentDateTime = date + " 23:59:59";
+		/*try {
 			calendar.setTime(dateFormat.parse(currentDateTime));
 		} catch (ParseException e1) {
 			log.error("Exception occured while parsing Date",e1);
-		}
-		calendar.set(Calendar.HOUR_OF_DAY, 00);
+		}*/
+		/*calendar.set(Calendar.HOUR_OF_DAY, 00);
 		calendar.set(Calendar.MINUTE, 00);
 		calendar.set(Calendar.SECOND, 00);
-		calendar.set(Calendar.MILLISECOND, 00);
-		String startDateTime = dateFormat.format(calendar.getTime());
+		calendar.set(Calendar.MILLISECOND, 00);*/
+		String startDateTime = date + " 00:00:00";
+		System.out.println("SQL: " + Queries.GET_TOTAL_CALORIE_CONSUMED + " where userID = " + userID + " and logTime >= '" + startDateTime + "' and logTime <= '" + currentDateTime + "'");
 		try (ResultSet resultSet = dataSource.getConnection().prepareStatement(Queries.GET_TOTAL_CALORIE_CONSUMED + " where userID = " + userID
-						+ " and foodLogTime >= '" + startDateTime + "' and foodLogTime <= '" + currentDateTime + "'").executeQuery()) {
+						+ " and logTime >= '" + startDateTime + "' and logTime <= '" + currentDateTime + "'").executeQuery()) {
 			log.info("Data fetched from database successfully");
 			if (resultSet.next())
 				totalCaloriesConsumed = resultSet.getInt("weightConsumed");
