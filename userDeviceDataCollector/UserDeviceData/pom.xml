@@ -82,7 +82,19 @@
 					<target>1.8</target>
 				</configuration>
 			</plugin>
-			<!-- TODO build exec jar -->
+			<plugin>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<configuration>
+					<archive>
+						<manifest>
+							<mainClass>com.bluewall.userDeviceDataCollector.deviceData.ApidataHandler</mainClass>
+						</manifest>
+					</archive>
+					<descriptorRefs>
+						<descriptorRef>jar-with-dependencies</descriptorRef>
+					</descriptorRefs>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
 </project>
