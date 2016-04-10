@@ -8,8 +8,31 @@ app.controller('userDashboardController', function($scope,userDashboardService) 
 		$scope.error = "Unable to load activity feed: "+error.statusText;
 		console.log(error.statusText);
 	});
+	
+	 $(function() {
+		    $('input[name="birthdate"]').daterangepicker({
+		        singleDatePicker: true,
+		        showDropdowns: true
+		    },
+		    function(start, end, label) {
+		    	userDashboardService.populateUserCalorieInfo(start.format('YYYY-MM-DD')).then(function(calorieInfo){
+		   		 console.log("Data returned from angular service:calorie info " + calorieInfo);
+		   		 console.log(calorieInfo.data);
+		   		 var res = calorieInfo.data.split(",");
+		   		console.log(res[0] + " " + res[1]);
+		   		$scope.caloriesBurnt = res[0];
+		   		$scope.caloriesConsumed = res[1];
+		   		$scope.calorieInfo = calorieInfo.data;
+		   		 myFunction(10);
+		   		
+			   	},function(error){
+			   		$scope.error = "Unable to load calorieInfo feed: "+error.statusText;
+			   		console.log(error.statusText);
+			   	});
+		    });
+		});
 	 
-	 userDashboardService.populateUserCalorieInfo($scope.currentData).then(function(calorieInfo){
+	/* userDashboardService.populateUserCalorieInfo().then(function(calorieInfo){
 		 console.log("Data returned from angular service:calorie info ");
 		 console.log(calorieInfo.data);
 		 $scope.calorieDetails = {};
@@ -19,7 +42,7 @@ app.controller('userDashboardController', function($scope,userDashboardService) 
 	},function(error){
 		$scope.error = "Unable to load calorieInfo feed: "+error.statusText;
 		console.log(error.statusText);
-	});
+	});*/
 	 
 	 userDashboardService.populateUserNutrientInfo().then(function(nutrientInfo){
 		 console.log("Data returned from angular service:nutrient info ");
@@ -39,9 +62,9 @@ app.service('userDashboardService', function($http) {
 			});
 		}
 	
-		this.populateUserCalorieInfo = function(){
-			//var num = $('#currentDate').text();
-			return $http.get("/calorieDetails/1").then(function(calorieInfo){
+		this.populateUserCalorieInfo = function(date){
+			alert("Date: " + date);
+			return $http.get("/calorieDetails/13/"+date).then(function(calorieInfo){
 				console.log("Data returned from backend service: calorie info: "+calorieInfo);
 				return calorieInfo;
 			});

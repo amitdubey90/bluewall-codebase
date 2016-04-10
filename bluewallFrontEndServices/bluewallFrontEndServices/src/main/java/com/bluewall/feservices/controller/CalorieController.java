@@ -21,13 +21,17 @@ public class CalorieController {
 	 * Calorie Service to calculate total Calories Burnt and Consumed by the
 	 * user in a day
 	 */
-	@RequestMapping(value = "/calorieDetails/{userID}", method = RequestMethod.GET)
-	public String getCalorieDetails(@PathVariable("userID") int userID) {
+	@RequestMapping(value = "/calorieDetails/{userID}/{date}", method = RequestMethod.GET)
+	public String getCalorieDetails(@PathVariable("userID") int userID, @PathVariable("date") String date) {
+		System.out.println("Inside Calorie Controller");
+		System.out.println("Date: " + date);
 		int sumCalorieBurnt = 0;
 		int sumCalorieConsumed = 0;
 		try {
-			sumCalorieBurnt = calorieService.getSumCaloriesBurnt(userID);
-			sumCalorieConsumed = calorieService.getSumCaloriesConsumed(userID);
+			sumCalorieBurnt = calorieService.getSumCaloriesBurnt(userID, date);
+			sumCalorieConsumed = calorieService.getSumCaloriesConsumed(userID, date);
+			System.out.println(sumCalorieBurnt);
+			System.out.println(sumCalorieConsumed);
 		} catch (Exception e) {
 			log.error("Exception occured");
 		}
