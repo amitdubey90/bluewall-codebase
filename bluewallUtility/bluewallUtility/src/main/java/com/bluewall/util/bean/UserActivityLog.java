@@ -1,6 +1,7 @@
 package com.bluewall.util.bean;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 /*
  * POJO class for fetching user activity logs.
@@ -8,13 +9,22 @@ import java.sql.Date;
 
 public class UserActivityLog {
 
-	private String type;
 	private String name;
 	private float distance;
 	private float caloriesBurnt;
 	private Date activityLogDate;
-//	private Timestamp starTime;
-//	private Timestamp endTime;
+	private float duration;
+	private Timestamp logTime;
+	
+	
+	
+	public Timestamp getLogTime() {
+		return logTime;
+	}
+
+	public void setLogTime(Timestamp logTime) {
+		this.logTime = logTime;
+	}
 
 	public float getDistance() {
 		return distance;
@@ -40,13 +50,6 @@ public class UserActivityLog {
 		this.name = name;
 	}
 
-	public String getType() {
-		return type;
-	}
-
-	public void setType(String type) {
-		this.type = type;
-	}
 
 	public Date getActivityLogDate() {
 		return activityLogDate;
@@ -55,23 +58,16 @@ public class UserActivityLog {
 	public void setActivityLogDate(Date activityLogDate) {
 		this.activityLogDate = activityLogDate;
 	}
+
+	public float getDuration() {
+		return duration;
+	}
+
+	public void setDuration(float duration) {
+		this.duration = duration;
+	}
 	
 	
 
-//	public Timestamp getStarTime() {
-//		return starTime;
-//	}
-//
-//	public void setStarTime(Timestamp starTime) {
-//		this.starTime = starTime;
-//	}
-//
-//	public Timestamp getEndTime() {
-//		return endTime;
-//	}
-//
-//	public void setEndTime(Timestamp endTime) {
-//		this.endTime = endTime;
-//	}
 
 }

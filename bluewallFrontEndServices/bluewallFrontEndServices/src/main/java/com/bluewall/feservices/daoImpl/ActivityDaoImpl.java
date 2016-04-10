@@ -58,7 +58,7 @@ public class ActivityDaoImpl implements ActivityDao {
 				UserActivityLog userActivity = new UserActivityLog();
 				userActivity.setName(rs.getString("name"));
 				userActivity.setDistance(rs.getFloat("distance"));
-			//	userActivity.setDuration(rs.getInt("duration"));
+				// userActivity.setDuration(rs.getInt("duration"));
 				userActivity.setCaloriesBurnt(rs.getInt("caloriesBurnt"));
 				userActivityLog.add(userActivity);
 			}
@@ -108,11 +108,15 @@ public class ActivityDaoImpl implements ActivityDao {
 			connection.setAutoCommit(false);
 
 			PreparedStatement prepStatement = connection.prepareStatement(Queries.INS_USER_ACTIVITY_LOG);
+
 			prepStatement.setInt(1, userId);
-			prepStatement.setFloat(2, userActivity.getDistance());
-			//duration
-			prepStatement.setInt(4, userActivity.getCaloriesBurnt());
-			prepStatement.setInt(5, 14);
+			prepStatement.setString(2, userActivity.getName());
+			prepStatement.setFloat(3, userActivity.getDistance());
+			prepStatement.setDate(4, userActivity.getActivityLogDate());
+			prepStatement.setFloat(5, userActivity.getDuration());
+			prepStatement.setFloat(6, userActivity.getCaloriesBurnt());
+			prepStatement.setInt(7, 14);
+			prepStatement.setTimestamp(8,userActivity.getLogTime());
 			prepStatement.executeUpdate();
 			connection.commit();
 			log.info("Activity Successfully created for user ID: " + userId);
@@ -120,8 +124,10 @@ public class ActivityDaoImpl implements ActivityDao {
 		} catch (SQLException e) {
 			try {
 				connection.rollback();
+				e.printStackTrace();
 				log.info("Create Activity Service: Successfully rolled back changes from the database!");
 			} catch (SQLException e1) {
+				e.printStackTrace();
 				log.info("Create Activity Service: Could not rollback updates " + e1.getMessage());
 			}
 		} finally {

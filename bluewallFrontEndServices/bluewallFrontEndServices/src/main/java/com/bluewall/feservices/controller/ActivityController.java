@@ -1,5 +1,6 @@
 package com.bluewall.feservices.controller;
 
+import java.util.Calendar;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,12 +39,10 @@ public class ActivityController {
 
 		for (UserActivityLog iterateList : activityList) {
 			System.out.println("calories burnt: " + iterateList.getCaloriesBurnt());
-			System.out.println("Activity type: " + iterateList.getType());
 			System.out.println("distance: " + iterateList.getDistance());
 			System.out.println("Name: " + iterateList.getName());
-			// add duration
-			// System.out.println("Start Time: " + iterateList.getStartTime());
-			// System.out.println("MET: " + iterateList.getMET());
+			System.out.println("Duration: " + iterateList.getDistance());
+			System.out.println("Activity Log date: " + iterateList.getActivityLogDate());
 		}
 	}
 
@@ -67,6 +66,7 @@ public class ActivityController {
 
 		// fetch the user id from the session
 		int userId = 1;
+		activity.setLogTime(new java.sql.Timestamp(Calendar.getInstance().getTime().getTime()));
 		activityService.createActivity(activity, userId);
 	}
 
