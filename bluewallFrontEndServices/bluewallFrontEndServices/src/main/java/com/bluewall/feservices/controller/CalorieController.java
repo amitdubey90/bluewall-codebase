@@ -23,27 +23,24 @@ public class CalorieController {
 	 */
 	@RequestMapping(value = "/calorieDetails/{userID}/{date}", method = RequestMethod.GET)
 	public String getCalorieDetails(@PathVariable("userID") int userID, @PathVariable("date") String date) {
-		System.out.println("Inside Calorie Controller");
-		System.out.println("Date: " + date);
 		int sumCalorieBurnt = 0;
 		int sumCalorieConsumed = 0;
-		/*int netCalorie = 0;
-		int percentCalorie = 0;
-		int targetWeight = 0;*/
+		double netCalorie = 0;
+		double percentCalorie = 0;
+		double dailyCalories = 0;
 		try {
 			sumCalorieBurnt = calorieService.getSumCaloriesBurnt(userID, date);
 			sumCalorieConsumed = calorieService.getSumCaloriesConsumed(userID, date);
-			/*netCalorie = sumCalorieConsumed - sumCalorieBurnt;
-			percentCalorie = (netCalorie / targetWeight) * 100; */
-			System.out.println(sumCalorieBurnt);
-			System.out.println(sumCalorieConsumed);
-			/*System.out.println(netCalorie);
-			System.out.println(percentCalorie);*/
+			dailyCalories = calorieService.getTargetWeight(userID, date);
+			netCalorie = sumCalorieConsumed - sumCalorieBurnt;
+			percentCalorie = (netCalorie / dailyCalories) * 100;
+			if(percentCalorie > 100)
+				percentCalorie = 100;
 		} catch (Exception e) {
 			log.error("Exception occured");
 			e.printStackTrace();
 		}
-		return sumCalorieBurnt + "," + sumCalorieConsumed /*+ "," + netCalorie + "," + percentCalorie*/;
+		return sumCalorieBurnt + "," + sumCalorieConsumed + "," + (int)netCalorie + "," + (int) percentCalorie;
 	}
 
 }

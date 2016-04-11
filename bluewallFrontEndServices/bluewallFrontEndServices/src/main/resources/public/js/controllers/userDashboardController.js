@@ -9,11 +9,11 @@
 		    
     	userDashboardService.populateUserCalorieInfo(today).then(function(calorieInfo){
 	   		 console.log("Data returned from angular service:calorie info " + calorieInfo);
-	   		 console.log(calorieInfo.data);
 	   		 var res = calorieInfo.data.split(",");
 	   	     $("#calorieBurnt").text(res[0]);
 	   	     $("#calorieConsumed").text(res[1]);
-	   	     myFunction(10);
+	   	     $("#netCalorie").text(res[2]);
+	   	     myFunction(res[3]);
 	   		 countNumber();
 		   	},function(error){
 		   		$scope.error = "Unable to load calorieInfo feed: "+error.statusText;
@@ -34,12 +34,10 @@
 	 
 	    var day = ("0" + now.getDate()).slice(-2);
 	    var month = ("0" + (now.getMonth() + 1)).slice(-2);
-	
 	    var today = now.getFullYear()+"-"+(month)+"-"+(day);
-	
 	    $('#datePicker').val(today);
+	    
 	    initDatepicker();
-	
 		changeFunct(new Date().getTime(),0,0);
 		
 	    userDashboardService.populateUserActivityFeed().then(function(activityFeed){

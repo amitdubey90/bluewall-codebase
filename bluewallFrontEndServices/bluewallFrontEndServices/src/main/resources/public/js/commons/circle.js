@@ -28,11 +28,12 @@ myFunction = function(val) {
 	    }
 	    else
 	    {
-	     /* $(".progress").parent().removeClass();
+	    	console.log("Inside Else of circle.js")
+	      $(".progress").parent().removeClass();
 	      $(".progress").parent().addClass("green");
-	      $(".progress .water").css("top", 100 - 67 + "%");
-	      $(".progress .percent").text(67 + "%");
-	      $("#abc").val("");*/
+	      $(".progress .water").css("top", 100 + "%");
+	      $(".progress .percent").text(100 + "%");
+	      $("#abc").val("");
 	    }
 	}
 </script>
