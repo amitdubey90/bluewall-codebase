@@ -6,18 +6,19 @@
 	-webkit-border-radius: 50px;
 	border-radius: 100px;
 	float: left;
-	margin: 5px;
+	margin: 18px;
+	margin-top: 5px;
 	height: 180px;
 	width: 180px;
 	border-style: solid;
 	border-color: black;
 	border-width: medium;
-	border: 5px solid #f07c3e;
+	border: 5px solid #52d3aa;
 }
 
 .count {
 	    line-height: 160px;
-    color: #f07c3e;
+    color: #52d3aa;
     margin-left: 20%;
     font-size: 50px;
     font-weight: bold;

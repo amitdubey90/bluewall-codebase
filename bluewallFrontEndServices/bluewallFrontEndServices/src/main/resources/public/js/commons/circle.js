@@ -1,14 +1,11 @@
 <script type="text/javascript">
 myFunction = function(val) {
 		var colorInc = 100 / 3;
-    	
 	    if(val != ""
 	      && !isNaN(val)
 	      && val <= 100
 	      && val >= 0)
-	    {
-	      console.log(val);
-	      
+	    {	      
 	      var valOrig = val;
 	      val = 100 - val;
 	      

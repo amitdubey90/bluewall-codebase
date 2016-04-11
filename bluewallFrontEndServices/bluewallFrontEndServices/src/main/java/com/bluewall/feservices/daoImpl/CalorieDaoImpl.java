@@ -33,24 +33,10 @@ public class CalorieDaoImpl implements CalorieDao {
 
 		int totalCaloriesBurnt = 0;
 		log.info("Fetching Sum of Caloreies Burnt for a day");
-		/*DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		
-		Calendar calendar = Calendar.getInstance();*/
 		String currentDateTime = date + " 23:59:59";
-		System.out.println("currentDateTime: " + currentDateTime);
-		/*try {
-			calendar.setTime(dateFormat.parse(currentDateTime));
-		} catch (ParseException e1) {
-			log.error("Exception occured while parsing Date",e1);
-		}*/
-		/*calendar.set(Calendar.HOUR_OF_DAY, 00);
-		calendar.set(Calendar.MINUTE, 00);
-		calendar.set(Calendar.SECOND, 00);
-		calendar.set(Calendar.MILLISECOND, 00);*/
 		String startDateTime = date + " 00:00:00";
-		System.out.println("SQL: " + Queries.GET_TOTAL_CALORIE_BURNT + " where userID = " + userID	+ " and startTime >= '" + startDateTime + "' and startTime <= '" + currentDateTime + "'");
 		try (ResultSet resultSet = dataSource.getConnection().prepareStatement(Queries.GET_TOTAL_CALORIE_BURNT + " where userID = " + userID
-						+ " and startTime >= '" + startDateTime + "' and startTime <= '" + currentDateTime + "'").executeQuery()) {
+						+ " and logTime >= '" + startDateTime + "' and logTime <= '" + currentDateTime + "'").executeQuery()) {
 			log.info("Data fetched from database successfully");
 			if (resultSet.next())
 				totalCaloriesBurnt = resultSet.getInt("caloriesBurnt");
@@ -67,20 +53,8 @@ public class CalorieDaoImpl implements CalorieDao {
 		int totalCaloriesConsumed = 0;
 
 		log.info("Fetching Sum of Caloreies Consumed for a day");
-		/*DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		Calendar calendar = Calendar.getInstance();*/
 		String currentDateTime = date + " 23:59:59";
-		/*try {
-			calendar.setTime(dateFormat.parse(currentDateTime));
-		} catch (ParseException e1) {
-			log.error("Exception occured while parsing Date",e1);
-		}*/
-		/*calendar.set(Calendar.HOUR_OF_DAY, 00);
-		calendar.set(Calendar.MINUTE, 00);
-		calendar.set(Calendar.SECOND, 00);
-		calendar.set(Calendar.MILLISECOND, 00);*/
 		String startDateTime = date + " 00:00:00";
-		System.out.println("SQL: " + Queries.GET_TOTAL_CALORIE_CONSUMED + " where userID = " + userID + " and logTime >= '" + startDateTime + "' and logTime <= '" + currentDateTime + "'");
 		try (ResultSet resultSet = dataSource.getConnection().prepareStatement(Queries.GET_TOTAL_CALORIE_CONSUMED + " where userID = " + userID
 						+ " and logTime >= '" + startDateTime + "' and logTime <= '" + currentDateTime + "'").executeQuery()) {
 			log.info("Data fetched from database successfully");
@@ -91,6 +65,11 @@ public class CalorieDaoImpl implements CalorieDao {
 		}
 
 		return totalCaloriesConsumed;
+	}
+
+	@Override
+	public int getTargetWeight(int userID, String date) {
+		return 0;
 	}
 
 }

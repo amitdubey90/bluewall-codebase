@@ -2,10 +2,8 @@
 	<div class="row row-offcanvas row-offcanvas-left">
 		<!-- include sidebar. Always include inside a row element -->
 		<div ng-include src="'partials/sidebar.html'"></div>
-		<!-- <div ng-include src="'js/commons/datepicker.js'"></div> -->
 		<div ng-include src="'js/commons/circle.js'"></div>
 		<div ng-include src="'js/commons/circleNumber.js'"></div>
-		<div ng-include src="'js/commons/currentDate.js'"></div>
 
 		<div class="col-xs-12 col-sm-9">
 		<div class="col-sm-12">
@@ -24,7 +22,7 @@
 						      
 						      <span class="inner">
 						        <span class="percent">
-						          <span id="abc">{{calorieDetails.sumCalorieBurnt}}</span>%
+						          <span id="abc"></span>%
 						        </span>
 						        <span class="water"></span>
 						        
@@ -32,9 +30,9 @@
 						      </span>
 						    </div>						    
 						  </div>  
-						  <div id="shiva"><span class="count" id="caloriesBurnt">{{caloriesBurnt}}</span></div>
-						  <div id="shiva"><span class="count" id="caloriesConsumed">{{calorieInfo.sumCalorieConsumed}}</span></div>
-						  <div id="shiva"><span class="count" id="netCalories"></span></div>
+						  <div id="shiva"><span class="count" id="calorieBurnt"></span></div>
+						  <div id="shiva"><span class="count" id="calorieConsumed"></span></div>
+						  <div id="shiva"><span class="count"></span></div>
 					</div>
 					 
 				</div>

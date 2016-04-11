@@ -22,4 +22,9 @@ public class CalorieServiceImpl implements CalorieService {
 		return calorieDao.getSumCaloriesConsumed(userID,date);
 	}
 
+	@Override
+	public int getTargetWeight(int userID, String date) {
+		return calorieDao.getTargetWeight(userID,date);
+	}
+
 }
