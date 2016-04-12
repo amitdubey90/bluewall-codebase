@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.bluewall.feservices.service.ActivityService;
-import com.bluewall.util.bean.ActivityInfo;
 import com.bluewall.util.bean.UserActivityLog;
 
 import lombok.extern.slf4j.Slf4j;
@@ -29,35 +28,16 @@ public class ActivityController {
 	 * Activity service to fetch user's activity based on given userID
 	 */
 
-	@RequestMapping(value = "/activityLog/{userID}", method = RequestMethod.GET)
+	@RequestMapping(value = "/activityLog", method = RequestMethod.GET)
 	@ResponseBody
-	public void getActivityLog(@PathVariable("userID") int userID) {
+	public List<UserActivityLog> getActivityLog() {
 
+		int userID = 1;
 		log.info("UserActivityLog service called");
 		List<UserActivityLog> activityList = activityService.getUserActivityLogs(userID);
 		log.info("User's activity logs fetched successfully");
 
-		for (UserActivityLog iterateList : activityList) {
-			System.out.println("calories burnt: " + iterateList.getCaloriesBurnt());
-			System.out.println("distance: " + iterateList.getDistance());
-			System.out.println("Name: " + iterateList.getName());
-			System.out.println("Duration: " + iterateList.getDistance());
-			System.out.println("Activity Log date: " + iterateList.getActivityLogDate());
-		}
-	}
-
-	@RequestMapping("/getRecentActivity")
-	@ResponseBody
-
-	public List<ActivityInfo> getUserActivityFeed() {
-
-		// fetch the user id from the session
-		int userId = 1;
-
-		// System.out.println("******************"+info.getEmailID()+"******************");
-		List<ActivityInfo> recentActivityList = activityService.fetchUserActivityFeedFromDevice(userId);
-
-		return recentActivityList;
+		return activityList;
 	}
 
 	@RequestMapping(value = "/createActivity")
@@ -66,6 +46,7 @@ public class ActivityController {
 
 		// fetch the user id from the session
 		int userId = 1;
+		activity.setLoggedFrom("Fitness Application");
 		activity.setLogTime(new java.sql.Timestamp(Calendar.getInstance().getTime().getTime()));
 		activityService.createActivity(activity, userId);
 	}
