@@ -39,6 +39,11 @@ app.config([
       templateUrl: 'partials/logFood.html',
       controller: 'logFoodController'
     })
+    .state('getFoodLogged', {
+      url: '/getFoodLogged',
+      templateUrl: 'partials/displayLoggedFood.html',
+      controller: 'logFoodController'
+    })
     .state('getActivityLogForm', {
         url: '/getActivityLogForm',
         templateUrl: 'partials/logActivity.html',
