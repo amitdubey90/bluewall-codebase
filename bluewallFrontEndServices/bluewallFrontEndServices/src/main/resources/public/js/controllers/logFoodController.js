@@ -29,6 +29,14 @@ app.controller('logFoodController', function($scope, logFoodService, $filter,$ro
 		});
 	}
 
+	logFoodService.getFoodLogged().then(function(foodLogged){
+		 console.log("Data returned from angular service:food Logged");
+		 $scope.foodLoggedList = foodLogged.data;
+	},function(error){
+		$scope.error = "Unable to load food logged: "+error.statusText;
+		console.log(error.statusText);
+	});
+	
 });
 
 app.directive('modal', function () {
@@ -75,6 +83,7 @@ app.directive('modal', function () {
 
 app.service('logFoodService', function($http, $state) {
 	console.log("in log food service");
+	
 	this.logFood = function(food) {
 		console.log(food.name + " " + food.calories + " " + food.foodLogTime
 				+ " " + food.weightConsumed + " " + food.type);
@@ -83,5 +92,12 @@ app.service('logFoodService', function($http, $state) {
 					console.log("response from backend service: " + data);
 					return data;
 				});
+	}
+	
+	this.getFoodLogged =  function(){
+		return $http.get("/user/food/foodLog/1").then(function(foodLogged){
+			console.log("Data returned from backend service: acitivity feed"+foodLogged);
+			return foodLogged;
+		});
 	}
 });

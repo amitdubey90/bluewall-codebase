@@ -40,13 +40,12 @@ public class FoodDaoImpl implements FoodDao {
 
 		List<UserFood> userFoodLogList = new ArrayList<UserFood>();
 		ResultSet rs = null;
-
 		try {
 			rs = dataSource.getConnection()
 					.prepareStatement("select FoodInfo.name, FoodLog.type,"
-							+ " FoodLog.weightConsumed, FoodLog.timeConsumed, FoodLog.calories"
+							+ " FoodLog.weightConsumed, FoodLog.foodLogDate, FoodLog.calories, FoodLog.logTime"
 							+ " from FoodLog, FoodInfo"
-							+ " where FoodInfo.foodID = FoodLog.foodID and FoodLog.userID = " + userID)
+							+ " where FoodInfo.foodID = FoodLog.foodID and FoodLog.userID = " + userID + " order by FoodLog.logTime desc")
 					.executeQuery();
 
 			while (rs.next()) {
@@ -56,6 +55,7 @@ public class FoodDaoImpl implements FoodDao {
 				userFoodLog.setFoodLogTime(rs.getDate("foodLogDate"));
 				userFoodLog.setCalories(rs.getFloat("calories"));
 				userFoodLog.setWeightConsumed(rs.getFloat("weightConsumed"));
+				userFoodLog.setLogTime(rs.getTimestamp("logTime"));
 				userFoodLogList.add(userFoodLog);
 			}
 

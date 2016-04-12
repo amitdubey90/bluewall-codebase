@@ -34,20 +34,14 @@ public class FoodController {
 
 	@RequestMapping(value = "/foodLog/{userID}", method = RequestMethod.GET)
 	@ResponseBody
-	public void getUserFoodLog(@PathVariable("userID") int userID) {
+	public List<UserFood> getUserFoodLog(@PathVariable("userID") int userID) {
 
 		List<UserFood> userFoodLogList = new ArrayList<UserFood>();
 		log.info("User food log service called");
 		userFoodLogList = foodService.getUserFoodLog(userID);
 		log.info("User food logs fetched successfully");
 
-		for (UserFood foodLogIterator : userFoodLogList) {
-			System.out.println("Food name: " + foodLogIterator.getName());
-			System.out.println("Food type: " + foodLogIterator.getType());
-			System.out.println("Food Calorie: " + foodLogIterator.getCalories());
-			System.out.println("Food weight consumed: " + foodLogIterator.getWeightConsumed());
-			System.out.println("Time when food is consumed: " + foodLogIterator.getFoodLogTime());
-		}
+		return userFoodLogList;
 	}
 
 	/*
