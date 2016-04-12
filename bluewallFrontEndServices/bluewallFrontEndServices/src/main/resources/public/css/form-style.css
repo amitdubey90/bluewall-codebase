@@ -20,3 +20,15 @@
 	font-size:xx-large;
 	position: inherit;
 }
+
+.slider-font-style {
+	font-size: small;
+	font-family: monospace;
+	margin-left: 20%;
+}
+
+.card-style {
+	color: white;
+	border-style: double;
+	align: center;
+}

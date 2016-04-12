@@ -15,9 +15,16 @@ public class UserActivityLog {
 	private Date activityLogDate;
 	private float duration;
 	private Timestamp logTime;
-	
-	
-	
+	private String loggedFrom;
+
+	public String getLoggedFrom() {
+		return loggedFrom;
+	}
+
+	public void setLoggedFrom(String loggedFrom) {
+		this.loggedFrom = loggedFrom;
+	}
+
 	public Timestamp getLogTime() {
 		return logTime;
 	}
@@ -50,7 +57,6 @@ public class UserActivityLog {
 		this.name = name;
 	}
 
-
 	public Date getActivityLogDate() {
 		return activityLogDate;
 	}
@@ -66,8 +72,5 @@ public class UserActivityLog {
 	public void setDuration(float duration) {
 		this.duration = duration;
 	}
-	
-	
-
 
 }

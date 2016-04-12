@@ -42,28 +42,32 @@ public class ActivityDaoImpl implements ActivityDao {
 
 		List<UserActivityLog> userActivityLog = new ArrayList<UserActivityLog>();
 		ResultSet rs = null;
+		PreparedStatement pst = null;
 
 		log.info("Now fetching user activity logs");
 
 		try {
 
-			rs = dataSource.getConnection()
-					.prepareStatement("select ActivityInfo.type, ActivityLog.distance, ActivityLog.startTime, "
-							+ "ActivityLog.duration, ActivityLog.caloriesBurnt, ActivityInfo.name, ActivityInfo.MET "
-							+ "from ActivityLog, ActivityInfo where ActivityLog.userID = " + userID
-							+ " and ActivityInfo.activityID = ActivityLog.activityID")
-					.executeQuery();
+			pst = dataSource.getConnection()
+					.prepareStatement("select ActivityLog.name, ActivityLog.distance,ActivityLog.duration, "
+							+ "ActivityLog.caloriesBurnt,ActivityLog.activityLogDate, SupportedDevice.deviceName "
+							+ "from ActivityLog, SupportedDevice where  ActivityLog.userID = " + userID
+							+ " and SupportedDevice.deviceID = ActivityLog.loggedFrom");
+			rs = pst.executeQuery();
 
 			while (rs.next()) {
 				UserActivityLog userActivity = new UserActivityLog();
 				userActivity.setName(rs.getString("name"));
 				userActivity.setDistance(rs.getFloat("distance"));
-				// userActivity.setDuration(rs.getInt("duration"));
-				userActivity.setCaloriesBurnt(rs.getInt("caloriesBurnt"));
+				userActivity.setDuration(rs.getFloat("duration"));
+				userActivity.setCaloriesBurnt(rs.getFloat("caloriesBurnt"));
+				userActivity.setActivityLogDate(rs.getDate("activityLogDate"));
+				userActivity.setLoggedFrom(rs.getString("deviceName"));
 				userActivityLog.add(userActivity);
 			}
 
 		} catch (SQLException e) {
+			e.printStackTrace();
 			log.info("GET USER ACTIVITY SERVICE: SQL Exception.");
 		} finally {
 			if (rs != null) {
@@ -116,7 +120,7 @@ public class ActivityDaoImpl implements ActivityDao {
 			prepStatement.setFloat(5, userActivity.getDuration());
 			prepStatement.setFloat(6, userActivity.getCaloriesBurnt());
 			prepStatement.setInt(7, 14);
-			prepStatement.setTimestamp(8,userActivity.getLogTime());
+			prepStatement.setTimestamp(8, userActivity.getLogTime());
 			prepStatement.executeUpdate();
 			connection.commit();
 			log.info("Activity Successfully created for user ID: " + userId);
