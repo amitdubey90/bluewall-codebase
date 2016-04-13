@@ -49,6 +49,11 @@ app.config([
         templateUrl: 'partials/logActivity.html',
         controller: 'logActivityController'
       })
+      .state('getLoggedActivity', {
+        url: '/getLoggedActivity',
+        templateUrl: 'partials/displayLoggedActivity.html',
+        controller: 'logActivityController'
+      })
     .state('haha', {
       url: '/haha',
       templateUrl: 'partials/haha.html'

@@ -52,7 +52,7 @@ public class ActivityDaoImpl implements ActivityDao {
 					.prepareStatement("select ActivityLog.name, ActivityLog.distance,ActivityLog.duration, "
 							+ "ActivityLog.caloriesBurnt,ActivityLog.activityLogDate, SupportedDevice.deviceName "
 							+ "from ActivityLog, SupportedDevice where  ActivityLog.userID = " + userID
-							+ " and SupportedDevice.deviceID = ActivityLog.loggedFrom");
+							+ " and SupportedDevice.deviceID = ActivityLog.loggedFrom order by ActivityLog.logTime desc");
 			rs = pst.executeQuery();
 
 			while (rs.next()) {

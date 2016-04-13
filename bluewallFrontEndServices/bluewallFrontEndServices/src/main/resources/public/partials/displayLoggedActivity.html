@@ -1,0 +1,242 @@
+<div class="container">
+	<div class="row row-offcanvas row-offcanvas-left">
+		<div ng-include src="'partials/sidebar.html'" />
+		<div ng-include src="'js/commons/loadDependencies.js'" />
+		<div ng-include src="'js/commons/calculateCalories.js'" />
+		<div ng-include src="'js/commons/collapse.js'"/> 
+		<div class="col c2">
+		<br>		
+			<div id="custom-show-hide-example" style="width: 270%;" >
+			       <h3>Log Activity</h3>
+			       <section>		
+					<form ng-submit="logActivity(activity)" novalidate>
+						<div class="row">
+							<div class="col-xs-8" style="width: 109%;">
+								<div class="form-align" style="margin-left: -8%;margin-top: 4%;">
+									<div class="form-group row">
+										<label for="activityType"
+											class="col-xs-4 form-control-label label-width">Activity
+											Type<span class="mandatory">*</span>
+										</label>
+										<div class="col-xs-6">
+											<select class="selectpicker form-control" id="activityType"
+												ng-model="activity.type" ng-change="change()" required>
+												<option value="">What type of activity?</option>
+												<option value=0.9>Sleeping</option>
+												<option value=1.0>Watching television</option>
+												<option value=1.5>Writing,Typing</option>
+												<option value=2.3>Walk,1.7 mph very slow</option>
+												<option value=2.9>Walking,2.5 mph</option>
+												<option value=2.9>Bicycling</option>
+												<option value=3.3>Walking 3.0 mph</option>
+												<option value=3.5>Home exercise, light effort</option>
+												<option value=4.0>bicycling, <10 mph (16 km/h),
+													leisure, to work or for pleasure</option>
+												<option value=5.5>bicycling, stationary, 100 watts,
+													light effort</option>
+												<option value=5.8>sexual activity</option>
+												<option value=7.0>jogging, general</option>
+												<option value=8.0>calisthenics (e.g. pushups, sit
+													ups, pull ups, jumping jacks), heavy, vigorous effort</option>
+												<option value=7.0>jogging, general</option>
+												<option value=8.0>calisthenics (e.g. pushups, sit
+													ups, pull ups, jumping jacks), heavy, vigorous effort</option>
+												<option value=8.0>running jogging, in place</option>
+												<option>Other</option>
+											</select>
+		
+										</div>
+										<a target="_blank" href="#"
+											title="Name of the activity. Eg.Running"><img
+											src="images/help.png" style="height: 26x; width: 26px;" /></a>
+									</div>
+		
+									<div class="form-group row" ng-show="activity.type=='Other'">
+										<label for="activtyName"
+											class="col-sm-4 form-control-label label-width">Activity
+											Name <span class="mandatory">*</span>
+										</label>
+										<div class="col-xs-6">
+											<input type="text" class="form-control" id="activtyName"
+												ng-model="activity.name" placeholder="Name of the activity"
+												required>
+										</div>
+										<a target="_blank" href="#"
+											title="Name of the Activity. Eg.Playing outdoor sports"><img
+											src="images/help.png" style="height: 26x; width: 26px;" /></a>
+									</div>
+		
+		
+									<div class="form-group row">
+										<label for="distance"
+											class="col-sm-4 form-control-label label-width">Distance</label>
+										<div class="col-sm-6">
+											<div class="input-group">
+												<input type="number" class="form-control" id="distance" min=0
+													ng-model="activity.distance" placeholder="Distance">
+												<span class="input-group-addon">Meter</span>
+											</div>
+										</div>
+										<a target="_blank" href="#" title="Distance covered"><img
+											src="images/help.png" style="height: 26x; width: 26px;" /></a>
+									</div>
+		
+									<div class="form-group row">
+										<label for="activityLogDate"
+											class="col-sm-4 form-control-label label-width">Date <span
+											class="mandatory">*</span>
+										</label>
+										<div class="col-sm-6">
+											<input type='date' class="form-control"
+												placeholder="Start time of the activity" id="activityLogDate"
+												ng-model="activity.activityLogDate" />
+										</div>
+										<a target="_blank" href="#"
+											title="Date when activity was performed"><img
+											src="images/help.png" style="height: 26x; width: 26px;" /></a>
+									</div>
+		
+									<div class="form-group row">
+		
+										<label class="col-xs-4 form-control-label label-width">Duration
+											<span class="mandatory">*</span>
+										</label>
+										<div class="col-sm-3">
+											<small>Hours:</small>
+											<select class="selectpicker form-control" id="hours"
+												ng-model="activity.hours" ng-change="change()" required>
+												<option value="">HOURS</option>
+												<option>0</option>
+												<option>1</option>
+												<option>2</option>
+												<option>3</option>
+												<option>4</option>
+												<option>5</option>
+												<option>6</option>
+											</select>
+										</div>
+										<span>
+											<div class="col-sm-3">
+													<small>Mins:</small>
+												<select class="selectpicker form-control" id="min"
+													ng-model="activity.mins" ng-change="change()" required>
+													<option value="">MINS</option>
+													<option>0</option>
+													<option>1</option>
+													<option>2</option>
+													<option>3</option>
+													<option>4</option>
+													<option>4</option>
+													<option>6</option>
+													<option>7</option>
+													<option>8</option>
+													<option>9</option>
+													<option>10</option>
+													<option>11</option>
+													<option>12</option>
+													<option>13</option>
+													<option>14</option>
+													<option>15</option>
+													<option>16</option>
+													<option>17</option>
+													<option>18</option>
+													<option>19</option>
+													<option>20</option>
+													<option>21</option>
+													<option>22</option>
+													<option>23</option>
+													<option>24</option>
+													<option>25</option>
+													<option>26</option>
+													<option>27</option>
+													<option>28</option>
+													<option>29</option>
+													<option>30</option>
+													<option>31</option>
+													<option>32</option>
+													<option>33</option>
+													<option>34</option>
+													<option>35</option>
+													<option>36</option>
+													<option>37</option>
+													<option>38</option>
+													<option>39</option>
+													<option>40</option>
+													<option>41</option>
+													<option>42</option>
+													<option>43</option>
+													<option>44</option>
+													<option>45</option>
+													<option>46</option>
+													<option>47</option>
+													<option>48</option>
+													<option>49</option>
+													<option>50</option>
+													<option>51</option>
+													<option>52</option>
+													<option>53</option>
+													<option>54</option>
+													<option>55</option>
+													<option>56</option>
+													<option>57</option>
+													<option>58</option>
+													<option>59</option>
+												</select>
+		
+											</div>
+										</span> <a target="_blank" href="#"
+											title="Duration of physical activity"><img
+											src="images/help.png" style="height: 26x; width: 26px;" /></a>
+									</div>
+		
+									<div class="form-group row">
+										<label for="activityCal"
+											class="col-sm-4 form-control-label label-width">Calories
+											expenditure <span class="mandatory">*</span>
+										</label>
+		
+										<div class="col-sm-6">
+											<div class="input-group">
+												<input type="text" class="form-control" id="activityCal"
+													ng-model="activity.caloriesBurnt"
+													placeholder="Calories burnt" required> <span
+													class="input-group-addon">Kcals</span>
+											</div>
+										</div>
+										<a target="_blank" href="#" title="Calories burnt"><img
+											src="images/help.png" style="height: 26x; width: 26px;" /></a>
+									</div>
+		
+									<div class="form-group row">
+										<div class="col-sm-offset-3 col-sm-8">
+		
+											<button class="btn btn-primary btn-md btn-block activity"
+												type="submit">
+												<strong>Log</strong>
+											</button>
+		
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</form>
+				</section>
+		     </div>
+		     <br>
+			
+			<div ng-repeat="activityLogged in activityLoggedList">
+			<div id="custom-show-hide-example" style="width: 270%;" >
+		     
+		       <h3>Activity Log Time: {{activityLogged.activityLogDate}}</h3>
+		       <div>
+		         <p>Name: {{activityLogged.name}}</p>
+		         <p>Distance: {{activityLogged.distance}}</p>
+		         <p>Duration: {{activityLogged.duration}}</p>
+		         <p>Calories Burnt: {{activityLogged.caloriesBurnt}}</p>	         
+		       </div>
+		     </div>
+			</div>
+		</div>
+	</div>
+</div>
