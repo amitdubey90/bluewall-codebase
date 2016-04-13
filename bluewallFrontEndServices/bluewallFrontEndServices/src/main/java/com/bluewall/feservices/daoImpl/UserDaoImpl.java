@@ -63,68 +63,78 @@ public class UserDaoImpl implements UserDao {
 		int userID = 0;
 		ResultSet rs = null;
 		Connection connection = null;
+		PreparedStatement preparedStatement = null;
 		
-		String insrtUserInfosql = "insert into UserInfo(firstName, lastName, emailID, contactNumber, age, gender, height,"
-				+ " weight, activityLevel, currentLocation) "
-				+ "values ('"+user.getFirstName()+"', '"+user.getLastName()+"','"+user.getEmailID()+"'," 
-				+ user.getContactNumber()+","+user.getAge()+",'"+user.getGender()+"',"+user.getHeight()
-				+ "," + user.getWeight() + ",'"+user.getActivityLevel()+"','"+user.getCurrentLocation()+"')";
 
 		try {
 			connection = datasource.getConnection();
 			
 			connection.setAutoCommit(false);
+
+			preparedStatement = connection.prepareStatement(Queries.INS_USER_INFO);
+			preparedStatement.setString(1, user.getFirstName());
+			preparedStatement.setString(2, user.getLastName());
+			preparedStatement.setString(3, user.getEmailID());
+			preparedStatement.setString(4, user.getContactNumber());
+			preparedStatement.setInt(5, user.getAge());
+			preparedStatement.setString(6, user.getGender());
+			preparedStatement.setDouble(7, user.getHeight());
+			preparedStatement.setDouble(8, user.getWeight());
+			preparedStatement.setString(9,user.getActivityLevel());
+			preparedStatement.setString(10, user.getCurrentLocation());
+			int rowCount = preparedStatement.executeUpdate();
+			preparedStatement.close();
 			
-			int rowCount = connection.prepareStatement(insrtUserInfosql).executeUpdate();
-			System.out.println("data in userinfo detail");
 			
 			if (rowCount != 0){
-				log.info("User succesfully registered, Data inserted in UserInfo!");
+				log.info("CREATE USER SERVICE: User succesfully registered, Data inserted in UserInfo!");
 			}
 			else{
-				log.info("Fail to register the user");
+				log.info("CREATE USER SERVICE: Fail to register the user");
 			}
 			
 			rs = connection.prepareStatement("select userID from UserInfo where emailID = "
-					+ "'"+user.getEmailID()+"'")
+													+ "'"+user.getEmailID()+"'")
 					.executeQuery();
 			
 			if (rs.next()){
 				userID = rs.getInt("userID");
-				log.info("New user registered with user id: "+userID);
+				log.info("CREATE USER SERVICE: New user registered with user id: " + userID);
 				
 				//check to see if user enters a goal
 				if (user.getGoalType() != null){
 					
-					PreparedStatement preparedStatement = connection.prepareStatement(Queries.INS_USER_GOALS);
+					preparedStatement = connection.prepareStatement(Queries.INS_USER_GOALS);
 					preparedStatement.setInt(1, userID);
 					preparedStatement.setString(2, user.getGoalType());
 					preparedStatement.setDouble(3, user.getTargetWeight());
 					preparedStatement.setDate(4, user.getStartDate());
 					preparedStatement.setDate(5, user.getEndDate());
 					preparedStatement.executeUpdate();
-					log.info("User goals inserted");
+					preparedStatement.close();
+					log.info("CREATE USER SERVICE: User Goals inserted");
 
 				}
 				
-				log.info("Now inserting in users database");
-				PreparedStatement prepStatement = connection.prepareStatement(Queries.INS_USERS);
-				prepStatement.setString(1, user.getEmailID());
-				prepStatement.setString(2, user.getPassword());
-				prepStatement.executeUpdate();
+				log.info("CREATE USER SERVICE: Now inserting in users database");
+				preparedStatement = connection.prepareStatement(Queries.INS_USERS);
+				preparedStatement.setString(1, user.getEmailID());
+				preparedStatement.setString(2, user.getPassword());
+				preparedStatement.executeUpdate();
+				preparedStatement.close();
 				connection.commit();
 			}
 			else{
-				log.info("Unable to fetch registered user");
+				log.info("CREATE USER SERVICE: Unable to fetch registered user");
 			}
 			
 		} catch (SQLException e) {
 			try {
 				connection.rollback();
-				log.info("Create User Service: Successfully rolled back changes from the database!");
+				log.info("CREATE USER SERVICE: Successfully rolled back changes from the database!");
 				e.printStackTrace();
 			  } catch (SQLException e1) {
-				  log.info("Create User Service: Could not rollback updates " + e1.getMessage());
+				  log.info("CREATE USER SERVICE: Could not rollback updates " + e1.getMessage());
 			  }
 		} 
 		
@@ -133,7 +143,6 @@ public class UserDaoImpl implements UserDao {
 				try {
 					rs.close();
 				} catch (SQLException e) {
-					// TODO Auto-generated catch block
 					log.info("CREATE USER SERVICE: Result set object is not closed.");
 				}
 			}
@@ -148,6 +157,7 @@ public class UserDaoImpl implements UserDao {
 		
 		return userID;
 	}
+
 
 	@Override
 	public List<UserProfile> getUserDetails(int userID) {

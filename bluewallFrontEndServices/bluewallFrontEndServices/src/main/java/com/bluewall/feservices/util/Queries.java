@@ -22,4 +22,7 @@ public class Queries {
 	public static final String GET_DAILY_NUTRITION_PLAN = "select dailyCalories, fatInGms, fatInCalories, carbsInGms, "
 			+ "carbsInCalories, proteinInGms, proteinInCalories" + " from UserDailyNutrientPlan";
 	public static final String GET_USER_PRINCIPAL = "SELECT userID, firstName, lastName, emailID FROM UserInfo where emailID = ?";
+	public static final String INS_USER_INFO = "insert into UserInfo(firstName, lastName, emailID, contactNumber, age, gender, height,"
+			+ " weight, activityLevel, currentLocation)"
+			+ " values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 }
