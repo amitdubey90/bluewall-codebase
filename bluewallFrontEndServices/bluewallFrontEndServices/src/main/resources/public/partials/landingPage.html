@@ -10,7 +10,7 @@
 						<h2 class="to-animate">Something Else</h2>
 						<p> 
 							<button class="btn btn-lg text-normal btn-primary-outline" ng-click="toggleModal()">Login</button>
-							<a href="#/register"><button class="btn btn-lg text-normal btn-primary-outline">Register</button></a>
+							<button class="btn btn-lg text-normal btn-primary-outline" ng-click="toggleRegisModal()">Register</button>
 						</p>
 					</div>
 				</div>
@@ -21,18 +21,123 @@
 </section>
 <modal title="Login form" visible="showModal">
   <form class="form-signin" ng-submit="login()"  ng-controller="loginController">
-      <h2 class="form-signin-heading">Please sign in</h2>
-      <label for="inputEmail" class="sr-only">Email address</label>
-      <input type="email" id="inputEmail" ng-model="credentials.username" class="form-control" placeholder="Email address" required autofocus>
-      <label for="inputPassword" class="sr-only">Password</label>
-      <input type="password" id="inputPassword" ng-model="credentials.password" class="form-control" placeholder="Password" required>
-      <div class="checkbox">
-        <label>
-          <input type="checkbox" value="remember-me"> Remember me
-        </label>
-      </div>
-      <button class="btn btn-lg btn-primary btn-block" type="submit" ng-click="toggleModal()">Sign in</button>
+ 	  <table border="0" style="width: 100%;">
+		<tr>
+			<td>First Name*:</td>
+			<td><input type="email" id="inputEmail" ng-model="credentials.username" class="form-control" placeholder="Email address" required autofocus></td>
+		</tr>
+		<tr></tr>
+		<tr>
+			<td>Last Name*:</td>
+			<td><input type="password" id="inputPassword" ng-model="credentials.password" class="form-control" placeholder="Password" required></td>
+		</tr>
+		<tr>
+			<td>
+				<div class="checkbox">
+			        <label>
+			          <input type="checkbox" value="remember-me"> Remember me
+			        </label>
+			    </div>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2" align="center"><button class="btn btn-lg btn-primary btn-block" type="submit" ng-click="toggleModal()">Sign in</button></td>
+		</tr>
+	  </table>
     </form>
+</modal>
+<modal title="Registration form" visible="showRegisModal">
+  <form ng-submit="register(user)" method="post" ng-controller="registrationController">
+			<table border="0" style="width: 100%;">
+				<tr>
+					<td>First Name*:</td>
+					<td><input class="form-control" type="text" name="firstName"	ng-model="user.firstName" required="required" /></td>
+				</tr>
+				<tr>
+					<td>Last Name*:</td>
+					<td><input class="form-control" type="text" name="lastName" ng-model="user.lastName" required="required" /></td>
+				</tr>
+				<tr>
+					<td>E-mail*:</td>
+					<td><input class="form-control" type="text" name="emailID" ng-model="user.emailID" required="required" /></td>
+				</tr>
+
+				<tr>
+					<td>Password*:</td>
+					<td><input class="form-control" type="password" ng-model="user.password" required="required" /></td>
+				</tr>
+
+
+				<!-- trigger javascript event to validate both pwd fields -->
+				<!-- <tr>
+					<td>Confirm Password:</td>
+					<td><form:password path="password" /></td>
+				</tr> -->
+
+				<tr>
+					<td>Contact Number:</td>
+					<td><input class="form-control" type="text" ng-model="user.contactNumber" /></td>
+				</tr>
+				<tr>
+					<td>Age*:</td>
+					<td><input class="form-control" type="text" ng-model="user.age" required="required"/></td>
+				</tr>
+				<tr>
+					<td>Gender*:</td>
+					<td><select class="form-control" name="gender" ng-model="user.gender" required="required">
+							<option value="female">Female</option>
+							<option value="male">Male</option>
+					</select></td>
+				</tr>
+				<tr>
+					<td>Height (inches)*:</td>
+					<td><input class="form-control" type="text" ng-model="user.height" required="required"/></td>
+				</tr>
+				<tr>
+					<td>Weight (pounds)*:</td>
+					<td><input class="form-control" type="text" ng-model="user.weight" required="required"/></td>
+				</tr>
+				<tr>
+					<td>Activity Level*:</td>
+					<td><select class="form-control" name="actLevel" ng-model="user.activityLevel" required="required">
+							<option value="veryActive">Very Active</option>
+							<option value="active">Active</option>
+							<option value="moderateActive">Moderate</option>
+							<option value="noActivity">No Activity</option>
+					</select></td>
+				</tr>
+				<tr>
+					<td>Current Location*:</td>
+					<td><input class="form-control" type="text" ng-model="user.currentLocation" required="required"/></td>
+				</tr>
+				<tr>
+					<td>Goal Type:</td>
+					<td><select class="form-control" name="goalType" ng-model="user.goalType">
+							<option value="gain">Gain Weight</option>
+							<option value="lose">Lose Weight</option>
+							<option value="maintain">Maintain Weight</option>
+
+					</select></td>
+				</tr>
+				<tr>
+					<td>Target Weight:</td>
+					<td><input class="form-control" type="text" ng-model="user.targetWeight" /></td>
+				</tr>
+				<!-- <tr>
+					<td>Start Date:</td>
+					<td><input type="text" th:field="*{startDate}"
+						placeholder="MM-DD-YYYYY" /></td>
+				</tr>
+				<tr>
+					<td>End Date:</td>
+					<td><input type="text" th:field="*{endDate}"
+						placeholder="MM-DD-YYYYY" /></td>
+				</tr> -->
+				<tr>
+					<td colspan="2" align="center"><input class="btn btn-lg btn-primary btn-block" type="submit" value="Register" ng-click="toggleRegisModal()" /></td>
+				</tr>
+			</table>
+		</form>
 </modal>
 <section id="fh5co-intro">
 	<div class="container">

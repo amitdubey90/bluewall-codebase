@@ -5,6 +5,11 @@ app.controller('welcomeController', function($scope, $ocLazyLoad, $state){
   $scope.toggleModal = function(){
       $scope.showModal = !$scope.showModal;
   };
+  
+  $scope.showRegisModal = false;
+  $scope.toggleRegisModal = function(){
+      $scope.showRegisModal = !$scope.showRegisModal;
+  };
   // Animations
   // Home
 
