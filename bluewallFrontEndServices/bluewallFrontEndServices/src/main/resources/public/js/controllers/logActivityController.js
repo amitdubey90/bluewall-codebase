@@ -79,7 +79,7 @@ app.service('logActivityService', function($http, $state) {
 	}
 	
 	this.getActivityLogged =  function(){
-		return $http.get("/user/activity/activityLog/1").then(function(activityLogged){
+		return $http.get("/user/activity/activityLog").then(function(activityLogged){
 			console.log("Data returned from backend service: acitivity logs: "+activityLogged);
 			return activityLogged;
 		});

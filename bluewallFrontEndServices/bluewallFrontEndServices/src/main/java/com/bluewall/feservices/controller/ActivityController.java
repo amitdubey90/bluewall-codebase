@@ -28,10 +28,11 @@ public class ActivityController {
 	 * Activity service to fetch user's activity based on given userID
 	 */
 
-	@RequestMapping(value = "/activityLog/{userID}", method = RequestMethod.GET)
+	@RequestMapping(value = "/activityLog", method = RequestMethod.GET)
 	@ResponseBody
-	public List<UserActivityLog> getActivityLog(@PathVariable("userID") int userID) {
+	public List<UserActivityLog> getActivityLog() {
 
+		int userID=1;
 		log.info("UserActivityLog service called");
 		List<UserActivityLog> activityList = activityService.getUserActivityLogs(userID);
 		log.info("User's activity logs fetched successfully");
