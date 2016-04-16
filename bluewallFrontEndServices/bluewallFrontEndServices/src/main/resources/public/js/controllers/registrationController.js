@@ -5,9 +5,10 @@ app.controller('registrationController', function($scope, $state, $rootScope, re
 	  console.log("Inside register function contrl")
 	  registrationService.registerUser(user).then(function(data) {
 			$rootScope.authenticated = true;
-			$state.go('userDashboard');
+			$state.go('welcome');
+			alert("Registration Successful");
 		}, function(error) {
-			console.log("error");
+			alert("Error in registering user")
 		});
 	}
 
