@@ -3,6 +3,8 @@ package com.bluewall.feservices.controller;
 import java.util.Calendar;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.bluewall.feservices.bean.UserPrincipal;
 import com.bluewall.feservices.service.ActivityService;
 import com.bluewall.util.bean.UserActivityLog;
 
@@ -30,25 +33,33 @@ public class ActivityController {
 
 	@RequestMapping(value = "/activityLog", method = RequestMethod.GET)
 	@ResponseBody
-	public List<UserActivityLog> getActivityLog() {
+	public List<UserActivityLog> getActivityLog(HttpSession session) {
+		int userId = 0;
+		UserPrincipal principal = (UserPrincipal) session.getAttribute("userPrincipal");
+		if (null != principal) {
+			userId = principal.getUserID();
+			log.info("UserActivityLog service called");
+			List<UserActivityLog> activityList = activityService.getUserActivityLogs(userId);
+			log.info("User's activity logs fetched successfully");
 
-		int userID=1;
-		log.info("UserActivityLog service called");
-		List<UserActivityLog> activityList = activityService.getUserActivityLogs(userID);
-		log.info("User's activity logs fetched successfully");
-
-		return activityList;
+			return activityList;
+		}
+		// TODO: HANDLE ERROR HANDLING HERE
+		return null;
 	}
 
 	@RequestMapping(value = "/createActivity")
 	@ResponseBody
-	public void createActivity(@RequestBody UserActivityLog activity) {
+	public void createActivity(@RequestBody UserActivityLog activity, HttpSession session) {
 
 		// fetch the user id from the session
-		int userId = 1;
-		activity.setLoggedFrom("Fitness Application");
-		activity.setLogTime(new java.sql.Timestamp(Calendar.getInstance().getTime().getTime()));
-		activityService.createActivity(activity, userId);
+		int userId = 0;
+		UserPrincipal principal = (UserPrincipal) session.getAttribute("userPrincipal");
+		if (null != principal) {
+			userId = principal.getUserID();
+			activity.setLoggedFrom("Fitness Application");
+			activity.setLogTime(new java.sql.Timestamp(Calendar.getInstance().getTime().getTime()));
+			activityService.createActivity(activity, userId);
+		}
 	}
-
 }
