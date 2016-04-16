@@ -1,10 +1,10 @@
-.col {
+#displayLogs .col {
   width: 320px;
   float: left;
   margin-right:32px;
   margin-bottom: 16px;
 }
-h3 {
+#displayLogs h3 {
   margin: 0;
   background-color: #52d3aa;
   background-image: linear-gradient(bottom, #52d3aa 14%, #52d3aa 57%);
@@ -25,11 +25,11 @@ h3 {
   text-align: -webkit-center;
 }
 
-h3 a {
+#displayLogs h3 a {
   color: white;
 } 
-h3:hover { background: #52d3aa; }
-h3.open  { background: #52d3aa; }
-h3.open a { background-position: 13px -25px; }
-h3 + div { padding: 10px; }
-h2 + div
+#displayLogs h3:hover { background: #52d3aa; }
+#displayLogs h3.open  { background: #52d3aa; }
+#displayLogs h3.open a { background-position: 13px -25px; }
+#displayLogs h3 + div { padding: 10px; }
+#displayLogs h2 + div
