@@ -12,18 +12,18 @@ import java.security.Principal;
 @RestController
 public class UserController {
 
-    @Autowired
-    UserDao userDao;
+	@Autowired
+	UserDao userDao;
 
-    @RequestMapping("/user")
-    public Principal user(Principal user, HttpSession session) {
+	@RequestMapping("/user")
+	public UserPrincipal user(Principal user, HttpSession session) {
 
-        // Hack to put userPrincipal in session
-        UserPrincipal userPrincipal = userDao.loadUserByName(user.getName());
-        if(userPrincipal != null) {
-                session.setAttribute("userPrincipal", userPrincipal);
-            return user;
-        }
-        return null;
-    }
+		// Hack to put userPrincipal in session
+		UserPrincipal userPrincipal = userDao.loadUserByName(user.getName());
+		if (userPrincipal != null) {
+			session.setAttribute("userPrincipal", userPrincipal);
+			return userPrincipal;
+		}
+		return null;
+	}
 }

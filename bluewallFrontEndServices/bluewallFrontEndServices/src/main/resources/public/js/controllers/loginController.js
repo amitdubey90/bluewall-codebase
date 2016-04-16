@@ -3,8 +3,8 @@ app.controller('loginController', function($scope, $rootScope, $http, $state, $l
   var self = this;
   $scope.credentials = {};
   // TODO remove credentials
-  $scope.credentials.username = "rainashastri30@gmail.com";
-  $scope.credentials.password = "raina";
+//  $scope.credentials.username = "rainashastri30@gmail.com";
+//  $scope.credentials.password = "raina";
 
   var authenticate = function(credentials, callback) {
     console.log("authenticating!!!!")
@@ -14,9 +14,11 @@ app.controller('loginController', function($scope, $rootScope, $http, $state, $l
 
   $http.get('user', {headers : headers}).success(function(data) {
     console.log("Data "+ JSON.stringify(data));
-    if (data.name) {
+    if (data.userID) {
       console.log("authenticating success!!!! "+ data)
       $rootScope.authenticated = true;
+      $rootScope.user = data;
+
       $state.go('userDashboard');
       //
     } else {
@@ -48,6 +50,7 @@ app.controller('loginController', function($scope, $rootScope, $http, $state, $l
     console.log('logging out')
   $http.post('logout', {}).success(function() {
     $rootScope.authenticated = false;
+    $rootScope.user = null;
     $location.path("/");
   }).error(function(data) {
     $rootScope.authenticated = false;
