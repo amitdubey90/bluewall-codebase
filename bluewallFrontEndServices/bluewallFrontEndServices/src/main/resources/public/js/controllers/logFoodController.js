@@ -47,7 +47,7 @@ app.service('logFoodService', function($http, $state) {
 	}
 	
 	this.getFoodLogged =  function(){
-		return $http.get("/user/food/foodLog/1").then(function(foodLogged){
+		return $http.get("/user/food/foodLog").then(function(foodLogged){
 			console.log("Data returned from backend service: food logs: "+foodLogged);
 			return foodLogged;
 		});

@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.bluewall.feservices.bean.FoodInfo;
+import com.bluewall.feservices.bean.UserPrincipal;
 import com.bluewall.feservices.service.FoodService;
 import com.bluewall.util.bean.UserFood;
 
@@ -32,16 +35,21 @@ public class FoodController {
 	 * getUserFoodLog service to return user's food logs
 	 */
 
-	@RequestMapping(value = "/foodLog/{userID}", method = RequestMethod.GET)
+	@RequestMapping(value = "/foodLog", method = RequestMethod.GET)
 	@ResponseBody
-	public List<UserFood> getUserFoodLog(@PathVariable("userID") int userID) {
+	public List<UserFood> getUserFoodLog(HttpSession session) {
+		int userID = 0;
+		UserPrincipal principal = (UserPrincipal) session.getAttribute("userPrincipal");
+		if (null != principal) {
+			userID = principal.getUserID();
+			List<UserFood> userFoodLogList = new ArrayList<UserFood>();
+			log.info("User food log service called");
+			userFoodLogList = foodService.getUserFoodLog(userID);
+			log.info("User food logs fetched successfully");
 
-		List<UserFood> userFoodLogList = new ArrayList<UserFood>();
-		log.info("User food log service called");
-		userFoodLogList = foodService.getUserFoodLog(userID);
-		log.info("User food logs fetched successfully");
-
-		return userFoodLogList;
+			return userFoodLogList;
+		}
+		return null;
 	}
 
 	/*
@@ -50,21 +58,22 @@ public class FoodController {
 
 	@RequestMapping(value = "/createFoodPlate", method = RequestMethod.POST, consumes = "application/json")
 	@ResponseBody
-	public void createFoodPlate(@RequestBody UserFood food) throws ParseException {
+	public void createFoodPlate(@RequestBody UserFood food, HttpSession session) throws ParseException {
 
-		// fetch user id from session
-		int userID = 1;
-		
-		food.setLogTime(new java.sql.Timestamp(Calendar.getInstance().getTime().getTime()));
-		//TODO:check foodlog time date
-		foodService.createFoodPlate(food, userID);
+		int userID = 0;
+		UserPrincipal principal = (UserPrincipal) session.getAttribute("userPrincipal");
+		if (null != principal) {
+			userID = principal.getUserID();
+			food.setLogTime(new java.sql.Timestamp(Calendar.getInstance().getTime().getTime()));
+			// TODO:check foodlog time date
+			foodService.createFoodPlate(food, userID);
+		}
 	}
 
 	@RequestMapping(value = { "/getFoodItems" }, method = RequestMethod.GET)
 	@ResponseBody
 	public List<FoodInfo> getFoodItems(@RequestParam String foodName) {
-//		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-//		UserInfo info = (UserInfo)auth.getPrincipal();
+
 		List<FoodInfo> foodList = new ArrayList<FoodInfo>();
 
 		foodList = foodService.getFoodInfo(foodName);
