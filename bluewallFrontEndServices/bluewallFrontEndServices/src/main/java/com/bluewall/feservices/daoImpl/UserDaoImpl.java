@@ -250,6 +250,7 @@ public class UserDaoImpl implements UserDao {
 
 	@Override
 	public UserPrincipal loadUserByName(String emailID) {
+		
 		log.info("loadUserByName started");
 		UserPrincipal userPrincipal = null;
 
@@ -263,11 +264,14 @@ public class UserDaoImpl implements UserDao {
 			if (rs.next()) {
 				String firstName = rs.getString("firstName");
 				String lastName = rs.getString("lastName");
+				int age = rs.getInt("age");
+				double height = rs.getDouble("height");
+				double weight = rs.getDouble("weight");
 
 				int userId = rs.getInt("userId");
 
 				userPrincipal = new UserPrincipal(emailID,firstName,
-						lastName, userId);
+						lastName, userId, age, height, weight);
 
 			}
 			log.info("loadUserByName successful");

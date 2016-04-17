@@ -11,13 +11,19 @@ public class UserPrincipal {
     private String lastName;
     private String emailID;
     private int userID;
+    private int age;
+    private double height;
+    private double weight;
 
     public UserPrincipal(String emailID, String firstName,
-                         String lastName, int userID) {
+                         String lastName, int userID, int age, double weight, double height) {
 
         this.firstName = firstName;
         this.lastName = lastName;
         this.emailID = emailID;
         this.userID = userID;
+        this.age = age;
+        this.height = height;
+        this.weight = weight;
     }
 }
