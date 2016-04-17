@@ -67,26 +67,26 @@ public class RegistrationController {
 		 * If user activity level is null, default = MODERATELY_ACTIVE
 		 */
 		
-		if (profile.getActivityLevel() == "SEDENTARY")
+		if (profile.getActivityLevel().equalsIgnoreCase("SEDENTARY"))
 			dailyCalorieRequirement = CalorieUtil.calculateDailyCalorieNeeds(targetWeight, profile.getHeight(), 
 					profile.getAge(), 
-						((profile.getGender() == "MALE") ? Gender.MALE : Gender.FEMALE), ActivityLevel.SEDENTARY);
-		else if (profile.getActivityLevel() == "LIGHTLY_ACTIVE")
+						((profile.getGender().equalsIgnoreCase("MALE")) ? Gender.MALE : Gender.FEMALE), ActivityLevel.SEDENTARY);
+		else if (profile.getActivityLevel().equalsIgnoreCase("LIGHTLY_ACTIVE"))
 			dailyCalorieRequirement = CalorieUtil.calculateDailyCalorieNeeds(targetWeight, profile.getHeight(), 
 					profile.getAge(), 
-						((profile.getGender() == "MALE") ? Gender.MALE : Gender.FEMALE), ActivityLevel.LIGHTLY_ACTIVE);
-		else if (profile.getActivityLevel() == "EXTREMELY_ACTIVE")
+						((profile.getGender().equalsIgnoreCase("MALE")) ? Gender.MALE : Gender.FEMALE), ActivityLevel.LIGHTLY_ACTIVE);
+		else if (profile.getActivityLevel().equalsIgnoreCase("EXTREMELY_ACTIVE"))
 			dailyCalorieRequirement = CalorieUtil.calculateDailyCalorieNeeds(targetWeight, profile.getHeight(), 
 					profile.getAge(), 
-						((profile.getGender() == "MALE") ? Gender.MALE : Gender.FEMALE), ActivityLevel.EXTREMELY_ACTIVE);
-		else if (profile.getActivityLevel() == "VERY_ACTIVE")
+						((profile.getGender().equalsIgnoreCase("MALE")) ? Gender.MALE : Gender.FEMALE), ActivityLevel.EXTREMELY_ACTIVE);
+		else if (profile.getActivityLevel().equalsIgnoreCase("VERY_ACTIVE"))
 			dailyCalorieRequirement = CalorieUtil.calculateDailyCalorieNeeds(targetWeight, profile.getHeight(), 
 					profile.getAge(), 
-						((profile.getGender() == "MALE") ? Gender.MALE : Gender.FEMALE), ActivityLevel.VERY_ACTIVE);
+						((profile.getGender().equalsIgnoreCase("MALE")) ? Gender.MALE : Gender.FEMALE), ActivityLevel.VERY_ACTIVE);
 		else
 			dailyCalorieRequirement = CalorieUtil.calculateDailyCalorieNeeds(targetWeight, profile.getHeight(), 
 					profile.getAge(), 
-						((profile.getGender() == "MALE") ? Gender.MALE : Gender.FEMALE), ActivityLevel.MODERATELY_ACTIVE);
+						((profile.getGender().equalsIgnoreCase("MALE")) ? Gender.MALE : Gender.FEMALE), ActivityLevel.MODERATELY_ACTIVE);
 			
 		dailyPlan.setDailyCalories(dailyCalorieRequirement);
 		dailyPlan.setProteinInCalories(ProteinUtil.calculateDailyProteinInCalories(dailyCalorieRequirement));
