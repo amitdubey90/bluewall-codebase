@@ -68,7 +68,7 @@
 		}
 	
 		this.populateUserCalorieInfo = function(date){
-			return $http.get("/calorieDetails/1/"+date).then(function(calorieInfo){
+			return $http.get("/calorieDetails/"+date).then(function(calorieInfo){
 				console.log("Data returned from backend service: calorie info: "+calorieInfo);
 				return calorieInfo;
 			});
