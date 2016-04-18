@@ -1,5 +1,7 @@
 package com.bluewall.feservices.controller;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -7,7 +9,6 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -33,7 +34,7 @@ public class ActivityController {
 
 	@RequestMapping(value = "/activityLog", method = RequestMethod.GET)
 	@ResponseBody
-	public List<UserActivityLog> getActivityLog(HttpSession session) {
+	public List<List<UserActivityLog>> getActivityLog(HttpSession session) {
 		int userId = 0;
 		UserPrincipal principal = (UserPrincipal) session.getAttribute("userPrincipal");
 		if (null != principal) {
@@ -41,8 +42,28 @@ public class ActivityController {
 			log.info("UserActivityLog service called");
 			List<UserActivityLog> activityList = activityService.getUserActivityLogs(userId);
 			log.info("User's activity logs fetched successfully");
-
-			return activityList;
+			
+			List<UserActivityLog> innerActivityList = new ArrayList<UserActivityLog>();
+			List<List<UserActivityLog>> outerActivityList = new ArrayList<List<UserActivityLog>>();
+			String logTimeList = new SimpleDateFormat("yyyy-MM-dd").format(activityList.get(0).getActivityLogDate());
+			
+			for(UserActivityLog activity : activityList){
+				String logTime = new SimpleDateFormat("yyyy-MM-dd").format(activity.getActivityLogDate());
+				
+				if(logTimeList.equalsIgnoreCase(logTime)){
+					innerActivityList.add(activity);
+					logTimeList = logTime;
+				}
+				else{
+					outerActivityList.add(innerActivityList);
+					innerActivityList = new ArrayList<UserActivityLog>();
+					innerActivityList.add(activity);
+					logTimeList = logTime;
+				}
+				
+			}
+			outerActivityList.add(innerActivityList);
+			return outerActivityList;
 		}
 		// TODO: HANDLE ERROR HANDLING HERE
 		return null;

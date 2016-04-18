@@ -52,7 +52,7 @@ public class FoodDaoImpl implements FoodDao {
 				UserFood userFoodLog = new UserFood();
 				userFoodLog.setName(rs.getString("name"));
 				userFoodLog.setType(rs.getString("type"));
-				userFoodLog.setFoodLogTime(rs.getDate("foodLogDate"));
+				userFoodLog.setFoodLogDate(rs.getDate("foodLogDate"));
 				userFoodLog.setCalories(rs.getFloat("calories"));
 				userFoodLog.setWeightConsumed(rs.getFloat("weightConsumed"));
 				userFoodLog.setLogTime(rs.getTimestamp("logTime"));
@@ -103,7 +103,7 @@ public class FoodDaoImpl implements FoodDao {
 				preparedStatement.setInt(5, 14);
 				preparedStatement.setFloat(6, createFood.getCalories());
 				preparedStatement.setTimestamp(7, createFood.getLogTime());
-				preparedStatement.setDate(8, createFood.getFoodLogTime());
+				preparedStatement.setDate(8, createFood.getFoodLogDate());
 				preparedStatement.executeUpdate();
 
 				log.info("Food logged for user ID: " + userID);
