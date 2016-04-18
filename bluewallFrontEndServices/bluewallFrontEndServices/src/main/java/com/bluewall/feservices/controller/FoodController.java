@@ -79,21 +79,22 @@ public class FoodController {
 
 	@RequestMapping(value = "/createFoodPlate", method = RequestMethod.POST, consumes = "application/json")
 	@ResponseBody
-	public void createFoodPlate(@RequestBody UserFood food) throws ParseException {
+	public void createFoodPlate(@RequestBody UserFood food, HttpSession session) throws ParseException {
 
-		// fetch user id from session
-		int userID = 1;
-		
-		food.setLogTime(new java.sql.Timestamp(Calendar.getInstance().getTime().getTime()));
-		//TODO:check foodlog time date
-		foodService.createFoodPlate(food, userID);
+		int userID = 0;
+		UserPrincipal principal = (UserPrincipal) session.getAttribute("userPrincipal");
+		if (null != principal) {
+			userID = principal.getUserID();
+			food.setLogTime(new java.sql.Timestamp(Calendar.getInstance().getTime().getTime()));
+			// TODO:check foodlog time date
+			foodService.createFoodPlate(food, userID);
+		}
 	}
 
 	@RequestMapping(value = { "/getFoodItems" }, method = RequestMethod.GET)
 	@ResponseBody
 	public List<FoodInfo> getFoodItems(@RequestParam String foodName) {
-//		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-//		UserInfo info = (UserInfo)auth.getPrincipal();
+
 		List<FoodInfo> foodList = new ArrayList<FoodInfo>();
 
 		foodList = foodService.getFoodInfo(foodName);
