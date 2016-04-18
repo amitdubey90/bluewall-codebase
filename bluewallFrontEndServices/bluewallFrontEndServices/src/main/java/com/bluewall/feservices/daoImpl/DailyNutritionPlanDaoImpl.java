@@ -3,8 +3,6 @@ package com.bluewall.feservices.daoImpl;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.sql.DataSource;
 
@@ -26,18 +24,17 @@ public class DailyNutritionPlanDaoImpl implements DailyNutritionPlanDao{
 	DataSource datasource;
 	
 	@Override
-	public List<UserDailyNutritionPlan> getDailyNutritionPlan(int userID) {
+	public UserDailyNutritionPlan getDailyNutritionPlan(int userID) {
 		
 		ResultSet rs = null;
 		Connection connection = null;
-		List<UserDailyNutritionPlan> userDailyNutrientList = new ArrayList<UserDailyNutritionPlan>();
-		
+	//	List<UserDailyNutritionPlan> userDailyNutrientList = new ArrayList<UserDailyNutritionPlan>();
+		UserDailyNutritionPlan userDailyPlan = new UserDailyNutritionPlan();
 		try {
 			connection = datasource.getConnection();
 			rs = connection.prepareStatement(Queries.GET_DAILY_NUTRITION_PLAN + " where userID = " + userID).executeQuery();
 			
 			while (rs.next()){
-				UserDailyNutritionPlan userDailyPlan = new UserDailyNutritionPlan();
 				userDailyPlan.setDailyCalories(rs.getDouble("dailyCalories"));
 				userDailyPlan.setFatInGms(rs.getDouble("fatInGms"));
 				userDailyPlan.setFatInCalories(rs.getDouble("fatInCalories"));
@@ -45,7 +42,6 @@ public class DailyNutritionPlanDaoImpl implements DailyNutritionPlanDao{
 				userDailyPlan.setCarbInCalories(rs.getDouble("carbsInCalories"));
 				userDailyPlan.setProteinInGms(rs.getDouble("proteinInGms"));
 				userDailyPlan.setProteinInCalories(rs.getDouble("proteinInCalories"));
-				userDailyNutrientList.add(userDailyPlan);			
 			}
 			
 		} catch (SQLException e) {
@@ -68,7 +64,7 @@ public class DailyNutritionPlanDaoImpl implements DailyNutritionPlanDao{
 			}
 		}
 		
-		return userDailyNutrientList;	
+		return userDailyPlan;	
 		
 	}
 	

@@ -7,126 +7,243 @@
 		<div ng-include src="'js/commons/loadDependencies.js'"></div>
 
 		<div class="col-xs-12 col-sm-9">
-		<div class="col-sm-12">
-			<div class="row">
-				<p>Calories Summary</p>
-				<div id="reportrange" class="pull-right"
-					style="background: #fff; cursor: pointer; text-align: -webkit-center; border: 2px solid #52d3aa; width: 100%; border-radius: 35px">
-					<input type="text" name="birthdate" id="datepicker" style="border-color: transparent;" />
-				</div>
-				<br>
-				<div style="margin-top: 5%;">
-					<span style="margin-left: 4%;">Calories Burnt</span>
-					<span style="margin-left: 8%;">Calories Consumed</span>
-					<span style="margin-left: 8%;">Net Calories</span>
-					<span style="margin-left: 7%;">Percentage Calories</span>
-				</div>
+			<div class="col-sm-12">
 				<div class="row">
-					<div class="col-sm-12">
-					
-						  <div class="green">
-						    <div class="progress">
-						      
-						      <span class="inner">
-						        <span class="percent">
-						          <span id="abc"></span>%
-						        </span>
-						        <span class="water"></span>
-						        
-						        <!-- <span class="glare"></span> -->
-						      </span>
-						    </div>						    
-						  </div>  
-						  <div id="shiva"><span class="count" id="calorieBurnt"></span></div>
-						  <div id="shiva"><span class="count" id="calorieConsumed"></span></div>
-						  <div id="shiva"><span class="count" id="netCalorie"></span></div>
+					<p>Calories Summary</p>
+					<div id="reportrange" class="pull-right"
+						style="background: #fff; cursor: pointer; text-align: -webkit-center; border: 2px solid #52d3aa; width: 100%; border-radius: 35px">
+						<input type="text" name="birthdate" id="datepicker"
+							style="border-color: transparent;" />
 					</div>
-					 
+					<br>
+					<div style="margin-top: 5%;">
+						<span style="margin-left: 4%;">Calories Burnt</span> <span
+							style="margin-left: 8%;">Calories Consumed</span> <span
+							style="margin-left: 8%;">Net Calories</span> <span
+							style="margin-left: 7%;">Percentage Calories</span>
+					</div>
+					<div class="row">
+						<div class="col-sm-12">
+
+							<div class="green">
+								<div class="progress">
+
+									<span class="inner"> <span class="percent"> <span
+											id="abc"></span>%
+									</span> <span class="water"></span> <!-- <span class="glare"></span> -->
+									</span>
+								</div>
+							</div>
+							<div id="shiva">
+								<span class="count" id="calorieBurnt"></span>
+							</div>
+							<div id="shiva">
+								<span class="count" id="calorieConsumed"></span>
+							</div>
+							<div id="shiva">
+								<span class="count" id="netCalorie"></span>
+							</div>
+						</div>
+
+					</div>
 				</div>
-			 </div>
+			</div>
+			<div class="row">
+					<div class="col-xs-6">
+							
+						<div id="nutrientChart" style="width: 600px;height: 300px;margin-top: 3%;margin-left: -30%;"></div>
+					</div>
+					<div class="col-xs-6">
+						<div style="margin-left: 29%;margin-top: 26%;">
+							<small style="margin-left: 15%;">
+								<table class="table" style="width:48%;font-size:small">
+									<thead>
+									<tr>Daily Nutrient Plan</tr>
+									</thead>
+								    <thead>
+								      <tr>
+								        <th>Nutrient</th>
+								        <th>Grams</th>
+								        <th>Kcals</th>
+								      </tr>
+								    </thead>
+								    <tbody>
+								      <tr>
+								     	 
+								        <td>Proteins</td>
+								        <td>{{nutrientDetails.proteinInGms}}</td>
+								        <td>{{nutrientDetails.proteinInCalories}}</td>
+								      </tr>
+								      <tr>
+								        <td>Carbohydrates</td>
+								        <td>{{nutrientDetails.carbInGms}}</td>
+								        <td>{{nutrientDetails.carbInCalories}}</td>
+								      </tr>
+								      <tr>
+								        <td>Fats</td>
+								        <td>{{nutrientDetails.fatInGms}}</td>
+								        <td>{{nutrientDetails.fatInCalories}}</td>
+								      </tr>
+								    </tbody>
+								</table>
+							</small>
+						</div>
+					</div>
 			</div>
 			<div class="row">
 				<div class="col-sm-12">
-				<p>Food Suggestions</p>
+					<p>Food Suggestions</p>
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-xs-6">
+				<div class="col-sm-12">
 					User Activity Feed
-					
 
-						<p>{{error}}</p>
-					 <div class="gallery js-flickity" data-flickity-options='{ "autoPlay": 1500 }'>
-								<div class="gallery-cell card-style" style="background:#E21A48;"> 
-									
-									<div style="margin-left:8%">
-									<strong>{{activitiesList[0].name}}</strong><br><br>
-									<div class="slider-font-style">
-										<div>Distance: {{activitiesList[0].distance}} <small>meters</small> </div>
-										<div>Calories:{{activitiesList[0].caloriesBurnt}} <small>kcals</small></div>
-										<div>Duration: {{activitiesList[0].duration}}<small>minutes</small> </div>
-										<div>Date: {{activitiesList[0].activityLogDate}} </div>
-										<div>Device: {{activitiesList[0].loggedFrom}}</div>
+
+					<p>{{error}}</p>
+					<div class="gallery js-flickity"
+						data-flickity-options='{ "autoPlay": 1500 }'>
+						<div class="gallery-cell card-style" style="background: #E21A48;">
+
+							<div style="margin-left:8%">
+								<strong>{{activitiesList[0].name}}</strong><br> <br>
+								<div class="slider-font-style">
+									<div>
+										<img src="images/distance-1.png" style=" width: 12%;"/> {{activitiesList[0].distance}} <small>meters</small>
+										&nbsp;&nbsp;
+										<span>
+											<img src="images/calorie-icon.png" style=" width: 10%;"/> {{activitiesList[0].caloriesBurnt}} <small>kcals</small>
+										</span>
 									</div>
+									<br>
+									<div>
+										<img src="images/duration-icon.png" style=" width: 10%;"/> {{activitiesList[0].duration}}<small> minutes</small>
+										&nbsp;&nbsp;
+										<span>
+											<img src="images/date-icon.png" style=" width: 8%;"/> {{activitiesList[0].activityLogDate}}
+										</span>
+									</div>
+									<br>
+									<div>
+										<img src="images/device-icon.png" style=" width: 10%;"/> {{activitiesList[0].loggedFrom}}
+									
 									</div>
 								</div>
-								<div class="gallery-cell card-style" style="background:#05A702"> 
-									<div style="margin-left:8%">
-									<strong>{{activitiesList[1].name}} </strong><br><br>
-									<div class="slider-font-style">
-									<div>Distance: {{activitiesList[1].distance}} <small>meters</small> </div>
-									<div>Calories:{{activitiesList[1].caloriesBurnt}} <small>kcals</small></div>
-									<div>Duration: {{activitiesList[1].duration}}<small>minutes</small> </div>
-									<div>Date: {{activitiesList[1].activityLogDate}} </div>
-									<div>Device: {{activitiesList[1].loggedFrom}}</div>
+							</div>
+						</div>
+						<div class="gallery-cell card-style" style="background:#295F28">
+							<div style="margin-left:8%">
+								<strong>{{activitiesList[1].name}} </strong><br> <br>
+								<div class="slider-font-style">
+									<div>
+										<img src="images/distance-1.png" style=" width: 12%;"/> {{activitiesList[1].distance}} <small>meters</small>
+										&nbsp;&nbsp;
+										<span>
+											<img src="images/calorie-icon.png" style=" width: 10%;"/> {{activitiesList[1].caloriesBurnt}} <small>kcals</small>
+										</span>
 									</div>
+									<br>
+									<div>
+										<img src="images/duration-icon.png" style=" width: 10%;"/> {{activitiesList[1].duration}}<small> minutes</small>
+										&nbsp;&nbsp;
+										<span>
+											<img src="images/date-icon.png" style=" width: 8%;"/> {{activitiesList[1].activityLogDate}}
+										</span>
 									</div>
-								 </div>
-								 <div class="gallery-cell card-style" style="background:#52d3aa;"> 
-									<div style="margin-left:8%">
-									<strong>{{activitiesList[2].name}} </strong><br><br>
-									<div class="slider-font-style">
-									<div>Distance: {{activitiesList[2].distance}} <small>meters</small> </div>
-									<div>Calories:{{activitiesList[2].caloriesBurnt}} <small>kcals</small></div>
-									<div>Duration: {{activitiesList[2].duration}}<small>minutes</small> </div>
-									<div>Date: {{activitiesList[2].activityLogDate}} </div>
-									<div>Device: {{activitiesList[2].loggedFrom}}</div>
+									<br>
+									<div>
+										<img src="images/device-icon.png" style=" width: 10%;"/> {{activitiesList[1].loggedFrom}}
+									
 									</div>
+								</div>
+							</div>
+						</div>
+						<div class="gallery-cell card-style" style="background:#F49F4F;">
+							<div style="margin-left:8%">
+								<strong>{{activitiesList[2].name}} </strong><br> <br>
+								<div class="slider-font-style">
+									<div>
+										<img src="images/distance-1.png" style=" width: 12%;"/> {{activitiesList[2].distance}} <small>meters</small>
+										&nbsp;&nbsp;
+										<span>
+											<img src="images/calorie-icon.png" style=" width: 10%;"/> {{activitiesList[2].caloriesBurnt}} <small>kcals</small>
+										</span>
 									</div>
-								  </div>
-								  <div class="gallery-cell card-style" style="background:#DC7A16"> 
-									<div style="margin-left:8%">
-									<strong>{{activitiesList[3].name}} </strong><br><br>
-									<div class="slider-font-style">
-									<div>Distance: {{activitiesList[3].distance}} <small>meters</small> </div>
-									<div>Calories:{{activitiesList[3].caloriesBurnt}} <small>kcals</small></div>
-									<div>Duration: {{activitiesList[3].duration}}<small>minutes</small> </div>
-									<div>Date: {{activitiesList[3].activityLogDate}} </div>
-									<div>Device: {{activitiesList[3].loggedFrom}}</div>
+									<br>
+									<div>
+										<img src="images/duration-icon.png" style=" width: 10%;"/> {{activitiesList[2].duration}}<small> minutes</small>
+										&nbsp;&nbsp;
+										<span>
+											<img src="images/date-icon.png" style=" width: 8%;"/> {{activitiesList[2].activityLogDate}}
+										</span>
 									</div>
+									<br>
+									<div>
+										<img src="images/device-icon.png" style=" width: 10%;"/> {{activitiesList[2].loggedFrom}}
+									
 									</div>
-								  </div>
-								  <div class="gallery-cell card-style" style="background:#1681DC"> 
-									<div style="margin-left:6%">
-									<strong>{{activitiesList[4].name}} </strong><br><br>
-									<div class="slider-font-style">
-									<div>Distance: {{activitiesList[4].distance}} <small>meters</small> </div>
-									<div>Calories:{{activitiesList[4].caloriesBurnt}} <small>kcals</small></div>
-									<div>Duration: {{activitiesList[4].duration}}<small>minutes</small> </div>
-									<div>Date: {{activitiesList[4].activityLogDate}} </div>
-									<div>Device: {{activitiesList[4].loggedFrom}}</div>
+								</div>
+							</div>
+						</div>
+						<div class="gallery-cell card-style" style="background: #52d3aa">
+							<div style="margin-left:8%">
+								<strong>{{activitiesList[3].name}} </strong><br> <br>
+								<div class="slider-font-style">
+									<div>
+										<img src="images/distance-1.png" style=" width: 12%;"/> {{activitiesList[3].distance}} <small>meters</small>
+										&nbsp;&nbsp;
+										<span>
+											<img src="images/calorie-icon.png" style=" width: 10%;"/> {{activitiesList[3].caloriesBurnt}} <small>kcals</small>
+										</span>
 									</div>
+									<br>
+									<div>
+										<img src="images/duration-icon.png" style=" width: 10%;"/> {{activitiesList[3].duration}}<small> minutes</small>
+										&nbsp;&nbsp;
+										<span>
+											<img src="images/date-icon.png" style=" width: 8%;"/> {{activitiesList[3].activityLogDate}}
+										</span>
 									</div>
-								  </div>
-							<!-- </div>  -->
-				     </div> 
+									<br>
+									<div>
+										<img src="images/device-icon.png" style=" width: 10%;"/> {{activitiesList[3].loggedFrom}}
+									
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="gallery-cell card-style" style="background: #022646">
+							<div style="margin-left:8%">
+								<strong>{{activitiesList[4].name}} </strong><br> <br>
+								<div class="slider-font-style">
+									<div>
+										<img src="images/distance-1.png" style=" width: 12%;"/> {{activitiesList[4].distance}} <small>meters</small>
+										&nbsp;&nbsp;
+										<span>
+											<img src="images/calorie-icon.png" style=" width: 10%;"/> {{activitiesList[4].caloriesBurnt}} <small>kcals</small>
+										</span>
+									</div>
+									<br>
+									<div>
+										<img src="images/duration-icon.png" style=" width: 10%;"/> {{activitiesList[4].duration}}<small> minutes</small>
+										&nbsp;&nbsp;
+										<span>
+											<img src="images/date-icon.png" style=" width: 8%;"/> {{activitiesList[4].activityLogDate}}
+										</span>
+									</div>
+									<br>
+									<div>
+										<img src="images/device-icon.png" style=" width: 10%;"/> {{activitiesList[4].loggedFrom}}
+									
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
 				</div>
-				<div class="col-xs-6">
-					<p>Nutrient chart</p>
-					
 				</div>
-		    </div>
 			</div>
-			
 		</div>
+
 	</div>
+</div>

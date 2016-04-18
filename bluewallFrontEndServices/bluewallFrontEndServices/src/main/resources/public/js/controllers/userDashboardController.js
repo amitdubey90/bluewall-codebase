@@ -51,6 +51,36 @@
 		 userDashboardService.populateUserNutrientInfo().then(function(nutrientInfo){
 			 console.log("Data returned from angular service:nutrient info ");
 			 $scope.nutrientDetails = nutrientInfo.data;
+
+			var protein = (nutrientInfo.data.proteinInCalories/nutrientInfo.data.dailyCalories)*100;
+			var carbs =  (nutrientInfo.data.carbInCalories/nutrientInfo.data.dailyCalories)*100;
+			var fats =  (nutrientInfo.data.fatInCalories/nutrientInfo.data.dailyCalories)*100;
+			 var chart = new CanvasJS.Chart("nutrientChart",
+						{
+							
+							animationEnabled: true,
+							legend:{
+								verticalAlign: "bottom",
+								horizontalAlign: "center"
+							},
+							width: 600,
+							height:300,
+							data: [
+							{       
+								type: "pie",
+								showInLegend: true,
+								toolTipContent: "{legendText}: <strong>{y}%</strong>",
+								indexLabel: "{label} {y}%",
+								dataPoints: [
+									{  y: protein, legendText: "Proteins", exploded: true, label: "Proteins",color:"#E21A48"},
+									{  y: carbs, legendText: "Carbohydrates", label: "Carbohydrates",color:"#1711B5" },
+									{  y: fats, legendText: "Fats", label: "Fats",color:"#05A702" },
+									
+								]
+						}
+						]
+						});
+						chart.render();
 		},function(error){
 			$scope.error = "Unable to load nutrientInfo feed: "+error.statusText;
 			console.log(error.statusText);
@@ -76,7 +106,7 @@
 	
 		this.populateUserNutrientInfo= function(){
 			
-			return $http.get("").then(function(nutrientInfo){
+			return $http.get("/user/dailyNutritionPlan").then(function(nutrientInfo){
 				console.log("Data returned from backend service: nutrient info: "+nutrientInfo);
 				return nutrientInfo;
 			});

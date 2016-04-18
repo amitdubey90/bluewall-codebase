@@ -1,7 +1,5 @@
 package com.bluewall.feservices.serviceImpl;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +15,7 @@ public class DailyNutritionPlanServiceImpl implements DailyNutritionPlanService{
 	DailyNutritionPlanDao dailyNutritionPlanDao;
 	
 	@Override
-	public List<UserDailyNutritionPlan> getDailyNutritionPlan(int userID) {
+	public UserDailyNutritionPlan getDailyNutritionPlan(int userID) {
 		
 		return dailyNutritionPlanDao.getDailyNutritionPlan(userID);
 		
