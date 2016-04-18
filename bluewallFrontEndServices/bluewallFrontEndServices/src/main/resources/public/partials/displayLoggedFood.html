@@ -8,13 +8,13 @@
 		<div ng-include src="'js/commons/loadDependencies.js'"/> 
 		<div ng-include src="'js/commons/collapse.js'"/> 
 		
-		<div class="col c2">
+		<div class="col c2" style="width: 16%;">
 	     
       <!-- END Custom open and close -->
 		<br>		
-			<div id="custom-show-hide-example" style="width: 270%;" >
-			       <h3>Log Food</h3>
-			       <section>
+			<div id="custom-show-hide-example" >
+			       <h3 style="text-align: left;margin-right: 24%;">Log Food</h3>
+			       <section style="display: block; width: 465%;">
 					<form role="form" ng-submit="logFood(food)">
 			      <div class="form-group">
 			        <label for="foodName">Food Name</label><span class="mandatory">*</span><a target="_blank" href="#" title="Name of the food. Eg.Sandwich"><img src="images/help.png" style="height: 26x;width: 26px;"/></a>
@@ -57,18 +57,24 @@
 		     <br>
 
 			<div ng-repeat="foodLogged in foodLoggedList">
-			<div id="custom-show-hide-example" style="width: 270%;" >
-		     
-		       <h3>Food Log Time: {{foodLogged.foodLogTime}}</h3>
-		       <div>
-		         <p>Name: {{foodLogged.name}}</p>
-		         <p>Type: {{foodLogged.type}}</p>
-		         <p>Weight Consumed: {{foodLogged.weightConsumed}}</p>
-		         <p>Calories: {{foodLogged.calories}}</p>	         
-		       </div>
-		     </div>
+				<div id="custom-show-hide-example" style="width: 465%;" >
+					<h3>Food Log Time: {{foodLogged[0].foodLogDate}}</h3>
+					<div class="row">
+						  <div class="col-md-3" style="border: 1px solid black;margin-left: initial;">Name</div>
+						  <div class="col-md-3" style="border: 1px solid black;margin-left: initial;">Type</div>
+						  <div class="col-md-3" style="border: 1px solid black;margin-left: initial;">Weight</div>
+						  <div class="col-md-3" style="border: 1px solid black;margin-left: initial;">Calories</div>
+						</div>
+					<div ng-repeat="food in foodLogged">
+						<div class="row">
+						  <div class="col-md-3">{{food.name}}</div>
+						  <div class="col-md-3">{{food.type}}</div>
+						  <div class="col-md-3">{{food.weightConsumed}}</div>
+						  <div class="col-md-3">{{food.calories}}</div>
+						</div><br />
+				    </div>
+			     </div>
 			</div>
-		
     </div>
 	</div>
 </div>

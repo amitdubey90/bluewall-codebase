@@ -13,7 +13,7 @@ public class UserFood {
 	private String type;
 	private float calories;
 	private float weightConsumed;
-	private Date foodLogTime;
+	private Date foodLogDate;
 	private Timestamp logTime;
 	
 	public String getType() {
@@ -39,17 +39,13 @@ public class UserFood {
 	public void setWeightConsumed(float weightConsumed) {
 		this.weightConsumed = weightConsumed;
 	}
-	
-	
 
-	
-
-	public Date getFoodLogTime() {
-		return foodLogTime;
+	public Date getFoodLogDate() {
+		return foodLogDate;
 	}
 
-	public void setFoodLogTime(Date foodLogTime) {
-		this.foodLogTime = foodLogTime;
+	public void setFoodLogDate(Date foodLogDate) {
+		this.foodLogDate = foodLogDate;
 	}
 
 	public String getName() {

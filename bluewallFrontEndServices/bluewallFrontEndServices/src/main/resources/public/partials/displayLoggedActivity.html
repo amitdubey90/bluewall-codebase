@@ -4,11 +4,11 @@
 		<div ng-include src="'js/commons/loadDependencies.js'" />
 		<div ng-include src="'js/commons/calculateCalories.js'" />
 		<div ng-include src="'js/commons/collapse.js'"/> 
-		<div class="col c2">
+		<div class="col c2" style="width: 16%;">
 		<br>		
-			<div id="custom-show-hide-example" style="width: 270%;" >
-			       <h3>Log Activity</h3>
-			       <section>		
+			<div id="custom-show-hide-example" >
+			       <h3 style="text-align: left;margin-right: 14%;">Log Activity</h3>
+			       <section style="display: block;width: 465%;">		
 					<form ng-submit="logActivity(activity)" novalidate>
 						<div class="row">
 							<div class="col-xs-8" style="width: 109%;">
@@ -226,16 +226,23 @@
 		     <br>
 			
 			<div ng-repeat="activityLogged in activityLoggedList">
-			<div id="custom-show-hide-example" style="width: 270%;" >
-		     
-		       <h3>Activity Log Time: {{activityLogged.activityLogDate}}</h3>
-		       <div>
-		         <p>Name: {{activityLogged.name}}</p>
-		         <p>Distance: {{activityLogged.distance}}</p>
-		         <p>Duration: {{activityLogged.duration}}</p>
-		         <p>Calories Burnt: {{activityLogged.caloriesBurnt}}</p>	         
-		       </div>
-		     </div>
+				<div id="custom-show-hide-example" style="width: 465%;" >
+					<h3>Activity Log Time: {{activityLogged[0].activityLogDate}}</h3>
+					<div class="row">
+						  <div class="col-md-3" style="border: 1px solid black;margin-left: initial;">Name</div>
+						  <div class="col-md-3" style="border: 1px solid black;margin-left: initial;">Distance</div>
+						  <div class="col-md-3" style="border: 1px solid black;margin-left: initial;">Duration</div>
+						  <div class="col-md-3" style="border: 1px solid black;margin-left: initial;">Calories Burnt</div>
+						</div>
+					<div ng-repeat="activity in activityLogged">
+						<div class="row">
+						  <div class="col-md-3">{{activity.name}}</div>
+						  <div class="col-md-3">{{activity.distance}}</div>
+						  <div class="col-md-3">{{activity.duration}}</div>
+						  <div class="col-md-3">{{activity.caloriesBurnt}}</div>
+						</div><br />
+				    </div>
+			     </div>
 			</div>
 		</div>
 	</div>
