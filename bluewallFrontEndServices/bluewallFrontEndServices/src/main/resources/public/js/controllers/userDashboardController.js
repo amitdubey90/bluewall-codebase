@@ -91,7 +91,7 @@
  app.service('userDashboardService', function($http) {
 		
 		this.populateUserActivityFeed =  function(){
-			return $http.get("/user/activity/activityLog").then(function(activityFeed){
+			return $http.get("/user/activity/recentActivityLog").then(function(activityFeed){
 				console.log("Data returned from backend service: acitivity feed"+activityFeed);
 				return activityFeed;
 			});

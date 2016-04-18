@@ -42,30 +42,43 @@ public class ActivityController {
 			log.info("UserActivityLog service called");
 			List<UserActivityLog> activityList = activityService.getUserActivityLogs(userId);
 			log.info("User's activity logs fetched successfully");
-			
+
 			List<UserActivityLog> innerActivityList = new ArrayList<UserActivityLog>();
 			List<List<UserActivityLog>> outerActivityList = new ArrayList<List<UserActivityLog>>();
 			String logTimeList = new SimpleDateFormat("yyyy-MM-dd").format(activityList.get(0).getActivityLogDate());
-			
-			for(UserActivityLog activity : activityList){
+
+			for (UserActivityLog activity : activityList) {
 				String logTime = new SimpleDateFormat("yyyy-MM-dd").format(activity.getActivityLogDate());
-				
-				if(logTimeList.equalsIgnoreCase(logTime)){
+
+				if (logTimeList.equalsIgnoreCase(logTime)) {
 					innerActivityList.add(activity);
 					logTimeList = logTime;
-				}
-				else{
+				} else {
 					outerActivityList.add(innerActivityList);
 					innerActivityList = new ArrayList<UserActivityLog>();
 					innerActivityList.add(activity);
 					logTimeList = logTime;
 				}
-				
+
 			}
 			outerActivityList.add(innerActivityList);
 			return outerActivityList;
 		}
 		// TODO: HANDLE ERROR HANDLING HERE
+		return null;
+	}
+
+	@RequestMapping(value = "/recentActivityLog", method = RequestMethod.GET)
+	@ResponseBody
+	public List<UserActivityLog> getRecentActivityLog(HttpSession session) {
+		int userId = 0;
+		UserPrincipal principal = (UserPrincipal) session.getAttribute("userPrincipal");
+		if (null != principal) {
+			userId = principal.getUserID();
+			List<UserActivityLog> activityList = activityService.getUserActivityLogs(userId);
+			log.info("User's activity logs fetched successfully");
+			return activityList;
+		}
 		return null;
 	}
 
