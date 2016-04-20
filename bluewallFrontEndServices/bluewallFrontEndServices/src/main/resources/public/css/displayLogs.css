@@ -4,7 +4,6 @@
 #displayLogs button {
   text-align: left;
   margin-right: 24%; 
-  color: #52d3aa;
 } 
 
 #displayLogs .col {
@@ -39,6 +38,6 @@
 } 
 #displayLogs h3:hover { background: #52d3aa; }
 #displayLogs h3.open  { background: #52d3aa; }
-#displayLogs h3.open a { background-position: 13px -25px; }
+#displayLogs h3.open a { background-position: 13px -25px;ï¿½}
 #displayLogs h3 + div { padding: 10px; }
 #displayLogs h2 + div
