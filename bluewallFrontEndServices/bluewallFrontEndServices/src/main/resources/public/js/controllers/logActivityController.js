@@ -1,23 +1,6 @@
 app.controller('logActivityController',	function($scope, $filter, $http, logActivityService, $rootScope, $state, limitToFilter) {
 	console.log("In ActivityController");
-
-	// $scope.activitesType = function(){
-	// var act = [{name:"Running",
-	// met:34},{name:"Sleeping",met:45}]
-	// alert(act);
-	// return act;
-	// }
-
-	$scope.activitiesType = [ {
-		name : 'Running',
-		met : 34
-	}, {
-		name : 'Sleeping',
-		value : 44
-	}, {
-		name : 'Walking',
-		value : 33
-	} ];
+	
 
 	$scope.logActivity = function(activity) {
 
@@ -55,7 +38,8 @@ app.controller('logActivityController',	function($scope, $filter, $http, logActi
 		var met = $('#activityType :selected').val();
 		if (met !== 'Other') {
 			var time = hours + minutes;
-			var calExp = 0.0175 * met * 30 * time;
+			alert($rootScope.user.weight);
+			var calExp = 0.0175 * met * $rootScope.user.weight * time;
 			$scope.activity.caloriesBurnt = calExp.toFixed(2);
 		}
 

@@ -18,6 +18,7 @@ app.controller('loginController', function($scope, $rootScope, $http, $state, $l
       console.log("authenticating success!!!! "+ data)
       $rootScope.authenticated = true;
       $rootScope.user = data;
+      console.log($rootScope.user);
 
       $state.go('userDashboard');
       //

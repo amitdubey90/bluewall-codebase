@@ -13,5 +13,7 @@ $(function(){
 
     var maxDate = year + '-' + month + '-' + day;  
     $('#textDate').attr('max', maxDate);
+    $('#textActivityLogDate').attr('max', maxDate);
 });
+
 </script>

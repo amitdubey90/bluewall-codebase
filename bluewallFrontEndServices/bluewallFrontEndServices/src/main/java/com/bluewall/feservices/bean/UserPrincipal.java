@@ -16,7 +16,7 @@ public class UserPrincipal {
     private double weight;
 
     public UserPrincipal(String emailID, String firstName,
-                         String lastName, int userID, int age, double weight, double height) {
+                         String lastName, int userID, int age, double height,double weight) {
 
         this.firstName = firstName;
         this.lastName = lastName;

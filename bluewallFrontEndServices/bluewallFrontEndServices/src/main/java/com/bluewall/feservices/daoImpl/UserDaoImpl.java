@@ -265,8 +265,8 @@ public class UserDaoImpl implements UserDao {
 				String firstName = rs.getString("firstName");
 				String lastName = rs.getString("lastName");
 				int age = rs.getInt("age");
-				double height = rs.getDouble("height");
-				double weight = rs.getDouble("weight");
+				float height = rs.getFloat("height");
+				float weight = rs.getFloat("weight");
 
 				int userId = rs.getInt("userId");
 

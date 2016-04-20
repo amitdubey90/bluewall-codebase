@@ -4,6 +4,7 @@
 		<div ng-include src="'js/commons/loadDependencies.js'" />
 		<div ng-include src="'js/commons/calculateCalories.js'" />
 		<div ng-include src="'js/commons/collapse.js'"/> 
+		<div ng-include src="'js/commons/futureDateBlocker.js'" />
 		<div class="col c2" style="width: 16%;">
 		<br>		
 			<div id="custom-show-hide-example" >
@@ -91,7 +92,7 @@
 										</label>
 										<div class="col-sm-6">
 											<input type='date' class="form-control"
-												placeholder="Start time of the activity" id="activityLogDate"
+												placeholder="Start time of the activity" id="textActivityLogDate"
 												ng-model="activity.activityLogDate" />
 										</div>
 										<a target="_blank" href="#"
@@ -215,7 +216,9 @@
 		
 											<button class="btn btn-primary btn-md btn-block activity"
 												type="submit">
+												<center>
 												<strong>Log</strong>
+												</center>
 											</button>
 		
 										</div>
