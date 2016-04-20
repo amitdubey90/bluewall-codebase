@@ -1,3 +1,12 @@
+#displayLogs th, td { padding: 5px; }
+#displayLogs table { border-collapse: separate; border-spacing: 5px; margin-left: 83%; }
+
+#displayLogs button {
+  text-align: left;
+  margin-right: 24%; 
+  color: #52d3aa;
+} 
+
 #displayLogs .col {
   width: 320px;
   float: left;
