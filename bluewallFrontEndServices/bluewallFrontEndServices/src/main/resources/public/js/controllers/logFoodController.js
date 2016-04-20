@@ -37,7 +37,7 @@ app.service('logFoodService', function($http, $state) {
 	console.log("in log food service");
 	
 	this.logFood = function(food) {
-		console.log(food.name + " " + food.calories + " " + food.foodLogTime
+		console.log(food.name + " " + food.calories + " " + food.foodLogDate
 				+ " " + food.weightConsumed + " " + food.type);
 		return $http.post("/user/food/createFoodPlate", food).then(
 				function(data) {
