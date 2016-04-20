@@ -13,48 +13,70 @@
       <!-- END Custom open and close -->
 		<br>		
 			<div id="custom-show-hide-example" >
-			       <button type="button" class="btn btn-default btn-lg">
-			       	<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+			   <button type="button" class="btn btn-default btn-lg">
+			     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
 			       	Log Food
-			       </button>
+			     </button>
 			       <section style="display: block; width: 465%;">
 					<form role="form" ng-submit="logFood(food)">
-			      <div class="form-group">
-			        <label for="foodName">Food Name</label><span class="mandatory">*</span><a target="_blank" href="#" title="Name of the food. Eg.Sandwich"><img src="images/help.png" style="height: 26x;width: 26px;"/></a>
-					<input type="text" id="foodName"
-						class="form-control search" placeholder="What did you eat?" ng-model="food.name" required style="width: 98%;" /> 
-			      </div>
-			      <div class="form-group">
-			        <label for="date">Date</label><span class="mandatory">*</span><a target="_blank" href="#" title="Date when food was consumed Eg. 03/10/2016"><img src="images/help.png" style="height: 3%;width: 3%;"/></a>
-					<input type='date' placeholder="When did you eat?" id="textDate"
-						class="form-control" ng-model="food.foodLogTime" value="{{food.foodLogTime}}" style="width: inherit;" />
-			      </div>
-			       <div class="form-group">
-			        <label for="foodType">Food Type</label><span class="mandatory">*</span><a target="_blank" href="#" title="Type of food. Eg.Dinner"><img src="images/help.png" style="height: 3%;width: 3%;"/></a> 
-				       <select class="selectpicker form-control" id="foodType" name="foodType" ng-model="food.type"  required>
-				       <option value="">What type of meal?</option>
-				        <option>Breakfast</option>
-				        <option>Lunch</option>
-				        <option>Dinner</option>
-				        <option>Snacks</option>
-				      </select>
-			      </div>
-			      <div class="form-group">
-			       <label for="wtConsumed" required>Weight</label><span class="mandatory">*</span><a target="_blank" href="#" title="Weight in grams. Eg.100 gms"><img src="images/help.png" style="height: 3%;width: 3%;"/></a>
-					<div class=input-group>
-						<input type="text" id="foodWeight" ng-model="food.weightConsumed" class="form-control" placeholder="Weight of the food" value="100" required></input>
-						<span class="input-group-addon">Grams</span>
+				     <div class="row">
+						<div class="col-sm-12">
+								<label for="foodName">Food Name</label><span class="mandatory">*</span><a target="_blank" href="#" title="Name of the food. Eg.Sandwich"><img src="images/help.png" style="height: 26x;width: 26px;"/></a>
+								<input type="text" id="foodName"
+									class="form-control search" placeholder="What did you eat?" ng-model="food.name"
+									required /> 
+						</div>
 					</div>
-			      </div>
-			      <div class="form-group">
-			      <label for="foodCalorie">Calories</label><span class="mandatory"></span><a target="_blank" href="#" title="Total calories consumed. Eg. 400 Kcals"><img src="images/help.png" style="height: 3%;width: 3%;"/></a>
-					<div class="input-group">
-						<input type="text" id="foodCalories" ng-model="food.calories" class="form-control" readonly required></input>
-						<span class="input-group-addon">Kcals</span>
+					<div class="row">	
+						<div class="col-sm-4">
+								<label for="date">Date</label><span class="mandatory">*</span><a target="_blank" href="#" title="Date when food was consumed Eg. 03/10/2016"><img src="images/help.png" style="height: 3%;width: 9%;"/></a>
+								<input type='date' placeholder="When did you eat?" id="textDate"
+									class="form-control" ng-model="food.foodLogTime" value="{{food.foodLogTime}}" />
+								
+						</div>
+						<div class="col-sm-4"></div>
+						<div class="col-sm-4">
+						<label for="foodType">Food Type</label><span class="mandatory">*</span><a target="_blank" href="#" title="Type of food. Eg.Dinner"><img src="images/help.png" style="height: 3%;width: 9%;"/></a> 
+								       <select class="selectpicker form-control" id="foodType" name="foodType" ng-model="food.type"  required>
+								       <option value="">What type of meal?</option>
+								        <option>Breakfast</option>
+								        <option>Lunch</option>
+								        <option>Dinner</option>
+								        <option>Snacks</option>
+								      </select>
+						</div>
 					</div>
-			      </div>
-			      <button class="btn btn-primary btn-md btn-block food" type="submit" style="width: 10%;"><strong>Log</strong></button>
-			    </form>
+					<div class="row">
+						<div class="col-sm-4">
+							<label for="wtConsumed" required>Weight</label><span class="mandatory">*</span><a target="_blank" href="#" title="Weight in grams. Eg.100 gms"><img src="images/help.png" style="height: 3%;width: 9%;"/></a>
+							<div class=input-group>
+								<input type="text" id="foodWeight" ng-model="food.weightConsumed" class="form-control" placeholder="Weight of food" value="100" required></input>
+								<span class="input-group-addon">Grams</span>
+							</div>
+						</div>
+						<div class="col-sm-4"></div>
+						<div class="col-sm-4">
+							<label for="foodCalorie">Calories</label><span class="mandatory"></span><a target="_blank" href="#" title="Total calories consumed. Eg. 400 Kcals"><img src="images/help.png" style="height: 3%;width: 9%;"/></a>
+							<div class="input-group">
+								<input type="text" id="foodCalories" ng-model="food.calories" class="form-control" readonly required></input>
+								<span class="input-group-addon">Kcals</span>
+							</div>
+						</div>
+					</div>
+					<br>
+					<div class="row">
+						
+						<div class="col-xs-12">
+							<div class="form-group">
+									<button class="btn btn-primary btn-md btn-block food" type="submit">
+									<center>
+										<strong>Log</strong>
+										</center>
+									</button>
+							</div>
+						</div>
+					</div>
+				    </form>
 				</section>
 		     </div>
 		     <br>
