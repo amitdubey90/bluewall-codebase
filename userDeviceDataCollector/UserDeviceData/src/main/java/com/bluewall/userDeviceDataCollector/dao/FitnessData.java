@@ -35,7 +35,7 @@ public class FitnessData {
 	 * @param userID
 	 * @param deviceType
 	 */
-	public void insertDeviceData(String data, int userID, String deviceType){
+	public void insertDeviceData(String activityLogDate, String data, int userID, String deviceType){
 		
 		MongoDBConnections dbconn = new MongoDBConnections();
 		MongoClient mongo = dbconn.returnMongoConnection();
@@ -74,6 +74,7 @@ public class FitnessData {
 		}
 		document.put("user_id", userID);
 	    document.put("device_type", deviceType);
+	    document.put("activity_log_date", activityLogDate);
 	    collection.insertOne(document);
 	    log.debug("Document Inserted");
 	    

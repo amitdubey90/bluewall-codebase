@@ -47,32 +47,25 @@
     </form>
 </modal>
 <modal title="Registration form" visible="showRegisModal">
-  <form ng-submit="register(user)" method="post" ng-controller="registrationController">
+  <form ng-submit="register(user,food)" method="post" ng-controller="registrationController">
 			<table border="0" style="width: 100%;">
 				<tr>
 					<td>First Name*:</td>
-					<td><input class="form-control" type="text" name="firstName"	ng-model="user.firstName" required="required" /></td>
+					<td><input class="form-control" type="text" name="firstName"	value="LMNO" ng-model="user.firstName" required="required" /></td>
 				</tr>
 				<tr>
 					<td>Last Name*:</td>
-					<td><input class="form-control" type="text" name="lastName" ng-model="user.lastName" required="required" /></td>
+					<td><input class="form-control" type="text" name="lastName" value="LMNO" ng-model="user.lastName" required="required" /></td>
 				</tr>
 				<tr>
 					<td>E-mail*:</td>
-					<td><input class="form-control" type="text" name="emailID" ng-model="user.emailID" required="required" /></td>
+					<td><input class="form-control" type="text" name="emailID" value="LMNO@gmail.com" ng-model="user.emailID" required="required" /></td>
 				</tr>
 
 				<tr>
 					<td>Password*:</td>
-					<td><input class="form-control" type="password" ng-model="user.password" required="required" /></td>
+					<td><input class="form-control" type="password" value="lmno" ng-model="user.password" required="required" /></td>
 				</tr>
-
-
-				<!-- trigger javascript event to validate both pwd fields -->
-				<!-- <tr>
-					<td>Confirm Password:</td>
-					<td><form:password path="password" /></td>
-				</tr> -->
 
 				<tr>
 					<td>Contact Number:</td>
@@ -80,27 +73,27 @@
 				</tr>
 				<tr>
 					<td>Age*:</td>
-					<td><input class="form-control" type="text" ng-model="user.age" required="required"/></td>
+					<td><input class="form-control" type="text" value=45 ng-model="user.age" required="required"/></td>
 				</tr>
 				<tr>
 					<td>Gender*:</td>
 					<td><select class="form-control" name="gender" ng-model="user.gender" required="required">
-							<option value="female">Female</option>
+							<option value="female" selected>Female</option>
 							<option value="male">Male</option>
 					</select></td>
 				</tr>
 				<tr>
 					<td>Height (inches)*:</td>
-					<td><input class="form-control" type="text" ng-model="user.height" required="required"/></td>
+					<td><input class="form-control" type="text" value="33" ng-model="user.height" required="required"/></td>
 				</tr>
 				<tr>
 					<td>Weight (pounds)*:</td>
-					<td><input class="form-control" type="text" ng-model="user.weight" required="required"/></td>
+					<td><input class="form-control" type="text" value="33" ng-model="user.weight" required="required"/></td>
 				</tr>
 				<tr>
 					<td>Activity Level*:</td>
 					<td><select class="form-control" name="actLevel" ng-model="user.activityLevel" required="required">
-							<option value="veryActive">Very Active</option>
+							<option value="veryActive" selected>Very Active</option>
 							<option value="active">Active</option>
 							<option value="moderateActive">Moderate</option>
 							<option value="noActivity">No Activity</option>
@@ -108,12 +101,12 @@
 				</tr>
 				<tr>
 					<td>Current Location*:</td>
-					<td><input class="form-control" type="text" ng-model="user.currentLocation" required="required"/></td>
+					<td><input class="form-control" type="text" value="sj" ng-model="user.currentLocation" required="required"/></td>
 				</tr>
 				<tr>
 					<td>Goal Type:</td>
 					<td><select class="form-control" name="goalType" ng-model="user.goalType">
-							<option value="gain">Gain Weight</option>
+							<option value="gain" selected>Gain Weight</option>
 							<option value="lose">Lose Weight</option>
 							<option value="maintain">Maintain Weight</option>
 
@@ -121,18 +114,145 @@
 				</tr>
 				<tr>
 					<td>Target Weight:</td>
-					<td><input class="form-control" type="text" ng-model="user.targetWeight" /></td>
-				</tr>
-				<!-- <tr>
-					<td>Start Date:</td>
-					<td><input type="text" th:field="*{startDate}"
-						placeholder="MM-DD-YYYYY" /></td>
+					<td><input class="form-control" type="text" value="33" ng-model="user.targetWeight" /></td>
 				</tr>
 				<tr>
-					<td>End Date:</td>
-					<td><input type="text" th:field="*{endDate}"
-						placeholder="MM-DD-YYYYY" /></td>
-				</tr> -->
+					<td>Food preference:</td>
+					<td>
+					<select class="form-control" name="foodPreference" ng-model="user.foodpref" required>
+						<option value="Vegetarian" selected>Vegetarian</option>
+						<option value="Non-Vegetarian">Non-Vegetarian</option>
+					</select>
+					</td>
+				</tr>
+				
+						
+					<tr>	
+									
+									<table>
+									<tr>Do you like?</tr>
+									<tr>
+										<td>
+											<label class="col-xs-5">Milk</label>
+											<div class="col-xs-1">
+												<select id="food1" ng-model="food.food1" required>
+													<option value="1079">1</option>
+													<option value="1079">2</option>
+													<option value="1079">3</option>
+													<option value="1079">4</option>
+													<option value="1079">5</option>
+												</select>  
+											</div>
+										</td>
+									</tr>
+									<tr>
+									<td>
+											<label class="col-xs-5">Apples</label>
+											<div class="col-xs-1">
+												<select id="food2" ng-model="food.food2" required>
+													<option value="9003">1</option>
+													<option value="9003">2</option>
+													<option value="9003">3</option>
+													<option value="9003">4</option>
+													<option value="9003">5</option>
+												</select>  
+											</div>
+									</td>
+									</tr>
+									<tr>
+									<td>
+											<label class="col-xs-5">Lentils, Sprouted</label>
+											<div class="col-xs-1">
+												<select id="food3" ng-model="food.food3" required>
+													<option value="11926">1</option>
+													<option value="11926">2</option>
+													<option value="11926">3</option>
+													<option value="11926">4</option>
+													<option value="11926">5</option>
+												</select>  
+											</div>
+									<td>
+									</tr>
+									<!-- HOT -->
+									<tr>
+									<td>
+											<div ng-if="user.foodpref === 'Non-Vegetarian'" >
+												<label class="col-xs-5">Chicken wings with BBQ Sauce</label>
+												<div class="col-xs-1">
+													<select id="food4" ng-model="food.food4" required>
+														<option value="5312">1</option>
+														<option value="5312">2</option>
+														<option value="5312">3</option>
+														<option value="5312">4</option>
+														<option value="5312">5</option>
+													</select>  
+												</div>
+											</div>
+									</td>
+									</tr>
+										<tr>
+										<td>
+										<!-- HOT AND CHEESE -->
+											<div ng-if="user.foodpref === 'Vegetarian'">
+												<label class="col-xs-5">Pasta with Onion and Garlic Italian Sauce</label>
+												<div class="col-xs-1">
+													<select id="food5" ng-model="food.food5" required>
+														<option value="5312">1</option>
+														<option value="5312">2</option>
+														<option value="5312">3</option>
+														<option value="5312">4</option>
+														<option value="5312">5</option>
+													</select>  
+												</div>
+											</div>
+											<div ng-if="user.foodpref === 'Non-Vegetarian'">
+												<label class="col-xs-5">Pasta with Mini Meatballs Italian Sauce</label>
+												<div class="col-xs-1">
+												<select id="food5" ng-model="food.food5" required>
+														<option value="5312">1</option>
+														<option value="5312">2</option>
+														<option value="5312">3</option>
+														<option value="5312">4</option>
+														<option value="5312">5</option>
+													</select>  
+												</div>
+											</div>
+										</td>
+										</tr>
+										<!-- FRIED -->
+										<tr>
+										<td>
+										<label class="col-xs-5">Potatoes, Fried</label>
+												<div class="col-xs-1">
+													<select id="food6" ng-model="food.food6" required>
+															<option value="5312">1</option>
+															<option value="5312">2</option>
+															<option value="5312">3</option>
+															<option value="5312">4</option>
+															<option value="5312">5</option>
+													</select>  
+												</div>
+										</td>
+										</tr>
+										<tr>
+										<!-- MEAT -->
+										<td>
+										<div ng-if="user.foodpref === 'Non-Vegetarian'">
+										<label class="col-xs-5">Beef patties</label>
+												<div class="col-xs-1">
+													<select id="food7" ng-model="food.food7" required>
+															<option value="13317">1</option>
+															<option value="13317">2</option>
+															<option value="13317">3</option>
+															<option value="13317">4</option>
+															<option value="13317">5</option>
+													</select>  
+												</div>
+												</div>
+										</td>
+										</tr>
+					</table>
+				</tr>
 				<tr>
 					<td colspan="2" align="center"><input class="btn btn-lg btn-primary btn-block" type="submit" value="Register" ng-click="toggleRegisModal()" /></td>
 				</tr>

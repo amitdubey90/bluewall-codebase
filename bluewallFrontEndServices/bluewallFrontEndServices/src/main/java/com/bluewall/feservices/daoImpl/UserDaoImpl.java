@@ -10,14 +10,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import com.bluewall.feservices.bean.UserPrincipal;
-import com.bluewall.feservices.dao.UserDao;
-import com.bluewall.feservices.util.Queries;
-import com.bluewall.util.bean.UserProfile;
-
-import com.bluewall.util.bean.UserDailyNutritionPlan;
-
-import lombok.extern.slf4j.Slf4j;
+import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -25,8 +18,14 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
-import javax.sql.DataSource;
+import com.bluewall.feservices.bean.UserPrincipal;
+import com.bluewall.feservices.dao.UserDao;
+import com.bluewall.feservices.util.Queries;
+import com.bluewall.util.bean.FoodRating;
+import com.bluewall.util.bean.UserDailyNutritionPlan;
+import com.bluewall.util.bean.UserProfile;
 
+import lombok.extern.slf4j.Slf4j;
 
 @Configuration
 @Component
@@ -39,23 +38,20 @@ public class UserDaoImpl implements UserDao {
 	@Autowired
 	DataSource datasource;
 
-	/*@Override
-	public UserCredential getUserConnectionCredsById(int userId, int providerId) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void updateUserCredentials(UserCredential newUserCreds) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void insertUserCredentials(UserCredential newUserCreds) {
-		// TODO Auto-generated method stub
-
-	}*/
+	/*
+	 * @Override public UserCredential getUserConnectionCredsById(int userId,
+	 * int providerId) { // TODO Auto-generated method stub return null; }
+	 * 
+	 * @Override public void updateUserCredentials(UserCredential newUserCreds)
+	 * { // TODO Auto-generated method stub
+	 * 
+	 * }
+	 * 
+	 * @Override public void insertUserCredentials(UserCredential newUserCreds)
+	 * { // TODO Auto-generated method stub
+	 * 
+	 * }
+	 */
 
 	@Override
 	public int createUser(UserProfile user) {
@@ -64,13 +60,10 @@ public class UserDaoImpl implements UserDao {
 		ResultSet rs = null;
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
-		
 
 		try {
 			connection = datasource.getConnection();
-			
 			connection.setAutoCommit(false);
-
 			preparedStatement = connection.prepareStatement(Queries.INS_USER_INFO);
 			preparedStatement.setString(1, user.getFirstName());
 			preparedStatement.setString(2, user.getLastName());
@@ -78,32 +71,40 @@ public class UserDaoImpl implements UserDao {
 			preparedStatement.setString(4, user.getContactNumber());
 			preparedStatement.setInt(5, user.getAge());
 			preparedStatement.setString(6, user.getGender());
-			preparedStatement.setFloat(7, user.getHeight());
-			preparedStatement.setFloat(8, user.getWeight());
-			preparedStatement.setString(9,user.getActivityLevel());
+			preparedStatement.setDouble(7, user.getHeight());
+			preparedStatement.setDouble(8, user.getWeight());
+			preparedStatement.setString(9, user.getActivityLevel());
+
 			preparedStatement.setString(10, user.getCurrentLocation());
 			int rowCount = preparedStatement.executeUpdate();
 			preparedStatement.close();
-			
-			
-			if (rowCount != 0){
+
+			if (rowCount != 0) {
 				log.info("CREATE USER SERVICE: User succesfully registered, Data inserted in UserInfo!");
-			}
-			else{
+			} else {
 				log.info("CREATE USER SERVICE: Fail to register the user");
 			}
-			
-			rs = connection.prepareStatement("select userID from UserInfo where emailID = "
-													+ "'"+user.getEmailID()+"'")
+
+			rs = connection
+					.prepareStatement("select userID from UserInfo where emailID = " + "'" + user.getEmailID() + "'")
 					.executeQuery();
-			
-			if (rs.next()){
+
+			if (rs.next()) {
 				userID = rs.getInt("userID");
 				log.info("CREATE USER SERVICE: New user registered with user id: " + userID);
-				
-				//check to see if user enters a goal
-				if (user.getGoalType() != null){
-					
+				PreparedStatement prepStatement = connection.prepareStatement(Queries.INS_USER_TASTE_PREFERENCES);
+				for (FoodRating foodRating : user.getFoodTasteList()) {
+					prepStatement.setInt(1, userID);
+					prepStatement.setInt(2, foodRating.getKey());
+					prepStatement.setInt(3, foodRating.getValue());
+					prepStatement.executeUpdate();
+
+				}
+				log.info("Taste preferences  saved succeefully for user id: " + userID);
+
+				// check to see if user enters a goal
+				if (user.getGoalType() != null) {
+
 					preparedStatement = connection.prepareStatement(Queries.INS_USER_GOALS);
 					preparedStatement.setInt(1, userID);
 					preparedStatement.setString(2, user.getGoalType());
@@ -115,7 +116,7 @@ public class UserDaoImpl implements UserDao {
 					log.info("CREATE USER SERVICE: User Goals inserted");
 
 				}
-				
+
 				log.info("CREATE USER SERVICE: Now inserting in users database");
 				
 				preparedStatement = connection.prepareStatement(Queries.INS_USERS);
@@ -124,30 +125,29 @@ public class UserDaoImpl implements UserDao {
 				preparedStatement.executeUpdate();
 				preparedStatement.close();
 				connection.commit();
-			}
-			else{
+			} else {
 				log.info("CREATE USER SERVICE: Unable to fetch registered user");
 			}
-			
+
 		} catch (SQLException e) {
 			try {
 				connection.rollback();
 				log.info("CREATE USER SERVICE: Successfully rolled back changes from the database!");
 				e.printStackTrace();
-			  } catch (SQLException e1) {
-				  log.info("CREATE USER SERVICE: Could not rollback updates " + e1.getMessage());
-			  }
-		} 
-		
+			} catch (SQLException e1) {
+				log.info("CREATE USER SERVICE: Could not rollback updates " + e1.getMessage());
+			}
+		}
+
 		finally {
-			if (rs!=null){
+			if (rs != null) {
 				try {
 					rs.close();
 				} catch (SQLException e) {
 					log.info("CREATE USER SERVICE: Result set object is not closed.");
 				}
 			}
-			if (connection != null){
+			if (connection != null) {
 				try {
 					connection.close();
 				} catch (SQLException e) {
@@ -155,23 +155,22 @@ public class UserDaoImpl implements UserDao {
 				}
 			}
 		}
-		
+
 		return userID;
 	}
 
-
 	@Override
 	public List<UserProfile> getUserDetails(int userID) {
-		
+
 		ResultSet rs = null;
 		Connection connection = null;
 		List<UserProfile> userProfileList = new ArrayList<UserProfile>();
-		
+
 		try {
 			connection = datasource.getConnection();
 			rs = connection.prepareStatement(Queries.GET_USER_INFO + " where userID = " + userID).executeQuery();
-			
-			while (rs.next()){
+
+			while (rs.next()) {
 				UserProfile userProfile = new UserProfile();
 				userProfile.setFirstName(rs.getString("firstName"));
 				userProfile.setLastName(rs.getString("lastName"));
@@ -185,7 +184,7 @@ public class UserDaoImpl implements UserDao {
 				userProfile.setCurrentLocation(rs.getString("currentLocation"));
 				userProfileList.add(userProfile);
 			}
-			
+
 		} catch (SQLException e) {
 			log.info("GET USER DETAILS: SQL Exception - Check the sql query or the connection string");
 			e.printStackTrace();
@@ -205,22 +204,22 @@ public class UserDaoImpl implements UserDao {
 				}
 			}
 		}
-		
+
 		return userProfileList;
-		
+
 	}
 
 	@Override
 	public void createNutrientPlan(UserDailyNutritionPlan dailyPlan, int userID) {
-		
+
 		Connection connection = null;
 		log.info("Now inserting nutrition plan in database for user id: " + userID);
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-		
+
 		try {
 			connection = datasource.getConnection();
 			PreparedStatement prepStatement = connection.prepareStatement(Queries.INS_DAILY_NUTRITION_PLAN);
-			
+
 			prepStatement.setInt(1, userID);
 			prepStatement.setDouble(2, dailyPlan.getDailyCalories());
 			prepStatement.setDouble(3, dailyPlan.getFatInGms());
@@ -231,9 +230,9 @@ public class UserDaoImpl implements UserDao {
 			prepStatement.setDouble(8, dailyPlan.getProteinInCalories());
 			prepStatement.setString(9, dateFormat.format(new Date()));
 			prepStatement.executeUpdate();
-			
+
 			log.info("Nutrient plan saved succeefully for user id: " + userID);
-			
+
 		} catch (SQLException e) {
 			log.info("CREATE NUTRIENT PLAN: SQL Exception - Check the sql query or the connection string");
 			e.printStackTrace();
@@ -246,12 +245,12 @@ public class UserDaoImpl implements UserDao {
 				}
 			}
 		}
-		
+
 	}
 
 	@Override
 	public UserPrincipal loadUserByName(String emailID) {
-		
+
 		log.info("loadUserByName started");
 		UserPrincipal userPrincipal = null;
 
@@ -259,7 +258,6 @@ public class UserDaoImpl implements UserDao {
 			int colId = 1;
 
 			pst.setString(colId++, emailID);
-
 
 			ResultSet rs = pst.executeQuery();
 			if (rs.next()) {
@@ -271,8 +269,7 @@ public class UserDaoImpl implements UserDao {
 
 				int userId = rs.getInt("userId");
 
-				userPrincipal = new UserPrincipal(emailID,firstName,
-						lastName, userId, age, height, weight);
+				userPrincipal = new UserPrincipal(emailID, firstName, lastName, userId, age, height, weight);
 
 			}
 			log.info("loadUserByName successful");
@@ -281,5 +278,7 @@ public class UserDaoImpl implements UserDao {
 		}
 		return userPrincipal;
 	}
+
+	
 
 }
