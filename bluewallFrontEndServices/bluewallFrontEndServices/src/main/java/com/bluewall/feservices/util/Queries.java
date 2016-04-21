@@ -25,4 +25,5 @@ public class Queries {
 	public static final String INS_USER_INFO = "insert into UserInfo(firstName, lastName, emailID, contactNumber, age, gender, height,"
 			+ " weight, activityLevel, currentLocation)"
 			+ " values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+	public static final String INS_USER_TASTE_PREFERENCES = "insert into UserRating (userID,foodID,rating) values (?,?,?)";
 }

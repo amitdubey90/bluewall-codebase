@@ -12,4 +12,5 @@ public interface UserServices {
 	public List<UserProfile> getUserDetails(int userID);
 	
 	public void createNutrientPlan(UserDailyNutritionPlan dailyPlan, int userID);
+
 }

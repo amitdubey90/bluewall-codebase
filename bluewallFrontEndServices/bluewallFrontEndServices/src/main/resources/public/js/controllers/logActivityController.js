@@ -38,7 +38,6 @@ app.controller('logActivityController',	function($scope, $filter, $http, logActi
 		var met = $('#activityType :selected').val();
 		if (met !== 'Other') {
 			var time = hours + minutes;
-			alert($rootScope.user.weight);
 			var calExp = 0.0175 * met * $rootScope.user.weight * time;
 			$scope.activity.caloriesBurnt = calExp.toFixed(2);
 		}

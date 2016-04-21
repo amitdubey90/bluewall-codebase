@@ -43,51 +43,54 @@ public class RegistrationController {
 		return model;
 	}
 
-	@RequestMapping(value = "/createUser", method = RequestMethod.POST, consumes = "application/json")
+	
+
+	@RequestMapping(value = "/createUser", method = RequestMethod.POST)
 	public String processRegistration(@RequestBody UserProfile profile) {
-		
+
 		int userID = 0;
-		if (null!= profile) {
+		if (null != profile) {
 			userID = userService.createUser(profile);
 		}
-		
+
 		log.info("Now calculating daily nutrient plan for user id: " + userID);
-		
+
 		UserDailyNutritionPlan dailyPlan = new UserDailyNutritionPlan();
 		double dailyCalorieRequirement;
+
 		float targetWeight;
 		
 		if (profile.getTargetWeight() != 0.0)
 			targetWeight = profile.getTargetWeight();
 		else
 			targetWeight = profile.getWeight();
-		
+
 		/*
-		 * Calculates daily calorie requirement.
-		 * If user activity level is null, default = MODERATELY_ACTIVE
+		 * Calculates daily calorie requirement. If user activity level is null,
+		 * default = MODERATELY_ACTIVE
 		 */
-		
+
 		if (profile.getActivityLevel().equalsIgnoreCase("SEDENTARY"))
-			dailyCalorieRequirement = CalorieUtil.calculateDailyCalorieNeeds(targetWeight, profile.getHeight(), 
-					profile.getAge(), 
-						((profile.getGender().equalsIgnoreCase("MALE")) ? Gender.MALE : Gender.FEMALE), ActivityLevel.SEDENTARY);
+			dailyCalorieRequirement = CalorieUtil.calculateDailyCalorieNeeds(targetWeight, profile.getHeight(),
+					profile.getAge(), ((profile.getGender().equalsIgnoreCase("MALE")) ? Gender.MALE : Gender.FEMALE),
+					ActivityLevel.SEDENTARY);
 		else if (profile.getActivityLevel().equalsIgnoreCase("LIGHTLY_ACTIVE"))
-			dailyCalorieRequirement = CalorieUtil.calculateDailyCalorieNeeds(targetWeight, profile.getHeight(), 
-					profile.getAge(), 
-						((profile.getGender().equalsIgnoreCase("MALE")) ? Gender.MALE : Gender.FEMALE), ActivityLevel.LIGHTLY_ACTIVE);
+			dailyCalorieRequirement = CalorieUtil.calculateDailyCalorieNeeds(targetWeight, profile.getHeight(),
+					profile.getAge(), ((profile.getGender().equalsIgnoreCase("MALE")) ? Gender.MALE : Gender.FEMALE),
+					ActivityLevel.LIGHTLY_ACTIVE);
 		else if (profile.getActivityLevel().equalsIgnoreCase("EXTREMELY_ACTIVE"))
-			dailyCalorieRequirement = CalorieUtil.calculateDailyCalorieNeeds(targetWeight, profile.getHeight(), 
-					profile.getAge(), 
-						((profile.getGender().equalsIgnoreCase("MALE")) ? Gender.MALE : Gender.FEMALE), ActivityLevel.EXTREMELY_ACTIVE);
+			dailyCalorieRequirement = CalorieUtil.calculateDailyCalorieNeeds(targetWeight, profile.getHeight(),
+					profile.getAge(), ((profile.getGender().equalsIgnoreCase("MALE")) ? Gender.MALE : Gender.FEMALE),
+					ActivityLevel.EXTREMELY_ACTIVE);
 		else if (profile.getActivityLevel().equalsIgnoreCase("VERY_ACTIVE"))
-			dailyCalorieRequirement = CalorieUtil.calculateDailyCalorieNeeds(targetWeight, profile.getHeight(), 
-					profile.getAge(), 
-						((profile.getGender().equalsIgnoreCase("MALE")) ? Gender.MALE : Gender.FEMALE), ActivityLevel.VERY_ACTIVE);
+			dailyCalorieRequirement = CalorieUtil.calculateDailyCalorieNeeds(targetWeight, profile.getHeight(),
+					profile.getAge(), ((profile.getGender().equalsIgnoreCase("MALE")) ? Gender.MALE : Gender.FEMALE),
+					ActivityLevel.VERY_ACTIVE);
 		else
-			dailyCalorieRequirement = CalorieUtil.calculateDailyCalorieNeeds(targetWeight, profile.getHeight(), 
-					profile.getAge(), 
-						((profile.getGender().equalsIgnoreCase("MALE")) ? Gender.MALE : Gender.FEMALE), ActivityLevel.MODERATELY_ACTIVE);
-			
+			dailyCalorieRequirement = CalorieUtil.calculateDailyCalorieNeeds(targetWeight, profile.getHeight(),
+					profile.getAge(), ((profile.getGender().equalsIgnoreCase("MALE")) ? Gender.MALE : Gender.FEMALE),
+					ActivityLevel.MODERATELY_ACTIVE);
+
 		dailyPlan.setDailyCalories(dailyCalorieRequirement);
 		dailyPlan.setProteinInCalories(ProteinUtil.calculateDailyProteinInCalories(dailyCalorieRequirement));
 		dailyPlan.setProteinInGms(ProteinUtil.calculateDailyProteinInGrams(dailyCalorieRequirement));
@@ -95,9 +98,9 @@ public class RegistrationController {
 		dailyPlan.setCarbInGms(CarbsUtil.calculateDailyCarbohydratesInGrams(dailyCalorieRequirement));
 		dailyPlan.setFatInCalories(FatUtil.calculateDailyFatInCalories(dailyCalorieRequirement));
 		dailyPlan.setFatInGms(FatUtil.calculateDailyFatInGrams(dailyCalorieRequirement));
-			
+
 		log.info("Nutrient plan created for user id: " + userID);
-		
+
 		userService.createNutrientPlan(dailyPlan, userID);
 
 		return "deviceDashboard";

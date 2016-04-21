@@ -1,42 +1,48 @@
-package com.bluewall.util.bean;
+package com.bluewall.feservices.bean;
 
-import java.sql.Date;
-import java.util.List;
+import java.sql.Timestamp;
+import java.util.Collection;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.User;
 
-public class UserProfile {
+public class UserInfo extends User{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String firstName;
 	private String lastName;
 	private String emailID;
-	private String password;
 	private String contactNumber;
 	private int age;
 	private String gender;
-	private float height;
-	private float weight;
+	private int height;
+	private int weight;
 	private String activityLevel;
 	private String currentLocation;
 	private String goalType;
-	private float targetWeight;
-	private Date startDate;
-	private Date endDate;
-	private List<FoodRating> foodTasteList;
+	private int targetWeight;
+	private Timestamp startDate;
+	private Timestamp endDate;
 	
 	
 	
+	public UserInfo(String username, String password, boolean enabled, boolean accountNonExpired,
+			boolean credentialsNonExpired, boolean accountNonLocked,
+			Collection<? extends GrantedAuthority> authorities, String emailID, String contactNumber) {
+		super(username, password, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
+		this.emailID = emailID;
+		this.contactNumber = contactNumber;
+	}
 	
 	
-	
-	
-	
-	public List<FoodRating> getFoodTasteList() {
-		return foodTasteList;
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 
-	public void setFoodTasteList(List<FoodRating> foodTasteList) {
-		this.foodTasteList = foodTasteList;
-	}
+
 
 	public String getFirstName() {
 		return firstName;
@@ -62,13 +68,6 @@ public class UserProfile {
 		this.emailID = emailID;
 	}
 
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
 
 	public String getContactNumber() {
 		return contactNumber;
@@ -94,20 +93,19 @@ public class UserProfile {
 		this.gender = gender;
 	}
 
-	public float getHeight() {
+	public int getHeight() {
 		return height;
-
 	}
 
-	public void setHeight(float height) {
+	public void setHeight(int height) {
 		this.height = height;
 	}
 
-	public float getWeight() {
+	public int getWeight() {
 		return weight;
 	}
 
-	public void setWeight(float weight) {
+	public void setWeight(int weight) {
 		this.weight = weight;
 	}
 
@@ -135,28 +133,31 @@ public class UserProfile {
 		this.goalType = goalType;
 	}
 
-	public float getTargetWeight() {
+	public int getTargetWeight() {
 		return targetWeight;
 	}
 
-	public void setTargetWeight(float targetWeight) {
+	public void setTargetWeight(int targetWeight) {
 		this.targetWeight = targetWeight;
 	}
 
-	public Date getStartDate() {
+	public Timestamp getStartDate() {
 		return startDate;
 	}
 
-	public void setStartDate(Date startDate) {
+	public void setStartDate(Timestamp startDate) {
 		this.startDate = startDate;
 	}
 
-	public Date getEndDate() {
+	public Timestamp getEndDate() {
 		return endDate;
 	}
 
-	public void setEndDate(Date endDate) {
+	public void setEndDate(Timestamp endDate) {
 		this.endDate = endDate;
 	}
+	
+	
+	
 
 }
