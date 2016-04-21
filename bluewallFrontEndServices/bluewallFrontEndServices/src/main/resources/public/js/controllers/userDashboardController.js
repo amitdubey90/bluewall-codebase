@@ -13,6 +13,7 @@
 	   	     $("#calorieBurnt").text(res[0]);
 	   	     $("#calorieConsumed").text(res[1]);
 	   	     $("#netCalorie").text(res[2]);
+	   	     $("#dailyCalorie").text(res[4]);
 	   	     myFunction(res[3]);
 	   		 countNumber();
 		   	},function(error){
