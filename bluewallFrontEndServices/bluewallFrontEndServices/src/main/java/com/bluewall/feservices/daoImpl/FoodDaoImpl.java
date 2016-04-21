@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,6 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.bluewall.feservices.bean.FoodInfo;
 import com.bluewall.feservices.dao.FoodDao;
 import com.bluewall.feservices.util.Queries;
 import com.bluewall.util.bean.UserFood;
@@ -132,8 +134,8 @@ public class FoodDaoImpl implements FoodDao {
 	}
 
 	@Override
-	public List<UserFood> getFoodInfo(String foodName) {
-		List<UserFood> foodList = new ArrayList<UserFood>();
+	public List<FoodInfo> getFoodInfo(String foodName) {
+		List<FoodInfo> foodList = new ArrayList<FoodInfo>();
 		ResultSet rs = null;
 		try {
 
@@ -143,10 +145,10 @@ public class FoodDaoImpl implements FoodDao {
 			rs = pst.executeQuery();
 
 			while (rs.next()) {
-				UserFood info = new UserFood();
-				info.setName(rs.getString("name"));
+				FoodInfo info = new FoodInfo();
+				info.setFoodName(rs.getString("name"));
 				info.setFoodId(rs.getInt("foodId"));
-				info.setCalories((float)(rs.getDouble("energy")));
+				info.setFoodCalorie(rs.getDouble("energy"));
 				foodList.add(info);
 			}
 

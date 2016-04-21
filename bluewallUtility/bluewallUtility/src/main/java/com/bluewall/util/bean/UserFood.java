@@ -9,7 +9,6 @@ import java.sql.Timestamp;
 
 public class UserFood {
 	
-	private int foodId;
 	private String name;
 	private String type;
 	private float calories;
@@ -63,14 +62,6 @@ public class UserFood {
 
 	public void setLogTime(Timestamp logTime) {
 		this.logTime = logTime;
-	}
-
-	public int getFoodId() {
-		return foodId;
-	}
-
-	public void setFoodId(int foodId) {
-		this.foodId = foodId;
 	}
 
 	
