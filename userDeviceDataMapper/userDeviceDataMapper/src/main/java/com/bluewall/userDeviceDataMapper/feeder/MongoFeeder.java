@@ -2,6 +2,7 @@ package com.bluewall.userDeviceDataMapper.feeder;
 
 import com.bluewall.userDeviceDataMapper.queue.QueueManager;
 import com.bluewall.userDeviceDataMapper.sql.Queries;
+import com.bluewall.userDeviceDataMapper.util.Constants;
 import com.bluewall.userDeviceDataMapper.util.MongoConnectionManager;
 import com.bluewall.userDeviceDataMapper.util.MySqlConnectionManager;
 import com.mongodb.MongoClient;
@@ -79,7 +80,7 @@ public class MongoFeeder extends Thread implements Feeder<Document> {
                         Document document = cursor.next();
                         log.debug("Receive doc - {}", document.toJson());
                         enqueueToMapperQueue(document);
-                        lastID = document.getInteger("doc_id");
+                        lastID = document.getInteger(Constants.DOC_ID_KEY);
                     }
                 } else {
                     initializeLastID();
@@ -130,7 +131,7 @@ public class MongoFeeder extends Thread implements Feeder<Document> {
 
             lastIDInitialized = true;
 
-            return 29;
+            return lastId;
         } catch (SQLException e) {
             log.error("Error in getting last id. ", e);
             e.printStackTrace();
