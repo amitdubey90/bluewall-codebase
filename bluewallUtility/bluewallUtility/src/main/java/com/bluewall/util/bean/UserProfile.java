@@ -12,12 +12,12 @@ public class UserProfile {
 	private String contactNumber;
 	private int age;
 	private String gender;
-	private double height;
-	private double weight;
+	private float height;
+	private float weight;
 	private String activityLevel;
 	private String currentLocation;
 	private String goalType;
-	private double targetWeight;
+	private float targetWeight;
 	private Date startDate;
 	private Date endDate;
 
@@ -77,20 +77,20 @@ public class UserProfile {
 		this.gender = gender;
 	}
 
-	public double getHeight() {
+	public float getHeight() {
 		return height;
 
 	}
 
-	public void setHeight(double height) {
+	public void setHeight(float height) {
 		this.height = height;
 	}
 
-	public double getWeight() {
+	public float getWeight() {
 		return weight;
 	}
 
-	public void setWeight(double weight) {
+	public void setWeight(float weight) {
 		this.weight = weight;
 	}
 
@@ -118,11 +118,11 @@ public class UserProfile {
 		this.goalType = goalType;
 	}
 
-	public double getTargetWeight() {
+	public float getTargetWeight() {
 		return targetWeight;
 	}
 
-	public void setTargetWeight(double targetWeight) {
+	public void setTargetWeight(float targetWeight) {
 		this.targetWeight = targetWeight;
 	}
 
