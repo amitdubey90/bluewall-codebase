@@ -1,5 +1,6 @@
 package com.bluewall.feservices.controller;
 
+import com.bluewall.feservices.bean.UserPrincipal;
 import com.bluewall.feservices.service.DeviceAuthorizationSvcIfc;
 import com.bluewall.feservices.util.Constants;
 import com.bluewall.util.common.DeviceType;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 @Slf4j
@@ -27,8 +29,10 @@ public class DeviceAuthorizationController {
     private DeviceAuthorizationSvcIfc service;
 
     @RequestMapping(value = "/initiateAuthorization/{deviceType}", method = RequestMethod.GET)
-    public void startDeviceAuthorization(@PathVariable String deviceType, HttpServletResponse response) {
-        String userId = "1";
+    public void startDeviceAuthorization(@PathVariable String deviceType, HttpServletResponse response,
+                                         HttpSession session) {
+        UserPrincipal principal = (UserPrincipal) session.getAttribute("userPrincipal");
+        String userId = principal.getUserID() + "";
         String redirectUrl = "";
         try {
 
@@ -61,7 +65,7 @@ public class DeviceAuthorizationController {
                     .getAccessToken(code, Constants.FITBIT_REDIRECT_URI);
             log.info("Successfully retrieved access token for user {}", userId);
 
-            if (service.storeUserAccessCredentials(1, DeviceType.FITBIT.getDeviceId(), tokenResponse)) {
+            if (service.storeUserAccessCredentials(userId, DeviceType.FITBIT.getDeviceId(), tokenResponse)) {
                 return "Success";
             }
         } catch (NumberFormatException nfe) {
@@ -84,7 +88,7 @@ public class DeviceAuthorizationController {
                     .getAccessToken(code, Constants.JAWBONE_REDIRECT_URI);
             log.info("Successfully retrieved access token for user {}", userId);
 
-            if (service.storeUserAccessCredentials(1, DeviceType.JAWBONE.getDeviceId(), response)) {
+            if (service.storeUserAccessCredentials(userId, DeviceType.JAWBONE.getDeviceId(), response)) {
                 return "Success";
             }
         } catch (NumberFormatException nfe) {
