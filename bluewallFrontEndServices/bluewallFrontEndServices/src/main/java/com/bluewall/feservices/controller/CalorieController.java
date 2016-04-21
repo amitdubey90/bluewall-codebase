@@ -50,7 +50,7 @@ public class CalorieController {
 				log.error("Exception occured");
 				e.printStackTrace();
 			}
-			return sumCalorieBurnt + "," + sumCalorieConsumed + "," + (int) netCalorie + "," + (int) percentCalorie;
+			return sumCalorieBurnt + "," + sumCalorieConsumed + "," + (int) netCalorie + "," + (int) percentCalorie + "," + dailyCalories;
 		}
 		return null;
 	}

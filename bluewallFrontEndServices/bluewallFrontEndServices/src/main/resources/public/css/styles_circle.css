@@ -6,21 +6,21 @@
 	-webkit-border-radius: 50px;
 	border-radius: 100px;
 	float: left;
-	margin: 18px;
+	margin: 5px;
 	margin-top: 5px;
-	height: 180px;
-	width: 180px;
+	height: 160px;
+	width: 160px;
 	border-style: solid;
 	border-color: black;
 	border-width: medium;
 	border: 5px solid #52d3aa;
+	text-align: -webkit-center;
 }
 
 .count {
-	    line-height: 160px;
+	line-height: 145px;
     color: #52d3aa;
-    margin-left: 20%;
-    font-size: 50px;
+    font-size: 35px;
     font-weight: bold;
 }
 
@@ -60,8 +60,8 @@
 }
 
 .green .progress, .red .progress, .orange .progress {
-	width: 180px;
-	height: 180px;
+	width: 160px;
+	height: 160px;
 }
 
 .green .progress {
@@ -87,8 +87,8 @@
 
 .green .progress .inner, .red .progress .inner, .orange .progress .inner
 	{
-	width: 180px;
-	height: 180px;
+	width: 160px;
+	height: 160px;
 }
 
 .green .progress .inner, .red .progress .inner, .orange .progress .inner
@@ -178,8 +178,9 @@
 
 .green .progress .inner .percent, .red .progress .inner .percent,
 	.orange .progress .inner .percent {
-	line-height: 350%;
-	font-size: -webkit-xxx-large;
+	line-height: 413%;
+    font-size: 35px;
+    text-align: -webkit-center;
 }
 
 .green .progress .inner .percent {
