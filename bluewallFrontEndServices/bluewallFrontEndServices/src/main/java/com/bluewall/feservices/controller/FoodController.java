@@ -4,6 +4,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -49,23 +50,31 @@ public class FoodController {
 			
 			List<UserFood> innerFoodList = new ArrayList<UserFood>();
 			List<List<UserFood>> outerFoodList = new ArrayList<List<UserFood>>();
-			String logTimeList = new SimpleDateFormat("yyyy-MM-dd").format(userFoodLogList.get(0).getFoodLogDate());
 			
-			for(UserFood userFoodLog : userFoodLogList){
-				String logTime = new SimpleDateFormat("yyyy-MM-dd").format(userFoodLog.getFoodLogDate());
-				
-				if(logTimeList.equalsIgnoreCase(logTime)){
-					innerFoodList.add(userFoodLog);
-					logTimeList = logTime;
-				}
-				else{
-					outerFoodList.add(innerFoodList);
-					innerFoodList = new ArrayList<UserFood>();
-					innerFoodList.add(userFoodLog);
-					logTimeList = logTime;
-				}
+			if(userFoodLogList.isEmpty()){
+				innerFoodList = null;
+				outerFoodList = null;
 			}
-			outerFoodList.add(innerFoodList);
+			else{
+				Date foodLogDate = userFoodLogList.get(0).getFoodLogDate();
+				String logTimeList = new SimpleDateFormat("yyyy-MM-dd").format(foodLogDate);
+				
+				for(UserFood userFoodLog : userFoodLogList){
+					String logTime = new SimpleDateFormat("yyyy-MM-dd").format(userFoodLog.getFoodLogDate());
+					
+					if(logTimeList.equalsIgnoreCase(logTime)){
+						innerFoodList.add(userFoodLog);
+						logTimeList = logTime;
+					}
+					else{
+						outerFoodList.add(innerFoodList);
+						innerFoodList = new ArrayList<UserFood>();
+						innerFoodList.add(userFoodLog);
+						logTimeList = logTime;
+					}
+				}
+				outerFoodList.add(innerFoodList);
+			}
 			return outerFoodList;
 		}
 		// TODO: HANDLE ERROR HANDLING HERE

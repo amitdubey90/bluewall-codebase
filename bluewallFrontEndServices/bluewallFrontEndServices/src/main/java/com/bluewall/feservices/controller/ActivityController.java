@@ -3,6 +3,7 @@ package com.bluewall.feservices.controller;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -45,23 +46,31 @@ public class ActivityController {
 
 			List<UserActivityLog> innerActivityList = new ArrayList<UserActivityLog>();
 			List<List<UserActivityLog>> outerActivityList = new ArrayList<List<UserActivityLog>>();
-			String logTimeList = new SimpleDateFormat("yyyy-MM-dd").format(activityList.get(0).getActivityLogDate());
-
-			for (UserActivityLog activity : activityList) {
-				String logTime = new SimpleDateFormat("yyyy-MM-dd").format(activity.getActivityLogDate());
-
-				if (logTimeList.equalsIgnoreCase(logTime)) {
-					innerActivityList.add(activity);
-					logTimeList = logTime;
-				} else {
-					outerActivityList.add(innerActivityList);
-					innerActivityList = new ArrayList<UserActivityLog>();
-					innerActivityList.add(activity);
-					logTimeList = logTime;
-				}
-
+			
+			if(activityList.isEmpty()){
+				innerActivityList = null;
+				outerActivityList = null;
 			}
-			outerActivityList.add(innerActivityList);
+			else{
+				Date logDate = activityList.get(0).getActivityLogDate();
+				String logTimeList = new SimpleDateFormat("yyyy-MM-dd").format(logDate);
+
+				for (UserActivityLog activity : activityList) {
+					String logTime = new SimpleDateFormat("yyyy-MM-dd").format(activity.getActivityLogDate());
+
+					if (logTimeList.equalsIgnoreCase(logTime)) {
+						innerActivityList.add(activity);
+						logTimeList = logTime;
+					} else {
+						outerActivityList.add(innerActivityList);
+						innerActivityList = new ArrayList<UserActivityLog>();
+						innerActivityList.add(activity);
+						logTimeList = logTime;
+					}
+
+				}
+				outerActivityList.add(innerActivityList);
+			}
 			return outerActivityList;
 		}
 		// TODO: HANDLE ERROR HANDLING HERE
