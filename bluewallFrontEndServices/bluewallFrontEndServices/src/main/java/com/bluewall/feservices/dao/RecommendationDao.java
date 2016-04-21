@@ -13,4 +13,6 @@ public interface RecommendationDao {
      * @return
      */
     List<FoodInfo> getRecommendationsForUser(int foodId, float calories, int count);
+
+	int getLatestPreferredFoodItem(int userId);
 }

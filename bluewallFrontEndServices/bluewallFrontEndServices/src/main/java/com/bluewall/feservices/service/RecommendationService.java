@@ -7,4 +7,6 @@ import java.util.List;
 public interface RecommendationService {
 
     List<FoodInfo> getRecommendationsForUser(int foodId, float calories, int count);
+
+	int getLatestPreferredFoodItem(int userId);
 }

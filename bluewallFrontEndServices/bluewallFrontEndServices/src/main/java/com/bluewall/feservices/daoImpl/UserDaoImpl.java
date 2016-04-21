@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -97,6 +98,7 @@ public class UserDaoImpl implements UserDao {
 					prepStatement.setInt(1, userID);
 					prepStatement.setInt(2, foodRating.getKey());
 					prepStatement.setInt(3, foodRating.getValue());
+					prepStatement.setTimestamp(4, new java.sql.Timestamp(Calendar.getInstance().getTime().getTime()));
 					prepStatement.executeUpdate();
 
 				}

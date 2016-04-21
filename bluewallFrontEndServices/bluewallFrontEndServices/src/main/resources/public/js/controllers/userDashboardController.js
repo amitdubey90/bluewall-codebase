@@ -86,6 +86,15 @@
 			$scope.error = "Unable to load nutrientInfo feed: "+error.statusText;
 			console.log(error.statusText);
 		});
+		 
+		 
+		 userDashboardService.getFoodRecommendations().then(function(data){
+			 $scope.recommendationList = data.data;
+			 console.log("Recomendation fetched successfully");
+		 },function(error){
+				$scope.error = "Unable to load recommendations: "+error.statusText;
+				console.log(error.statusText);
+			});
 
 });
 
@@ -110,6 +119,14 @@
 			return $http.get("/user/dailyNutritionPlan").then(function(nutrientInfo){
 				console.log("Data returned from backend service: nutrient info: "+nutrientInfo);
 				return nutrientInfo;
+			});
+		}
+		
+		this.getFoodRecommendations = function(){
+			
+			return $http.get("/recommendation/get/5").then(function(food){
+				console.log("Data returned from backend servie: recommendations service: "+food);
+				return food;
 			});
 		}
 	

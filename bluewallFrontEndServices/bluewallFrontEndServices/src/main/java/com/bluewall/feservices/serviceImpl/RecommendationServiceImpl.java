@@ -17,4 +17,8 @@ public class RecommendationServiceImpl implements RecommendationService {
     public List<FoodInfo> getRecommendationsForUser(int foodId, float calories, int count) {
         return dao.getRecommendationsForUser(foodId, calories, count);
     }
+	@Override
+	public int getLatestPreferredFoodItem(int userId) {
+		return dao.getLatestPreferredFoodItem(userId);
+	}
 }
