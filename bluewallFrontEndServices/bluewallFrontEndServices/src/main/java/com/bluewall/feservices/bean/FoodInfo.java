@@ -27,8 +27,4 @@ public class FoodInfo {
 	public void setFoodCalorie(double foodCalorie) {
 		this.foodCalorie = foodCalorie;
 	}
-	
-	
-	
-	
 }

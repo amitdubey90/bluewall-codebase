@@ -25,5 +25,9 @@ public class Queries {
 	public static final String INS_USER_INFO = "insert into UserInfo(firstName, lastName, emailID, contactNumber, age, gender, height,"
 			+ " weight, activityLevel, currentLocation)"
 			+ " values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
 	public static final String INS_USER_TASTE_PREFERENCES = "insert into UserRating (userID,foodID,rating) values (?,?,?)";
+
+	public static final String GET_RECOMMENDATION_FOR_USER = "SELECT foodB, similarity, foodBCalories FROM userDatabase.FoodSimilarity " +
+			"where foodA = ? and foodBCalories < ? order by similarity desc limit ?";
 }
