@@ -69,12 +69,15 @@ public class ApidataHandler
 							else{
 								log.info("Fitbit Data fetched from User Activity Log API");
 								log.info("Inserting Fitbit Data in database");
-								fdm.insertDeviceData(userActivityInfoData, userID, DeviceType.FITBIT.getName());
+								fdm.insertDeviceData(currentDateTime, userActivityInfoData, userID, DeviceType.FITBIT.getName());
 							}
 						}	
 						else{
 							ClientInterface jawbone = DeviceClientFactory.getClientInstance(DeviceType.JAWBONE);
 							log.debug("Jawbone Instance created");
+							
+							DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+							String currentDateTime = dateFormat.format(calendar.getTime());
 							
 							calendar.setTime(calendar.getTime());
 							long currentmillis = calendar.getTimeInMillis();
@@ -94,7 +97,7 @@ public class ApidataHandler
 							else{
 								log.info("Jawbone Data fetched from Moves API");
 								log.info("Inserting Fitbit Data in database");
-								fdm.insertDeviceData(userActivityInfoData, userID, DeviceType.JAWBONE.getName());
+								fdm.insertDeviceData(currentDateTime, userActivityInfoData, userID, DeviceType.JAWBONE.getName());
 							}
 						}
 					}
