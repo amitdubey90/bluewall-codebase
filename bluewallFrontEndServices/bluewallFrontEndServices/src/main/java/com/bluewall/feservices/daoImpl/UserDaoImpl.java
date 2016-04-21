@@ -117,6 +117,7 @@ public class UserDaoImpl implements UserDao {
 				}
 				
 				log.info("CREATE USER SERVICE: Now inserting in users database");
+				
 				preparedStatement = connection.prepareStatement(Queries.INS_USERS);
 				preparedStatement.setString(1, user.getEmailID());
 				preparedStatement.setString(2, user.getPassword());

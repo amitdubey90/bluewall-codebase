@@ -55,7 +55,7 @@ public class RegistrationController {
 		
 		UserDailyNutritionPlan dailyPlan = new UserDailyNutritionPlan();
 		double dailyCalorieRequirement;
-		double targetWeight;
+		float targetWeight;
 		
 		if (profile.getTargetWeight() != 0.0)
 			targetWeight = profile.getTargetWeight();
