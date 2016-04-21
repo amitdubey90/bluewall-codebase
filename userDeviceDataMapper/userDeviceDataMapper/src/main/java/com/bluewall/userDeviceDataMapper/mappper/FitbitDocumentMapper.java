@@ -20,7 +20,7 @@ public class FitbitDocumentMapper implements ActivityLogMapper<Document> {
             output = ActivityLog.builder()
                     .userID(getUserId(doc))
                     .loggedFrom(Constants.FITBIT_LOGGED_FROM)
-                    .type(Constants.DEFAULT_MAPPER_TYPE)
+                    .activityName(Constants.DEFAULT_ACTIVITY_NAME)
                     .caloriesBurnt(getCaloriesBurnt(doc))
                     .build();
         } catch (Throwable t) {
