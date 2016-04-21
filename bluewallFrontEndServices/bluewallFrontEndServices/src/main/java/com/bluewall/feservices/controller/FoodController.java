@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.bluewall.feservices.bean.FoodInfo;
 import com.bluewall.feservices.bean.UserPrincipal;
 import com.bluewall.feservices.service.FoodService;
 import com.bluewall.util.bean.UserFood;
@@ -93,9 +92,9 @@ public class FoodController {
 
 	@RequestMapping(value = { "/getFoodItems" }, method = RequestMethod.GET)
 	@ResponseBody
-	public List<FoodInfo> getFoodItems(@RequestParam String foodName) {
+	public List<UserFood> getFoodItems(@RequestParam String foodName) {
 
-		List<FoodInfo> foodList = new ArrayList<FoodInfo>();
+		List<UserFood> foodList = new ArrayList<UserFood>();
 
 		foodList = foodService.getFoodInfo(foodName);
 		return foodList;

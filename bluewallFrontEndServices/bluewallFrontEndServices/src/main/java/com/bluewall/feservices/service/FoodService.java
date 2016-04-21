@@ -2,7 +2,6 @@ package com.bluewall.feservices.service;
 
 import java.util.List;
 
-import com.bluewall.feservices.bean.FoodInfo;
 import com.bluewall.util.bean.UserFood;
 
 public interface FoodService {
@@ -19,5 +18,5 @@ public interface FoodService {
 	
 	public void createFoodPlate(UserFood createFood, int userID);
 
-	public List<FoodInfo> getFoodInfo(String foodName);
+	public List<UserFood> getFoodInfo(String foodName);
 }
