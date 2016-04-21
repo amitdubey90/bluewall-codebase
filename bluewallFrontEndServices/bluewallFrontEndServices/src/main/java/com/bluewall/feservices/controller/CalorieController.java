@@ -38,11 +38,14 @@ public class CalorieController {
 			try {
 				sumCalorieBurnt = calorieService.getSumCaloriesBurnt(userID, date);
 				sumCalorieConsumed = calorieService.getSumCaloriesConsumed(userID, date);
-				dailyCalories = calorieService.getTargetWeight(userID, date);
+				dailyCalories = calorieService.getTargetWeight(userID);
 				netCalorie = sumCalorieConsumed - sumCalorieBurnt;
 				percentCalorie = (netCalorie / dailyCalories) * 100;
+				
 				if (percentCalorie > 100)
 					percentCalorie = 100;
+				if (percentCalorie < 0)
+					percentCalorie = 0;
 			} catch (Exception e) {
 				log.error("Exception occured");
 				e.printStackTrace();

@@ -68,11 +68,10 @@ public class CalorieDaoImpl implements CalorieDao {
 	}
 
 	@Override
-	public int getTargetWeight(int userID, String date) {
+	public int getTargetWeight(int userID) {
 		int dailyCalories = 0;
 		log.info("Fetching target weight for a day");
-		try (ResultSet resultSet = dataSource.getConnection().prepareStatement(Queries.GET_DAILY_CALORIES + " where userID = " + userID
-						+ " and planDate = '" + date + "'").executeQuery()) {
+		try (ResultSet resultSet = dataSource.getConnection().prepareStatement(Queries.GET_DAILY_CALORIES + " where userID = " + userID).executeQuery()) {
 			log.info("Data fetched from database successfully");
 			if (resultSet.next())
 				dailyCalories = resultSet.getInt("dailyCalories");

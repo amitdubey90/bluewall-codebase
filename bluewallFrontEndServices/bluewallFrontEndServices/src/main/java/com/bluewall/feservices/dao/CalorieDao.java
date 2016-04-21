@@ -17,5 +17,5 @@ public interface CalorieDao {
 	 */
 	public int getSumCaloriesConsumed(int userID, String date);
 	
-	public int getTargetWeight(int userID, String date);
+	public int getTargetWeight(int userID);
 }
