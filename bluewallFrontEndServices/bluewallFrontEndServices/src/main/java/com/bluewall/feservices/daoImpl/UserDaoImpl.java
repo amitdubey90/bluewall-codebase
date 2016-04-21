@@ -78,8 +78,8 @@ public class UserDaoImpl implements UserDao {
 			preparedStatement.setString(4, user.getContactNumber());
 			preparedStatement.setInt(5, user.getAge());
 			preparedStatement.setString(6, user.getGender());
-			preparedStatement.setDouble(7, user.getHeight());
-			preparedStatement.setDouble(8, user.getWeight());
+			preparedStatement.setFloat(7, user.getHeight());
+			preparedStatement.setFloat(8, user.getWeight());
 			preparedStatement.setString(9,user.getActivityLevel());
 			preparedStatement.setString(10, user.getCurrentLocation());
 			int rowCount = preparedStatement.executeUpdate();
@@ -107,7 +107,7 @@ public class UserDaoImpl implements UserDao {
 					preparedStatement = connection.prepareStatement(Queries.INS_USER_GOALS);
 					preparedStatement.setInt(1, userID);
 					preparedStatement.setString(2, user.getGoalType());
-					preparedStatement.setDouble(3, user.getTargetWeight());
+					preparedStatement.setFloat(3, user.getTargetWeight());
 					preparedStatement.setDate(4, user.getStartDate());
 					preparedStatement.setDate(5, user.getEndDate());
 					preparedStatement.executeUpdate();
@@ -117,6 +117,7 @@ public class UserDaoImpl implements UserDao {
 				}
 				
 				log.info("CREATE USER SERVICE: Now inserting in users database");
+				
 				preparedStatement = connection.prepareStatement(Queries.INS_USERS);
 				preparedStatement.setString(1, user.getEmailID());
 				preparedStatement.setString(2, user.getPassword());
@@ -150,7 +151,7 @@ public class UserDaoImpl implements UserDao {
 				try {
 					connection.close();
 				} catch (SQLException e) {
-					log.info("Create Activity Service: Error closing connection object " + e.getMessage());
+					log.info("CREATE USER SERVICE: Error closing connection object " + e.getMessage());
 				}
 			}
 		}
@@ -178,8 +179,8 @@ public class UserDaoImpl implements UserDao {
 				userProfile.setContactNumber(rs.getString("contactNumber"));
 				userProfile.setAge(rs.getInt("age"));
 				userProfile.setGender(rs.getString("gender"));
-				userProfile.setHeight(rs.getInt("height"));
-				userProfile.setWeight(rs.getInt("weight"));
+				userProfile.setHeight(rs.getFloat("height"));
+				userProfile.setWeight(rs.getFloat("weight"));
 				userProfile.setActivityLevel(rs.getString("activityLevel"));
 				userProfile.setCurrentLocation(rs.getString("currentLocation"));
 				userProfileList.add(userProfile);

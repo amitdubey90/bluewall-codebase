@@ -8,6 +8,7 @@ public class FoodInfo {
 	
 	public FoodInfo(){
 	}
+	
 	public int getFoodId() {
 		return foodId;
 	}
