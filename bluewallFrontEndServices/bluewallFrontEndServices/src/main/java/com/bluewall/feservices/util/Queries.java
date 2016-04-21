@@ -26,7 +26,7 @@ public class Queries {
 			+ " weight, activityLevel, currentLocation)"
 			+ " values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-	public static final String INS_USER_TASTE_PREFERENCES = "insert into UserRating (userID,foodID,rating,ratineTimeStamp) values (?,?,?,?)";
+	public static final String INS_USER_TASTE_PREFERENCES = "insert into UserRating (userID,foodID,rating,ratingTimeStamp) values (?,?,?,?)";
 
 	public static final String GET_RECOMMENDATION_FOR_USER = "SELECT FoodInfo.name, FoodSimilarity.foodB, FoodSimilarity.similarity, FoodSimilarity.foodBCalories FROM FoodInfo,FoodSimilarity" +
 			" where foodA = ? and foodBCalories < ? and FoodInfo.foodId = FoodSimilarity.foodB order by similarity desc limit ?";
