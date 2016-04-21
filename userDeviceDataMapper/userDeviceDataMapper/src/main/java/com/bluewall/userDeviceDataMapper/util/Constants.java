@@ -15,7 +15,7 @@ public class Constants {
     public static final String MONGO_LAB_URI = "mongodb://bluewallmongo:bluewall1234@ds061375.mongolab.com:61375/user-activity-raw";
 
     // Default values
-    public static final int DEFAULT_MAPPER_TYPE = 0;
+    public static final String DEFAULT_ACTIVITY_NAME = "Device Summary";
 
     // Generic keys for mappers
     public static final String DEVICE_TYPE_KEY = "device_type";
@@ -29,4 +29,5 @@ public class Constants {
     public static final int FITBIT_LOGGED_FROM = 10;
 
     public static final String DOC_ID_KEY = "doc_id";
+    public static final String ACTIVITY_LOG_DATE_KEY = "activity_log_date";
 }

@@ -55,7 +55,7 @@ public class OutboundQueueWorker extends Thread {
                         int colIndex = 1;
 
                         pst.setInt(colIndex++, activityLog.getUserID());
-                        pst.setInt(colIndex++, activityLog.getType());
+                        pst.setString(colIndex++, activityLog.getActivityName());
                         pst.setInt(colIndex++, activityLog.getDistance());
                         pst.setTimestamp(colIndex++, activityLog.getStartTime());
                         pst.setLong(colIndex++, activityLog.getDuration());
