@@ -23,15 +23,15 @@
   <form class="form-signin" ng-submit="login(); toggleModal()"  ng-controller="loginController">
  	  <table border="0" style="width: 100%;">
 		<tr>
-			<td>Email ID*:</td>
+			<td>Email ID<span style="color:red;">*</span>:</td>
 			<td><input type="email" id="inputEmail" ng-model="credentials.username" class="form-control" placeholder="Email address" required autofocus></td>
 		</tr>
 		<tr></tr>
 		<tr>
-			<td>Password*:</td>
+			<td>Password<span style="color:red;">*</span>:</td>
 			<td><input type="password" id="inputPassword" ng-model="credentials.password" class="form-control" placeholder="Password" required></td>
 		</tr>
-		<tr>
+		<!-- <tr>
 			<td>
 				<div class="checkbox">
 			        <label>
@@ -39,7 +39,7 @@
 			        </label>
 			    </div>
 			</td>
-		</tr>
+		</tr> -->
 		<tr>
 			<td colspan="2" align="center"><button class="btn btn-lg btn-primary btn-block" type="submit" >Sign in</button></td>
 		</tr>
@@ -50,25 +50,25 @@
   <form ng-submit="register(user,food); toggleRegisModal()" method="post" ng-controller="registrationController">
 			<table border="0" style="width: 100%;">
 				<tr>
-					<td>First Name*: <input class="form-control" type="text" name="firstName"	value="LMNO" ng-model="user.firstName" required="required" /></td>
-					<td>Last Name*:<input class="form-control" type="text" name="lastName" value="LMNO" ng-model="user.lastName" required="required" /></td>
-					<td>E-mail*:<input class="form-control" type="text" name="emailID" value="LMNO@gmail.com" ng-model="user.emailID" required="required" /></td>
-					<td>Password*:<input class="form-control" type="password" value="lmno" ng-model="user.password" required="required" /></td>
+					<td>First Name<span style="color:red;">*</span>: <input placeholder="First Name" class="form-control" type="text" name="firstName"	value="LMNO" ng-model="user.firstName" required="required" /></td>
+					<td>Last Name<span style="color:red;">*</span>:<input placeholder="Last Name" class="form-control" type="text" name="lastName" value="LMNO" ng-model="user.lastName" required="required" /></td>
+					<td>E-mail<span style="color:red;">*</span>:<input placeholder="Email address" class="form-control" type="text" name="emailID" value="LMNO@gmail.com" ng-model="user.emailID" required="required" /></td>
+					<td>Password<span style="color:red;">*</span>:<input placeholder="Password" class="form-control" type="password" value="lmno" ng-model="user.password" required="required" /></td>
 				</tr>
 				<tr>
-					<td>Contact Number:<input class="form-control" type="text" ng-model="user.contactNumber" /></td>
-					<td>Age*:<input class="form-control" type="text" value=45 ng-model="user.age" required="required"/></td>
-					<td>Gender*:<select class="form-control" name="gender" ng-model="user.gender" required="required">
+					<td>Contact Number:<input placeholder="Contact Number" class="form-control" type="text" ng-model="user.contactNumber" /></td>
+					<td>Age<span style="color:red;">*</span>:<input placeholder="Age" class="form-control" type="text" value=45 ng-model="user.age" required="required"/></td>
+					<td>Gender<span style="color:red;">*</span>:<select class="form-control" name="gender" ng-model="user.gender" required="required">
 										<option value="female" selected>Female</option>
 										<option value="male">Male</option>
 								</select>
 					</td>
-					<td>Current Location*:<input class="form-control" type="text" value="sj" ng-model="user.currentLocation" required="required"/></td>
+					<td>Current Location<span style="color:red;">*</span>:<input placeholder="Current Location" class="form-control" type="text" value="sj" ng-model="user.currentLocation" required="required"/></td>
 				</tr>
 				<tr>
-					<td>Height (Feet)*:<input class="form-control" type="text" value="33" ng-model="user.height" required="required"/></td>
-					<td>Weight (pounds)*:<input class="form-control" type="text" value="33" ng-model="user.weight" required="required"/></td>
-					<td colspan="2">Activity Level*:
+					<td>Height (Feet)<span style="color:red;">*</span>:<input placeholder="Height in Feets" class="form-control" type="text" value="33" ng-model="user.height" required="required"/></td>
+					<td>Weight (pounds)<span style="color:red;">*</span>:<input placeholder="Weight in pounds" class="form-control" type="text" value="33" ng-model="user.weight" required="required"/></td>
+					<td colspan="2">Activity Level<span style="color:red;">*</span>:
 						<select class="form-control" name="actLevel" ng-model="user.activityLevel" required="required">
 								<option value="veryActive" selected>Very Active</option>
 								<option value="active">Active</option>
@@ -86,10 +86,10 @@
 	
 						</select>
 					</td>
-					<td colspan="2">Target Weight (pounds):<input class="form-control" type="text" value="33" ng-model="user.targetWeight" /></td>
+					<td colspan="2">Target Weight (pounds):<input placeholder="Target weight in pounds" class="form-control" type="text" value="33" ng-model="user.targetWeight" /></td>
 				</tr>
 				<tr>
-					<td colspan="4">Food preference:
+					<td>Food preference:
 						<select class="form-control" name="foodPreference" ng-model="user.foodpref" required>
 							<option value="Vegetarian" selected>Vegetarian</option>
 							<option value="Non-Vegetarian">Non-Vegetarian</option>
@@ -111,7 +111,7 @@
 						</tr>
 						<tr>
 							<td>
-								<label class="col-xs-5">Milk</label>
+								<label class="col-xs-5">Milk&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
 								<div class="col-xs-1">
 									<select id="food1" ng-model="food.food1" required>
 										<option value="1079">1</option>
@@ -123,7 +123,7 @@
 								</div>
 							</td>
 							<td>
-								<label class="col-xs-5">Apples</label>
+								<label class="col-xs-5">Apples&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
 								<div class="col-xs-1">
 									<select id="food2" ng-model="food.food2" required>
 										<option value="9003">1</option>
@@ -135,7 +135,7 @@
 								</div>
 							</td>
 							<td>
-								<label class="col-xs-5">Lentils, Sprouted</label>
+								<label class="col-xs-5">Lentils, Sprouted&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
 								<div class="col-xs-1">
 									<select id="food3" ng-model="food.food3" required>
 										<option value="11926">1</option>
@@ -147,7 +147,7 @@
 								</div>
 							<td>
 							<td>
-							<label class="col-xs-5">Potatoes, Fried</label>
+							<label class="col-xs-5">Potatoes, Fried&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
 									<div class="col-xs-1">
 										<select id="food6" ng-model="food.food6" required>
 												<option value="11840">1</option>
