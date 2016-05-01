@@ -9,6 +9,7 @@ import com.bluewall.feservices.bean.FoodInfo;
 import com.bluewall.feservices.dao.FoodDao;
 import com.bluewall.feservices.service.FoodService;
 import com.bluewall.util.bean.UserFood;
+import com.bluewall.util.bean.UserRating;
 
 @Service
 public class FoodServiceImpl implements FoodService{
@@ -31,6 +32,13 @@ public class FoodServiceImpl implements FoodService{
 		String name = "%"+foodName+"%";
 		return foodDao.getFoodInfo(name);
 				
+		
+	}
+
+	@Override
+	public void rateFoodItems(UserRating userRating, int userID) {
+		
+		foodDao.rateFoodItems(userRating, userID);
 		
 	}
 	

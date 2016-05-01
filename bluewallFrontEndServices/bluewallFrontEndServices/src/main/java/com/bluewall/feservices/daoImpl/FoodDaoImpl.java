@@ -4,7 +4,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,6 +18,7 @@ import com.bluewall.feservices.bean.FoodInfo;
 import com.bluewall.feservices.dao.FoodDao;
 import com.bluewall.feservices.util.Queries;
 import com.bluewall.util.bean.UserFood;
+import com.bluewall.util.bean.UserRating;
 
 @Slf4j
 @Repository
@@ -165,5 +165,33 @@ public class FoodDaoImpl implements FoodDao {
 		}
 
 		return foodList;
+	}
+
+	@Override
+	public void rateFoodItems(UserRating userRating, int userID) {
+		
+		ResultSet rs = null;
+		
+		try{
+			PreparedStatement prepStat = dataSource.getConnection().prepareStatement(Queries.INS_USER_RATINGS);
+			prepStat.setInt(1, userID);
+			prepStat.setInt(2, userRating.getFoodID());
+			prepStat.setInt(3, userRating.getRating());
+			prepStat.executeUpdate();
+			prepStat.close();
+			log.info("RATE FOOD ITEMS: Ratings successfully logged by user id: " + userID);
+		}
+		 catch (SQLException e) {
+				log.info("RATE FOOD ITEMS: SQL Exception - Check the sql query or the connection string");
+		}
+		finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					log.info("RATE FOOD ITEMS - Could not close result set object");
+				}
+			}
+		}
 	}
 }
