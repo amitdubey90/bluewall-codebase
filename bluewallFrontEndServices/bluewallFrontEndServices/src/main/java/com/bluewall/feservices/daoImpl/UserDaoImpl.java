@@ -102,7 +102,7 @@ public class UserDaoImpl implements UserDao {
 					prepStatement.executeUpdate();
 
 				}
-				log.info("Taste preferences  saved succeefully for user id: " + userID);
+				log.info("CREATE USER SERVICE: Taste preferences  saved succeefully for user id: " + userID);
 
 				// check to see if user enters a goal
 				if (user.getGoalType() != null) {
@@ -134,10 +134,10 @@ public class UserDaoImpl implements UserDao {
 		} catch (SQLException e) {
 			try {
 				connection.rollback();
-				log.info("CREATE USER SERVICE: Successfully rolled back changes from the database!");
+				log.error("CREATE USER SERVICE: Successfully rolled back changes from the database!");
 				e.printStackTrace();
 			} catch (SQLException e1) {
-				log.info("CREATE USER SERVICE: Could not rollback updates " + e1.getMessage());
+				log.error("CREATE USER SERVICE: Could not rollback updates " + e1.getMessage());
 			}
 		}
 
@@ -146,14 +146,14 @@ public class UserDaoImpl implements UserDao {
 				try {
 					rs.close();
 				} catch (SQLException e) {
-					log.info("CREATE USER SERVICE: Result set object is not closed.");
+					log.error("CREATE USER SERVICE: Result set object is not closed.");
 				}
 			}
 			if (connection != null) {
 				try {
 					connection.close();
 				} catch (SQLException e) {
-					log.info("CREATE USER SERVICE: Error closing connection object " + e.getMessage());
+					log.error("CREATE USER SERVICE: Error closing connection object " + e.getMessage());
 				}
 			}
 		}
@@ -188,21 +188,21 @@ public class UserDaoImpl implements UserDao {
 			}
 
 		} catch (SQLException e) {
-			log.info("GET USER DETAILS: SQL Exception - Check the sql query or the connection string");
+			log.error("GET USER DETAILS: SQL Exception - Check the sql query or the connection string");
 			e.printStackTrace();
 		} finally {
 			if (rs != null) {
 				try {
 					rs.close();
 				} catch (SQLException e) {
-					log.info("Could not close result set object");
+					log.error("GET USER DETAILS: Could not close result set object");
 				}
 			}
 			if (connection != null) {
 				try {
 					connection.close();
 				} catch (SQLException e) {
-					log.info("GET USER DETAILS: Error closing connection object " + e.getMessage());
+					log.error("GET USER DETAILS: Error closing connection object " + e.getMessage());
 				}
 			}
 		}
@@ -215,7 +215,7 @@ public class UserDaoImpl implements UserDao {
 	public void createNutrientPlan(UserDailyNutritionPlan dailyPlan, int userID) {
 
 		Connection connection = null;
-		log.info("Now inserting nutrition plan in database for user id: " + userID);
+		log.info("CREATE NUTRITION PLAN: Now inserting nutrition plan in database for user id: " + userID);
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
 		try {
@@ -233,17 +233,17 @@ public class UserDaoImpl implements UserDao {
 			prepStatement.setString(9, dateFormat.format(new Date()));
 			prepStatement.executeUpdate();
 			prepStatement.close();
-			log.info("Nutrient plan saved succeefully for user id: " + userID);
+			log.info("CREATE NUTRITION PLAN: Nutrient plan saved succeefully for user id: " + userID);
 
 		} catch (SQLException e) {
-			log.info("CREATE NUTRIENT PLAN: SQL Exception - Check the sql query or the connection string");
+			log.error("CREATE NUTRIENT PLAN: SQL Exception - Check the sql query or the connection string");
 			e.printStackTrace();
 		} finally {
 			if (connection != null) {
 				try {
 					connection.close();
 				} catch (SQLException e) {
-					log.info("CREATE NUTRIENT PLAN: Error closing connection object " + e.getMessage());
+					log.error("CREATE NUTRIENT PLAN: Error closing connection object " + e.getMessage());
 				}
 			}
 		}

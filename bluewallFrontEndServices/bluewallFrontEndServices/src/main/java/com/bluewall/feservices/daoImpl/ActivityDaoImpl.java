@@ -69,13 +69,13 @@ public class ActivityDaoImpl implements ActivityDao {
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-			log.info("GET USER ACTIVITY SERVICE: SQL Exception.");
+			log.error("GET USER ACTIVITY LOGS: SQL Exception.");
 		} finally {
 			if (rs != null) {
 				try {
 					rs.close();
 				} catch (SQLException e) {
-					log.info("GET USER ACTIVITY SERVICE: Result set object is not closed");
+					log.error("GET USER ACTIVITY LOGS: Result set object is not closed");
 				}
 			}
 		}
@@ -99,14 +99,14 @@ public class ActivityDaoImpl implements ActivityDao {
 				creds.setAccessToken(rs.getString("accessToken"));
 			}
 		} catch (SQLException sqlExp) {
-			log.error("SQL Exception while fetching user device Info");
+			log.error("GET USER DEVICE INFO: SQL Exception while fetching user device Info");
 		}
 		finally {
 			if (rs != null) {
 				try {
 					rs.close();
 				} catch (SQLException e) {
-					log.info("GET USER DEVICE INFO: Result set object is not closed");
+					log.error("GET USER DEVICE INFO: Result set object is not closed");
 				}
 			}
 		}
@@ -135,17 +135,17 @@ public class ActivityDaoImpl implements ActivityDao {
 			prepStatement.setTimestamp(8, userActivity.getLogTime());
 			prepStatement.executeUpdate();
 			connection.commit();
-			log.info("Activity Successfully created for user ID: " + userId);
+			log.info("CREATE ACTIVITY: Activity Successfully created for user ID: " + userId);
 			prepStatement.close();
 
 		} catch (SQLException e) {
 			try {
 				connection.rollback();
 				e.printStackTrace();
-				log.info("Create Activity Service: Successfully rolled back changes from the database!");
+				log.info("CREATE ACTIVITY: Successfully rolled back changes from the database!");
 			} catch (SQLException e1) {
 				e.printStackTrace();
-				log.info("Create Activity Service: Could not rollback updates " + e1.getMessage());
+				log.error("CREATE ACTIVITY: Could not rollback updates " + e1.getMessage());
 			}
 		} finally {
 
@@ -153,7 +153,7 @@ public class ActivityDaoImpl implements ActivityDao {
 				try {
 					connection.close();
 				} catch (SQLException e) {
-					log.info("Create Activity Service: Error closing connection object " + e.getMessage());
+					log.error("CREATE ACTIVITY: Error closing connection object " + e.getMessage());
 				}
 			}
 		}
