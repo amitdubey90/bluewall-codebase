@@ -143,6 +143,7 @@ public class FoodDaoImpl implements FoodDao {
 					"select f1.foodId, f1.name, f2.energy from FoodInfo f1 , FoodNutrientPer100Gram f2 where f1.name like ? and f1.foodId=f2.foodId;");
 			pst.setString(1, foodName);
 			rs = pst.executeQuery();
+			pst.close();
 
 			while (rs.next()) {
 				FoodInfo info = new FoodInfo();

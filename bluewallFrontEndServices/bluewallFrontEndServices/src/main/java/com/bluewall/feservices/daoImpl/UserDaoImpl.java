@@ -232,7 +232,7 @@ public class UserDaoImpl implements UserDao {
 			prepStatement.setDouble(8, dailyPlan.getProteinInCalories());
 			prepStatement.setString(9, dateFormat.format(new Date()));
 			prepStatement.executeUpdate();
-
+			prepStatement.close();
 			log.info("Nutrient plan saved succeefully for user id: " + userID);
 
 		} catch (SQLException e) {
@@ -262,6 +262,8 @@ public class UserDaoImpl implements UserDao {
 			pst.setString(colId++, emailID);
 
 			ResultSet rs = pst.executeQuery();
+			pst.close();
+			
 			if (rs.next()) {
 				String firstName = rs.getString("firstName");
 				String lastName = rs.getString("lastName");
@@ -273,6 +275,13 @@ public class UserDaoImpl implements UserDao {
 
 				userPrincipal = new UserPrincipal(emailID, firstName, lastName, userId, age, height, weight);
 
+			}
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					log.info("RATE FOOD ITEMS - Could not close result set object");
+				}
 			}
 			log.info("loadUserByName successful");
 		} catch (SQLException e) {

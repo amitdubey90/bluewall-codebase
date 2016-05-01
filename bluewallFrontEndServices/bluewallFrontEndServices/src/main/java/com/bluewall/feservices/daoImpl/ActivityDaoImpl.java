@@ -54,6 +54,7 @@ public class ActivityDaoImpl implements ActivityDao {
 							+ "from ActivityLog, SupportedDevice where  ActivityLog.userID = " + userID
 							+ " and SupportedDevice.deviceID = ActivityLog.loggedFrom order by ActivityLog.logTime desc");
 			rs = pst.executeQuery();
+			pst.close();
 
 			while (rs.next()) {
 				UserActivityLog userActivity = new UserActivityLog();
@@ -86,10 +87,12 @@ public class ActivityDaoImpl implements ActivityDao {
 	public UserCredential getUserDeviceInfo(int userId) {
 
 		UserCredential creds = null;
+		ResultSet rs = null;
 		try {
 			PreparedStatement pst = dataSource.getConnection().prepareStatement(SQLQueries.GET_USER_DEVICE_CREDENTIALS);
 			pst.setInt(1, userId);
-			ResultSet rs = pst.executeQuery();
+			rs = pst.executeQuery();
+			pst.close();
 			while (rs.next()) {
 				creds = new UserCredential();
 				creds.setDeviceID(rs.getInt("deviceId"));
@@ -97,6 +100,15 @@ public class ActivityDaoImpl implements ActivityDao {
 			}
 		} catch (SQLException sqlExp) {
 			log.error("SQL Exception while fetching user device Info");
+		}
+		finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					log.info("GET USER DEVICE INFO: Result set object is not closed");
+				}
+			}
 		}
 		return creds;
 	}
@@ -124,6 +136,7 @@ public class ActivityDaoImpl implements ActivityDao {
 			prepStatement.executeUpdate();
 			connection.commit();
 			log.info("Activity Successfully created for user ID: " + userId);
+			prepStatement.close();
 
 		} catch (SQLException e) {
 			try {
