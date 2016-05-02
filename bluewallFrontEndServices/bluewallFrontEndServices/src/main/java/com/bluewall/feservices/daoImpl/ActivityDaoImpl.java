@@ -54,7 +54,6 @@ public class ActivityDaoImpl implements ActivityDao {
 							+ "from ActivityLog, SupportedDevice where  ActivityLog.userID = " + userID
 							+ " and SupportedDevice.deviceID = ActivityLog.loggedFrom order by ActivityLog.logTime desc");
 			rs = pst.executeQuery();
-			pst.close();
 
 			while (rs.next()) {
 				UserActivityLog userActivity = new UserActivityLog();
@@ -69,13 +68,13 @@ public class ActivityDaoImpl implements ActivityDao {
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-			log.error("GET USER ACTIVITY LOGS: SQL Exception.");
+			log.info("GET USER ACTIVITY SERVICE: SQL Exception.");
 		} finally {
 			if (rs != null) {
 				try {
 					rs.close();
 				} catch (SQLException e) {
-					log.error("GET USER ACTIVITY LOGS: Result set object is not closed");
+					log.info("GET USER ACTIVITY SERVICE: Result set object is not closed");
 				}
 			}
 		}
@@ -87,28 +86,17 @@ public class ActivityDaoImpl implements ActivityDao {
 	public UserCredential getUserDeviceInfo(int userId) {
 
 		UserCredential creds = null;
-		ResultSet rs = null;
 		try {
 			PreparedStatement pst = dataSource.getConnection().prepareStatement(SQLQueries.GET_USER_DEVICE_CREDENTIALS);
 			pst.setInt(1, userId);
-			rs = pst.executeQuery();
-			pst.close();
+			ResultSet rs = pst.executeQuery();
 			while (rs.next()) {
 				creds = new UserCredential();
 				creds.setDeviceID(rs.getInt("deviceId"));
 				creds.setAccessToken(rs.getString("accessToken"));
 			}
 		} catch (SQLException sqlExp) {
-			log.error("GET USER DEVICE INFO: SQL Exception while fetching user device Info");
-		}
-		finally {
-			if (rs != null) {
-				try {
-					rs.close();
-				} catch (SQLException e) {
-					log.error("GET USER DEVICE INFO: Result set object is not closed");
-				}
-			}
+			log.error("SQL Exception while fetching user device Info");
 		}
 		return creds;
 	}
@@ -135,17 +123,16 @@ public class ActivityDaoImpl implements ActivityDao {
 			prepStatement.setTimestamp(8, userActivity.getLogTime());
 			prepStatement.executeUpdate();
 			connection.commit();
-			log.info("CREATE ACTIVITY: Activity Successfully created for user ID: " + userId);
-			prepStatement.close();
+			log.info("Activity Successfully created for user ID: " + userId);
 
 		} catch (SQLException e) {
 			try {
 				connection.rollback();
 				e.printStackTrace();
-				log.info("CREATE ACTIVITY: Successfully rolled back changes from the database!");
+				log.info("Create Activity Service: Successfully rolled back changes from the database!");
 			} catch (SQLException e1) {
 				e.printStackTrace();
-				log.error("CREATE ACTIVITY: Could not rollback updates " + e1.getMessage());
+				log.info("Create Activity Service: Could not rollback updates " + e1.getMessage());
 			}
 		} finally {
 
@@ -153,7 +140,7 @@ public class ActivityDaoImpl implements ActivityDao {
 				try {
 					connection.close();
 				} catch (SQLException e) {
-					log.error("CREATE ACTIVITY: Error closing connection object " + e.getMessage());
+					log.info("Create Activity Service: Error closing connection object " + e.getMessage());
 				}
 			}
 		}
