@@ -31,6 +31,10 @@ app.controller('logFoodController', function($scope, logFoodService, $filter,$ro
 		console.log(error.statusText);
 	});
 	
+	$scope.postToController = function() {
+	  alert("Inside Food Controller");
+	}
+	
 });
 
 app.service('logFoodService', function($http, $state) {
