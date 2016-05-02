@@ -40,15 +40,8 @@ public class CalorieDaoImpl implements CalorieDao {
 			log.info("Data fetched from database successfully");
 			if (resultSet.next())
 				totalCaloriesBurnt = resultSet.getInt("caloriesBurnt");
-			if (resultSet != null) {
-				try {
-					resultSet.close();
-				} catch (SQLException e) {
-					log.error("GET SUM CALORIES BURNT: Result set object is not closed");
-				}
-			}
 		} catch (SQLException e) {
-			log.error("GET SUM CALORIES BURNT: SQL Exception occured while fetching user details");
+			log.error("SQL Exception occured while fetching user details");
 		}
 
 		return totalCaloriesBurnt;
@@ -67,15 +60,8 @@ public class CalorieDaoImpl implements CalorieDao {
 			log.info("Data fetched from database successfully");
 			if (resultSet.next())
 				totalCaloriesConsumed = resultSet.getInt("weightConsumed");
-			if (resultSet != null) {
-				try {
-					resultSet.close();
-				} catch (SQLException e) {
-					log.error("GET SUM CALORIES CONSUMED: Result set object is not closed");
-				}
-			}
 		} catch (SQLException e) {
-			log.error("GET SUM CALORIES CONSUMED: SQL Exception occured while fetching user details");
+			log.error("SQL Exception occured while fetching user details");
 		}
 
 		return totalCaloriesConsumed;
@@ -89,15 +75,8 @@ public class CalorieDaoImpl implements CalorieDao {
 			log.info("Data fetched from database successfully");
 			if (resultSet.next())
 				dailyCalories = resultSet.getInt("dailyCalories");
-			if (resultSet != null) {
-				try {
-					resultSet.close();
-				} catch (SQLException e) {
-					log.error("GET TARGET WEIGHT: Result set object is not closed");
-				}
-			}
 		} catch (SQLException e) {
-			log.error("GET TARGET WEIGHT: SQL Exception occured while fetching user details");
+			log.error("SQL Exception occured while fetching user details");
 		}
 
 		return dailyCalories;

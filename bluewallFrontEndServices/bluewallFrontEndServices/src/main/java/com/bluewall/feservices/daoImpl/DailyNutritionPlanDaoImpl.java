@@ -28,7 +28,7 @@ public class DailyNutritionPlanDaoImpl implements DailyNutritionPlanDao{
 		
 		ResultSet rs = null;
 		Connection connection = null;
-
+	//	List<UserDailyNutritionPlan> userDailyNutrientList = new ArrayList<UserDailyNutritionPlan>();
 		UserDailyNutritionPlan userDailyPlan = new UserDailyNutritionPlan();
 		try {
 			connection = datasource.getConnection();
@@ -45,21 +45,21 @@ public class DailyNutritionPlanDaoImpl implements DailyNutritionPlanDao{
 			}
 			
 		} catch (SQLException e) {
-			log.error("GET DAILY NUTRITION PLAN: SQL Exception - Check the sql query or the connection string");
+			log.info("GET USER DETAILS: SQL Exception - Check the sql query or the connection string");
 			e.printStackTrace();
 		} finally {
 			if (rs != null) {
 				try {
 					rs.close();
 				} catch (SQLException e) {
-					log.error("GET DAILY NUTRITION PLAN: Could not close result set object");
+					log.info("Could not close result set object");
 				}
 			}
 			if (connection != null) {
 				try {
 					connection.close();
 				} catch (SQLException e) {
-					log.error("GET DAILY NUTRITION PLAN: Error closing connection object " + e.getMessage());
+					log.info("GET USER DETAILS: Error closing connection object " + e.getMessage());
 				}
 			}
 		}

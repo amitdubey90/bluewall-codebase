@@ -16,6 +16,7 @@ import com.bluewall.feservices.dao.RecommendationDao;
 import com.bluewall.feservices.util.Queries;
 
 import lombok.extern.slf4j.Slf4j;
+import scala.annotation.meta.setter;
 
 @Slf4j
 @Repository
@@ -35,7 +36,6 @@ public class RecommendationDaoImpl implements RecommendationDao {
 			pst.setInt(colId++, count);
 
 			ResultSet rs = pst.executeQuery();
-			pst.close();
 			FoodInfo fi = null;
 			while (rs.next()) {
 				fi = new FoodInfo();
@@ -43,13 +43,6 @@ public class RecommendationDaoImpl implements RecommendationDao {
 				fi.setFoodId(rs.getInt("foodB"));
 				fi.setFoodCalorie(rs.getDouble("foodBCalories"));
 				recommendations.add(fi);
-			}
-			if (rs != null) {
-				try {
-					rs.close();
-				} catch (SQLException e) {
-					log.info("GET USER DEVICE INFO: Result set object is not closed");
-				}
 			}
 			log.info("getRecommendationsForUser successful");
 		} catch (SQLException e) {
@@ -69,14 +62,7 @@ public class RecommendationDaoImpl implements RecommendationDao {
 				foodId = rs.getInt("foodID");
 			}
 			log.debug("Successfully fetched most preferred foodId {}", foodId);
-			pst.close();
-			if (rs != null) {
-				try {
-					rs.close();
-				} catch (SQLException e) {
-					log.info("GET USER DEVICE INFO: Result set object is not closed");
-				}
-			}
+
 		} catch (SQLException e) {
 			log.error("SqlException in getLatestPreferredFoodItem {}", e);
 		}
