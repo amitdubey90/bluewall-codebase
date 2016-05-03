@@ -22,6 +22,6 @@ public interface FoodService {
 
 	public List<FoodInfo> getFoodInfo(String foodName);
 	
-	public void rateFoodItems(UserRating userRating, int userID);
+	public void rateFoodItems(int foodId, int foodRating, int userID);
 	
 }

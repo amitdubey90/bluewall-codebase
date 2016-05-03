@@ -1,4 +1,4 @@
- app.controller('userDashboardController', function($scope,userDashboardService) {
+ app.controller('userDashboardController', function($scope,userDashboardService, $rootScope) {
 	console.log("In userDashboardController");
 	
 	 var changeFunct = function(start, end, label) {
@@ -95,6 +95,28 @@
 				$scope.error = "Unable to load recommendations: "+error.statusText;
 				console.log(error.statusText);
 			});
+		 
+		 $scope.userRating = function(foodId, index) {
+				
+				for (i = 0; i < document.getElementsByName('rating'+index).length; i++) {
+					if(document.getElementsByName('rating'+index)[i].checked == true){
+						var nameValue = document.getElementsByName('rating'+index)[i].getAttribute("name");
+					}
+					else{
+						continue;
+					}
+					
+				    if (nameValue == 'rating'+index) {
+				      var userRating = document.getElementsByName('rating'+index)[i].value;
+				      userDashboardService.postUserRating(foodId, userRating).then(function(data) {
+						  return data;
+					  }, function(error) {
+						  console.log("error");
+					  });
+				      break;
+				    }
+			  }
+		}
 
 });
 
@@ -125,10 +147,16 @@
 		this.getFoodRecommendations = function(){
 			
 			return $http.get("/recommendation/get/5").then(function(food){
-				console.log("Data returned from backend servie: recommendations service: "+food);
+				console.log("Data returned from backend servie: recommendations service: "+ JSON.stringify(food));
 				return food;
 			});
 		}
 	
+		this.postUserRating = function(foodId, foodRating) {
+			console.log("User Rating: "+ foodId +" " + foodRating);
+			return $http.post("/recommendation/rateFood/"+foodId+"/"+foodRating).then(function(data) {
+				return data;
+			});
+		}
 	}
 );

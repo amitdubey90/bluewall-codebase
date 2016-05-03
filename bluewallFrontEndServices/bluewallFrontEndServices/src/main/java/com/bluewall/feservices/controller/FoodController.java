@@ -21,7 +21,6 @@ import com.bluewall.feservices.bean.FoodInfo;
 import com.bluewall.feservices.bean.UserPrincipal;
 import com.bluewall.feservices.service.FoodService;
 import com.bluewall.util.bean.UserFood;
-import com.bluewall.util.bean.UserRating;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -110,18 +109,5 @@ public class FoodController {
 
 		foodList = foodService.getFoodInfo(foodName);
 		return foodList;
-	}
-	
-	
-	@RequestMapping(value = "/rateFood", method = RequestMethod.POST)
-	@ResponseBody
-	public void rateFoodItems(@RequestBody UserRating userRating, HttpSession session){
-		
-		int userID = 0;
-		UserPrincipal principal = (UserPrincipal) session.getAttribute("userPrincipal");
-		if (null != principal) {
-			userID = principal.getUserID();
-			foodService.rateFoodItems(userRating, userID);
-		}
 	}
 }
