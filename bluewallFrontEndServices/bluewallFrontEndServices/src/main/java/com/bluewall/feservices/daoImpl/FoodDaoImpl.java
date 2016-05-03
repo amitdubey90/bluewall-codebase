@@ -172,7 +172,7 @@ public class FoodDaoImpl implements FoodDao {
 		ResultSet rs = null;
 		
 		try{
-			PreparedStatement prepStat = dataSource.getConnection().prepareStatement(Queries.INS_USER_RATINGS);
+			PreparedStatement prepStat = dataSource.getConnection().prepareStatement(Queries.UPSERT_USER_RATINGS);
 			prepStat.setInt(1, userID);
 			prepStat.setInt(2, foodId);
 			prepStat.setInt(3, foodRating);
