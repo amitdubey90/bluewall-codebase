@@ -34,7 +34,6 @@ public class RecommendationController {
 		if (null != principal) {
 			userId = principal.getUserID();
 			int foodId = svc.getLatestPreferredFoodItem(userId);
-			System.out.println("Preferred Food Id: " + foodId);
 			// TODO calculate required calories
 			int requiredCalories = 500;
 			return svc.getRecommendationsForUser(foodId, requiredCalories, count);
@@ -45,8 +44,6 @@ public class RecommendationController {
 	@RequestMapping(value = "/rateFood/{foodId}/{foodRating}", method = RequestMethod.POST)
 	@ResponseBody
 	public void rateFoodItems(@PathVariable int foodId, @PathVariable int foodRating, HttpSession session){
-		System.out.println(foodId);
-		System.out.println(foodRating);
 		int userID = 0;
 		UserPrincipal principal = (UserPrincipal) session.getAttribute("userPrincipal");
 		if (null != principal) {

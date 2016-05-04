@@ -74,3 +74,8 @@ body { font-family: sans-serif; }
 .gallery-cell.is-selected {
   background: #ED2;
 }
+#flickityWidth .flickity-slider {
+    position: absolute;
+    width: 250%;
+    height: 100%;
+}

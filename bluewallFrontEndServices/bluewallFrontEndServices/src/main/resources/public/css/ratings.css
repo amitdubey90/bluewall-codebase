@@ -1,41 +1,66 @@
-@import url(//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css);
-
-fieldset, label { margin: 0; padding: 0; }
-
-.rating {
-  border: none;
-  float: left;
+#ratings .cc-selector1 input, .cc-selector2 input, .cc-selector3 input,
+	.cc-selector4 input, .cc-selector5 input {
+	margin: 0;
+	padding: 0;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
 }
 
-.rating > input {
-  display: none;
+#ratings .star11, .star12, .star13, .star14, .star15, .star21, .star22, .star23,
+	.star24, .star25, .star31, .star32, .star33, .star34, .star35, .star41,
+	.star42, .star43, .star44, .star45, .star51, .star52, .star53, .star54,
+	.star55 {
+	background-image: url(../images/star.png);
 }
 
-.rating > label:before {
-  margin: 5px;
-  font-size: 1.25em;
-  font-family: FontAwesome;
-  display: inline-block;
-  content: "\f005";
+#ratings .cc-selector1 input:active+.drinkcard-cc1, .cc-selector2 input:active+.drinkcard-cc2,
+	.cc-selector3 input:active+.drinkcard-cc3, .cc-selector4 input:active+.drinkcard-cc4,
+	.cc-selector5 input:active+.drinkcard-cc5 {
+	opacity: .9;
 }
 
-.rating > label {
-  color: #ddd;
-  float: right;
+#ratings .cc-selector1 input:checked+.drinkcard-cc1, .cc-selector2 input:checked+.drinkcard-cc2,
+	.cc-selector3 input:checked+.drinkcard-cc3, .cc-selector4 input:checked+.drinkcard-cc4,
+	.cc-selector5 input:checked+.drinkcard-cc5 {
+	-webkit-filter: none;
+	-moz-filter: none;
+	filter: none;
 }
 
-.rating > input:checked ~ label,
-
-.rating:not(:checked) > label:hover,
-
-.rating:not(:checked) > label:hover ~ label {
-  color: #FFD700;
+#ratings .drinkcard-cc1, .drinkcard-cc2, .drinkcard-cc3, .drinkcard-cc4,
+	.drinkcard-cc5 {
+	cursor: pointer;
+	background-size: contain;
+	background-repeat: no-repeat;
+	display: inline-block;
+	width: 30px;
+	height: 30px;
+	-webkit-transition: all 100ms ease-in;
+	-moz-transition: all 100ms ease-in;
+	transition: all 100ms ease-in;
+	-webkit-filter: brightness(1.8) grayscale(1) opacity(.7);
+	-moz-filter: brightness(1.8) grayscale(1) opacity(.7);
+	filter: brightness(1.8) grayscale(1) opacity(.7);
 }
 
-.rating > input:checked + label:hover,
-.rating > input:checked ~ label:hover,
-.rating > label:hover ~ input:checked ~ label,
+#ratings .drinkcard-cc1:hover, .drinkcard-cc2:hover, .drinkcard-cc3:hover,
+	.drinkcard-cc4:hover, .drinkcard-cc5:hover {
+	-webkit-filter: brightness(1.2) grayscale(.5) opacity(.9);
+	-moz-filter: brightness(1.2) grayscale(.5) opacity(.9);
+	filter: brightness(1.2) grayscale(.5) opacity(.9);
+}
 
-.rating > input:checked ~ label:hover ~ label {
-  color: #FFED85;
+/* Extras */
+#ratings a:visited {
+	color: #888
+}
+
+#ratings a {
+	color: #444;
+	text-decoration: none;
+}
+
+#ratings p {
+	margin-bottom: .3em;
 }
