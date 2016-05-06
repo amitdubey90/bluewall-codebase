@@ -33,11 +33,24 @@ public class CalorieDaoImpl implements CalorieDao {
 		String startDateTime = date + " 00:00:00";
 		try 
 		{
-			resultSet = dataSource.getConnection().prepareStatement(Queries.GET_TOTAL_CALORIE_BURNT + " where userID = " + userID
-					+ " and logTime >= '" + startDateTime + "' and logTime <= '" + currentDateTime + "'").executeQuery();
+			String sql = "select sum(sum) as totalCaloriesBurnt from (select round(sum(caloriesBurnt)) as sum from ActivityLog where loggedFrom=14 and userID="
+					+ userID
+					+ " and logTime >= '"
+					+ startDateTime
+					+ "' and logTime <= '"
+					+ currentDateTime
+					+ "' union all select max(caloriesBurnt) as sum from ActivityLog where (loggedFrom=10 or loggedFrom=11) and userID="
+					+ userID
+					+ " and logTime >= '"
+					+ startDateTime
+					+ "' and logTime <= '"
+					+ currentDateTime
+					+ "') as totalCaloriesBurnt";
+			
+			resultSet = dataSource.getConnection().prepareStatement(sql).executeQuery();
 			log.info("GET SUM CALORIES BURNT: Data fetched from database successfully");
 			if (resultSet.next())
-				totalCaloriesBurnt = resultSet.getInt("caloriesBurnt");
+				totalCaloriesBurnt = resultSet.getInt("totalCaloriesBurnt");
 		} catch (SQLException e) {
 			log.error("GET SUM CALORIES BURNT: SQL Exception occured while fetching user details");
 		}
