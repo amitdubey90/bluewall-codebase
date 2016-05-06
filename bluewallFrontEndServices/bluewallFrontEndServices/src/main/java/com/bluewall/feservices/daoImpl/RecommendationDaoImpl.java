@@ -28,6 +28,7 @@ public class RecommendationDaoImpl implements RecommendationDao {
 	@Override
 	public List<FoodInfo> getRecommendationsForUser(int foodId, float calories, int count) {
 		List<FoodInfo> recommendations = new ArrayList<>();
+		ResultSet rs = null;
 		try (PreparedStatement pst = dataSource.getConnection().prepareStatement(Queries.GET_RECOMMENDATION_FOR_USER)) {
 			int colId = 1;
 
@@ -35,7 +36,7 @@ public class RecommendationDaoImpl implements RecommendationDao {
 			pst.setDouble(colId++, calories);
 			pst.setInt(colId++, count);
 
-			ResultSet rs = pst.executeQuery();
+			rs = pst.executeQuery();
 			FoodInfo fi = null;
 			while (rs.next()) {
 				fi = new FoodInfo();
@@ -48,16 +49,26 @@ public class RecommendationDaoImpl implements RecommendationDao {
 		} catch (SQLException e) {
 			log.error("SqlException in getRecommendationsForUser {}", e);
 		}
+		finally{
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					log.error("GET RECOMMENDATION: Result set object is not closed");
+				}
+			}
+		}
 		return recommendations;
 	}
 
 	@Override
 	public int getLatestPreferredFoodItem(int userId) {
 		int foodId = 0;
+		ResultSet rs = null;
 		try {
 			PreparedStatement pst = dataSource.getConnection().prepareStatement(Queries.GET_MOST_PREFERRED_FOOD_ID);
 			pst.setInt(1, userId);
-			ResultSet rs = pst.executeQuery();
+			rs = pst.executeQuery();
 			if (rs.next()) {
 				foodId = rs.getInt("foodID");
 			}
@@ -66,6 +77,17 @@ public class RecommendationDaoImpl implements RecommendationDao {
 		} catch (SQLException e) {
 			log.error("SqlException in getLatestPreferredFoodItem {}", e);
 		}
+		
+		finally{
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					log.error("GET LATEST PREF. FOOD: Result set object is not closed");
+				}
+			}
+		}
+		
 		return foodId;
 	}
 }

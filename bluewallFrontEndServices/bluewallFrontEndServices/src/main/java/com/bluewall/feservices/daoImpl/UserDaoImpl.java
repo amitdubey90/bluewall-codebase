@@ -255,13 +255,13 @@ public class UserDaoImpl implements UserDao {
 
 		log.info("loadUserByName started");
 		UserPrincipal userPrincipal = null;
-
+		ResultSet rs = null;
 		try (PreparedStatement pst = datasource.getConnection().prepareStatement(Queries.GET_USER_PRINCIPAL)) {
 			int colId = 1;
 
 			pst.setString(colId++, emailID);
 
-			ResultSet rs = pst.executeQuery();
+			rs = pst.executeQuery();
 			if (rs.next()) {
 				String firstName = rs.getString("firstName");
 				String lastName = rs.getString("lastName");
@@ -277,6 +277,16 @@ public class UserDaoImpl implements UserDao {
 			log.info("loadUserByName successful");
 		} catch (SQLException e) {
 			log.error("SqlException in loadUserByName {}", e);
+		}
+		finally{
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					log.error("LOAD USER BY NAME: Result set object is not closed");
+				}
+			}
+
 		}
 		return userPrincipal;
 	}
