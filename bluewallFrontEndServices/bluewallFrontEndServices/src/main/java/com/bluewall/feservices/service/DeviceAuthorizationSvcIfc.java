@@ -1,6 +1,7 @@
 package com.bluewall.feservices.service;
 
 
+import com.bluewall.util.bean.UserConnectedDevice;
 import com.google.api.client.auth.oauth2.TokenResponse;
 
 public interface DeviceAuthorizationSvcIfc {
@@ -13,4 +14,6 @@ public interface DeviceAuthorizationSvcIfc {
      * @return true if successful
      */
     boolean storeUserAccessCredentials(int userId, int deviceId, TokenResponse tokenResponse);
+
+    UserConnectedDevice checkIfUserHasDevice(int userID);
 }

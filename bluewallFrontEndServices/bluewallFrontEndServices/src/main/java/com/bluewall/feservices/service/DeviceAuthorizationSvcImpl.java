@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import com.bluewall.feservices.dao.DeviceAuthorizationDaoIfc;
 import com.bluewall.util.bean.AccessCredentials;
+import com.bluewall.util.bean.UserConnectedDevice;
 import com.bluewall.util.utility.GenericUtil;
 import com.google.api.client.auth.oauth2.TokenResponse;
 
@@ -27,6 +28,13 @@ public class DeviceAuthorizationSvcImpl implements DeviceAuthorizationSvcIfc {
 
 		log.info("Sending access token to DAO for user {}", userId);
 		return dao.storeUserAccessToken(credentials);
+	}
+
+	@Override
+	public UserConnectedDevice checkIfUserHasDevice(int userID) {
+		log.info("checkIfUserHasDevice: Sending request to DAO for user {}", userID);
+		return dao.checkIfUserHasDevice(userID);
+		
 	}
 
 }

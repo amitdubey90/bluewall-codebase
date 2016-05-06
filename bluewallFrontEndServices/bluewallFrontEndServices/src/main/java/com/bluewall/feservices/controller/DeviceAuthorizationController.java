@@ -1,12 +1,11 @@
 package com.bluewall.feservices.controller;
 
-import com.bluewall.feservices.bean.UserPrincipal;
-import com.bluewall.feservices.service.DeviceAuthorizationSvcIfc;
-import com.bluewall.feservices.util.Constants;
-import com.bluewall.util.common.DeviceType;
-import com.bluewall.util.factory.DeviceClientFactory;
-import com.google.api.client.auth.oauth2.TokenResponse;
-import lombok.extern.slf4j.Slf4j;
+import java.io.IOException;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,11 +13,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import java.io.IOException;
+import com.bluewall.feservices.bean.UserPrincipal;
+import com.bluewall.feservices.dao.UserDao;
+import com.bluewall.feservices.service.DeviceAuthorizationSvcIfc;
+import com.bluewall.feservices.util.Constants;
+import com.bluewall.util.common.DeviceType;
+import com.bluewall.util.factory.DeviceClientFactory;
+import com.google.api.client.auth.oauth2.TokenResponse;
+
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Controller
@@ -27,6 +32,9 @@ public class DeviceAuthorizationController {
 
     @Autowired
     private DeviceAuthorizationSvcIfc service;
+    
+    @Autowired
+	UserDao userDao;
 
     @RequestMapping(value = "/initiateAuthorization/{deviceType}", method = RequestMethod.GET)
     public void startDeviceAuthorization(@PathVariable String deviceType, HttpServletResponse response,
@@ -55,7 +63,7 @@ public class DeviceAuthorizationController {
 
     @RequestMapping(value = "/redirectFitbit")
     @ResponseBody
-    public String handleAuthRedirectFitbit(@RequestParam("code") String code, HttpServletRequest request) {
+    public String handleAuthRedirectFitbit(@RequestParam("code") String code, HttpServletRequest request,HttpServletResponse response,HttpSession session) {
         try {
             int userId = Integer.parseInt(request.getParameter("state"));
             log.debug("Received auth code from Fitbit for user {}", userId);
@@ -66,7 +74,12 @@ public class DeviceAuthorizationController {
             log.info("Successfully retrieved access token for user {}", userId);
 
             if (service.storeUserAccessCredentials(userId, DeviceType.FITBIT.getDeviceId(), tokenResponse)) {
-                return "Success";
+                //return "Success";
+            	UserPrincipal principal = (UserPrincipal) session.getAttribute("userPrincipal");
+        		if (principal != null) {
+        			session.setAttribute("userPrincipal", principal);
+        		}
+            	response.sendRedirect("/#/user/deviceDashboard/"+principal);
             }
         } catch (NumberFormatException nfe) {
             log.error("Invalid user id in request : {}", request.getParameter("state"));
@@ -78,18 +91,23 @@ public class DeviceAuthorizationController {
 
     @RequestMapping(value = "/redirectJawbone")
     @ResponseBody
-    public String handleAuthRedirectJawbone(@RequestParam("code") String code, HttpServletRequest request) {
+    public String handleAuthRedirectJawbone(@RequestParam("code") String code, HttpServletRequest request,HttpSession session,HttpServletResponse response) {
         try {
             int userId = Integer.parseInt(request.getParameter("state"));
             log.debug("Received auth code from Jawbone for user {}", userId);
 
             log.debug("Attempting to fetch access token from Jawbone.");
-            TokenResponse response = DeviceClientFactory.getClientInstance(DeviceType.JAWBONE)
+            TokenResponse resp = DeviceClientFactory.getClientInstance(DeviceType.JAWBONE)
                     .getAccessToken(code, Constants.JAWBONE_REDIRECT_URI);
             log.info("Successfully retrieved access token for user {}", userId);
 
-            if (service.storeUserAccessCredentials(userId, DeviceType.JAWBONE.getDeviceId(), response)) {
-                return "Success";
+            if (service.storeUserAccessCredentials(userId, DeviceType.JAWBONE.getDeviceId(), resp)) {
+                //return "Success";
+            	UserPrincipal principal = (UserPrincipal) session.getAttribute("userPrincipal");
+        		if (principal != null) {
+        			session.setAttribute("userPrincipal", principal);
+        		}
+            	response.sendRedirect("/#/user/deviceDashboard/"+principal);
             }
         } catch (NumberFormatException nfe) {
             log.error("Invalid user id in request : {}", request.getParameter("state"));
