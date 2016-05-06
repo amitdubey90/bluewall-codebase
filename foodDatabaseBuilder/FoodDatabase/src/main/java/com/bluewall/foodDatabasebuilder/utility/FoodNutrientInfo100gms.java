@@ -27,7 +27,7 @@ import com.bluewall.foodDatabasebuilder.common.Queries;
  * @author rainashastri
  *
  */
-public class FoodNutrientInfo {
+public class FoodNutrientInfo100gms {
 
 	public static void main(String[] args) {
 
