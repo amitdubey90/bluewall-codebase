@@ -2,7 +2,7 @@ package com.bluewall.foodDatabasebuilder.common;
 
 public class Constants {
 
-	public static final String DATABASE_NAME = "jdbc:mysql://user-db-instance.cqqcnirpnrkg.us-west-1.rds.amazonaws.com:3306/userDatabase";
+	public static final String DATABASE_NAME = "jdbc:mysql://userdatabase.cjydixq0uvpi.us-west-1.rds.amazonaws.com:3306/userDatabase";
 	public static final String USERNAME = "root";
 	public static final String PASSWORD = "q1w2e3r4t5y6";
 	public static final String DRIVER_CLASS = "com.mysql.jdbc.Driver";
