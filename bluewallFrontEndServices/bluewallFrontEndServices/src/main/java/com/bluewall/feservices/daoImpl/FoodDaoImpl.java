@@ -59,14 +59,14 @@ public class FoodDaoImpl implements FoodDao {
 			}
 
 		} catch (SQLException e) {
-			log.info("SQL Exception - Check the sql query or the connection string");
+			log.error("GET USER FOOD LOG: SQL Exception - Check the sql query or the connection string");
 		} finally {
 			if (rs != null) {
 				try {
 					rs.close();
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
-					log.info("Could not close result set object");
+					log.error("GET USER FOOD LOG: Could not close result set object");
 				}
 			}
 		}
@@ -109,7 +109,7 @@ public class FoodDaoImpl implements FoodDao {
 			}
 
 		} catch (SQLException e) {
-			log.info("Create Food Service:: Could not rollback updates " + e.getMessage());
+			log.error("Create Food Service:: Could not rollback updates " + e.getMessage());
 
 		}
 
@@ -118,7 +118,7 @@ public class FoodDaoImpl implements FoodDao {
 				try {
 					rs.close();
 				} catch (SQLException e) {
-					log.info("Create Food Service: Result set object is not closed.");
+					log.error("Create Food Service: Result set object is not closed.");
 				}
 			}
 			if (connection != null) {
@@ -126,7 +126,7 @@ public class FoodDaoImpl implements FoodDao {
 					connection.close();
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
-					log.info("Create Food Service: Error closing connection object " + e.getMessage());
+					log.error("Create Food Service: Error closing connection object " + e.getMessage());
 				}
 			}
 		}
@@ -152,13 +152,13 @@ public class FoodDaoImpl implements FoodDao {
 			}
 
 		} catch (SQLException e) {
-			log.info("SQL Exception - Check the sql query or the connection string");
+			log.error("GET FOOD INFO: SQL Exception - Check the sql query or the connection string");
 		} finally {
 			if (rs != null) {
 				try {
 					rs.close();
 				} catch (SQLException e) {
-					log.info("Could not close result set object");
+					log.error("GET FOOD INFO: Could not close result set object");
 				}
 			}
 		}
@@ -181,14 +181,14 @@ public class FoodDaoImpl implements FoodDao {
 			log.info("RATE FOOD ITEMS: Ratings successfully logged by user id: " + userID);
 		}
 		 catch (SQLException e) {
-				log.info("RATE FOOD ITEMS: SQL Exception - Check the sql query or the connection string");
+				log.error("RATE FOOD ITEMS: SQL Exception - Check the sql query or the connection string");
 		}
 		finally {
 			if (rs != null) {
 				try {
 					rs.close();
 				} catch (SQLException e) {
-					log.info("RATE FOOD ITEMS - Could not close result set object");
+					log.error("RATE FOOD ITEMS - Could not close result set object");
 				}
 			}
 		}
