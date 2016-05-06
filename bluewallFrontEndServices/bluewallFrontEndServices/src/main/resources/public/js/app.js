@@ -34,6 +34,11 @@ app.config([
       templateUrl: 'partials/dashboard.html',
       controller: 'userDashboardController'
     })
+    .state('userDeviceDashboard', {
+      url: '/user/deviceDashboard/:user',
+      templateUrl: 'partials/addFitnessDevice.html',
+      controller: 'addDeviceController'
+    })
      .state('getFoodLogForm', {
       url: '/getFoodLogForm',
       templateUrl: 'partials/logFood.html',
@@ -56,7 +61,8 @@ app.config([
       })
     .state('addFitnessDevice', {
         url: '/addFitnessDevice',
-        templateUrl: 'partials/addFitnessDevice.html'
+        templateUrl: 'partials/addFitnessDevice.html',
+        controller: 'addDeviceController'
       })
     .state('haha', {
       url: '/haha',

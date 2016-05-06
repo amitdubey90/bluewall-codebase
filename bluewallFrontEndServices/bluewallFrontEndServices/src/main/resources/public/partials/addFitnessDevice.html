@@ -2,6 +2,8 @@
 	<div class="row row-offcanvas row-offcanvas-left" id="displayLogs">
 		<div ng-include src="'partials/sidebar.html'" />
 		
+
+		<div ng-show="addDeviceOption">
 		<div class="col c2" style="width: 16%;">
 		<div id="custom-show-hide-example" >
 			<table border="0">
@@ -21,6 +23,20 @@
 					</td>
 				</tr>
 			</table>
+		</div>
+		</div>
+		</div>
+		<br>
+		<div class="col-sm-9">
+			<H2 style="background-color:#52d3aa;color:white"><strong><div align="center">YOUR CONNECTED DEVICES</div></strong></H2>
+			<div ng-show="addDeviceOption">
+			<div align="center">You dont have any devices connected.</div>
+			</div>
+			<div ng-show="!(addDeviceOption)">
+			<strong>Device Name : </strong>{{deviceName}}<br><br>
+			<strong>Device Connection Status : </strong>{{deviceConnectionStatus}}<br><br>
+			<strong>Connected on : </strong>{{deviceConnectionTimeStamp}}<br><br>
+			<strong>Last Synched : </strong>{{deviceSynchTimeStamp}} <br><br>
 			</div>
 		</div>
 	</div>

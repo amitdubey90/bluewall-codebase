@@ -1,6 +1,6 @@
 package com.bluewall.feservices.dao;
 import com.bluewall.util.bean.AccessCredentials;
-import com.bluewall.util.bean.UserCredential;
+import com.bluewall.util.bean.UserConnectedDevice;
 
 public interface DeviceAuthorizationDaoIfc {
     /**
@@ -9,4 +9,6 @@ public interface DeviceAuthorizationDaoIfc {
      * @return true if successfully persisted
      */
     boolean storeUserAccessToken(AccessCredentials credentials);
+
+    UserConnectedDevice checkIfUserHasDevice(int userID);
 }
