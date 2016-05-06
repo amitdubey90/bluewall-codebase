@@ -2,11 +2,6 @@ package com.bluewall.feservices.daoImpl;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,11 +32,11 @@ public class CalorieDaoImpl implements CalorieDao {
 		String startDateTime = date + " 00:00:00";
 		try (ResultSet resultSet = dataSource.getConnection().prepareStatement(Queries.GET_TOTAL_CALORIE_BURNT + " where userID = " + userID
 						+ " and logTime >= '" + startDateTime + "' and logTime <= '" + currentDateTime + "'").executeQuery()) {
-			log.info("Data fetched from database successfully");
+			log.info("GET SUM CALORIES BURNT: Data fetched from database successfully");
 			if (resultSet.next())
 				totalCaloriesBurnt = resultSet.getInt("caloriesBurnt");
 		} catch (SQLException e) {
-			log.error("SQL Exception occured while fetching user details");
+			log.error("GET SUM CALORIES BURNT: SQL Exception occured while fetching user details");
 		}
 
 		return totalCaloriesBurnt;
@@ -57,11 +52,11 @@ public class CalorieDaoImpl implements CalorieDao {
 		String startDateTime = date + " 00:00:00";
 		try (ResultSet resultSet = dataSource.getConnection().prepareStatement(Queries.GET_TOTAL_CALORIE_CONSUMED + " where userID = " + userID
 						+ " and logTime >= '" + startDateTime + "' and logTime <= '" + currentDateTime + "'").executeQuery()) {
-			log.info("Data fetched from database successfully");
+			log.info("GET SUM CALORIES CONSUMED: Data fetched from database successfully");
 			if (resultSet.next())
 				totalCaloriesConsumed = resultSet.getInt("weightConsumed");
 		} catch (SQLException e) {
-			log.error("SQL Exception occured while fetching user details");
+			log.error("GET SUM CALORIES CONSUMED: SQL Exception occured while fetching user details");
 		}
 
 		return totalCaloriesConsumed;
@@ -72,11 +67,11 @@ public class CalorieDaoImpl implements CalorieDao {
 		int dailyCalories = 0;
 		log.info("Fetching target weight for a day");
 		try (ResultSet resultSet = dataSource.getConnection().prepareStatement(Queries.GET_DAILY_CALORIES + " where userID = " + userID).executeQuery()) {
-			log.info("Data fetched from database successfully");
+			log.info("GET TARGET WEIGHT: Data fetched from database successfully");
 			if (resultSet.next())
 				dailyCalories = resultSet.getInt("dailyCalories");
 		} catch (SQLException e) {
-			log.error("SQL Exception occured while fetching user details");
+			log.error("GET TARGET WEIGHT: SQL Exception occured while fetching user details");
 		}
 
 		return dailyCalories;

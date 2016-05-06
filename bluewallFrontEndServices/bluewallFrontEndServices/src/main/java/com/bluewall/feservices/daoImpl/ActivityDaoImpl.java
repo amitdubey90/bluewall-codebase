@@ -68,13 +68,13 @@ public class ActivityDaoImpl implements ActivityDao {
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-			log.info("GET USER ACTIVITY SERVICE: SQL Exception.");
+			log.error("GET USER ACTIVITY SERVICE: SQL Exception.");
 		} finally {
 			if (rs != null) {
 				try {
 					rs.close();
 				} catch (SQLException e) {
-					log.info("GET USER ACTIVITY SERVICE: Result set object is not closed");
+					log.error("GET USER ACTIVITY SERVICE: Result set object is not closed");
 				}
 			}
 		}
@@ -96,7 +96,7 @@ public class ActivityDaoImpl implements ActivityDao {
 				creds.setAccessToken(rs.getString("accessToken"));
 			}
 		} catch (SQLException sqlExp) {
-			log.error("SQL Exception while fetching user device Info");
+			log.error("GET USER DEVICE INFO: SQL Exception while fetching user device Info");
 		}
 		return creds;
 	}
@@ -129,10 +129,10 @@ public class ActivityDaoImpl implements ActivityDao {
 			try {
 				connection.rollback();
 				e.printStackTrace();
-				log.info("Create Activity Service: Successfully rolled back changes from the database!");
+				log.error("Create Activity Service: Successfully rolled back changes from the database!");
 			} catch (SQLException e1) {
 				e.printStackTrace();
-				log.info("Create Activity Service: Could not rollback updates " + e1.getMessage());
+				log.error("Create Activity Service: Could not rollback updates " + e1.getMessage());
 			}
 		} finally {
 
@@ -140,7 +140,7 @@ public class ActivityDaoImpl implements ActivityDao {
 				try {
 					connection.close();
 				} catch (SQLException e) {
-					log.info("Create Activity Service: Error closing connection object " + e.getMessage());
+					log.error("Create Activity Service: Error closing connection object " + e.getMessage());
 				}
 			}
 		}
