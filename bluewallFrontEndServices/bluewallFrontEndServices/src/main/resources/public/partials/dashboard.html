@@ -9,11 +9,9 @@
 		<div class="col-xs-12 col-sm-9">
 			<div class="col-sm-12">
 				<div class="row">
-					<strong><p>Calories Summary</p></strong>
-					<div id="reportrange" class="pull-right"
-						style="background: #fff; cursor: pointer; text-align: -webkit-center; border: 2px solid #52d3aa; width: 100%; border-radius: 35px">
-						<input type="text" name="birthdate" id="datepicker"
-							style="border-color: transparent;" />
+					<strong><p style="margin-top: 5%;text-align: center;">Calories Summary</p></strong>
+					<div id="reportrange" class="pull-right" style="background: #fff; cursor: pointer; text-align: -webkit-center; border: 2px solid #52d3aa; width: 100%; border-radius: 35px">
+						<input type="text" name="birthdate" id="datepicker"	style="border-color: transparent; text-align: center;"></input><span class="glyphicon glyphicon-calendar"></span>
 					</div>
 					<br>
 					<div style="margin-top: 5%;">
@@ -52,17 +50,18 @@
 					</div>
 				</div>
 			</div>
-			<div class="row">
-			
-					<div class="col-xs-12" style="text-align: -webkit-left;"><strong><p>Your Daily Nutrient Plan</p></strong></div>
-					<div class="col-xs-6">
-							
+			</div>
+			<div class="col-xs-12 col-sm-12">
+			<div class="col-sm-12">
+				<div class="row">
+					<div class="col-xs-12" style="text-align: center; margin-top: 3%; margin-bottom: -4%;"><strong><p>Your Daily Nutrient Plan</p></strong></div>
+					<div class="col-xs-6" style="float: left;margin-left: 12%;">
 						<div id="nutrientChart" style="width: 600px;height: 300px;margin-top: 3%;margin-left: -30%;"></div>
 					</div>
-					<div class="col-xs-6">
+					<div class="col-xs-6" style="margin-left: -12%;">
 						<div>
 							<small style="margin-left: 15%;">
-								<table class="table" style="width:100%">
+								<table class="table" style="width:96%">
 								<caption><strong><center>Summary</center></strong></caption>
 								    <thead>
 								      <tr>
@@ -93,11 +92,13 @@
 							</small>
 						</div>
 					</div>
+				</div>
+			</div>
 			</div>
 			<div class="row">
 				<div class="col-sm-12">
 				<br>
-					<strong><p>Food Suggestions for Today</p></strong>
+					<strong><p style="text-align: center;">Food Suggestions for Today</p></strong>
 					
 					<div class="gallery js-flickity" data-flickity-options='{ "autoPlay": 1500 }' id="flickityWidth">
 						<div class="gallery-cell card-style" style="background: #E21A48;">
@@ -251,17 +252,14 @@
 			<br /><br />
 			<div class="row">
 				<div class="col-sm-12">
-					<strong><p>User Activity Feed</p></strong>
-
-
+					<strong><p style="text-align: center;">User Activity Feed</p></strong>
 					<p>{{error}}</p>
-					<div class="gallery js-flickity"
-						data-flickity-options='{ "autoPlay": 1500 }'>
+					<div class="gallery js-flickity" data-flickity-options='{ "autoPlay": 1500 }'>
 						<div class="gallery-cell card-style" style="background: #E21A48;">
 
 							<div style="margin-left:8%">
 								<strong>{{activitiesList[0].name}}</strong><br> <br>
-								<div class="slider-font-style">
+								<div class="slider-font-style" style="margin-top: -7%;">
 									<div>
 										<img src="images/distance-1.png" style=" width: 12%;"/> {{activitiesList[0].distance}} <small>meters</small>
 										&nbsp;&nbsp;
@@ -288,7 +286,7 @@
 						<div class="gallery-cell card-style" style="background:#295F28">
 							<div style="margin-left:8%">
 								<strong>{{activitiesList[1].name}} </strong><br> <br>
-								<div class="slider-font-style">
+								<div class="slider-font-style" style="margin-top: -7%;">
 									<div>
 										<img src="images/distance-1.png" style=" width: 12%;"/> {{activitiesList[1].distance}} <small>meters</small>
 										&nbsp;&nbsp;
@@ -315,7 +313,7 @@
 						<div class="gallery-cell card-style" style="background:#F49F4F;">
 							<div style="margin-left:8%">
 								<strong>{{activitiesList[2].name}} </strong><br> <br>
-								<div class="slider-font-style">
+								<div class="slider-font-style" style="margin-top: -7%;">
 									<div>
 										<img src="images/distance-1.png" style=" width: 12%;"/> {{activitiesList[2].distance}} <small>meters</small>
 										&nbsp;&nbsp;
@@ -342,7 +340,7 @@
 						<div class="gallery-cell card-style" style="background: #52d3aa">
 							<div style="margin-left:8%">
 								<strong>{{activitiesList[3].name}} </strong><br> <br>
-								<div class="slider-font-style">
+								<div class="slider-font-style" style="margin-top: -7%;">
 									<div>
 										<img src="images/distance-1.png" style=" width: 12%;"/> {{activitiesList[3].distance}} <small>meters</small>
 										&nbsp;&nbsp;
@@ -369,7 +367,7 @@
 						<div class="gallery-cell card-style" style="background: #022646">
 							<div style="margin-left:8%">
 								<strong>{{activitiesList[4].name}} </strong><br> <br>
-								<div class="slider-font-style">
+								<div class="slider-font-style" style="margin-top: -7%;">
 									<div>
 										<img src="images/distance-1.png" style=" width: 12%;"/> {{activitiesList[4].distance}} <small>meters</small>
 										&nbsp;&nbsp;
@@ -396,7 +394,7 @@
 					</div>
 				</div>
 				</div>
-			</div>
+			<!-- </div> -->
 		</div>
 
 	</div>
