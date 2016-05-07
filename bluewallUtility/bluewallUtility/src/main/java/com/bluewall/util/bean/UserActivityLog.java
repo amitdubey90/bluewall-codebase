@@ -10,7 +10,7 @@ import java.sql.Timestamp;
 public class UserActivityLog {
 
 	private String name;
-	private float distance;
+	//private float distance;
 	private float caloriesBurnt;
 	private Date activityLogDate;
 	private float duration;
@@ -33,13 +33,13 @@ public class UserActivityLog {
 		this.logTime = logTime;
 	}
 
-	public float getDistance() {
-		return distance;
-	}
-
-	public void setDistance(float distance) {
-		this.distance = distance;
-	}
+//	public float getDistance() {
+//		return distance;
+//	}
+//
+//	public void setDistance(float distance) {
+//		this.distance = distance;
+//	}
 
 	public float getCaloriesBurnt() {
 		return caloriesBurnt;

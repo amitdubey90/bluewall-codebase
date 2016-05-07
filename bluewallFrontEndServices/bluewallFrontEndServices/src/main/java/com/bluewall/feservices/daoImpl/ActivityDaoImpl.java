@@ -58,7 +58,7 @@ public class ActivityDaoImpl implements ActivityDao {
 			while (rs.next()) {
 				UserActivityLog userActivity = new UserActivityLog();
 				userActivity.setName(rs.getString("name"));
-				userActivity.setDistance(rs.getFloat("distance"));
+//				userActivity.setDistance(rs.getFloat("distance"));
 				userActivity.setDuration(rs.getFloat("duration"));
 				userActivity.setCaloriesBurnt(rs.getFloat("caloriesBurnt"));
 				userActivity.setActivityLogDate(rs.getDate("activityLogDate"));
@@ -125,7 +125,7 @@ public class ActivityDaoImpl implements ActivityDao {
 
 			prepStatement.setInt(1, userId);
 			prepStatement.setString(2, userActivity.getName());
-			prepStatement.setFloat(3, userActivity.getDistance());
+			prepStatement.setFloat(3, 0);
 			prepStatement.setDate(4, userActivity.getActivityLogDate());
 			prepStatement.setFloat(5, userActivity.getDuration());
 			prepStatement.setFloat(6, userActivity.getCaloriesBurnt());

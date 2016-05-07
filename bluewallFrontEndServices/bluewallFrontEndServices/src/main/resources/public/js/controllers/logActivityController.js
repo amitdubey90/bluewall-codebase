@@ -13,7 +13,7 @@ app.controller('logActivityController',	function($scope, $filter, $http, logActi
 			name : activity.name,
 			duration : parseInt((activity.hours * 60))
 					+ parseInt(activity.mins),
-			distance : activity.distance,
+			//distance : activity.distance,
 			caloriesBurnt : activity.caloriesBurnt,
 			activityLogDate : activity.activityLogDate
 		};
