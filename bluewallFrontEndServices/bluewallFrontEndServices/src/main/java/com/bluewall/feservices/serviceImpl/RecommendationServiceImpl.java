@@ -14,11 +14,11 @@ public class RecommendationServiceImpl implements RecommendationService {
     @Autowired
     RecommendationDao dao;
     @Override
-    public List<FoodInfo> getRecommendationsForUser(int foodId, float calories, int count) {
-        return dao.getRecommendationsForUser(foodId, calories, count);
+    public List<FoodInfo> getRecommendationsForUser(List<Integer> foodIdList, float calories, int count) {
+        return dao.getRecommendationsForUser(foodIdList, calories, count);
     }
 	@Override
-	public int getLatestPreferredFoodItem(int userId) {
+	public List<Integer> getLatestPreferredFoodItem(int userId) {
 		return dao.getLatestPreferredFoodItem(userId);
 	}
 }

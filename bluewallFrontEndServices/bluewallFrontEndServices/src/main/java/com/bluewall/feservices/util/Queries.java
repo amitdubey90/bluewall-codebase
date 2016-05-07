@@ -28,9 +28,13 @@ public class Queries {
 
 	public static final String INS_USER_TASTE_PREFERENCES = "insert into UserRating (userID,foodID,rating,ratingTimeStamp) values (?,?,?,?)";
 
-	public static final String GET_RECOMMENDATION_FOR_USER = "SELECT FoodInfo.name, FoodSimilarity.foodB, FoodSimilarity.similarity, FoodSimilarity.foodBCalories FROM FoodInfo,FoodSimilarity" +
-			" where foodA = ? and foodBCalories < ? and FoodInfo.foodId = FoodSimilarity.foodB order by similarity desc limit ?";
-	public static final String GET_MOST_PREFERRED_FOOD_ID = "SELECT foodID from UserRating where userID = ? order by ratingTimeStamp desc, rating desc limit 1";
+	public static final String GET_RECOMMENDATION_FOR_USER = "SELECT FoodInfo.name, FoodSimilarity.foodB, FoodSimilarity.similarity, FoodSimilarity.foodBCalories " +
+			"FROM FoodInfo,FoodSimilarity where foodA in ";
+	public static final String GET_RECOMMENDATION_FOR_USER_CONDITION = " and foodBCalories < ? and FoodInfo.foodId = FoodSimilarity.foodB order by similarity desc limit ?";
+
+	public static final String GET_PREFERRED_FOOD_ID = "(SELECT distinct(foodId) FROM UserRating WHERE userID = ? AND rating >= " +
+			"(SELECT AVG(rating) FROM UserRating WHERE userId = ?) ORDER BY ratingTimeStamp DESC , rating DESC limit 2) union " +
+			"(SELECT distinct(foodId) FROM userDatabase.FoodLog WHERE userID = ? ORDER BY logTime DESC LIMIT 2)";
 	public static final String UPSERT_USER_RATINGS = "INSERT INTO UserRating (userID, foodID, rating) VALUES (?, ?, ?) "
 														+ "ON DUPLICATE KEY UPDATE "
 															+ "rating = VALUES(rating)";
