@@ -1,14 +1,6 @@
 app.controller('logFoodController', function($scope, logFoodService, $filter,$rootScope,$state) {
 	console.log("In logFoodController");
 
-	$scope.userWt = {
-		max : 5
-	};
-
-	$scope.userCal = {
-		max : 500
-	};
-
 	$scope.logFood = function(food) {
 		var name = document.getElementById("foodName").value;
 		food.name = name.split(":")[1].trim();

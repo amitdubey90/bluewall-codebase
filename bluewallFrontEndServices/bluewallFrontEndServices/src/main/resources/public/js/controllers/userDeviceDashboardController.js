@@ -21,40 +21,32 @@ app
 											// console.log("TRUE");
 											$scope.addDeviceOption = true;
 										} else {
-											// console.log("FALSE");
+											//console.log("FALSE");
 											$scope.addDeviceOption = false;
-											if (result.data.deviceID == 10) {
+											if(result.data.deviceID == 10){
 												$scope.deviceName = "Fitbit";
-											} else {
+											}else{
 												$scope.deviceName = "Jawbone";
 											}
 											$scope.deviceConnectionStatus = "Active";
-											// TODO: FETCH THESE VALUES FROM DB
-											var currentdate = new Date();
-											$scope.deviceConnectionTimeStamp = currentdate
-													.getDate()
-													+ "/"
-													+ (currentdate.getMonth() + 1)
-													+ "/"
-													+ currentdate.getFullYear()
-													+ " @ "
-													+ currentdate.getHours()
-													+ ":"
-													+ currentdate.getMinutes()
-													+ ":"
-													+ currentdate.getSeconds();
-											$scope.deviceSynchTimeStamp = currentdate
-													.getDate()
-													+ "/"
-													+ (currentdate.getMonth() + 1)
-													+ "/"
-													+ currentdate.getFullYear()
-													+ " @ "
-													+ currentdate.getHours()
-													+ ":"
-													+ currentdate.getMinutes()
-													+ ":"
-													+ currentdate.getSeconds();
+												//TODO: FETCH THESE VALUES FROM DB
+											
+											if(null!=result.data.deviceConnectionTime){
+												$scope.deviceConnectionTimeStamp = new Date(result.data.deviceConnectionTime).toLocaleString();
+												console.log($scope.deviceConnectionTimeStamp);
+											}
+											else{
+												$scope.deviceConnectionTimeStamp = result.data.deviceConnectionTime;
+												console.log($scope.deviceConnectionTimeStamp);
+											}
+											if(null!=$scope.deviceSynchTimeStamp){
+												$scope.deviceSynchTimeStamp = new Date(result.data.expirationTime).toLocaleString();
+												console.log($scope.deviceSynchTimeStamp);
+											}else{
+												$scope.deviceSynchTimeStamp = result.data.expirationTime;	
+												console.log($scope.deviceSynchTimeStamp);
+											}
+											
 										}
 
 									},

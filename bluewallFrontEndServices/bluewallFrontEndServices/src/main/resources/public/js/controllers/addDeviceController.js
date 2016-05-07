@@ -18,19 +18,25 @@ app.controller('addDeviceController', function($scope, addDeviceService,$rootSco
 					}
 					$scope.deviceConnectionStatus = "Active";
 						//TODO: FETCH THESE VALUES FROM DB
-					var currentdate = new Date();
-					$scope.deviceConnectionTimeStamp = currentdate.getDate() + "/"
-	                + (currentdate.getMonth()+1)  + "/" 
-	                + currentdate.getFullYear() + " @ "  
-	                + currentdate.getHours() + ":"  
-	                + currentdate.getMinutes() + ":" 
-	                + currentdate.getSeconds();
-					$scope.deviceSynchTimeStamp = currentdate.getDate() + "/"
-	                + (currentdate.getMonth()+1)  + "/" 
-	                + currentdate.getFullYear() + " @ "  
-	                + currentdate.getHours() + ":"  
-	                + currentdate.getMinutes() + ":" 
-	                + currentdate.getSeconds();
+					
+					if(null!=result.data.deviceConnectionTime){
+						$scope.deviceConnectionTimeStamp = new Date(result.data.deviceConnectionTime).toLocaleString();
+						console.log(result.data.deviceConnectionTime);
+						console.log($scope.deviceConnectionTimeStamp);
+					}
+					else{
+						$scope.deviceConnectionTimeStamp = result.data.deviceConnectionTime;
+						console.log($scope.deviceConnectionTimeStamp);
+					}
+					if(null!=result.data.expirationTime){
+						$scope.deviceSynchTimeStamp = new Date(result.data.expirationTime).toLocaleString();
+						console.log(result.data.expirationTime);
+						console.log($scope.deviceSynchTimeStamp);
+					}else{
+						$scope.deviceSynchTimeStamp = result.data.expirationTime;	
+						console.log($scope.deviceSynchTimeStamp);
+					}
+					
 				}
 				$rootScope.authenticated = true;
 			}, function(error) {

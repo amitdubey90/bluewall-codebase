@@ -17,5 +17,6 @@ public class UserConnectedDevice {
 	private String refreshToken;
 	private String accessToken;
 	private Date expirationTime;
+	private Date deviceConnectionTime;
 
 }
