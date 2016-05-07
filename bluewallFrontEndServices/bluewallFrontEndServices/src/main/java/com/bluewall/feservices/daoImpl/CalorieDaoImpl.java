@@ -29,22 +29,16 @@ public class CalorieDaoImpl implements CalorieDao {
 		ResultSet resultSet = null;
 		int totalCaloriesBurnt = 0;
 		log.info("Fetching Sum of Caloreies Burnt for a day");
-		String currentDateTime = date + " 23:59:59";
-		String startDateTime = date + " 00:00:00";
 		try 
 		{
 			String sql = "select sum(sum) as totalCaloriesBurnt from (select round(sum(caloriesBurnt)) as sum from ActivityLog where loggedFrom=14 and userID="
 					+ userID
-					+ " and logTime >= '"
-					+ startDateTime
-					+ "' and logTime <= '"
-					+ currentDateTime
+					+ " and activityLogDate = '"
+					+ date
 					+ "' union all select max(caloriesBurnt) as sum from ActivityLog where (loggedFrom=10 or loggedFrom=11) and userID="
 					+ userID
-					+ " and logTime >= '"
-					+ startDateTime
-					+ "' and logTime <= '"
-					+ currentDateTime
+					+ " and activityLogDate = '"
+					+ date
 					+ "') as totalCaloriesBurnt";
 			
 			resultSet = dataSource.getConnection().prepareStatement(sql).executeQuery();
@@ -72,12 +66,11 @@ public class CalorieDaoImpl implements CalorieDao {
 
 		int totalCaloriesConsumed = 0;
 		ResultSet resultSet = null;
-		log.info("Fetching Sum of Caloreies Consumed for a day");
-		String currentDateTime = date + " 23:59:59";
-		String startDateTime = date + " 00:00:00";
+		log.info("Fetching Sum of Caloreies Consumed for a day");	
+		
 		try {
 			resultSet = dataSource.getConnection().prepareStatement(Queries.GET_TOTAL_CALORIE_CONSUMED + " where userID = " + userID
-					+ " and logTime >= '" + startDateTime + "' and logTime <= '" + currentDateTime + "'").executeQuery();
+					+ " and foodLogDate = '" + date + "'").executeQuery();
 			log.info("GET SUM CALORIES CONSUMED: Data fetched from database successfully");
 			if (resultSet.next())
 				totalCaloriesConsumed = resultSet.getInt("weightConsumed");

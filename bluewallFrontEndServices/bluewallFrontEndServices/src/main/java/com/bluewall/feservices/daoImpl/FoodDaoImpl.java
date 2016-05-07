@@ -44,7 +44,7 @@ public class FoodDaoImpl implements FoodDao {
 					.prepareStatement("select FoodInfo.name, FoodLog.type,"
 							+ " FoodLog.weightConsumed, FoodLog.foodLogDate, FoodLog.calories, FoodLog.logTime"
 							+ " from FoodLog, FoodInfo"
-							+ " where FoodInfo.foodID = FoodLog.foodID and FoodLog.userID = " + userID + " order by FoodLog.logTime desc")
+							+ " where FoodInfo.foodID = FoodLog.foodID and FoodLog.userID = " + userID + " order by FoodLog.foodLogDate desc")
 					.executeQuery();
 
 			while (rs.next()) {
