@@ -83,19 +83,19 @@
 
 			<div ng-repeat="foodLogged in foodLoggedList">
 				<div id="custom-show-hide-example" style="width: 465%;" >
-					<h3>Food Log Time: {{foodLogged[0].foodLogDate}}</h3>
+					<h3>Food Log Date: {{foodLogged[0].foodLogDate}}</h3>
 					<div class="row">
 						  <div class="col-md-3" style="border: 1px solid black;margin-left: initial;">Name</div>
 						  <div class="col-md-3" style="border: 1px solid black;margin-left: initial;">Type</div>
-						  <div class="col-md-3" style="border: 1px solid black;margin-left: initial;">Weight</div>
-						  <div class="col-md-3" style="border: 1px solid black;margin-left: initial;">Calories</div>
+						  <div class="col-md-3" style="border: 1px solid black;margin-left: initial;">Weight (in Grams)</div>
+						  <div class="col-md-3" style="border: 1px solid black;margin-left: initial;">Calories (in Kcals)</div>
 						</div>
 					<div ng-repeat="food in foodLogged">
 						<div class="row">
 						  <div class="col-md-3">{{food.name}}</div>
 						  <div class="col-md-3">{{food.type}}</div>
-						  <div class="col-md-3">{{food.weightConsumed}}</div>
-						  <div class="col-md-3">{{food.calories}}</div>
+						  <div class="col-md-3">{{food.weightConsumed}} grams</div>
+						  <div class="col-md-3">{{food.calories}} Kcals</div>
 						</div><br />
 				    </div>
 			     </div>

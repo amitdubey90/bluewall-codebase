@@ -236,15 +236,15 @@
 					<div class="row">
 						  <div class="col-md-4" style="border: 1px solid black;margin-left: initial;">Name</div>
 						 <!--  <div class="col-md-3" style="border: 1px solid black;margin-left: initial;">Distance</div> -->
-						  <div class="col-md-4" style="border: 1px solid black;margin-left: initial;">Duration</div>
-						  <div class="col-md-4" style="border: 1px solid black;margin-left: initial;">Calories Burnt</div>
+						  <div class="col-md-4" style="border: 1px solid black;margin-left: initial;">Duration (in minutes)</div>
+						  <div class="col-md-4" style="border: 1px solid black;margin-left: initial;">Calories Burnt (in Kcals)</div>
 						</div>
 					<div ng-repeat="activity in activityLogged">
 						<div class="row">
 						  <div class="col-md-4">{{activity.name}}</div>
 						 <!--  <div class="col-md-3">{{activity.distance}}</div> -->
-						  <div class="col-md-4">{{activity.duration}}</div>
-						  <div class="col-md-4">{{activity.caloriesBurnt}}</div>
+						  <div class="col-md-4">{{activity.duration}} minutes</div>
+						  <div class="col-md-4">{{activity.caloriesBurnt}} Kcals</div>
 						</div><br />
 				    </div>
 			     </div>
