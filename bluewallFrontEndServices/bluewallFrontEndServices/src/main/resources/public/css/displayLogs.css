@@ -1,4 +1,4 @@
-#displayLogs th, td { padding: 5px; }
+#displayLogs th, td { padding: 1px; }
 #displayLogs table { border-collapse: separate; border-spacing: 5px; margin-left: 83%; }
 
 #displayLogs button {
