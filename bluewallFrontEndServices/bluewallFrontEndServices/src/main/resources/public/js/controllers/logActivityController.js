@@ -15,7 +15,7 @@ app.controller('logActivityController',	function($scope, $filter, $http, logActi
 					+ parseInt(activity.mins),
 			//distance : activity.distance,
 			caloriesBurnt : activity.caloriesBurnt,
-			activityLogDate : activity.activityLogDate
+			activityLogDate : new Date(moment(activity.activityLogDate).format())
 		};
 		logActivityService.logUserActivity(userActivity).then(
 				function(data) {

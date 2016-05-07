@@ -5,6 +5,7 @@ app.controller('logFoodController', function($scope, logFoodService, $filter,$ro
 		var name = document.getElementById("foodName").value;
 		food.name = name.split(":")[1].trim();
 		food.calories = document.getElementById("foodCalories").value;
+		food.foodLogDate = new Date(moment(food.foodLogDate).format());
 //		var foodObj = angular.copy(food);
 //		console.log(foodObj + " " + food);
 		logFoodService.logFood(food).then(function(data) {
