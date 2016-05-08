@@ -15,6 +15,16 @@
   margin-top: 100px;
 }
 
+.flyover {
+  
+   overflow: hidden;
+   position: fixed;
+   width: 100%;
+   opacity: 0.9;
+   z-index: 1050;
+   transition: all 1s ease;
+}
+
 body {
   font-family: "Source Sans Pro", Arial, sans-serif;
   font-weight: 300;

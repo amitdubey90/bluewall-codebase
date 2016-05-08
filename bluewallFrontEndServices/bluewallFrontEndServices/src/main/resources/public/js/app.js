@@ -75,4 +75,23 @@ app.config([
 
 }]);
 
+app.service('messageService', ['$rootScope', function ($rootScope) {
+    $rootScope.errors = [];
+    $rootScope.alerts = [];
 
+    this.error = function (code, message) {
+        $rootScope.errors.push({ code: code, message: message });
+    };
+
+    this.info = function (code, message) {
+        $rootScope.alerts.push({ code: code, message: message });
+    };
+
+    $rootScope.clearError = function () {
+        $rootScope.errors = [];
+    };
+
+    $rootScope.clearInfo = function () {
+        $rootScope.alerts = [];
+    }
+}]);

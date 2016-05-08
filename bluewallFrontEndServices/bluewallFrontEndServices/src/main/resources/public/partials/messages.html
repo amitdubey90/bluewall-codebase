@@ -1,0 +1,16 @@
+<div data-ng-show="errors.length > 0">
+    <div class="alert alert-danger alert-dismissible flyover text-center" role="alert" ng-repeat="error in errors">
+        <button type="button" class="close" data-dismiss="alert" ng-click="clearError()">
+        	<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+        </button>
+        <strong>ERROR! </strong>{{error.message}}
+    </div>
+</div>
+<div data-ng-show="alerts.length > 0">
+    <div class="alert alert-success alert-dismissible flyover text-center" role="alert" ng-repeat="alert in alerts">
+        <button type="button" class="close" data-dismiss="alert" ng-click="clearInfo()">
+        	<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+        </button>
+        <strong>{{alert.code}} </strong>{{alert.message}}
+    </div>
+</div>
