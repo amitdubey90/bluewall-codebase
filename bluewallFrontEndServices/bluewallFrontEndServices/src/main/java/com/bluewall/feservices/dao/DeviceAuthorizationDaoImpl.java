@@ -3,6 +3,10 @@ package com.bluewall.feservices.dao;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.sql.DataSource;
 
@@ -33,7 +37,7 @@ public class DeviceAuthorizationDaoImpl implements DeviceAuthorizationDaoIfc {
 			pst.setString(colId++, credentials.getAccessToken());
 			pst.setString(colId++, credentials.getRefreshToken());
 			pst.setTimestamp(colId++, credentials.getExpirationTime());
-
+			pst.setTimestamp(colId++, new java.sql.Timestamp(new java.util.Date().getTime()));
 			pst.execute();
 			log.info("storeUserAccessToken successful");
 			return true;
@@ -49,16 +53,29 @@ public class DeviceAuthorizationDaoImpl implements DeviceAuthorizationDaoIfc {
 		UserConnectedDevice device = UserConnectedDevice.builder().build();
 		try {
 			log.info("Checking if user has any devices connected");
-			PreparedStatement pst = dataSource.getConnection()
-					.prepareStatement("SELECT deviceID FROM UserConnectedDevice where userId = ?");
-			pst.setInt(1, userID);
+			PreparedStatement pst = dataSource.getConnection().prepareStatement(
+					"SELECT d.deviceID, d.deviceConnectionTime, a.logTime FROM UserConnectedDevice d LEFT JOIN ActivityLog a ON (d.userId = a.userID AND d.deviceID = a.loggedFrom AND a.loggedFrom != ?) WHERE d.userId = ? ORDER BY a.logTime DESC");
+			pst.setInt(1, 14);
+			pst.setInt(2, userID);
 			ResultSet rs = pst.executeQuery();
 			if (rs.next()) {
 				device.setDeviceID(rs.getInt("deviceID"));
+				device.setDeviceConnectionTime(rs.getTimestamp("deviceConnectionTime"));
+				SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+				if(null==(rs.getString("logTime"))){
+					device.setExpirationTime(null);
+				}else{
+					Date parsedDate = dateFormat.parse(rs.getString("logTime"));
+					Timestamp timestamp = new java.sql.Timestamp(parsedDate.getTime());
+					device.setExpirationTime(timestamp);
+				}
+				
 				log.info("User has device connected {} ", device.getDeviceID());
 			}
 		} catch (SQLException e) {
 			log.error("SqlException in checkIfUserHasDevice {}", e);
+		} catch (ParseException e) {
+			log.error("ParseException in checkIfUserHasDevice {}", e);
 		}
 		return device;
 	}

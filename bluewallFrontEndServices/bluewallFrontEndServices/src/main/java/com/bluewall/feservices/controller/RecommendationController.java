@@ -33,10 +33,10 @@ public class RecommendationController {
 		UserPrincipal principal = (UserPrincipal) session.getAttribute("userPrincipal");
 		if (null != principal) {
 			userId = principal.getUserID();
-			int foodId = svc.getLatestPreferredFoodItem(userId);
+			List<Integer> foodIdList = svc.getLatestPreferredFoodItem(userId);
 			// TODO calculate required calories
 			int requiredCalories = 500;
-			return svc.getRecommendationsForUser(foodId, requiredCalories, count);
+			return svc.getRecommendationsForUser(foodIdList, requiredCalories, count);
 		}
 		return null;
 	}

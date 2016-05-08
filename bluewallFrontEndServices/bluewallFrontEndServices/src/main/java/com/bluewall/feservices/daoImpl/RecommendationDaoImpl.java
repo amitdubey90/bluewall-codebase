@@ -5,9 +5,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.StringJoiner;
 
 import javax.sql.DataSource;
 
+import com.google.api.client.repackaged.com.google.common.base.Preconditions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -16,7 +18,6 @@ import com.bluewall.feservices.dao.RecommendationDao;
 import com.bluewall.feservices.util.Queries;
 
 import lombok.extern.slf4j.Slf4j;
-import scala.annotation.meta.setter;
 
 @Slf4j
 @Repository
@@ -26,13 +27,27 @@ public class RecommendationDaoImpl implements RecommendationDao {
 	DataSource dataSource;
 
 	@Override
-	public List<FoodInfo> getRecommendationsForUser(int foodId, float calories, int count) {
+	public List<FoodInfo> getRecommendationsForUser(List<Integer> foodIdList, float calories, int count) {
+		Preconditions.checkNotNull(foodIdList);
+		Preconditions.checkArgument(foodIdList.size() != 0, "Preferred food list is empty");
+
 		List<FoodInfo> recommendations = new ArrayList<>();
 		ResultSet rs = null;
-		try (PreparedStatement pst = dataSource.getConnection().prepareStatement(Queries.GET_RECOMMENDATION_FOR_USER)) {
+
+		// build the query
+		StringBuffer query = new StringBuffer(Queries.GET_RECOMMENDATION_FOR_USER);
+		query.append("(");
+		StringJoiner joiner = new StringJoiner(",");
+		for (int i : foodIdList) {
+			joiner.add(String.valueOf(i));
+		}
+		query.append(joiner.toString());
+		query.append(")");
+		query.append(Queries.GET_RECOMMENDATION_FOR_USER_CONDITION);
+
+		try (PreparedStatement pst = dataSource.getConnection().prepareStatement(query.toString())) {
 			int colId = 1;
 
-			pst.setInt(colId++, foodId);
 			pst.setDouble(colId++, calories);
 			pst.setInt(colId++, count);
 
@@ -62,17 +77,19 @@ public class RecommendationDaoImpl implements RecommendationDao {
 	}
 
 	@Override
-	public int getLatestPreferredFoodItem(int userId) {
-		int foodId = 0;
+	public List<Integer> getLatestPreferredFoodItem(int userId) {
+		List<Integer> foodIdList = new ArrayList<>();
 		ResultSet rs = null;
-		try {
-			PreparedStatement pst = dataSource.getConnection().prepareStatement(Queries.GET_MOST_PREFERRED_FOOD_ID);
-			pst.setInt(1, userId);
+		try (PreparedStatement pst = dataSource.getConnection().prepareStatement(Queries.GET_PREFERRED_FOOD_ID)) {
+			int colIdx = 1;
+			pst.setInt(colIdx++, userId);
+			pst.setInt(colIdx++, userId);
+			pst.setInt(colIdx++, userId);
 			rs = pst.executeQuery();
-			if (rs.next()) {
-				foodId = rs.getInt("foodID");
+			while (rs.next()) {
+				foodIdList.add(rs.getInt("foodID"));
 			}
-			log.debug("Successfully fetched most preferred foodId {}", foodId);
+			log.debug("Successfully fetched most preferred foodId {}", foodIdList);
 
 		} catch (SQLException e) {
 			log.error("SqlException in getLatestPreferredFoodItem {}", e);
@@ -88,6 +105,6 @@ public class RecommendationDaoImpl implements RecommendationDao {
 			}
 		}
 		
-		return foodId;
+		return foodIdList;
 	}
 }

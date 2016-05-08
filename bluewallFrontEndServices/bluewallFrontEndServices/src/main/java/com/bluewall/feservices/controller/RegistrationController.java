@@ -51,6 +51,8 @@ public class RegistrationController {
 	public String processRegistration(@RequestBody UserProfile profile) { 
 		int userID = 0;
 		if (null != profile) {
+			float ht = (float)(profile.getHeight()*(30.48));
+			profile.setHeight(ht);
 			userID = userService.createUser(profile);
 		}
 
