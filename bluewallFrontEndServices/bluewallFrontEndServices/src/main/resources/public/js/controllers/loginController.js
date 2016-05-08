@@ -1,4 +1,4 @@
-app.controller('loginController', function($scope, $rootScope, $http, $state, $location){
+app.controller('loginController', function($scope, $rootScope, $http, $state, $location, messageService){
   console.log('inside loginController');
   var self = this;
   $scope.credentials = {};
@@ -23,11 +23,13 @@ app.controller('loginController', function($scope, $rootScope, $http, $state, $l
       $state.go('userDashboard');
       //
     } else {
+      messageService.error("error", "Login failed");
       console.log("authenticating failed!!!!")
       $rootScope.authenticated = false;
     }
     callback && callback();
   }).error(function() {
+    messageService.error("error", "Login failed");
     $rootScope.authenticated = false;
     callback && callback();
   });
