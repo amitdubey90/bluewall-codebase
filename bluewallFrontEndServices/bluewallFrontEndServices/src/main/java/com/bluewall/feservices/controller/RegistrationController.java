@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.bluewall.feservices.service.FoodService;
 import com.bluewall.feservices.service.UserServices;
 import com.bluewall.util.bean.UserDailyNutritionPlan;
 import com.bluewall.util.bean.UserProfile;
@@ -26,6 +27,9 @@ public class RegistrationController {
 
 	@Autowired
 	private UserServices userService;
+	
+	@Autowired
+	private FoodService foodService;
 
 	/**
 	 * Returns a view for registration form, allowing the user to manually fill
@@ -43,11 +47,8 @@ public class RegistrationController {
 		return model;
 	}
 
-	
-
 	@RequestMapping(value = "/createUser", method = RequestMethod.POST)
-	public String processRegistration(@RequestBody UserProfile profile) {
-
+	public String processRegistration(@RequestBody UserProfile profile) { 
 		int userID = 0;
 		if (null != profile) {
 			userID = userService.createUser(profile);
@@ -102,7 +103,7 @@ public class RegistrationController {
 		log.info("Nutrient plan created for user id: " + userID);
 
 		userService.createNutrientPlan(dailyPlan, userID);
-
+		
 		return "deviceDashboard";
 	}
 

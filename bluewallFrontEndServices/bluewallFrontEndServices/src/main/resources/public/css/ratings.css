@@ -1,5 +1,5 @@
 #ratings .cc-selector1 input, .cc-selector2 input, .cc-selector3 input,
-	.cc-selector4 input, .cc-selector5 input {
+	.cc-selector4 input, .cc-selector5 input, .cc-selector6 input, .cc-selector7 input, .cc-selector8 input {
 	margin: 0;
 	padding: 0;
 	-webkit-appearance: none;
@@ -7,29 +7,31 @@
 	appearance: none;
 }
 
-#ratings .star11, .star12, .star13, .star14, .star15, .star21, .star22, .star23,
-	.star24, .star25, .star31, .star32, .star33, .star34, .star35, .star41,
-	.star42, .star43, .star44, .star45, .star51, .star52, .star53, .star54,
-	.star55 {
+#ratings .star11, .star12, .star13, .star14, .star15, .star21, .star22, .star23, .star24, .star25, 
+.star31, .star32, .star33, .star34, .star35, .star41, .star42, .star43, .star44, .star45, 
+.star51, .star52, .star53, .star54, .star55, .star61, .star62, .star63, .star64, .star65, 
+.star71, .star72, .star73, .star74, .star75, .star81, .star82, .star83, .star84, .star85 {
 	background-image: url(../images/star.png);
 }
 
 #ratings .cc-selector1 input:active+.drinkcard-cc1, .cc-selector2 input:active+.drinkcard-cc2,
 	.cc-selector3 input:active+.drinkcard-cc3, .cc-selector4 input:active+.drinkcard-cc4,
-	.cc-selector5 input:active+.drinkcard-cc5 {
+	.cc-selector5 input:active+.drinkcard-cc5, .cc-selector6 input:active+.drinkcard-cc6,
+	.cc-selector7 input:active+.drinkcard-cc7, .cc-selector8 input:active+.drinkcard-cc8 {
 	opacity: .9;
 }
 
 #ratings .cc-selector1 input:checked+.drinkcard-cc1, .cc-selector2 input:checked+.drinkcard-cc2,
 	.cc-selector3 input:checked+.drinkcard-cc3, .cc-selector4 input:checked+.drinkcard-cc4,
-	.cc-selector5 input:checked+.drinkcard-cc5 {
+	.cc-selector5 input:checked+.drinkcard-cc5, .cc-selector6 input:checked+.drinkcard-cc6,
+	.cc-selector7 input:checked+.drinkcard-cc7, .cc-selector8 input:checked+.drinkcard-cc8 {
 	-webkit-filter: none;
 	-moz-filter: none;
 	filter: none;
 }
 
 #ratings .drinkcard-cc1, .drinkcard-cc2, .drinkcard-cc3, .drinkcard-cc4,
-	.drinkcard-cc5 {
+	.drinkcard-cc5, .drinkcard-cc6, .drinkcard-cc7, .drinkcard-cc8  {
 	cursor: pointer;
 	background-size: contain;
 	background-repeat: no-repeat;
@@ -45,7 +47,8 @@
 }
 
 #ratings .drinkcard-cc1:hover, .drinkcard-cc2:hover, .drinkcard-cc3:hover,
-	.drinkcard-cc4:hover, .drinkcard-cc5:hover {
+	.drinkcard-cc4:hover, .drinkcard-cc5:hover, .drinkcard-cc6:hover,
+	.drinkcard-cc7:hover, .drinkcard-cc8:hover {
 	-webkit-filter: brightness(1.2) grayscale(.5) opacity(.9);
 	-moz-filter: brightness(1.2) grayscale(.5) opacity(.9);
 	filter: brightness(1.2) grayscale(.5) opacity(.9);

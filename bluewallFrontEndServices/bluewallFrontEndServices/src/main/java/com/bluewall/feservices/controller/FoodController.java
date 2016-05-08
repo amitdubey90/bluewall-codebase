@@ -90,7 +90,6 @@ public class FoodController {
 	@RequestMapping(value = "/createFoodPlate", method = RequestMethod.POST, consumes = "application/json")
 	@ResponseBody
 	public void createFoodPlate(@RequestBody UserFood food, HttpSession session) throws ParseException {
-
 		int userID = 0;
 		UserPrincipal principal = (UserPrincipal) session.getAttribute("userPrincipal");
 		if (null != principal) {

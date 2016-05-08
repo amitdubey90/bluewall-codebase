@@ -1,7 +1,6 @@
 package com.bluewall.util.bean;
 
 import java.sql.Date;
-import java.util.List;
 
 
 public class UserProfile {
@@ -21,25 +20,19 @@ public class UserProfile {
 	private float targetWeight;
 	private Date startDate;
 	private Date endDate;
-	private List<FoodRating> foodTasteList;
-	
-	
-	
-	
-	
-	
-	
-	
-	public List<FoodRating> getFoodTasteList() {
-		return foodTasteList;
-	}
-
-	public void setFoodTasteList(List<FoodRating> foodTasteList) {
-		this.foodTasteList = foodTasteList;
-	}
+	private String userRating;
+	/*private List<FoodRating> foodTasteList;*/
 
 	public String getFirstName() {
 		return firstName;
+	}
+
+	public String getUserRating() {
+		return userRating;
+	}
+
+	public void setUserRating(String userRating) {
+		this.userRating = userRating;
 	}
 
 	public void setFirstName(String firstName) {

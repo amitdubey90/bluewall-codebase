@@ -22,7 +22,6 @@ import org.springframework.stereotype.Service;
 import com.bluewall.feservices.bean.UserPrincipal;
 import com.bluewall.feservices.dao.UserDao;
 import com.bluewall.feservices.util.Queries;
-import com.bluewall.util.bean.FoodRating;
 import com.bluewall.util.bean.UserDailyNutritionPlan;
 import com.bluewall.util.bean.UserProfile;
 
@@ -94,13 +93,15 @@ public class UserDaoImpl implements UserDao {
 				userID = rs.getInt("userID");
 				log.info("CREATE USER SERVICE: New user registered with user id: " + userID);
 				PreparedStatement prepStatement = connection.prepareStatement(Queries.INS_USER_TASTE_PREFERENCES);
-				for (FoodRating foodRating : user.getFoodTasteList()) {
+				String s =  user.getUserRating().replaceAll("[{}]", "");
+				String[] arr = s.split(",");
+				for(int i=0; i<arr.length; i++){
+					String[] arr1 = arr[i].split(":");
 					prepStatement.setInt(1, userID);
-					prepStatement.setInt(2, foodRating.getKey());
-					prepStatement.setInt(3, foodRating.getValue());
+					prepStatement.setInt(2, Integer.parseInt(arr1[0].replace("\"", "")));
+					prepStatement.setInt(3, Integer.parseInt(arr1[1]));
 					prepStatement.setTimestamp(4, new java.sql.Timestamp(Calendar.getInstance().getTime().getTime()));
 					prepStatement.executeUpdate();
-
 				}
 				log.info("Taste preferences  saved succeefully for user id: " + userID);
 

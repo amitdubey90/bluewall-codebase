@@ -52,24 +52,26 @@
 				<tr>
 					<td>First Name<span style="color:red;">*</span>: <input placeholder="First Name" class="form-control" type="text" name="firstName"	value="LMNO" ng-model="user.firstName" required="required" /></td>
 					<td>Last Name<span style="color:red;">*</span>:<input placeholder="Last Name" class="form-control" type="text" name="lastName" value="LMNO" ng-model="user.lastName" required="required" /></td>
-					<td>E-mail<span style="color:red;">*</span>:<input placeholder="Email address" class="form-control" type="text" name="emailID" value="LMNO@gmail.com" ng-model="user.emailID" required="required" /></td>
+					<td>E-mail<span style="color:red;">*</span>:<input placeholder="Email address" class="form-control" type="email" name="emailID" value="LMNO@gmail.com" ng-model="user.emailID" required="required" /></td>
 					<td>Password<span style="color:red;">*</span>:<input placeholder="Password" class="form-control" type="password" value="lmno" ng-model="user.password" required="required" /></td>
 				</tr>
 				<tr>
-					<td>Contact Number:<input placeholder="Contact Number" class="form-control" type="text" ng-model="user.contactNumber" /></td>
-					<td>Age<span style="color:red;">*</span>:<input placeholder="Age" class="form-control" type="text" value=45 ng-model="user.age" required="required"/></td>
+					<td>Contact Number:<input placeholder="Contact Number" class="form-control" type="number" ng-model="user.contactNumber" /></td>
+					<td>Age<span style="color:red;">*</span>:<input placeholder="Age" class="form-control" type="number" value=45 ng-model="user.age" required="required"/></td>
 					<td>Gender<span style="color:red;">*</span>:<select class="form-control" name="gender" ng-model="user.gender" required="required">
-										<option value="female" selected>Female</option>
+										<option value="">Select</option>
+										<option value="female">Female</option>
 										<option value="male">Male</option>
 								</select>
 					</td>
 					<td>Current Location<span style="color:red;">*</span>:<input placeholder="Current Location" class="form-control" type="text" value="sj" ng-model="user.currentLocation" required="required"/></td>
 				</tr>
 				<tr>
-					<td>Height (Feet)<span style="color:red;">*</span>:<input placeholder="Height in Feets" class="form-control" type="text" value="33" ng-model="user.height" required="required"/></td>
-					<td>Weight (pounds)<span style="color:red;">*</span>:<input placeholder="Weight in pounds" class="form-control" type="text" value="33" ng-model="user.weight" required="required"/></td>
+					<td>Height (Feet)<span style="color:red;">*</span>:<input placeholder="Height in Feets" class="form-control" type="number" value="33" ng-model="user.height" required="required"/></td>
+					<td>Weight (pounds)<span style="color:red;">*</span>:<input placeholder="Weight in pounds" class="form-control" type="number" value="33" ng-model="user.weight" required="required"/></td>
 					<td colspan="2">Activity Level<span style="color:red;">*</span>:
 						<select class="form-control" name="actLevel" ng-model="user.activityLevel" required="required">
+								<option value="">Select</option>
 								<option value="veryActive" selected>Very Active</option>
 								<option value="active">Active</option>
 								<option value="moderateActive">Moderate</option>
@@ -78,19 +80,21 @@
 					</td>
 				</tr>
 				<tr>
-					<td colspan="2">Goal Type:
-						<select class="form-control" name="goalType" ng-model="user.goalType">
+					<td colspan="2">Goal Type<span style="color:red;">*</span>:
+						<select class="form-control" name="goalType" ng-model="user.goalType" required>
+								<option value="">Select</option>
 								<option value="gain" selected>Gain Weight</option>
 								<option value="lose">Lose Weight</option>
 								<option value="maintain">Maintain Weight</option>
 	
 						</select>
 					</td>
-					<td colspan="2">Target Weight (pounds):<input placeholder="Target weight in pounds" class="form-control" type="text" value="33" ng-model="user.targetWeight" /></td>
+					<td colspan="2">Target Weight (pounds)<span style="color:red;">*</span>:<input placeholder="Target weight in pounds" class="form-control" type="number" value="33" ng-model="user.targetWeight" required /></td>
 				</tr>
 				<tr>
-					<td>Food preference:
+					<td>Food preference<span style="color:red;">*</span>:
 						<select class="form-control" name="foodPreference" ng-model="user.foodpref" required>
+							<option value="">Select</option>
 							<option value="Vegetarian" selected>Vegetarian</option>
 							<option value="Non-Vegetarian">Non-Vegetarian</option>
 						</select>
@@ -103,100 +107,72 @@
 						</tr>
 						<tr>
 							<td>
-								<label class="col-xs-1">Milk</label>
-								<div class="col-xs-1">
-									<select id="food1" ng-model="food.food1" required>
-										<option value="1079">1</option>
-										<option value="1079">2</option>
-										<option value="1079">3</option>
-										<option value="1079">4</option>
-										<option value="1079">5</option>
-									</select>  
-								</div>
-								<div class="slider-font-style" style="margin-left: 0px;">
-								    <div id="ratings">
-									    <span class="cc-selector1">
-									        <input id="star11" type="radio" name="rating1" value="1" ng-click="" />1<label class="drinkcard-cc1 star11" for="star11"></label>
-									        <input id="star12" type="radio" name="rating1" value="2" ng-click="" />2<label class="drinkcard-cc1 star12"for="star12"></label>
-									        <input id="star13" type="radio" name="rating1" value="3" ng-click="" />3<label class="drinkcard-cc1 star13" for="star13"></label>
-									        <input id="star14" type="radio" name="rating1" value="4" ng-click="" />4<label class="drinkcard-cc1 star14"for="star14"></label>
-											<input id="star15" type="radio" name="rating1" value="5" ng-click="" />5<label class="drinkcard-cc1 star15"for="star15"></label>
-									    </span>
+								<label class="col-xs-2">Milk<span style="color:red;">*</span>:</label>
+								<div class="col-xs-5">
+									<div class="slider-font-style" style="margin-left: 0px;">
+								    	<div id="ratings">
+										    <div class="cc-selector1">
+										        <input id="star11" type="radio" name="rating1" value="1" ng-click="ratings(1079, 1)" required />1<label class="drinkcard-cc1 star11" for="star11"></label>
+										        <input id="star12" type="radio" name="rating1" value="2" ng-click="ratings(1079, 2)" />2<label class="drinkcard-cc1 star12"for="star12"></label>
+										        <input id="star13" type="radio" name="rating1" value="3" ng-click="ratings(1079, 3)" />3<label class="drinkcard-cc1 star13" for="star13"></label>
+										        <input id="star14" type="radio" name="rating1" value="4" ng-click="ratings(1079, 4)" />4<label class="drinkcard-cc1 star14"for="star14"></label>
+												<input id="star15" type="radio" name="rating1" value="5" ng-click="ratings(1079, 5)" />5<label class="drinkcard-cc1 star15"for="star15"></label>
+										    </div>
+										</div>
 									</div>
 								</div>
 							</td>
 						</tr>
 						<tr>
 							<td>
-								<label class="col-xs-1">Apples</label>
-								<div class="col-xs-1">
-									<select id="food2" ng-model="food.food2" required>
-										<option value="9003">1</option>
-										<option value="9003">2</option>
-										<option value="9003">3</option>
-										<option value="9003">4</option>
-										<option value="9003">5</option>
-									</select>  
-								</div>
-								<div class="slider-font-style" style="margin-left: 0px;">
-								    <div id="ratings">
-									    <span class="cc-selector1">
-									        <input id="star11" type="radio" name="rating1" value="1" ng-click="" />1<label class="drinkcard-cc1 star11" for="star11"></label>
-									        <input id="star12" type="radio" name="rating1" value="2" ng-click="" />2<label class="drinkcard-cc1 star12"for="star12"></label>
-									        <input id="star13" type="radio" name="rating1" value="3" ng-click="" />3<label class="drinkcard-cc1 star13" for="star13"></label>
-									        <input id="star14" type="radio" name="rating1" value="4" ng-click="" />4<label class="drinkcard-cc1 star14"for="star14"></label>
-											<input id="star15" type="radio" name="rating1" value="5" ng-click="" />5<label class="drinkcard-cc1 star15"for="star15"></label>
-									    </span>
+								<label class="col-xs-2">Apples<span style="color:red;">*</span>:</label>
+								<div class="col-xs-5">
+									<div class="slider-font-style" style="margin-left: 0px;">
+									    <div id="ratings">
+										    <div class="cc-selector2">
+										        <input id="star21" type="radio" name="rating2" value="1" ng-click="ratings(9003, 1)" required />1<label class="drinkcard-cc2 star21" for="star21"></label>
+										        <input id="star22" type="radio" name="rating2" value="2" ng-click="ratings(9003, 2)" />2<label class="drinkcard-cc2 star22"for="star22"></label>
+										        <input id="star23" type="radio" name="rating2" value="3" ng-click="ratings(9003, 3)" />3<label class="drinkcard-cc2 star23" for="star23"></label>
+										        <input id="star24" type="radio" name="rating2" value="4" ng-click="ratings(9003, 4)" />4<label class="drinkcard-cc2 star24"for="star24"></label>
+												<input id="star25" type="radio" name="rating2" value="5" ng-click="ratings(9003, 5)" />5<label class="drinkcard-cc2 star25"for="star25"></label>
+										    </div>
+										</div>
 									</div>
 								</div>
 							</td>
 						</tr>
 						<tr>
 							<td>
-								<label class="col-xs-2">Lentils, Sprouted</label>
-								<div class="col-xs-1">
-									<select id="food3" ng-model="food.food3" required>
-										<option value="11926">1</option>
-										<option value="11926">2</option>
-										<option value="11926">3</option>
-										<option value="11926">4</option>
-										<option value="11926">5</option>
-									</select>  
-								</div>
-								<div class="slider-font-style" style="margin-left: 0px;">
-								    <div id="ratings">
-									    <span class="cc-selector1">
-									        <input id="star11" type="radio" name="rating1" value="1" ng-click="" />1<label class="drinkcard-cc1 star11" for="star11"></label>
-									        <input id="star12" type="radio" name="rating1" value="2" ng-click="" />2<label class="drinkcard-cc1 star12"for="star12"></label>
-									        <input id="star13" type="radio" name="rating1" value="3" ng-click="" />3<label class="drinkcard-cc1 star13" for="star13"></label>
-									        <input id="star14" type="radio" name="rating1" value="4" ng-click="" />4<label class="drinkcard-cc1 star14"for="star14"></label>
-											<input id="star15" type="radio" name="rating1" value="5" ng-click="" />5<label class="drinkcard-cc1 star15"for="star15"></label>
-									    </span>
+								<label class="col-xs-2">Lentils, Sprouted<span style="color:red;">*</span>:</label>
+								<div class="col-xs-5">
+									<div class="slider-font-style" style="margin-left: 0px;">
+									    <div id="ratings">
+										   <div class="cc-selector3">
+										        <input id="star31" type="radio" name="rating3" value="1" ng-click="ratings(11926, 1)" required />1<label class="drinkcard-cc3 star31" for="star31"></label>
+										        <input id="star32" type="radio" name="rating3" value="2" ng-click="ratings(11926, 2)" />2<label class="drinkcard-cc3 star32"for="star32"></label>
+										        <input id="star33" type="radio" name="rating3" value="3" ng-click="ratings(11926, 3)" />3<label class="drinkcard-cc3 star33" for="star33"></label>
+										        <input id="star34" type="radio" name="rating3" value="4" ng-click="ratings(11926, 4)" />4<label class="drinkcard-cc3 star34"for="star34"></label>
+												<input id="star35" type="radio" name="rating3" value="5" ng-click="ratings(11926, 5)" />5<label class="drinkcard-cc3 star35"for="star35"></label>
+										    </div>
+										</div>
 									</div>
 								</div>
 							</td>
 						</tr>
 						<tr>
 							<td>
-								<label class="col-xs-2">Potatoes, Fried</label>
-								<div class="col-xs-1">
-									<select id="food6" ng-model="food.food6" required>
-											<option value="11840">1</option>
-											<option value="11840">2</option>
-											<option value="11840">3</option>
-											<option value="11840">4</option>
-											<option value="11840">5</option>
-									</select>  
-								</div>
-								<div class="slider-font-style" style="margin-left: 0px;">
-								    <div id="ratings">
-									    <span class="cc-selector1">
-									        <input id="star11" type="radio" name="rating1" value="1" ng-click="" />1<label class="drinkcard-cc1 star11" for="star11"></label>
-									        <input id="star12" type="radio" name="rating1" value="2" ng-click="" />2<label class="drinkcard-cc1 star12"for="star12"></label>
-									        <input id="star13" type="radio" name="rating1" value="3" ng-click="" />3<label class="drinkcard-cc1 star13" for="star13"></label>
-									        <input id="star14" type="radio" name="rating1" value="4" ng-click="" />4<label class="drinkcard-cc1 star14"for="star14"></label>
-											<input id="star15" type="radio" name="rating1" value="5" ng-click="" />5<label class="drinkcard-cc1 star15"for="star15"></label>
-									    </span>
+								<label class="col-xs-2">Potatoes, Fried<span style="color:red;">*</span>:</label>
+								<div class="col-xs-5">
+									<div class="slider-font-style" style="margin-left: 0px;">
+									    <div id="ratings">
+										    <div class="cc-selector4">
+										        <input id="star41" type="radio" name="rating4" value="1" ng-click="ratings(11840, 1)" required />1<label class="drinkcard-cc4 star41" for="star41"></label>
+										        <input id="star42" type="radio" name="rating4" value="2" ng-click="ratings(11840, 2)" />2<label class="drinkcard-cc4 star42"for="star42"></label>
+										        <input id="star43" type="radio" name="rating4" value="3" ng-click="ratings(11840, 3)" />3<label class="drinkcard-cc4 star43" for="star43"></label>
+										        <input id="star44" type="radio" name="rating4" value="4" ng-click="ratings(11840, 4)" />4<label class="drinkcard-cc4 star44"for="star44"></label>
+												<input id="star45" type="radio" name="rating4" value="5" ng-click="ratings(11840, 5)" />5<label class="drinkcard-cc4 star45"for="star45"></label>
+										    </div>
+										</div>
 									</div>
 								</div>
 							</td>
@@ -204,52 +180,37 @@
 						<tr>
 							<td>
 								<div ng-if="user.foodpref === 'Non-Vegetarian'">
-									<label class="col-xs-2">Beef patties</label>
-									<div class="col-xs-1">
-										<select id="food7" ng-model="food.food7" required>
-												<option value="13317">1</option>
-												<option value="13317">2</option>
-												<option value="13317">3</option>
-												<option value="13317">4</option>
-												<option value="13317">5</option>
-										</select>  
+									<label class="col-xs-2">Beef patties<span style="color:red;">*</span>:</label>
+										<div class="slider-font-style" style="margin-left: 0px;">
+										    <div id="ratings">
+											    <div class="cc-selector5">
+											        <input id="star51" type="radio" name="rating5" value="1" ng-click="ratings(13317, 1)" required />1<label class="drinkcard-cc5 star51" for="star51"></label>
+											        <input id="star52" type="radio" name="rating5" value="2" ng-click="ratings(13317, 2)" />2<label class="drinkcard-cc5 star52"for="star52"></label>
+											        <input id="star53" type="radio" name="rating5" value="3" ng-click="ratings(13317, 3)" />3<label class="drinkcard-cc5 star53" for="star53"></label>
+											        <input id="star54" type="radio" name="rating5" value="4" ng-click="ratings(13317, 4)" />4<label class="drinkcard-cc5 star54"for="star54"></label>
+													<input id="star55" type="radio" name="rating5" value="5" ng-click="ratings(13317, 5)" />5<label class="drinkcard-cc5 star55"for="star55"></label>
+											    </div>
+											</div>
+										</div>
 									</div>
-									<div class="slider-font-style" style="margin-left: 0px;">
-								    <div id="ratings">
-									    <span class="cc-selector1">
-									        <input id="star11" type="radio" name="rating1" value="1" ng-click="" />1<label class="drinkcard-cc1 star11" for="star11"></label>
-									        <input id="star12" type="radio" name="rating1" value="2" ng-click="" />2<label class="drinkcard-cc1 star12"for="star12"></label>
-									        <input id="star13" type="radio" name="rating1" value="3" ng-click="" />3<label class="drinkcard-cc1 star13" for="star13"></label>
-									        <input id="star14" type="radio" name="rating1" value="4" ng-click="" />4<label class="drinkcard-cc1 star14"for="star14"></label>
-											<input id="star15" type="radio" name="rating1" value="5" ng-click="" />5<label class="drinkcard-cc1 star15"for="star15"></label>
-									    </span>
-									</div>
-								</div>
 								</div>
 							</td>
 						</tr>
 						<tr>
 							<td>
 								<div ng-if="user.foodpref === 'Non-Vegetarian'" >
-									<label class="col-xs-4">Chicken wings with BBQ Sauce</label>
-									<div class="col-xs-1">
-										<select id="food4" ng-model="food.food4" required>
-											<option value="5312">1</option>
-											<option value="5312">2</option>
-											<option value="5312">3</option>
-											<option value="5312">4</option>
-											<option value="5312">5</option>
-										</select>  
-									</div>
-									<div class="slider-font-style" style="margin-left: 0px;">
-									    <div id="ratings">
-										    <span class="cc-selector1">
-										        <input id="star11" type="radio" name="rating1" value="1" ng-click="" />1<label class="drinkcard-cc1 star11" for="star11"></label>
-										        <input id="star12" type="radio" name="rating1" value="2" ng-click="" />2<label class="drinkcard-cc1 star12"for="star12"></label>
-										        <input id="star13" type="radio" name="rating1" value="3" ng-click="" />3<label class="drinkcard-cc1 star13" for="star13"></label>
-										        <input id="star14" type="radio" name="rating1" value="4" ng-click="" />4<label class="drinkcard-cc1 star14"for="star14"></label>
-												<input id="star15" type="radio" name="rating1" value="5" ng-click="" />5<label class="drinkcard-cc1 star15"for="star15"></label>
-										    </span>
+									<label class="col-xs-2">Chicken wings with BBQ Sauce<span style="color:red;">*</span>:</label>
+									<div class="col-xs-5">
+										<div class="slider-font-style" style="margin-left: 0px;">
+										    <div id="ratings">
+											   <div class="cc-selector6">
+											        <input id="star61" type="radio" name="rating6" value="1" ng-click="ratings(5312, 1)" required />1<label class="drinkcard-cc6 star61" for="star61"></label>
+											        <input id="star62" type="radio" name="rating6" value="2" ng-click="ratings(5312, 2)" />2<label class="drinkcard-cc6 star62"for="star62"></label>
+											        <input id="star63" type="radio" name="rating6" value="3" ng-click="ratings(5312, 3)" />3<label class="drinkcard-cc6 star63" for="star63"></label>
+											        <input id="star64" type="radio" name="rating6" value="4" ng-click="ratings(5312, 4)" />4<label class="drinkcard-cc6 star64"for="star64"></label>
+													<input id="star65" type="radio" name="rating6" value="5" ng-click="ratings(5312, 5)" />5<label class="drinkcard-cc6 star65"for="star65"></label>
+											    </div>
+											</div>
 										</div>
 									</div>
 								</div>
@@ -258,25 +219,18 @@
 						<tr>
 							<td>
 								<div ng-if="user.foodpref === 'Vegetarian'">
-									<label class="col-xs-5">Pasta with Onion and Garlic Italian Sauce</label>
-									<div class="col-xs-1">
-										<select id="food5" ng-model="food.food5" required>
-											<option value="6222">1</option>
-											<option value="6222">2</option>
-											<option value="6222">3</option>
-											<option value="6222">4</option>
-											<option value="6222">5</option>
-										</select>  
-									</div>
-									<div class="slider-font-style" style="margin-left: 0px;">
-									    <div id="ratings">
-										    <span class="cc-selector1">
-										        <input id="star11" type="radio" name="rating1" value="1" ng-click="" />1<label class="drinkcard-cc1 star11" for="star11"></label>
-										        <input id="star12" type="radio" name="rating1" value="2" ng-click="" />2<label class="drinkcard-cc1 star12"for="star12"></label>
-										        <input id="star13" type="radio" name="rating1" value="3" ng-click="" />3<label class="drinkcard-cc1 star13" for="star13"></label>
-										        <input id="star14" type="radio" name="rating1" value="4" ng-click="" />4<label class="drinkcard-cc1 star14"for="star14"></label>
-												<input id="star15" type="radio" name="rating1" value="5" ng-click="" />5<label class="drinkcard-cc1 star15"for="star15"></label>
-										    </span>
+									<label class="col-xs-2">Pasta with Onion and Garlic Italian Sauce<span style="color:red;">*</span>:</label>
+									<div class="col-xs-5">
+										<div class="slider-font-style" style="margin-left: 0px;">
+										    <div id="ratings">
+											    <span class="cc-selector7">
+											        <input id="star71" type="radio" name="rating7" value="1" ng-click="ratings(6222, 1)" required />1<label class="drinkcard-cc7 star71" for="star71"></label>
+											        <input id="star72" type="radio" name="rating7" value="2" ng-click="ratings(6222, 2)" />2<label class="drinkcard-cc7 star72"for="star72"></label>
+											        <input id="star73" type="radio" name="rating7" value="3" ng-click="ratings(6222, 3)" />3<label class="drinkcard-cc7 star73" for="star73"></label>
+											        <input id="star74" type="radio" name="rating7" value="4" ng-click="ratings(6222, 4)" />4<label class="drinkcard-cc7 star74"for="star74"></label>
+													<input id="star75" type="radio" name="rating7" value="5" ng-click="ratings(6222, 5)" />5<label class="drinkcard-cc7 star75"for="star75"></label>
+											    </span>
+											</div>
 										</div>
 									</div>
 								</div>
@@ -285,25 +239,18 @@
 						<tr>
 							<td>
 								<div ng-if="user.foodpref === 'Non-Vegetarian'">
-									<label class="col-xs-5">Pasta with Mini Meatballs Italian Sauce</label>
-									<div class="col-xs-1">
-										<select id="food5" ng-model="food.food5" required>
-											<option value="6228">1</option>
-											<option value="6228">2</option>
-											<option value="6228">3</option>
-											<option value="6228">4</option>
-											<option value="6228">5</option>
-										</select>  
-									</div>
-									<div class="slider-font-style" style="margin-left: 0px;">
-									    <div id="ratings">
-										    <span class="cc-selector1">
-										        <input id="star11" type="radio" name="rating1" value="1" ng-click="" />1<label class="drinkcard-cc1 star11" for="star11"></label>
-										        <input id="star12" type="radio" name="rating1" value="2" ng-click="" />2<label class="drinkcard-cc1 star12"for="star12"></label>
-										        <input id="star13" type="radio" name="rating1" value="3" ng-click="" />3<label class="drinkcard-cc1 star13" for="star13"></label>
-										        <input id="star14" type="radio" name="rating1" value="4" ng-click="" />4<label class="drinkcard-cc1 star14"for="star14"></label>
-												<input id="star15" type="radio" name="rating1" value="5" ng-click="" />5<label class="drinkcard-cc1 star15"for="star15"></label>
-										    </span>
+									<label class="col-xs-2">Pasta with Mini Meatballs Italian Sauce<span style="color:red;">*</span>:</label>
+									<div class="col-xs-5">
+										<div class="slider-font-style" style="margin-left: 0px;">
+										    <div id="ratings">
+											    <span class="cc-selector8">
+											        <input id="star81" type="radio" name="rating8" value="1" ng-click="ratings(6228, 1)" required/>1<label class="drinkcard-cc8 star81" for="star81"></label>
+											        <input id="star82" type="radio" name="rating8" value="2" ng-click="ratings(6228, 2)" />2<label class="drinkcard-cc8 star82"for="star82"></label>
+											        <input id="star83" type="radio" name="rating8" value="3" ng-click="ratings(6228, 3)" />3<label class="drinkcard-cc8 star83" for="star83"></label>
+											        <input id="star84" type="radio" name="rating8" value="4" ng-click="ratings(6228, 4)" />4<label class="drinkcard-cc8 star84"for="star84"></label>
+													<input id="star85" type="radio" name="rating8" value="5" ng-click="ratings(6228, 5)" />5<label class="drinkcard-cc8 star85"for="star85"></label>
+											    </span>
+											</div>
 										</div>
 									</div>
 								</div>
