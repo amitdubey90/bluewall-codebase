@@ -1,5 +1,6 @@
 package com.bluewall.feservices.daoImpl;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -9,6 +10,7 @@ import java.util.StringJoiner;
 
 import javax.sql.DataSource;
 
+import com.bluewall.feservices.util.DatabaseResouceCloser;
 import com.google.api.client.repackaged.com.google.common.base.Preconditions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -33,6 +35,8 @@ public class RecommendationDaoImpl implements RecommendationDao {
 
 		List<FoodInfo> recommendations = new ArrayList<>();
 		ResultSet rs = null;
+		Connection connection = null;
+		PreparedStatement pst = null;
 
 		// build the query
 		StringBuffer query = new StringBuffer(Queries.GET_RECOMMENDATION_FOR_USER);
@@ -45,7 +49,10 @@ public class RecommendationDaoImpl implements RecommendationDao {
 		query.append(")");
 		query.append(Queries.GET_RECOMMENDATION_FOR_USER_CONDITION);
 
-		try (PreparedStatement pst = dataSource.getConnection().prepareStatement(query.toString())) {
+		try {
+			connection = dataSource.getConnection();
+			pst = connection.prepareStatement(query.toString());
+
 			int colId = 1;
 
 			pst.setDouble(colId++, calories);
@@ -65,13 +72,7 @@ public class RecommendationDaoImpl implements RecommendationDao {
 			log.error("SqlException in getRecommendationsForUser {}", e);
 		}
 		finally{
-			if (rs != null) {
-				try {
-					rs.close();
-				} catch (SQLException e) {
-					log.error("GET RECOMMENDATION: Result set object is not closed");
-				}
-			}
+			DatabaseResouceCloser.closeAllSilent(connection, pst, rs);
 		}
 		return recommendations;
 	}
@@ -80,7 +81,12 @@ public class RecommendationDaoImpl implements RecommendationDao {
 	public List<Integer> getLatestPreferredFoodItem(int userId) {
 		List<Integer> foodIdList = new ArrayList<>();
 		ResultSet rs = null;
-		try (PreparedStatement pst = dataSource.getConnection().prepareStatement(Queries.GET_PREFERRED_FOOD_ID)) {
+		Connection connection = null;
+		PreparedStatement pst = null;
+
+		try {
+			connection = dataSource.getConnection();
+			pst = connection.prepareStatement(Queries.GET_PREFERRED_FOOD_ID);
 			int colIdx = 1;
 			pst.setInt(colIdx++, userId);
 			pst.setInt(colIdx++, userId);
@@ -96,13 +102,7 @@ public class RecommendationDaoImpl implements RecommendationDao {
 		}
 		
 		finally{
-			if (rs != null) {
-				try {
-					rs.close();
-				} catch (SQLException e) {
-					log.error("GET LATEST PREF. FOOD: Result set object is not closed");
-				}
-			}
+			DatabaseResouceCloser.closeAllSilent(connection, pst, rs);
 		}
 		
 		return foodIdList;

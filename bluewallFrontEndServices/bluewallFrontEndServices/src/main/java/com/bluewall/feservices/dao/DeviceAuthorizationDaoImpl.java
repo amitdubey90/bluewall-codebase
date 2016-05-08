@@ -1,5 +1,6 @@
 package com.bluewall.feservices.dao;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -10,6 +11,7 @@ import java.util.Date;
 
 import javax.sql.DataSource;
 
+import com.bluewall.feservices.util.DatabaseResouceCloser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -29,7 +31,11 @@ public class DeviceAuthorizationDaoImpl implements DeviceAuthorizationDaoIfc {
 	public boolean storeUserAccessToken(AccessCredentials credentials) {
 		log.info("storeUserAccessToken started");
 
-		try (PreparedStatement pst = dataSource.getConnection().prepareStatement(SQLQueries.INSERT_USER_ACCESS_TOKEN)) {
+		Connection connection = null;
+		PreparedStatement pst = null;
+		try {
+			connection = dataSource.getConnection();
+			pst = connection.prepareStatement(SQLQueries.INSERT_USER_ACCESS_TOKEN);
 			int colId = 1;
 
 			pst.setInt(colId++, credentials.getUserId());
@@ -43,6 +49,8 @@ public class DeviceAuthorizationDaoImpl implements DeviceAuthorizationDaoIfc {
 			return true;
 		} catch (SQLException e) {
 			log.error("SqlException in storeUserAccessToken {}", e);
+		} finally {
+			DatabaseResouceCloser.closeAllSilent(connection, pst, null);
 		}
 		return false;
 	}
@@ -51,13 +59,20 @@ public class DeviceAuthorizationDaoImpl implements DeviceAuthorizationDaoIfc {
 
 	public UserConnectedDevice checkIfUserHasDevice(int userID) {
 		UserConnectedDevice device = UserConnectedDevice.builder().build();
+		Connection connection = null;
+		PreparedStatement pst = null;
+		ResultSet rs = null;
+
 		try {
 			log.info("Checking if user has any devices connected");
-			PreparedStatement pst = dataSource.getConnection().prepareStatement(
-					"SELECT d.deviceID, d.deviceConnectionTime, a.logTime FROM UserConnectedDevice d LEFT JOIN ActivityLog a ON (d.userId = a.userID AND d.deviceID = a.loggedFrom AND a.loggedFrom != ?) WHERE d.userId = ? ORDER BY a.logTime DESC");
+			connection =  dataSource.getConnection();
+			pst = connection.prepareStatement(
+					"SELECT d.deviceID, d.deviceConnectionTime, a.logTime FROM UserConnectedDevice d LEFT JOIN " +
+							"ActivityLog a ON (d.userId = a.userID AND d.deviceID = a.loggedFrom AND a.loggedFrom != ?) " +
+							"WHERE d.userId = ? ORDER BY a.logTime DESC");
 			pst.setInt(1, 14);
 			pst.setInt(2, userID);
-			ResultSet rs = pst.executeQuery();
+			rs = pst.executeQuery();
 			if (rs.next()) {
 				device.setDeviceID(rs.getInt("deviceID"));
 				device.setDeviceConnectionTime(rs.getTimestamp("deviceConnectionTime"));
@@ -76,6 +91,8 @@ public class DeviceAuthorizationDaoImpl implements DeviceAuthorizationDaoIfc {
 			log.error("SqlException in checkIfUserHasDevice {}", e);
 		} catch (ParseException e) {
 			log.error("ParseException in checkIfUserHasDevice {}", e);
+		} finally {
+			DatabaseResouceCloser.closeAllSilent(connection, pst, rs);
 		}
 		return device;
 	}

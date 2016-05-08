@@ -9,6 +9,7 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
+import com.bluewall.feservices.util.DatabaseResouceCloser;
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,6 @@ import com.bluewall.util.bean.UserCredential;
 
 /**
  * @author Vrushank
- *
  */
 
 @Slf4j
@@ -43,12 +43,13 @@ public class ActivityDaoImpl implements ActivityDao {
 		List<UserActivityLog> userActivityLog = new ArrayList<UserActivityLog>();
 		ResultSet rs = null;
 		PreparedStatement pst = null;
+		Connection connection = null;
 
 		log.info("Now fetching user activity logs");
 
 		try {
-
-			pst = dataSource.getConnection()
+			connection = dataSource.getConnection();
+			pst = connection
 					.prepareStatement("select ActivityLog.name, ActivityLog.distance,ActivityLog.duration, "
 							+ "ActivityLog.caloriesBurnt,ActivityLog.activityLogDate, SupportedDevice.deviceName "
 							+ "from ActivityLog, SupportedDevice where  ActivityLog.userID = " + userID
@@ -77,13 +78,7 @@ public class ActivityDaoImpl implements ActivityDao {
 			e.printStackTrace();
 			log.error("GET USER ACTIVITY SERVICE: SQL Exception.");
 		} finally {
-			if (rs != null) {
-				try {
-					rs.close();
-				} catch (SQLException e) {
-					log.error("GET USER ACTIVITY SERVICE: Result set object is not closed");
-				}
-			}
+			DatabaseResouceCloser.closeAllSilent(connection, pst, rs);
 		}
 
 		return userActivityLog;
@@ -94,8 +89,11 @@ public class ActivityDaoImpl implements ActivityDao {
 
 		UserCredential creds = null;
 		ResultSet rs = null;
+		PreparedStatement pst = null;
+		Connection connection = null;
 		try {
-			PreparedStatement pst = dataSource.getConnection().prepareStatement(SQLQueries.GET_USER_DEVICE_CREDENTIALS);
+			connection = dataSource.getConnection();
+			pst = connection.prepareStatement(SQLQueries.GET_USER_DEVICE_CREDENTIALS);
 			pst.setInt(1, userId);
 			rs = pst.executeQuery();
 			while (rs.next()) {
@@ -107,13 +105,7 @@ public class ActivityDaoImpl implements ActivityDao {
 			log.error("GET USER DEVICE INFO: SQL Exception while fetching user device Info");
 		}
 		finally{
-			if (rs != null) {
-				try {
-					rs.close();
-				} catch (SQLException e) {
-					log.error("GET USER DEVICE INFO: Result set object is not closed");
-				}
-			}
+			DatabaseResouceCloser.closeAllSilent(connection, pst, rs);
 		}
 		return creds;
 	}
@@ -122,13 +114,14 @@ public class ActivityDaoImpl implements ActivityDao {
 	public void createActivity(UserActivityLog userActivity, int userId) {
 
 		Connection connection = null;
+		PreparedStatement prepStatement = null;
 
 		try {
 			connection = dataSource.getConnection();
 
 			connection.setAutoCommit(false);
 
-			PreparedStatement prepStatement = connection.prepareStatement(Queries.INS_USER_ACTIVITY_LOG);
+			prepStatement = connection.prepareStatement(Queries.INS_USER_ACTIVITY_LOG);
 
 			prepStatement.setInt(1, userId);
 			prepStatement.setString(2, userActivity.getName());
@@ -143,24 +136,10 @@ public class ActivityDaoImpl implements ActivityDao {
 			log.info("Activity Successfully created for user ID: " + userId);
 
 		} catch (SQLException e) {
-			try {
-				connection.rollback();
-				e.printStackTrace();
-				log.error("Create Activity Service: Successfully rolled back changes from the database!");
-			} catch (SQLException e1) {
-				e.printStackTrace();
-				log.error("Create Activity Service: Could not rollback updates " + e1.getMessage());
-			}
+			e.printStackTrace();
+			log.error("Create Activity Service: Successfully rolled back changes from the database!");
 		} finally {
-
-			if (connection != null) {
-				try {
-					connection.close();
-				} catch (SQLException e) {
-					log.error("Create Activity Service: Error closing connection object " + e.getMessage());
-				}
-			}
+			DatabaseResouceCloser.closeAllSilent(connection, prepStatement, null);
 		}
 	}
-
 }

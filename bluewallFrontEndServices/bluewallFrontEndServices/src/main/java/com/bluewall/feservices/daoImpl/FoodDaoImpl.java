@@ -9,6 +9,7 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
+import com.bluewall.feservices.util.DatabaseResouceCloser;
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,13 +40,16 @@ public class FoodDaoImpl implements FoodDao {
 
 		List<UserFood> userFoodLogList = new ArrayList<UserFood>();
 		ResultSet rs = null;
+		Connection connection = null;
+		PreparedStatement pst = null;
 		try {
-			rs = dataSource.getConnection()
-					.prepareStatement("select FoodInfo.name, FoodLog.type,"
-							+ " FoodLog.weightConsumed, FoodLog.foodLogDate, FoodLog.calories, FoodLog.logTime"
-							+ " from FoodLog, FoodInfo"
-							+ " where FoodInfo.foodID = FoodLog.foodID and FoodLog.userID = " + userID + " order by FoodLog.foodLogDate desc")
-					.executeQuery();
+			connection = dataSource.getConnection();
+			pst = connection.prepareStatement("select FoodInfo.name, FoodLog.type,"
+					+ " FoodLog.weightConsumed, FoodLog.foodLogDate, FoodLog.calories, FoodLog.logTime"
+					+ " from FoodLog, FoodInfo"
+					+ " where FoodInfo.foodID = FoodLog.foodID and FoodLog.userID = " + userID + " order by FoodLog.foodLogDate desc");
+
+			rs = pst.executeQuery();
 
 			while (rs.next()) {
 				UserFood userFoodLog = new UserFood();
@@ -61,14 +65,7 @@ public class FoodDaoImpl implements FoodDao {
 		} catch (SQLException e) {
 			log.error("GET USER FOOD LOG: SQL Exception - Check the sql query or the connection string");
 		} finally {
-			if (rs != null) {
-				try {
-					rs.close();
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					log.error("GET USER FOOD LOG: Could not close result set object");
-				}
-			}
+			DatabaseResouceCloser.closeAllSilent(connection, pst, rs);
 		}
 
 		return userFoodLogList;
@@ -81,13 +78,14 @@ public class FoodDaoImpl implements FoodDao {
 		int foodID;
 		ResultSet rs = null;
 		Connection connection = null;
+		PreparedStatement pst = null;
 
 		String sqlStatement = Queries.GET_FOODID + " where name = '" + createFood.getName() + "'";
 
 		try {
 			connection = dataSource.getConnection();
-
-			rs = connection.prepareStatement(sqlStatement).executeQuery();
+			pst = connection.prepareStatement(sqlStatement);
+			rs = pst.executeQuery();
 
 			if (rs.next()) {
 				foodID = rs.getInt("foodId");
@@ -114,21 +112,7 @@ public class FoodDaoImpl implements FoodDao {
 		}
 
 		finally {
-			if (rs != null) {
-				try {
-					rs.close();
-				} catch (SQLException e) {
-					log.error("Create Food Service: Result set object is not closed.");
-				}
-			}
-			if (connection != null) {
-				try {
-					connection.close();
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					log.error("Create Food Service: Error closing connection object " + e.getMessage());
-				}
-			}
+			DatabaseResouceCloser.closeAllSilent(connection, pst, rs);
 		}
 	}
 
@@ -136,9 +120,11 @@ public class FoodDaoImpl implements FoodDao {
 	public List<FoodInfo> getFoodInfo(String foodName) {
 		List<FoodInfo> foodList = new ArrayList<FoodInfo>();
 		ResultSet rs = null;
+		Connection connection = null;
+		PreparedStatement pst = null;
 		try {
-
-			PreparedStatement pst = dataSource.getConnection().prepareStatement(
+			connection = dataSource.getConnection();
+			pst = connection.prepareStatement(
 					"select f1.foodId, f1.name, f2.energy from FoodInfo f1 , FoodNutrientPer100Gram f2 where f1.name like ? and f1.foodId=f2.foodId;");
 			pst.setString(1, foodName);
 			rs = pst.executeQuery();
@@ -154,13 +140,7 @@ public class FoodDaoImpl implements FoodDao {
 		} catch (SQLException e) {
 			log.error("GET FOOD INFO: SQL Exception - Check the sql query or the connection string");
 		} finally {
-			if (rs != null) {
-				try {
-					rs.close();
-				} catch (SQLException e) {
-					log.error("GET FOOD INFO: Could not close result set object");
-				}
-			}
+			DatabaseResouceCloser.closeAllSilent(connection, pst, rs);
 		}
 
 		return foodList;
@@ -170,9 +150,12 @@ public class FoodDaoImpl implements FoodDao {
 	public void rateFoodItems(int foodId, int foodRating, int userID) {
 		
 		ResultSet rs = null;
-		
+		Connection connection = null;
+		PreparedStatement prepStat = null;
+
 		try{
-			PreparedStatement prepStat = dataSource.getConnection().prepareStatement(Queries.UPSERT_USER_RATINGS);
+			connection = dataSource.getConnection();
+			prepStat = connection.prepareStatement(Queries.UPSERT_USER_RATINGS);
 			prepStat.setInt(1, userID);
 			prepStat.setInt(2, foodId);
 			prepStat.setInt(3, foodRating);
@@ -184,13 +167,7 @@ public class FoodDaoImpl implements FoodDao {
 				log.error("RATE FOOD ITEMS: SQL Exception - Check the sql query or the connection string");
 		}
 		finally {
-			if (rs != null) {
-				try {
-					rs.close();
-				} catch (SQLException e) {
-					log.error("RATE FOOD ITEMS - Could not close result set object");
-				}
-			}
+			DatabaseResouceCloser.closeAllSilent(connection, prepStat, rs);
 		}
 	}
 }

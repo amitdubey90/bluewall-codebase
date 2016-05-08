@@ -13,6 +13,7 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
+import com.bluewall.feservices.util.DatabaseResouceCloser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
@@ -37,21 +38,6 @@ import lombok.extern.slf4j.Slf4j;
 public class UserDaoImpl implements UserDao {
 	@Autowired
 	DataSource datasource;
-
-	/*
-	 * @Override public UserCredential getUserConnectionCredsById(int userId,
-	 * int providerId) { // TODO Auto-generated method stub return null; }
-	 * 
-	 * @Override public void updateUserCredentials(UserCredential newUserCreds)
-	 * { // TODO Auto-generated method stub
-	 * 
-	 * }
-	 * 
-	 * @Override public void insertUserCredentials(UserCredential newUserCreds)
-	 * { // TODO Auto-generated method stub
-	 * 
-	 * }
-	 */
 
 	@Override
 	public int createUser(UserProfile user) {
@@ -143,20 +129,7 @@ public class UserDaoImpl implements UserDao {
 		}
 
 		finally {
-			if (rs != null) {
-				try {
-					rs.close();
-				} catch (SQLException e) {
-					log.info("CREATE USER SERVICE: Result set object is not closed.");
-				}
-			}
-			if (connection != null) {
-				try {
-					connection.close();
-				} catch (SQLException e) {
-					log.info("CREATE USER SERVICE: Error closing connection object " + e.getMessage());
-				}
-			}
+			DatabaseResouceCloser.closeAllSilent(connection, preparedStatement, rs);
 		}
 
 		return userID;
@@ -167,11 +140,13 @@ public class UserDaoImpl implements UserDao {
 
 		ResultSet rs = null;
 		Connection connection = null;
+		PreparedStatement pst = null;
 		List<UserProfile> userProfileList = new ArrayList<UserProfile>();
 
 		try {
 			connection = datasource.getConnection();
-			rs = connection.prepareStatement(Queries.GET_USER_INFO + " where userID = " + userID).executeQuery();
+			pst = connection.prepareStatement(Queries.GET_USER_INFO + " where userID = " + userID);
+			rs = pst.executeQuery();
 
 			while (rs.next()) {
 				UserProfile userProfile = new UserProfile();
@@ -192,20 +167,7 @@ public class UserDaoImpl implements UserDao {
 			log.info("GET USER DETAILS: SQL Exception - Check the sql query or the connection string");
 			e.printStackTrace();
 		} finally {
-			if (rs != null) {
-				try {
-					rs.close();
-				} catch (SQLException e) {
-					log.info("Could not close result set object");
-				}
-			}
-			if (connection != null) {
-				try {
-					connection.close();
-				} catch (SQLException e) {
-					log.info("GET USER DETAILS: Error closing connection object " + e.getMessage());
-				}
-			}
+			DatabaseResouceCloser.closeAllSilent(connection, pst, rs);
 		}
 
 		return userProfileList;
@@ -216,12 +178,13 @@ public class UserDaoImpl implements UserDao {
 	public void createNutrientPlan(UserDailyNutritionPlan dailyPlan, int userID) {
 
 		Connection connection = null;
+		PreparedStatement prepStatement = null;
 		log.info("Now inserting nutrition plan in database for user id: " + userID);
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
 		try {
 			connection = datasource.getConnection();
-			PreparedStatement prepStatement = connection.prepareStatement(Queries.INS_DAILY_NUTRITION_PLAN);
+			prepStatement = connection.prepareStatement(Queries.INS_DAILY_NUTRITION_PLAN);
 
 			prepStatement.setInt(1, userID);
 			prepStatement.setDouble(2, dailyPlan.getDailyCalories());
@@ -240,13 +203,7 @@ public class UserDaoImpl implements UserDao {
 			log.info("CREATE NUTRIENT PLAN: SQL Exception - Check the sql query or the connection string");
 			e.printStackTrace();
 		} finally {
-			if (connection != null) {
-				try {
-					connection.close();
-				} catch (SQLException e) {
-					log.info("CREATE NUTRIENT PLAN: Error closing connection object " + e.getMessage());
-				}
-			}
+			DatabaseResouceCloser.closeAllSilent(connection, prepStatement, null);
 		}
 
 	}
@@ -257,7 +214,11 @@ public class UserDaoImpl implements UserDao {
 		log.info("loadUserByName started");
 		UserPrincipal userPrincipal = null;
 		ResultSet rs = null;
-		try (PreparedStatement pst = datasource.getConnection().prepareStatement(Queries.GET_USER_PRINCIPAL)) {
+		PreparedStatement pst = null;
+		Connection connection = null;
+		try {
+			connection = datasource.getConnection();
+			pst = connection.prepareStatement(Queries.GET_USER_PRINCIPAL);
 			int colId = 1;
 
 			pst.setString(colId++, emailID);
@@ -280,18 +241,9 @@ public class UserDaoImpl implements UserDao {
 			log.error("SqlException in loadUserByName {}", e);
 		}
 		finally{
-			if (rs != null) {
-				try {
-					rs.close();
-				} catch (SQLException e) {
-					log.error("LOAD USER BY NAME: Result set object is not closed");
-				}
-			}
+			DatabaseResouceCloser.closeAllSilent(connection, pst, rs);
 
 		}
 		return userPrincipal;
 	}
-
-	
-
 }
