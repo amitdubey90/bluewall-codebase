@@ -243,7 +243,12 @@
 						<div class="row">
 						  <div class="col-md-4">{{activity.name}}</div>
 						 <!--  <div class="col-md-3">{{activity.distance}}</div> -->
-						  <div class="col-md-4">{{activity.duration}} minutes</div>
+						  <div ng-if="activity.duration == 0">
+						    <div class="col-md-4">-</div>
+						  </div>
+						  <div ng-if="activity.duration > 0">
+						    <div class="col-md-4">{{activity.duration}} minutes</div>
+						  </div>
 						  <div class="col-md-4">{{activity.caloriesBurnt}} Kcals</div>
 						</div><br />
 				    </div>

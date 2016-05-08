@@ -57,12 +57,19 @@ public class ActivityDaoImpl implements ActivityDao {
 
 			while (rs.next()) {
 				UserActivityLog userActivity = new UserActivityLog();
-				userActivity.setName(rs.getString("name"));
 //				userActivity.setDistance(rs.getFloat("distance"));
 				userActivity.setDuration(rs.getFloat("duration"));
 				userActivity.setCaloriesBurnt(rs.getFloat("caloriesBurnt"));
 				userActivity.setActivityLogDate(rs.getDate("activityLogDate"));
 				userActivity.setLoggedFrom(rs.getString("deviceName"));
+				
+				if(rs.getString("deviceName").equalsIgnoreCase("Fitbit") || rs.getString("deviceName").equalsIgnoreCase("Jawbone")){
+					userActivity.setName(rs.getString("deviceName"));
+				}
+				else{
+					userActivity.setName(rs.getString("name"));
+				}
+				
 				userActivityLog.add(userActivity);
 			}
 
