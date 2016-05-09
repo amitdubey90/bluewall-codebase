@@ -16,9 +16,20 @@ public class Queries {
 	public static final String GET_FOODID = "select foodId from FoodInfo";
 
 	public static final String GET_USER_INFO = "select * from UserInfo";
-	public static final String INS_DAILY_NUTRITION_PLAN = "insert into UserDailyNutrientPlan(userID, dailyCalories, fatInGms, "
-			+ " fatInCalories, carbsInGms, carbsInCalories, proteinInGms, " + "proteinInCalories, planDate)"
-			+ " values(?, ?, ?, ?, ?, ?, ?, ?, ?)";
+	
+	public static final String UPSERT_DAILY_NUTRITION_PLAN = "insert into UserDailyNutrientPlan(userID, dailyCalories, fatInGms, "
+			+ "fatInCalories, carbsInGms, carbsInCalories, proteinInGms, proteinInCalories, planDate)"
+			+ " values(?, ?, ?, ?, ?, ?, ?, ?, ?)"
+			+ " ON DUPLICATE KEY UPDATE"
+			+ " dailyCalories = VALUES(dailyCalories),"
+			+ "	fatInGms = VALUES(fatInGms),"
+			+ " fatInCalories = VALUES(fatInCalories),"
+			+ " carbsInGms = VALUES(carbsInGms),"
+			+ " carbsInCalories = VALUES(carbsInCalories),"
+			+ " proteinInGms = VALUES(proteinInGms),"
+			+ " proteinInCalories = VALUES(proteinInCalories),"
+			+ " planDate = values(planDate)";
+	
 	public static final String GET_DAILY_NUTRITION_PLAN = "select dailyCalories, fatInGms, fatInCalories, carbsInGms, "
 			+ "carbsInCalories, proteinInGms, proteinInCalories" + " from UserDailyNutrientPlan";
 	public static final String GET_USER_PRINCIPAL = "select userID, firstName, lastName, emailID, age, height, weight FROM UserInfo where emailID = ?";
@@ -35,6 +46,7 @@ public class Queries {
 	public static final String GET_PREFERRED_FOOD_ID = "(SELECT distinct(foodId) FROM UserRating WHERE userID = ? AND rating >= " +
 			"(SELECT AVG(rating) FROM UserRating WHERE userId = ?) ORDER BY ratingTimeStamp DESC , rating DESC limit 2) union " +
 			"(SELECT distinct(foodId) FROM userDatabase.FoodLog WHERE userID = ? ORDER BY logTime DESC LIMIT 2)";
+	
 	public static final String UPSERT_USER_RATINGS = "INSERT INTO UserRating (userID, foodID, rating) VALUES (?, ?, ?) "
 														+ "ON DUPLICATE KEY UPDATE "
 															+ "rating = VALUES(rating)";
