@@ -37,3 +37,90 @@
 .pos-with-nav {
 	margin-left:28%;
 }
+
+#stickyNotes h2, #stickyNotes p{
+  font-size:100%;
+  font-weight:normal;
+}
+
+#stickyNotes ul,#stickyNotes li{
+  list-style:none;
+}
+#stickyNotes ul{
+  overflow:hidden;
+  padding:3em;
+}
+#stickyNotes ul li a{
+  text-decoration:none;
+  color:#000;
+  background:#ffc;
+  display:block;
+  height:10em;
+  width:10em;
+  padding:1em;
+  -moz-box-shadow:5px 5px 7px rgba(33,33,33,1);
+  -webkit-box-shadow: 5px 5px 7px rgba(33,33,33,.7);
+  box-shadow: 5px 5px 7px rgba(33,33,33,.7);
+  -moz-transition:-moz-transform .15s linear;
+  -o-transition:-o-transform .15s linear;
+  -webkit-transition:-webkit-transform .15s linear;
+}
+#stickyNotes ul li{
+  margin:1em;
+  float:left;
+}
+#stickyNotes ul li h2 small{
+  font-size:100%;
+  font-weight:initial;
+  padding-bottom:10px;
+}
+#stickyNotes ul li h2 small{
+  font-size:100%;
+  font-weight:initial;
+  padding-bottom:10px;
+}
+#stickyNotes ul li p{
+  font-family:"Reenie Beanie",arial,sans-serif;
+  font-size:180%;
+}
+#stickyNotes ul li a{
+  -webkit-transform: rotate(-6deg);
+  -o-transform: rotate(-6deg);
+  -moz-transform:rotate(-6deg);
+}
+#stickyNotes ul li:nth-child(even) a{
+  -o-transform:rotate(4deg);
+  -webkit-transform:rotate(4deg);
+  -moz-transform:rotate(4deg);
+  position:relative;
+  top:5px;
+  background:#cfc;
+}
+#stickyNotes ul li:nth-child(3n) a{
+  -o-transform:rotate(-3deg);
+  -webkit-transform:rotate(-3deg);
+  -moz-transform:rotate(-3deg);
+  position:relative;
+  top:-5px;
+  /* background:#ccf; */
+}
+#stickyNotes ul li:nth-child(5n) a{
+  -o-transform:rotate(5deg);
+  -webkit-transform:rotate(5deg);
+  -moz-transform:rotate(5deg);
+  position:relative;
+  top:-10px;
+}
+#stickyNotes ul li a:hover, #stickyNotes ul li a:focus{
+  box-shadow:10px 10px 7px rgba(0,0,0,.7);
+  -moz-box-shadow:10px 10px 7px rgba(0,0,0,.7);
+  -webkit-box-shadow: 10px 10px 7px rgba(0,0,0,.7);
+  -webkit-transform: scale(1.25);
+  -moz-transform: scale(1.25);
+  -o-transform: scale(1.25);
+  position:relative;
+  z-index:5;
+}
+#stickyNotes ol{text-align:center;}
+#stickyNotes ol li{display:inline;padding-right:1em;}
+#stickyNotes ol li a{color:#fff;}

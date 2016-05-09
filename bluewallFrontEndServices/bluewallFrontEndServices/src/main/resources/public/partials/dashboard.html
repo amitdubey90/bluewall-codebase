@@ -107,6 +107,7 @@
 				<div align="center">
 				<br>
 				<H3>Food Suggestions for today</H3>
+				<div ng-hide="recommendationList.length == 0">
 				<div class="gallery js-flickity"
 					data-flickity-options='{ "autoPlay": 1500 }' id="flickityWidth">
 					<div class="gallery-cell card-style" style="background: #E21A48;">
@@ -315,139 +316,222 @@
 						</div>
 					</div>
 				</div>
+				</div><!-- ng-show -->
+				<div ng-show="recommendationList.length == 0" align="center">
+					No Food Recommendations
+				</div>
 				</div>
 				</div></div>
 		<br />
 		<br />
 		
-			<div align="center">
+		<!-- 	<div align="center">
 				<H3>User Activity Feed</H3>
 			</div>
 				<p>{{error}}</p>
+				<div ng-hide="activitiesList.length == 0">
 				<div class="gallery js-flickity"
 					data-flickity-options='{ "autoPlay": 1500 }'>
-					<div class="gallery-cell card-style" style="background: #E21A48;">
-
-						<div style="margin-left: 8%">
-							<strong>{{activitiesList[0].name}}</strong>
-							<br><br>
-							
-							<div class="slider-font-style">
-								<div>
-									<img src="images/duration-icon.png" style="width: 12%;"/>
-									{{activitiesList[0].duration}} <small>minutes</small>
-									&nbsp;&nbsp; <span> <img src="images/calorie-icon.png"
-										style="width: 10%;" /> {{activitiesList[0].caloriesBurnt}} <small>kcals</small>
-									</span>
-								</div>
-								<br>
-								<div>
-									<img src="images/device-icon.png" style="width: 10%;" />
-									{{activitiesList[0].loggedFrom}} &nbsp;&nbsp; <span style="margin-left:15%"> <img
-										src="images/date-icon.png" style="width: 10%;"/>
-										{{activitiesList[0].activityLogDate}}
-									</span>
-								</div>
-								<br>
-							</div>
-						</div>
-					</div>
-					<div class="gallery-cell card-style" style="background: #295F28">
-						<div style="margin-left: 8%">
-							<strong>{{activitiesList[1].name}} </strong><br> <br>
-							<div class="slider-font-style">
-								<div>
-									<img src="images/duration-icon.png" style="width: 12%;" />
-									{{activitiesList[1].duration}} <small>minutes</small>
-									&nbsp;&nbsp; <span> <img src="images/calorie-icon.png"
-										style="width: 10%;" /> {{activitiesList[1].caloriesBurnt}} <small>kcals</small>
-									</span>
-								</div>
-								<br>
-								<div>
-									<img src="images/device-icon.png" style="width: 10%;" />
-									{{activitiesList[1].loggedFrom}} &nbsp;&nbsp; <span style="margin-left:15%"> <img
-										src="images/date-icon.png" style="width: 8%;" />
-										{{activitiesList[1].activityLogDate}}
-									</span>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="gallery-cell card-style" style="background: #F49F4F;">
-						<div style="margin-left: 8%">
-							<strong>{{activitiesList[2].name}} </strong><br> <br>
-							<div class="slider-font-style">
-								<div>
-										<img src="images/duration-icon.png" style=" width: 12%;"/> {{activitiesList[2].duration}} <small>minutes</small>
-										&nbsp;&nbsp;
-										<span>
-											<img src="images/calorie-icon.png" style=" width: 10%;"/> {{activitiesList[2].caloriesBurnt}} <small>kcals</small>
+					<div ng-hide="activitiesList[0] === undefined">
+						<div class="gallery-cell card-style" style="background: #E21A48;">
+							<div style="margin-left: 8%">
+								<strong>{{activitiesList[0].name}}</strong>
+								<br><br>
+								
+								<div class="slider-font-style">
+									<div>
+										<img src="images/duration-icon.png" style="width: 12%;"/>
+										{{activitiesList[0].duration}} <small>minutes</small>
+										&nbsp;&nbsp; <span> <img src="images/calorie-icon.png"
+											style="width: 10%;" /> {{activitiesList[0].caloriesBurnt}} <small>kcals</small>
 										</span>
 									</div>
 									<br>
 									<div>
-										<img src="images/device-icon.png" style=" width: 10%;"/> {{activitiesList[2].loggedFrom}}
-										&nbsp;&nbsp;
-										<span style="margin-left:15%">
-											<img src="images/date-icon.png" style=" width: 8%;"/> {{activitiesList[2].activityLogDate}}
+										<img src="images/device-icon.png" style="width: 10%;" />
+										{{activitiesList[0].loggedFrom}} &nbsp;&nbsp; <span style="margin-left:15%"> <img
+											src="images/date-icon.png" style="width: 10%;"/>
+											{{activitiesList[0].activityLogDate}}
 										</span>
 									</div>
+									<br>
+								</div>
 							</div>
 						</div>
 					</div>
-					<div class="gallery-cell card-style" style="background: #52d3aa">
-						<div style="margin-left: 8%">
-							<strong>{{activitiesList[3].name}} </strong><br> <br>
-							<div class="slider-font-style">
-								 <div>
-										<img src="images/duration-icon.png" style=" width: 12%;"/> {{activitiesList[3].duration}} <small>minutes</small>
-										&nbsp;&nbsp;
-										<span>
-											<img src="images/calorie-icon.png" style=" width: 10%;"/> {{activitiesList[3].caloriesBurnt}} <small>kcals</small>
+					<div ng-hide="activitiesList[1] === undefined">
+						<div class="gallery-cell card-style" style="background: #295F28">
+							<div style="margin-left: 8%">
+								<strong>{{activitiesList[1].name}} </strong><br> <br>
+								<div class="slider-font-style">
+									<div>
+										<img src="images/duration-icon.png" style="width: 12%;" />
+										{{activitiesList[1].duration}} <small>minutes</small>
+										&nbsp;&nbsp; <span> <img src="images/calorie-icon.png"
+											style="width: 10%;" /> {{activitiesList[1].caloriesBurnt}} <small>kcals</small>
 										</span>
 									</div>
 									<br>
 									<div>
-										<img src="images/device-icon.png" style=" width: 10%;"/> {{activitiesList[3].loggedFrom}}
-										&nbsp;&nbsp;
-										<span style="margin-left:15%">
-											<img src="images/date-icon.png" style=" width: 8%;"/> {{activitiesList[3].activityLogDate}}
+										<img src="images/device-icon.png" style="width: 10%;" />
+										{{activitiesList[1].loggedFrom}} &nbsp;&nbsp; <span style="margin-left:15%"> <img
+											src="images/date-icon.png" style="width: 8%;" />
+											{{activitiesList[1].activityLogDate}}
 										</span>
 									</div>
+								</div>
 							</div>
 						</div>
-					</div>
-					<div class="gallery-cell card-style" style="background: #022646">
-						<div style="margin-left: 8%">
-							<strong>{{activitiesList[4].name}} </strong><br> <br>
-							<div class="slider-font-style">
-								<div>
-										<img src="images/duration-icon.png" style=" width: 12%;"/> {{activitiesList[4].duration}} <small>minutes</small>
-										&nbsp;&nbsp;
-										<span>
-											<img src="images/calorie-icon.png" style=" width: 10%;"/> {{activitiesList[4].caloriesBurnt}} <small>kcals</small>
-										</span>
-									</div>
-									<br>
+					</div> 
+					<div ng-hide="activitiesList[2] === undefined">
+						<div class="gallery-cell card-style" style="background: #F49F4F;">
+							<div style="margin-left: 8%">
+								<strong>{{activitiesList[2].name}} </strong><br> <br>
+								<div class="slider-font-style">
 									<div>
-										<img src="images/device-icon.png" style=" width: 10%;"/> {{activitiesList[4].loggedFrom}}
-										&nbsp;&nbsp;
-										<span style="margin-left:15%">
-											<img src="images/date-icon.png" style=" width: 8%;"/> {{activitiesList[4].activityLogDate}}
-										</span>
-									</div>
+											<img src="images/duration-icon.png" style=" width: 12%;"/> {{activitiesList[2].duration}} <small>minutes</small>
+											&nbsp;&nbsp;
+											<span>
+												<img src="images/calorie-icon.png" style=" width: 10%;"/> {{activitiesList[2].caloriesBurnt}} <small>kcals</small>
+											</span>
+										</div>
+										<br>
+										<div>
+											<img src="images/device-icon.png" style=" width: 10%;"/> {{activitiesList[2].loggedFrom}}
+											&nbsp;&nbsp;
+											<span style="margin-left:15%">
+												<img src="images/date-icon.png" style=" width: 8%;"/> {{activitiesList[2].activityLogDate}}
+											</span>
+										</div>
+								</div>
 							</div>
 						</div>
 					</div>
+					<div ng-hide="activitiesList[3] === undefined">
+						<div class="gallery-cell card-style" style="background: #52d3aa">
+							<div style="margin-left: 8%">
+								<strong>{{activitiesList[3].name}} </strong><br> <br>
+								<div class="slider-font-style">
+									 <div>
+											<img src="images/duration-icon.png" style=" width: 12%;"/> {{activitiesList[3].duration}} <small>minutes</small>
+											&nbsp;&nbsp;
+											<span>
+												<img src="images/calorie-icon.png" style=" width: 10%;"/> {{activitiesList[3].caloriesBurnt}} <small>kcals</small>
+											</span>
+										</div>
+										<br>
+										<div>
+											<img src="images/device-icon.png" style=" width: 10%;"/> {{activitiesList[3].loggedFrom}}
+											&nbsp;&nbsp;
+											<span style="margin-left:15%">
+												<img src="images/date-icon.png" style=" width: 8%;"/> {{activitiesList[3].activityLogDate}}
+											</span>
+										</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div ng-hide="activitiesList[4] === undefined">
+						<div class="gallery-cell card-style" style="background: #022646">
+							<div style="margin-left: 8%">
+								<strong>{{activitiesList[4].name}} </strong><br> <br>
+								<div class="slider-font-style">
+									<div>
+											<img src="images/duration-icon.png" style=" width: 12%;"/> {{activitiesList[4].duration}} <small>minutes</small>
+											&nbsp;&nbsp;
+											<span>
+												<img src="images/calorie-icon.png" style=" width: 10%;"/> {{activitiesList[4].caloriesBurnt}} <small>kcals</small>
+											</span>
+										</div>
+										<br>
+										<div>
+											<img src="images/device-icon.png" style=" width: 10%;"/> {{activitiesList[4].loggedFrom}}
+											&nbsp;&nbsp;
+											<span style="margin-left:15%">
+												<img src="images/date-icon.png" style=" width: 8%;"/> {{activitiesList[4].activityLogDate}}
+											</span>
+										</div>
+								</div>
+							</div>
+						</div>
+					 </div>
 				</div>
-			<!-- </div>
-		</div> -->
+				</div>ng-show
+				<br>
+				<div ng-show="activitiesList.length == 0" align="center">
+					You do not have any recent activities
+				</div> -->
+				<div align="center">
+						<H3>User Activity Feed</H3>
+				</div>
+				<div ng-hide="activitiesList.length == 0">
+					<div id="stickyNotes">
+					<ul>
+  						<li ng-repeat="activity in activitiesList">
+   							 <a href="">
+	     						 <h2>{{activity.name}}</h2>
+	     						 
+	      							<!-- <li>{{activity.duration}} minutes </li>
+	      							<li>{{activity.caloriesBurnt}} kcals </li>
+	      							<li>{{activity.loggedFrom}}</li>
+	      							<li>{{activity.activityLogDate}}</li> -->
+	      							<div style="font-size:medium">
+	      							<table>
+	      							<col width="30%">
+	      							<col width="50%">
+	      							<tr>
+	      							<td><img src="images/date-icon.png" style=" width: 30%;"/></td>
+									<td>{{activity.activityLogDate}}</td>
+	      							</tr>
+	      							<tr>
+	      							<td><img src="images/duration-icon.png" style=" width: 30%;"/></td>
+									<td>{{activity.duration}} minutes</td>
+	      							</tr>
+	      							<tr>
+	      							<td><img src="images/calorie-icon.png" style=" width: 30%;"/></td>
+									<td>{{activity.caloriesBurnt}} kcals</td>
+	      							</tr>
+	      							<tr>
+	      							<td><img src="images/device-icon.png" style=" width: 30%;"/></td>
+									<td>{{activity.loggedFrom}}</td>
+	      							</tr>
+	      							</table>
+	      							<!-- 	<img src="images/date-icon.png" style=" width: 8%;"/>&nbsp;&nbsp;&nbsp;&nbsp;{{activity.duration}} minutes<br>
+		      							<img src="images/duration-icon.png" style=" width: 12%;"/>&nbsp;&nbsp;&nbsp;&nbsp;{{activity.duration}} minutes<br>
+		      							<img src="images/calorie-icon.png" style=" width: 10%;"/>&nbsp;&nbsp;&nbsp;&nbsp;{{activity.caloriesBurnt}} kcals<br>
+		      							<img src="images/device-icon.png" style=" width: 10%;"/>&nbsp;&nbsp;&nbsp;&nbsp;{{activity.loggedFrom}}</br> -->
+	      							</div>
+    						</a>
+  						</li>
+  					</ul>
+				</div>
+			</div>
+			<br>
+				<div ng-show="activitiesList.length == 0" align="center">
+					You do not have any recent activities
+			</div>
 		
-	</div>
+	</div><!-- row -->
 
 </div>
 </div>
 
 </div>
+</div>
+<div class="container" style="width:35%" align="center">
+			<div class="">
+				<div class="col-md-12 text-center">
+					<p>&copy; EatRight. All Rights Reserved.</p>
+
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12 text-center">
+					<ul class="social social-circle">
+						<li><a href="#"><i class="icon-twitter"></i></a></li>
+						<li><a href="#"><i class="icon-facebook"></i></a></li>
+						<li><a href="#"><i class="icon-youtube"></i></a></li>
+					</ul>
+				</div>
+			</div>
 </div>
