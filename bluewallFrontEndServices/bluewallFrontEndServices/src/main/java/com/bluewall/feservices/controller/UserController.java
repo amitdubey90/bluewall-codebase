@@ -2,7 +2,10 @@ package com.bluewall.feservices.controller;
 
 import com.bluewall.feservices.bean.UserPrincipal;
 import com.bluewall.feservices.dao.UserDao;
+import com.bluewall.util.bean.UserProfile;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -26,4 +29,5 @@ public class UserController {
 		}
 		return null;
 	}
+	
 }

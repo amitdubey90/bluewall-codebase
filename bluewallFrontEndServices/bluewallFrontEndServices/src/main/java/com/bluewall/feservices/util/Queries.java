@@ -38,4 +38,7 @@ public class Queries {
 	public static final String UPSERT_USER_RATINGS = "INSERT INTO UserRating (userID, foodID, rating) VALUES (?, ?, ?) "
 														+ "ON DUPLICATE KEY UPDATE "
 															+ "rating = VALUES(rating)";
+	public static final String GET_USER_PROFILE = "select UserInfo.firstName,UserInfo.lastName, UserInfo.emailID, UserInfo.contactNumber, "
+			+ "UserInfo.age, UserInfo.gender, UserInfo.weight, UserInfo.height, UserInfo.activityLevel, UserGoal.goalType, "
+			+ "UserGoal.targetWeight, UserGoal.startDate, UserGoal.endDate from UserInfo, UserGoal";
 }
