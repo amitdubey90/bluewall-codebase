@@ -79,7 +79,6 @@ public class FoodController {
 			}
 			return outerFoodList;
 		}
-		// TODO: HANDLE ERROR HANDLING HERE
 		return null;
 	}
 		
@@ -89,7 +88,7 @@ public class FoodController {
 
 	@RequestMapping(value = "/createFoodPlate", method = RequestMethod.POST, consumes = "application/json")
 	@ResponseBody
-	public void createFoodPlate(@RequestBody UserFood food, HttpSession session) throws ParseException {
+	public boolean createFoodPlate(@RequestBody UserFood food, HttpSession session) throws ParseException {
 		int userID = 0;
 		UserPrincipal principal = (UserPrincipal) session.getAttribute("userPrincipal");
 		if (null != principal) {
@@ -97,15 +96,15 @@ public class FoodController {
 			food.setLogTime(new java.sql.Timestamp(Calendar.getInstance().getTime().getTime()));
 			// TODO:check foodlog time date
 			foodService.createFoodPlate(food, userID);
+			return true;
 		}
+		return false;
 	}
 
 	@RequestMapping(value = { "/getFoodItems" }, method = RequestMethod.GET)
 	@ResponseBody
 	public List<FoodInfo> getFoodItems(@RequestParam String foodName) {
-
 		List<FoodInfo> foodList = new ArrayList<FoodInfo>();
-
 		foodList = foodService.getFoodInfo(foodName);
 		return foodList;
 	}

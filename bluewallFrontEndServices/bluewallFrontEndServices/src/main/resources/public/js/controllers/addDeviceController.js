@@ -1,4 +1,4 @@
-app.controller('addDeviceController', function($scope, addDeviceService,$rootScope) {
+app.controller('addDeviceController', function($scope, addDeviceService,$rootScope,$state,messageService) {
 	console.log("In addDeviceController");
 
 	addDeviceService.checkIfUserHasDevice().then(
@@ -17,7 +17,6 @@ app.controller('addDeviceController', function($scope, addDeviceService,$rootSco
 						$scope.deviceName = "Jawbone";
 					}
 					$scope.deviceConnectionStatus = "Active";
-						//TODO: FETCH THESE VALUES FROM DB
 					
 					if(null!=result.data.deviceConnectionTime){
 						$scope.deviceConnectionTimeStamp = new Date(result.data.deviceConnectionTime).toLocaleString();
@@ -36,11 +35,13 @@ app.controller('addDeviceController', function($scope, addDeviceService,$rootSco
 						$scope.deviceSynchTimeStamp = result.data.expirationTime;	
 						console.log($scope.deviceSynchTimeStamp);
 					}
-					
+					messageService.info("Success","Device connected successfully");
+					//$state.go($state.current, {}, {reload: true});
 				}
-				$rootScope.authenticated = true;
+				
 			}, function(error) {
-				console.log("error in addDeviceController");
+				messageService.error("Error","Could connect to device");
+				//$state.go($state.current, {}, {reload: true});
 			});
 
 });

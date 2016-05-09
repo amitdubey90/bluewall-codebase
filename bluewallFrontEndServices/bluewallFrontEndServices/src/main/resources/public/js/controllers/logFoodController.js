@@ -1,4 +1,4 @@
-app.controller('logFoodController', function($scope, logFoodService, $filter,$rootScope,$state) {
+app.controller('logFoodController', function($scope, logFoodService, $filter,$rootScope,$state,messageService) {
 	console.log("In logFoodController");
 
 	$scope.logFood = function(food) {
@@ -6,21 +6,32 @@ app.controller('logFoodController', function($scope, logFoodService, $filter,$ro
 		food.name = name.split(":")[1].trim();
 		food.calories = document.getElementById("foodCalories").value;
 		food.foodLogDate = new Date(moment(food.foodLogDate).format());
-//		var foodObj = angular.copy(food);
-//		console.log(foodObj + " " + food);
 		logFoodService.logFood(food).then(function(data) {
-			$rootScope.authenticated = true;
-			$state.go('userDashboard');
+			console.log(data);
+			if(data.data){
+				messageService.info("Success","Food Logged");
+				$state.go($state.current, {}, {reload: true});
+			}else{
+				messageService.error("Error","Could not log food");
+				$state.go($state.current, {}, {reload: true});
+			}
 		}, function(error) {
-			console.log("error");
+			messageService.error("Error","Could not log food");
+			$state.go($state.current, {}, {reload: true});
 		});
 	}
 
 	logFoodService.getFoodLogged().then(function(foodLogged){
 		 console.log("Data returned from angular service:food Logged");
-		 $scope.foodLoggedList = foodLogged.data;
+		 if(null!=foodLogged.data){
+			 $scope.foodLoggedList = foodLogged.data;
+		 }else{
+			 messageService.error("Error","Could not fetch food logs");
+			 $state.go($state.current, {}, {reload: true});
+		 }
 	},function(error){
-		$scope.error = "Unable to load food logged: "+error.statusText;
+		messageService.error("Error","Could not fetch food logs");
+		$state.go($state.current, {}, {reload: true});
 		console.log(error.statusText);
 	});
 	
@@ -34,7 +45,7 @@ app.service('logFoodService', function($http, $state) {
 				+ " " + food.weightConsumed + " " + food.type);
 		return $http.post("/user/food/createFoodPlate", food).then(
 				function(data) {
-					console.log("response from backend service: " + data);
+					console.log("response from backend service: create food log: " + data);
 					return data;
 				});
 	}
