@@ -44,6 +44,12 @@
 	    userDashboardService.populateUserActivityFeed().then(function(activityFeed){
 			 console.log("Data returned from angular service:activity feed");
 			 $scope.activitiesList = activityFeed.data;
+			 console.log("1: "+activityFeed.data[0]);
+			 console.log("2: "+activityFeed.data[1]);
+			 console.log("3: "+activityFeed.data[2]);
+			 console.log("4: "+activityFeed.data[3]);
+			 console.log("5: "+activityFeed.data[4]);
+			 
 		},function(error){
 			$scope.error = "Unable to load activity feed: "+error.statusText;
 			console.log(error.statusText);
