@@ -73,7 +73,6 @@ public class ActivityController {
 			}
 			return outerActivityList;
 		}
-		// TODO: HANDLE ERROR HANDLING HERE
 		return null;
 	}
 
@@ -93,7 +92,7 @@ public class ActivityController {
 
 	@RequestMapping(value = "/createActivity")
 	@ResponseBody
-	public void createActivity(@RequestBody UserActivityLog activity, HttpSession session) {
+	public boolean createActivity(@RequestBody UserActivityLog activity, HttpSession session) {
 
 		// fetch the user id from the session
 		int userId = 0;
@@ -103,6 +102,8 @@ public class ActivityController {
 			activity.setLoggedFrom("Fitness Application");
 			//activity.setLogTime(new java.sql.Timestamp(Calendar.getInstance().getTime().getTime()));
 			activityService.createActivity(activity, userId);
+			return true;
 		}
+		return false;
 	}
 }

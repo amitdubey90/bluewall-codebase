@@ -1,6 +1,7 @@
 package com.bluewall.feservices.controller;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -43,9 +44,12 @@ public class RecommendationController {
 			SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-dd");
 			String date = sdf.format(new Date());
 
-			int sumCalorieBurnt = calorieService.getSumCaloriesBurnt(userId, date);
-			int sumCalorieConsumed = calorieService.getSumCaloriesConsumed(userId, date);
 			int dailyCalories = calorieService.getTargetWeight(userId);
+
+			int sumCalorieBurnt = calorieService.getSumCaloriesBurnt(userId, date);
+			sumCalorieBurnt += ((dailyCalories/24) * Calendar.getInstance().get(Calendar.HOUR_OF_DAY));
+			int sumCalorieConsumed = calorieService.getSumCaloriesConsumed(userId, date);
+
 			int netCalorie = sumCalorieConsumed - sumCalorieBurnt;
 			netCalorie = netCalorie > 0 ? netCalorie : 0;
 

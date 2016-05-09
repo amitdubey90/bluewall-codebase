@@ -63,6 +63,10 @@ public class DeviceAuthorizationController {
     @RequestMapping(value = "/redirectFitbit")
     @ResponseBody
     public String handleAuthRedirectFitbit(@RequestParam("code") String code, HttpServletRequest request,HttpServletResponse response,HttpSession session) {
+    	UserPrincipal principal = (UserPrincipal) session.getAttribute("userPrincipal");
+		if (principal != null) {
+			session.setAttribute("userPrincipal", principal);
+		}
         try {
             int userId = Integer.parseInt(request.getParameter("state"));
             log.debug("Received auth code from Fitbit for user {}", userId);
@@ -71,13 +75,8 @@ public class DeviceAuthorizationController {
             TokenResponse tokenResponse = DeviceClientFactory.getClientInstance(DeviceType.FITBIT)
                     .getAccessToken(code, Constants.FITBIT_REDIRECT_URI);
             log.info("Successfully retrieved access token for user {}", userId);
-
-            if (service.storeUserAccessCredentials(userId, DeviceType.FITBIT.getDeviceId(), tokenResponse)) {
-                //return "Success";
-            	UserPrincipal principal = (UserPrincipal) session.getAttribute("userPrincipal");
-        		if (principal != null) {
-        			session.setAttribute("userPrincipal", principal);
-        		}
+            
+            if (!service.storeUserAccessCredentials(userId, DeviceType.FITBIT.getDeviceId(), tokenResponse)) {
             	response.sendRedirect("/#/user/deviceDashboard/"+principal);
             }
         } catch (NumberFormatException nfe) {
@@ -85,7 +84,12 @@ public class DeviceAuthorizationController {
         } catch (IOException e) {
             log.error("Failed to retrieve access token from Fitbit: ", e);
         }
-        return "Failure";
+        try {
+			response.sendRedirect("/#/user/deviceDashboard/"+principal);
+		} catch (IOException e) {
+			log.error("Failed to retrieve access token from Fitbit:", e);
+		}
+        return null;
     }
 
     @RequestMapping(value = "/redirectJawbone")
@@ -113,7 +117,7 @@ public class DeviceAuthorizationController {
         } catch (IOException e) {
             log.error("Failed to retrieve access token from Jawbone: ", e);
         }
-        return "Failure";
+        return null;
     }
 }
 

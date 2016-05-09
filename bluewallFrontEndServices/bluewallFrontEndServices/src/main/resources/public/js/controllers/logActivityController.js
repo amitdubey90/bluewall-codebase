@@ -1,9 +1,8 @@
-app.controller('logActivityController',	function($scope, $filter, $http, logActivityService, $rootScope, $state, limitToFilter) {
+app.controller('logActivityController',	function($scope, $filter, $http, logActivityService, $rootScope, $state, limitToFilter,messageService) {
 	console.log("In ActivityController");
 	
 
 	$scope.logActivity = function(activity) {
-
 		activity.type = document.getElementById('activityType').options[document
 				.getElementById('activityType').selectedIndex].text;
 		if (activity.type !== 'Other') {
@@ -13,16 +12,21 @@ app.controller('logActivityController',	function($scope, $filter, $http, logActi
 			name : activity.name,
 			duration : parseInt((activity.hours * 60))
 					+ parseInt(activity.mins),
-			//distance : activity.distance,
 			caloriesBurnt : activity.caloriesBurnt,
 			activityLogDate : new Date(moment(activity.activityLogDate).format())
 		};
-		logActivityService.logUserActivity(userActivity).then(
-				function(data) {
-					$rootScope.authenticated = true;
-					$state.go('userDashboard');
-				}, function(error) {
-					console.log("error");
+		logActivityService.logUserActivity(userActivity).then(function(data) {
+				console.log(data);
+				if(data.data){
+					messageService.info("Success","Activity Logged");
+					$state.go($state.current, {}, {reload: true});
+				}else{
+					messageService.error("Error","Could not log activity");
+					$state.go($state.current, {}, {reload: true});
+				}
+		}, function(error) {
+					messageService.error("Error","Could not log activity");
+					$state.go($state.current, {}, {reload: true});
 				});
 	}
 
@@ -46,9 +50,15 @@ app.controller('logActivityController',	function($scope, $filter, $http, logActi
 	
 	logActivityService.getActivityLogged().then(function(activityLogged){
 		 console.log("Data returned from angular service:activity Logged");
-		 $scope.activityLoggedList = activityLogged.data;
+		 if(null!=activityLogged.data){
+			 $scope.activityLoggedList = activityLogged.data;
+		 }else{
+			 messageService.error("Error","Could not fetch activity logs");
+			 $state.go($state.current, {}, {reload: true});
+		 }
 	},function(error){
-		$scope.error = "Unable to load food logged: "+error.statusText;
+		messageService.error("Error","Could not fetch activity logs");
+		$state.go($state.current, {}, {reload: true});
 		console.log(error.statusText);
 	});
 });
