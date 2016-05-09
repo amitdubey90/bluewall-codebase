@@ -20,4 +20,11 @@ public class ProfileServiceImpl implements ProfileService{
 		return profileDao.getUserProfile(userId);
 	}
 
+	@Override
+	public void updateUserProfile(UserProfile userProfile, int userId) {
+		
+		profileDao.updateUserProfile(userProfile, userId);
+		
+	}
+
 }

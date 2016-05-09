@@ -6,4 +6,6 @@ public interface ProfileService {
 
 	public UserProfile getUserProfile(int userId);
 	
+	public void updateUserProfile(UserProfile userProfile, int userId);
+	
 }
