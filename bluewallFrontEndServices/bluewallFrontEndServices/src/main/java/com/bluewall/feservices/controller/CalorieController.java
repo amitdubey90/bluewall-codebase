@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.bluewall.feservices.bean.UserPrincipal;
 import com.bluewall.feservices.service.CalorieService;
 
+import java.util.Calendar;
+
 @Slf4j
 @RestController
 public class CalorieController {
@@ -36,9 +38,10 @@ public class CalorieController {
 			double percentCalorie = 0;
 			double dailyCalories = 0;
 			try {
-				sumCalorieBurnt = calorieService.getSumCaloriesBurnt(userID, date);
-				sumCalorieConsumed = calorieService.getSumCaloriesConsumed(userID, date);
 				dailyCalories = calorieService.getTargetWeight(userID);
+				sumCalorieBurnt = calorieService.getSumCaloriesBurnt(userID, date);
+				sumCalorieBurnt += ((dailyCalories/24) * Calendar.getInstance().get(Calendar.HOUR_OF_DAY));
+				sumCalorieConsumed = calorieService.getSumCaloriesConsumed(userID, date);
 				netCalorie = sumCalorieConsumed - sumCalorieBurnt;
 				percentCalorie = (netCalorie / dailyCalories) * 100;
 				
