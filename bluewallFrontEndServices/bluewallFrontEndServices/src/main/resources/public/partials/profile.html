@@ -1,0 +1,60 @@
+<div class="container" ng-controller="profileController">
+	<div class="row row-offcanvas row-offcanvas-left" id="displayLogs">
+		<div ng-include src="'partials/sidebar.html'" />
+		<div ng-include src="'js/commons/loadDependencies.js'" />
+		<div ng-include src="'js/commons/calculateCalories.js'" />
+		<div ng-include src="'js/commons/collapse.js'" />
+		<div ng-include src="'js/commons/futureDateBlocker.js'" />
+		<div class="col c2" style="width: 28%;">
+			<table style="margin-left: 100%;margin-top: 5%;width: 256%;">
+				<tr style="background-color: #52d3aa; color: white">
+					<td style="padding: 1%;" colspan="2">User Profile Details</td>
+				</tr>
+				<tr>
+					<td style="padding: 1%;">FirstName:</td>
+					<td>{{userProfile.firstName}}</td>
+				</tr>
+				<tr>
+					<td style="padding: 1%;">LastName:</td>
+					<td>{{userProfile.lastName}}</td>
+				</tr>
+				<tr>
+					<td style="padding: 1%;">EmailId:</td>
+					<td>{{userProfile.emailID}}</td>
+				</tr>
+				<tr>
+					<td style="padding: 1%;">Contact number:</td>
+					<td>{{userProfile.contactNumber}}</td>
+				</tr>
+				<tr>
+					<td style="padding: 1%;">Age:</td>
+					<td>{{userProfile.age}}</td>
+				</tr>
+				<tr>
+					<td style="padding: 1%;">Gender:</td>
+					<td>{{userProfile.gender}}</td>
+				</tr>
+				<tr>
+					<td style="padding: 1%;">Height"</td>
+					<td><div contentEditable="true" ng-model="lName">{{userProfile.height}}</div></td>
+				</tr>
+				<tr>
+					<td style="padding: 1%;">Activity Level:</td>
+					<td>{{userProfile.activityLevel}}</td>
+				</tr>
+				<tr>
+					<td style="padding: 1%;">Goal Type:</td>
+					<td>{{userProfile.goalType}}</td>
+				</tr>
+				<tr>
+					<td style="padding: 1%;">Weight:</div></td>
+					<td>{{userProfile.weight}}</td>
+				</tr>
+				<tr>
+					<td style="padding: 1%;">Target Weight:</td>
+					<td>{{userProfile.targetWeight}}</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+</div>

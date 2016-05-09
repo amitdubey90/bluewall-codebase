@@ -59,6 +59,11 @@ app.config([
         templateUrl: 'partials/displayLoggedActivity.html',
         controller: 'logActivityController'
       })
+      .state('profile', {
+        url: '/profile',
+        templateUrl: 'partials/profile.html',
+        controller: 'profileController'
+      })
     .state('addFitnessDevice', {
         url: '/addFitnessDevice',
         templateUrl: 'partials/addFitnessDevice.html',
