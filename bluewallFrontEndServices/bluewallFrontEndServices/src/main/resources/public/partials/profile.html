@@ -1,20 +1,22 @@
 <div class="container" ng-controller="profileController">
-	<div class="row row-offcanvas row-offcanvas-left" id="displayLogs">
+	<div class="row row-offcanvas row-offcanvas-left" >
 		<div ng-include src="'partials/sidebar.html'" />
 		<div ng-include src="'js/commons/loadDependencies.js'" />
 		<div ng-include src="'js/commons/calculateCalories.js'" />
 		<div ng-include src="'js/commons/collapse.js'" />
 		<div ng-include src="'js/commons/futureDateBlocker.js'" />
 		<div class="col c2" style="width: 28%;">
-			<table style="margin-left: 100%;margin-top: 5%;width: 256%;">
+			<table BORDER=1 RULES=NONE FRAME=BOX id="tableProfile">
 				<tr style="background-color: #52d3aa; color: white">
-					<td style="padding: 1%;" colspan="2">User Profile Details</td>
+					<td style="padding: 1%;" colspan="2">User Profile Details<button type="button" class="btn btn-default btn-lg" ng-click="toggleModalProfile()" style="color: #52d3aa;margin-left: 53%;margin-right: 0%;">
+				       		<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>Edit Details
+				       </button></td>
 				</tr>
 				<tr>
-					<td style="padding: 1%;">FirstName:</td>
-					<td>{{userProfile.firstName}}</td>
+					<td style="padding: 1%;" id="tableProfile">FirstName:</td>
+					<td id="tableProfile">{{userProfile.firstName}}</td>
 				</tr>
-				<tr>
+				<tr style="background-color: aliceblue;">
 					<td style="padding: 1%;">LastName:</td>
 					<td>{{userProfile.lastName}}</td>
 				</tr>
@@ -22,7 +24,7 @@
 					<td style="padding: 1%;">EmailId:</td>
 					<td>{{userProfile.emailID}}</td>
 				</tr>
-				<tr>
+				<tr style="background-color: aliceblue;">
 					<td style="padding: 1%;">Contact number:</td>
 					<td>{{userProfile.contactNumber}}</td>
 				</tr>
@@ -30,15 +32,15 @@
 					<td style="padding: 1%;">Age:</td>
 					<td>{{userProfile.age}}</td>
 				</tr>
-				<tr>
+				<tr style="background-color: aliceblue;">
 					<td style="padding: 1%;">Gender:</td>
 					<td>{{userProfile.gender}}</td>
 				</tr>
 				<tr>
-					<td style="padding: 1%;">Height"</td>
+					<td style="padding: 1%;">Height</td>
 					<td>{{userProfile.height}}</td>
 				</tr>
-				<tr>
+				<tr style="background-color: aliceblue;">
 					<td style="padding: 1%;">Activity Level:</td>
 					<td>{{userProfile.activityLevel}}</td>
 				</tr>
@@ -46,36 +48,29 @@
 					<td style="padding: 1%;">Goal Type:</td>
 					<td>{{userProfile.goalType}}</td>
 				</tr>
-				<tr>
+				<tr style="background-color: aliceblue;">
 					<td style="padding: 1%;">Weight:</div></td>
 					<td>{{userProfile.weight}}</td>
 				</tr>
 				<tr>
-					<td style="padding: 1%;">Target Weight:</td>
-					<td>{{userProfile.targetWeight}}</td>
-				</tr>
-				<tr>
-					<td style="padding: 1%;" colspan="2">
-						<button type="button" class="btn btn-default btn-lg" ng-click="toggleModalProfile()" style="color: #52d3aa;">
-				       		<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>Edit Details
-				       </button>
-			       </td>
+					<td style="padding: 1%;border-bottom-color: black;">Target Weight:</td>
+					<td style="border-bottom-color: black;">{{userProfile.targetWeight}}</td>
 				</tr>
 			</table>
 		</div>
-		<modal2 title="Login form" visible="showModalProfile" >
-			  <form class="form-signin" ng-submit="editUserProfile(); toggleModalProfile()"  ng-controller="profileController">
+		<modal2 title="Edit User Profile" visible="showModalProfile" >
+			  <form ng-submit="editUserProfile(userProfile);toggleModalProfile()" ng-controller="editProfileController">
 			 	  <table border="0" style="width: 100%;margin-left: 0%;">
 					<tr>
-						<td>Height (Feet)<span style="color:red;">*</span>:<input placeholder="Height in Feet" class="form-control" type="text" value="33" ng-model="user.height" required="required"/></td>
+						<td>Height (Feet)<span style="color:red;">*</span>:<input placeholder="Height in Feet" class="form-control" type="text" value="33" ng-model="userProfile.height" required="required" /></td>
 					</tr>
 					<tr>
-						<td>Weight (Kgs)<span style="color:red;">*</span>:<input placeholder="Weight in Kgs" class="form-control" type="text" value="33" ng-model="user.weight" required="required"/></td>
+						<td>Weight (Kgs)<span style="color:red;">*</span>:<input placeholder="Weight in Kgs" class="form-control" type="text" value="33" ng-model="userProfile.weight" required="required"/></td>
 					</tr>
 					<tr>
 						<td colspan="2">Activity Level<span style="color:red;">*</span>:
-						<select class="form-control" name="actLevel" ng-model="user.activityLevel" required="required">
-								<option value="">Select</option>
+						<select class="form-control" name="actLevel" ng-model="userProfile.activityLevel" required="required">
+								<!-- <option value="">Select</option> -->
 								<option value="veryActive" selected>Very Active</option>
 								<option value="active">Active</option>
 								<option value="moderateActive">Moderate</option>
@@ -84,8 +79,8 @@
 					</td>
 					</tr>
 						<td colspan="2">Goal Type<span style="color:red;">*</span>:
-						<select class="form-control" name="goalType" ng-model="user.goalType" required>
-								<option value="">Select</option>
+						<select class="form-control" name="goalType" ng-model="userProfile.goalType" required>
+								<!-- <option value="">Select</option> -->
 								<option value="gain" selected>Gain Weight</option>
 								<option value="lose">Lose Weight</option>
 								<option value="maintain">Maintain Weight</option>
@@ -93,7 +88,7 @@
 						</select>
 					</td>
 					<tr>
-						<td colspan="2">Target Weight (pounds)<span style="color:red;">*</span>:<input placeholder="Target weight in pounds" class="form-control" type="number" value="33" ng-model="user.targetWeight" required /></td>
+						<td colspan="2">Target Weight (kgs)<span style="color:red;">*</span>:<input placeholder="Target weight in pounds" class="form-control" type="number" value="33" ng-model="userProfile.targetWeight" required /></td>
 					</tr>
 					<tr>
 						<td align="center"><button class="btn btn-lg btn-primary btn-block" type="submit" >Submit</button></td>

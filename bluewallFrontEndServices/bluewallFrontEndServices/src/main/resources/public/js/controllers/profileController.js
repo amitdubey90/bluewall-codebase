@@ -1,11 +1,11 @@
-app.controller('profileController', function($scope, profileService,$rootScope) {
+app.controller('profileController', function($scope, $state, profileService,$rootScope, messageService) {
 	console.log("Inside ProfileController");
 
 	 $scope.showModalProfile = false;
 	  $scope.toggleModalProfile = function(){
 	      $scope.showModalProfile = !$scope.showModalProfile;
 	  };
-	  
+	
 	profileService.getUserProfile().then(function(userProfile){
 		 console.log("Data returned from angular service: user profile");
 		 if(null!=userProfile.data){

@@ -1,5 +1,24 @@
-#displayLogs th, td { padding: 1px; }
-#displayLogs table { border-collapse: separate; border-spacing: 5px; margin-left: 83%; }
+#tableProfile td {
+	padding: 0px;
+	border-bottom: 1px solid #dff0d8;
+	width: 50%;
+}
+
+#tableProfile {
+	margin-left: 100%;
+	margin-top: 5%;
+	width: 256%;
+}
+
+#displayLogs th, td {
+	padding: 1px;
+}
+
+#displayLogs table {
+	border-collapse: separate;
+	border-spacing: 5px;
+	margin-left: 83%;
+}
 
 #displayLogs button {
   text-align: left;
