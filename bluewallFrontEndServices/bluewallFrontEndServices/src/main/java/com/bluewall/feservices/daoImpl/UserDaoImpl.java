@@ -179,12 +179,12 @@ public class UserDaoImpl implements UserDao {
 
 		Connection connection = null;
 		PreparedStatement prepStatement = null;
-		log.info("Now inserting nutrition plan in database for user id: " + userID);
+		log.info("Now inserting/updating nutrition plan in database for user id: " + userID);
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
 		try {
 			connection = datasource.getConnection();
-			prepStatement = connection.prepareStatement(Queries.INS_DAILY_NUTRITION_PLAN);
+			prepStatement = connection.prepareStatement(Queries.UPSERT_DAILY_NUTRITION_PLAN);
 
 			prepStatement.setInt(1, userID);
 			prepStatement.setDouble(2, dailyPlan.getDailyCalories());
