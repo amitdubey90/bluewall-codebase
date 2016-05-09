@@ -49,7 +49,7 @@ public class ProfileDaoImpl implements ProfileDao{
 				userProfile.setHeight(rs.getFloat("height"));
 				userProfile.setWeight(rs.getFloat("weight"));
 				userProfile.setActivityLevel(rs.getString("activityLevel"));
-				userProfile.setCurrentLocation(rs.getString("goalType"));
+				userProfile.setGoalType(rs.getString("goalType"));
 				userProfile.setTargetWeight(rs.getFloat("targetWeight"));
 				userProfile.setStartDate(rs.getDate("startDate"));
 				userProfile.setEndDate(rs.getDate("endDate"));
@@ -79,8 +79,9 @@ public class ProfileDaoImpl implements ProfileDao{
 			pst = connection.prepareStatement(Queries.UPDATE_USER_PROFILE + " where UserInfo.userID = " + userId + " and UserGoal.userID = " + userId);
 			pst.setFloat(1, userProfile.getHeight());
 			pst.setFloat(2, userProfile.getWeight());
-			pst.setFloat(3, userProfile.getTargetWeight());
-			pst.setString(4, userProfile.getGoalType());
+			pst.setString(3, userProfile.getActivityLevel());
+			pst.setFloat(4, userProfile.getTargetWeight());
+			pst.setString(5, userProfile.getGoalType());
 			pst.executeUpdate();
 			log.info("UPDATE USER PROFILE: Update Successful");
 		}
