@@ -25,6 +25,7 @@ app.controller('logFoodController', function($scope, logFoodService, $filter,$ro
 		 console.log("Data returned from angular service:food Logged");
 		 if(null!=foodLogged.data){
 			 $scope.foodLoggedList = foodLogged.data;
+			 //console.log("HERE FOOD: "+JSON.stringify(foodLogged.data));
 		 }else{
 			 messageService.error("Error","Could not fetch food logs");
 			 $state.go($state.current, {}, {reload: true});

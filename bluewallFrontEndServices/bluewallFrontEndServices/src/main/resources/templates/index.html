@@ -97,11 +97,29 @@
 
 <!-- Angular JS -->
 <script
-	src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular.min.js"></script>
+	src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular.js"></script>
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.10/angular-ui-router.js"></script>
 
+<!-- FOOD AND ACTIVITY DATA tables start -->
+ <script
+	src="js/commons/jquery.dataTables.min.js"></script>
+<link rel="stylesheet"
+	href="css/jquery.dataTables.min.css">
+<script
+	src="js/commons/angular-datatables.directive.js"></script>
+<script
+	src="js/commons/angular-datatables.instances.js"></script>
+<script src="js/commons/angular-datatables.util.js"></script>
+<script
+	src="js/commons/angular-datatables.renderer.js"></script>
+<script
+	src="js/commons/angular-datatables.factory.js"></script>
+<script
+	src="js/commons/angular-datatables.options.js"></script>
+<!-- FOOD AND ACTIVITY DATA tables END -->
 
+<script src="js/commons/angular-datatables.js"></script>
 <!-- Controllers and routes -->
 <script src="./js/app.js"></script>
 <script src="./js/controllers/welcomeController.js"></script>
@@ -130,7 +148,8 @@
 <link rel="stylesheet" href="css/daterangepicker.css"></link>
 
 <!-- Small Carousel -->
-<link rel="stylesheet" href="https://npmcdn.com/flickity@1.2/dist/flickity.css">
+<link rel="stylesheet"
+	href="https://npmcdn.com/flickity@1.2/dist/flickity.css">
 <script src="https://npmcdn.com/flickity@1.2/dist/flickity.pkgd.js"></script>
 <link rel="stylesheet" href="css/flickity.css">
 
@@ -183,13 +202,14 @@
 						<li><a href="#" data-nav-section="contact"><span>Contact</span></a></li> -->
 					</ul>
 					<ul class="nav navbar-nav navbar-right" ng-hide="!authenticated">
+						<li><a href=""><span>Hello {{user.firstName}} !</span></a></li>
 						<li><a href="#" ng-click="logout()"><span>Logout</span></a></li>
 					</ul>
 				</div>
 			</nav>
 			<!-- </div> -->
 		</div>
-	
+
 	</header>
 
 	<div ng-include src="'partials/messages.html'"></div>

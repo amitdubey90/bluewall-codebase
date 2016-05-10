@@ -124,3 +124,8 @@
 #stickyNotes ol{text-align:center;}
 #stickyNotes ol li{display:inline;padding-right:1em;}
 #stickyNotes ol li a{color:#fff;}
+
+
+#tableStyle tr:nth-child(odd) {
+       background: rgba(214, 255, 238, 0.4);
+}

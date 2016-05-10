@@ -1,10 +1,8 @@
 package com.bluewall.feservices.controller;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -39,7 +37,7 @@ public class FoodController {
 
 	@RequestMapping(value = "/foodLog", method = RequestMethod.GET)
 	@ResponseBody
-	public List<List<UserFood>> getUserFoodLog(HttpSession session) {
+	public List<UserFood> getUserFoodLog(HttpSession session) {
 		int userId = 0;
 		UserPrincipal principal = (UserPrincipal) session.getAttribute("userPrincipal");
 		
@@ -50,34 +48,35 @@ public class FoodController {
 			userFoodLogList = foodService.getUserFoodLog(userId);
 			log.info("User food logs fetched successfully");
 			
-			List<UserFood> innerFoodList = new ArrayList<UserFood>();
-			List<List<UserFood>> outerFoodList = new ArrayList<List<UserFood>>();
-			
-			if(userFoodLogList.isEmpty()){
-				innerFoodList = null;
-				outerFoodList = null;
-			}
-			else{
-				Date foodLogDate = userFoodLogList.get(0).getFoodLogDate();
-				String logTimeList = new SimpleDateFormat("yyyy-MM-dd").format(foodLogDate);
-				
-				for(UserFood userFoodLog : userFoodLogList){
-					String logTime = new SimpleDateFormat("yyyy-MM-dd").format(userFoodLog.getFoodLogDate());
-					
-					if(logTimeList.equalsIgnoreCase(logTime)){
-						innerFoodList.add(userFoodLog);
-						logTimeList = logTime;
-					}
-					else{
-						outerFoodList.add(innerFoodList);
-						innerFoodList = new ArrayList<UserFood>();
-						innerFoodList.add(userFoodLog);
-						logTimeList = logTime;
-					}
-				}
-				outerFoodList.add(innerFoodList);
-			}
-			return outerFoodList;
+//			List<UserFood> innerFoodList = new ArrayList<UserFood>();
+//			List<List<UserFood>> outerFoodList = new ArrayList<List<UserFood>>();
+//			
+//			if(userFoodLogList.isEmpty()){
+//				innerFoodList = null;
+//				outerFoodList = null;
+//			}
+//			else{
+//				Date foodLogDate = userFoodLogList.get(0).getFoodLogDate();
+//				String logTimeList = new SimpleDateFormat("yyyy-MM-dd").format(foodLogDate);
+//				
+//				for(UserFood userFoodLog : userFoodLogList){
+//					String logTime = new SimpleDateFormat("yyyy-MM-dd").format(userFoodLog.getFoodLogDate());
+//					
+//					if(logTimeList.equalsIgnoreCase(logTime)){
+//						innerFoodList.add(userFoodLog);
+//						logTimeList = logTime;
+//					}
+//					else{
+//						outerFoodList.add(innerFoodList);
+//						innerFoodList = new ArrayList<UserFood>();
+//						innerFoodList.add(userFoodLog);
+//						logTimeList = logTime;
+//					}
+//				}
+//				outerFoodList.add(innerFoodList);
+//			}
+//			return outerFoodList;
+			return userFoodLogList;
 		}
 		return null;
 	}

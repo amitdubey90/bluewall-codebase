@@ -52,6 +52,7 @@ app.controller('logActivityController',	function($scope, $filter, $http, logActi
 		 console.log("Data returned from angular service:activity Logged");
 		 if(null!=activityLogged.data){
 			 $scope.activityLoggedList = activityLogged.data;
+			 console.log("ACTIVITY HERE: "+JSON.stringify(activityLogged.data));
 		 }else{
 			 messageService.error("Error","Could not fetch activity logs");
 			 $state.go($state.current, {}, {reload: true});

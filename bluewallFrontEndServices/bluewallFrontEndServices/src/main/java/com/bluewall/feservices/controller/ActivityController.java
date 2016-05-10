@@ -1,9 +1,5 @@
 package com.bluewall.feservices.controller;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -35,7 +31,7 @@ public class ActivityController {
 
 	@RequestMapping(value = "/activityLog", method = RequestMethod.GET)
 	@ResponseBody
-	public List<List<UserActivityLog>> getActivityLog(HttpSession session) {
+	public List<UserActivityLog> getActivityLog(HttpSession session) {
 		int userId = 0;
 		UserPrincipal principal = (UserPrincipal) session.getAttribute("userPrincipal");
 		if (null != principal) {
@@ -44,34 +40,34 @@ public class ActivityController {
 			List<UserActivityLog> activityList = activityService.getUserActivityLogs(userId);
 			log.info("User's activity logs fetched successfully");
 
-			List<UserActivityLog> innerActivityList = new ArrayList<UserActivityLog>();
-			List<List<UserActivityLog>> outerActivityList = new ArrayList<List<UserActivityLog>>();
-			
-			if(activityList.isEmpty()){
-				innerActivityList = null;
-				outerActivityList = null;
-			}
-			else{
-				Date logDate = activityList.get(0).getActivityLogDate();
-				String logTimeList = new SimpleDateFormat("yyyy-MM-dd").format(logDate);
-
-				for (UserActivityLog activity : activityList) {
-					String logTime = new SimpleDateFormat("yyyy-MM-dd").format(activity.getActivityLogDate());
-
-					if (logTimeList.equalsIgnoreCase(logTime)) {
-						innerActivityList.add(activity);
-						logTimeList = logTime;
-					} else {
-						outerActivityList.add(innerActivityList);
-						innerActivityList = new ArrayList<UserActivityLog>();
-						innerActivityList.add(activity);
-						logTimeList = logTime;
-					}
-
-				}
-				outerActivityList.add(innerActivityList);
-			}
-			return outerActivityList;
+//			List<UserActivityLog> innerActivityList = new ArrayList<UserActivityLog>();
+//			List<List<UserActivityLog>> outerActivityList = new ArrayList<List<UserActivityLog>>();
+//			
+//			if(activityList.isEmpty()){
+//				innerActivityList = null;
+//				outerActivityList = null;
+//			}
+//			else{
+//				Date logDate = activityList.get(0).getActivityLogDate();
+//				String logTimeList = new SimpleDateFormat("yyyy-MM-dd").format(logDate);
+//
+//				for (UserActivityLog activity : activityList) {
+//					String logTime = new SimpleDateFormat("yyyy-MM-dd").format(activity.getActivityLogDate());
+//
+//					if (logTimeList.equalsIgnoreCase(logTime)) {
+//						innerActivityList.add(activity);
+//						logTimeList = logTime;
+//					} else {
+//						outerActivityList.add(innerActivityList);
+//						innerActivityList = new ArrayList<UserActivityLog>();
+//						innerActivityList.add(activity);
+//						logTimeList = logTime;
+//					}
+//
+//				}
+//				outerActivityList.add(innerActivityList);
+//			}
+			return activityList;
 		}
 		return null;
 	}

@@ -1,11 +1,11 @@
 <div class="container">
-	<div class="row row-offcanvas row-offcanvas-left" id="displayLogs">
+	<div class="row row-offcanvas row-offcanvas-left">
 		<div ng-include src="'partials/sidebar.html'" />
 		<div ng-include src="'js/commons/loadDependencies.js'" />
 		<div ng-include src="'js/commons/calculateCalories.js'" />
 		<div ng-include src="'js/commons/collapse.js'"/> 
 		<div ng-include src="'js/commons/futureDateBlocker.js'" />
-		<div class="col c2 pos-with-nav" style="width: 16%;">
+		<div class="pos-with-nav" style="width: 16%;">
 		<br>		
 			<div id="custom-show-hide-example" >
 			       <button type="button" class="btn btn-default btn-lg">
@@ -207,32 +207,39 @@
 					</form>
 				</section>
 		     </div>
+		     </div>
 		     <br>
 			
-			<div ng-repeat="activityLogged in activityLoggedList">
-				<div id="custom-show-hide-example" style="width: 465%;" >
-					<h3>Activity Log Time: {{activityLogged[0].activityLogDate}}</h3>
-					<div class="row">
-						  <div class="col-md-4" style="border: 1px solid black;margin-left: initial;">Name</div>
-						 <!--  <div class="col-md-3" style="border: 1px solid black;margin-left: initial;">Distance</div> -->
-						  <div class="col-md-4" style="border: 1px solid black;margin-left: initial;">Duration (in minutes)</div>
-						  <div class="col-md-4" style="border: 1px solid black;margin-left: initial;">Calories Burnt (in Kcals)</div>
-						</div>
-					<div ng-repeat="activity in activityLogged">
-						<div class="row">
-						  <div class="col-md-4">{{activity.name}}</div>
-						 <!--  <div class="col-md-3">{{activity.distance}}</div> -->
-						  <div ng-if="activity.duration == 0">
-						    <div class="col-md-4">-</div>
-						  </div>
-						  <div ng-if="activity.duration > 0">
-						    <div class="col-md-4">{{activity.duration}} minutes</div>
-						  </div>
-						  <div class="col-md-4">{{activity.caloriesBurnt}} Kcals</div>
-						</div><br />
-				    </div>
-			     </div>
-			</div>
+			<div class="pos-with-nav">
+			<table datatable="ng" class="table table-striped" id="tableStyle"
+				cellspacing="0" width="100%"
+				style="display: table; width: 100%; font-family: 'Source Sans Pro', Arial, sans-serif; font-weight: 400; color: black;">
+				<thead>
+					<tr>
+						<th>Name</th>
+						<th>Duration (Minutes)</th>
+						<th>Calories Burnt (Kcals)</th>
+						<th>Activity Performed on</th>
+					</tr>
+				</thead>
+				<tfoot>
+					<tr>
+						<th>Name</th>
+						<th>Duration (Minutes)</th>
+						<th>Calories Burnt (Kcals)</th>
+						<th>Activity Performed on</th>
+					</tr>
+				</tfoot>
+				<tbody>
+					<tr ng-repeat="activity in activityLoggedList">
+						<td>{{activity.name}}</td>
+						<td>{{activity.duration}}</td>
+						<td>{{activity.caloriesBurnt}}</td>
+						<td>{{activity.activityLogDate}}</td>
+					</tr>
+
+				</tbody>
+			</table>
 		</div>
 	</div>
 </div>

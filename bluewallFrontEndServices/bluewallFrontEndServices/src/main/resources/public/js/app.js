@@ -1,4 +1,4 @@
-var app = angular.module('eatRightApp',['ui.router', 'oc.lazyLoad']);
+var app = angular.module('eatRightApp',['ui.router', 'oc.lazyLoad','datatables']);
 
 app.config([
   '$stateProvider',
