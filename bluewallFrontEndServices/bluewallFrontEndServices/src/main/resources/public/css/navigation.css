@@ -1,7 +1,7 @@
 <style>
-    @import url('http://fonts.googleapis.com/css?family=Source+Code+Pro');
+  /*   @import url('http://fonts.googleapis.com/css?family=Source+Code+Pro'); */
 
-#sidebar body {
+/* #sidebar body {
   background-image: url('');
   background-size : cover;
 }
@@ -42,49 +42,54 @@
 #sidebar a {
   display    : block;
   padding    : 25px 0;
-  color      : #454545;
+  color      : black;
   text-align : center;
-  font-family: 'Source Code Pro', sans-serif;
+  font-family: "Source Sans Pro", Arial, sans-serif;
   text-decoration: none;
   -webkit-transition : color .1s;
   -moz-transition : color .1s;
+  font-weight : 400
 }
 
 #sidebar a:hover {
   color : #fff;
   -webkit-transition : color .1s;
   -moz-transition : color .1s;
+} */
+.sidebar ul li.active{
+	background:#52d3aa;
+	color:#fff;
 }
-
+/* 
 #sidebar li:nth-child(1) {
   border-top : none;
-  background-image : -webkit-linear-gradient(left, #78cdce 0%, #78cdce 50%, #f4f5f6 0%);
-  background-image : -moz-linear-gradient(left, #78cdce 0%, #78cdce 50%, #f4f5f6 0%);
+  background-image : -webkit-linear-gradient(left, #52d3aa 0%, #52d3aa 50%, #f4f5f6 0%);
+  background-image : -moz-linear-gradient(left, #52d3aa 0%, #52d3aa 50%, #f4f5f6 0%);
 }
 
 #sidebar li:nth-child(2) {
-  background-image : -webkit-linear-gradient(left, #f16767 0%, #f16767 50%, #f4f5f6 0%);
-  background-image : -moz-linear-gradient(left, #f16767 0%, #f16767 50%, #f4f5f6 0%);
+  background-image : -webkit-linear-gradient(left, #000 0%, #000 50%, #f4f5f6 0%);
+  background-image : -moz-linear-gradient(left, #000 0%, #000 50%, #f4f5f6 0%);
 }
 
 #sidebar li:nth-child(3) {
-  background-image : -webkit-linear-gradient(left, #f5ee32 0%, #f5ee32 50%, #f4f5f6 0%);
-  background-image : -moz-linear-gradient(left, #f5ee32 0%, #f5ee32 50%, #f4f5f6 0%);
+  background-image : -webkit-linear-gradient(left, #52d3aa 0%, #52d3aa 50%, #f4f5f6 0%);
+  background-image : -moz-linear-gradient(left, #52d3aa 0%, #52d3aa 50%, #f4f5f6 0%);
 }
 
 #sidebar li:nth-child(4) {
-  background-image : -webkit-linear-gradient(left, #97cc69 0%, #97cc69 50%, #f4f5f6 0%);
-  background-image : -moz-linear-gradient(left, #97cc69 0%, #97cc69 50%, #f4f5f6 0%);
+  background-image : -webkit-linear-gradient(left, #000 0%, #000 50%, #f4f5f6 0%);
+  background-image : -moz-linear-gradient(left, #000 0%, #000 50%, #f4f5f6 0%);
 }
 
 #sidebar li:nth-child(5) {
-  background-image : -webkit-linear-gradient(left, #507abd 0%, #507abd 50%, #f4f5f6 0%);
-  background-image : -moz-linear-gradient(left, #507abd 0%, #507abd 50%, #f4f5f6 0%);
+  background-image : -webkit-linear-gradient(left, #52d3aa 0%, #52d3aa 50%, #f4f5f6 0%);
+  background-image : -moz-linear-gradient(left, #52d3aa 0%, #52d3aa 50%, #f4f5f6 0%);
 }
 
 #sidebar li:nth-child(6) {
-  background-image : -webkit-linear-gradient(left, #6b408e 0%, #6b408e 50%, #f4f5f6 0%);
-  background-image : -moz-linear-gradient(left, #6b408e 0%, #6b408e 50%, #f4f5f6 0%);
+  background-image : -webkit-linear-gradient(left, #000 0%, #000 50%, #f4f5f6 0%);
+  background-image : -moz-linear-gradient(left, #000 0%, #000 50%, #f4f5f6 0%);
   border-bottom : none;
 }
 
@@ -111,5 +116,5 @@
 #sidebar li {
   border:0 #f2f2f2 solid;
   border-bottom-width:1px;
-}
+} */
 </style>
