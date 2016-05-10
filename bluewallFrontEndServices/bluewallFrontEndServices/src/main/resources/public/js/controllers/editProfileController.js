@@ -7,7 +7,7 @@ app.controller('editProfileController', function($scope, $state, editProfileServ
 		editProfileService.editUserProfile(userProfile).then(function(userProfileResponse){
 			 console.log("Data returned from angular service: edit user profile response");
 			 if(null!=userProfileResponse.data){
-				 messageService.info("Success","User Profile Updated Logged");				
+				 messageService.info("Success","User Profile Updated");				
 				 $state.go($state.current, {}, {reload: true});
 			 }else{
 				 messageService.error("Error","Could not edit user profile details");
