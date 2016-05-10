@@ -59,9 +59,9 @@
 			 console.log("Data returned from angular service:nutrient info ");
 			 $scope.nutrientDetails = nutrientInfo.data;
 
-			var protein = (nutrientInfo.data.proteinInCalories/nutrientInfo.data.dailyCalories)*100;
-			var carbs =  (nutrientInfo.data.carbInCalories/nutrientInfo.data.dailyCalories)*100;
-			var fats =  (nutrientInfo.data.fatInCalories/nutrientInfo.data.dailyCalories)*100;
+			var protein = Math.round((nutrientInfo.data.proteinInCalories/nutrientInfo.data.dailyCalories)*100);
+			var carbs =  Math.round((nutrientInfo.data.carbInCalories/nutrientInfo.data.dailyCalories)*100);
+			var fats =  Math.round((nutrientInfo.data.fatInCalories/nutrientInfo.data.dailyCalories)*100);
 			 var chart = new CanvasJS.Chart("nutrientChart",
 						{
 							
