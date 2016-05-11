@@ -1,69 +1,88 @@
-#ratings .cc-selector1 input, .cc-selector2 input, .cc-selector3 input,
-	.cc-selector4 input, .cc-selector5 input, .cc-selector6 input, .cc-selector7 input, .cc-selector8 input {
-	margin: 0;
-	padding: 0;
-	-webkit-appearance: none;
-	-moz-appearance: none;
-	appearance: none;
+.rating1, .rating2, .rating3, .rating4, .rating5, .rating6, .rating7, .rating8 {
+    float:left;
 }
 
-#ratings .star11, .star12, .star13, .star14, .star15, .star21, .star22, .star23, .star24, .star25, 
-.star31, .star32, .star33, .star34, .star35, .star41, .star42, .star43, .star44, .star45, 
-.star51, .star52, .star53, .star54, .star55, .star61, .star62, .star63, .star64, .star65, 
-.star71, .star72, .star73, .star74, .star75, .star81, .star82, .star83, .star84, .star85 {
-	background-image: url(../images/star.png);
+.rating1:not(:checked) > input, .rating2:not(:checked) > input,
+.rating3:not(:checked) > input, .rating4:not(:checked) > input,
+.rating5:not(:checked) > input, .rating6:not(:checked) > input,
+.rating7:not(:checked) > input, .rating8:not(:checked) > input {
+    position:absolute;
+    top:-9999px;
+    clip:rect(0,0,0,0);
 }
 
-#ratings .cc-selector1 input:active+.drinkcard-cc1, .cc-selector2 input:active+.drinkcard-cc2,
-	.cc-selector3 input:active+.drinkcard-cc3, .cc-selector4 input:active+.drinkcard-cc4,
-	.cc-selector5 input:active+.drinkcard-cc5, .cc-selector6 input:active+.drinkcard-cc6,
-	.cc-selector7 input:active+.drinkcard-cc7, .cc-selector8 input:active+.drinkcard-cc8 {
-	opacity: .9;
+.rating1:not(:checked) > label, .rating2:not(:checked) > label,
+.rating3:not(:checked) > label, .rating4:not(:checked) > label,
+.rating5:not(:checked) > label, .rating6:not(:checked) > label,
+.rating7:not(:checked) > label, .rating8:not(:checked) > label {
+    float:right;
+    width:1em;
+    padding:0 .1em;
+    overflow:hidden;
+    white-space:nowrap;
+    cursor:pointer;
+    font-size:290%;
+    line-height:1.2;
+    color:#ddd;
+    text-shadow:1px 1px #bbb, 2px 2px #666, .1em .1em .2em rgba(0,0,0,.5);
 }
 
-#ratings .cc-selector1 input:checked+.drinkcard-cc1, .cc-selector2 input:checked+.drinkcard-cc2,
-	.cc-selector3 input:checked+.drinkcard-cc3, .cc-selector4 input:checked+.drinkcard-cc4,
-	.cc-selector5 input:checked+.drinkcard-cc5, .cc-selector6 input:checked+.drinkcard-cc6,
-	.cc-selector7 input:checked+.drinkcard-cc7, .cc-selector8 input:checked+.drinkcard-cc8 {
-	-webkit-filter: none;
-	-moz-filter: none;
-	filter: none;
+.rating1:not(:checked) > label:before, .rating2:not(:checked) > label:before,
+.rating3:not(:checked) > label:before, .rating4:not(:checked) > label:before,
+.rating5:not(:checked) > label:before, .rating6:not(:checked) > label:before,
+.rating7:not(:checked) > label:before, .rating8:not(:checked) > label:before {
+    content: '★ ';
 }
 
-#ratings .drinkcard-cc1, .drinkcard-cc2, .drinkcard-cc3, .drinkcard-cc4,
-	.drinkcard-cc5, .drinkcard-cc6, .drinkcard-cc7, .drinkcard-cc8  {
-	cursor: pointer;
-	background-size: contain;
-	background-repeat: no-repeat;
-	display: inline-block;
-	width: 30px;
-	height: 30px;
-	-webkit-transition: all 100ms ease-in;
-	-moz-transition: all 100ms ease-in;
-	transition: all 100ms ease-in;
-	-webkit-filter: brightness(1.8) grayscale(1) opacity(.7);
-	-moz-filter: brightness(1.8) grayscale(1) opacity(.7);
-	filter: brightness(1.8) grayscale(1) opacity(.7);
+.rating1 > input:checked ~ label, .rating2 > input:checked ~ label,
+.rating3 > input:checked ~ label, .rating4 > input:checked ~ label,
+.rating5 > input:checked ~ label, .rating6 > input:checked ~ label,
+.rating7 > input:checked ~ label, .rating8 > input:checked ~ label {
+    color: #f70;
+    text-shadow:1px 1px #c60, 2px 2px #940, .1em .1em .2em rgba(0,0,0,.5);
 }
 
-#ratings .drinkcard-cc1:hover, .drinkcard-cc2:hover, .drinkcard-cc3:hover,
-	.drinkcard-cc4:hover, .drinkcard-cc5:hover, .drinkcard-cc6:hover,
-	.drinkcard-cc7:hover, .drinkcard-cc8:hover {
-	-webkit-filter: brightness(1.2) grayscale(.5) opacity(.9);
-	-moz-filter: brightness(1.2) grayscale(.5) opacity(.9);
-	filter: brightness(1.2) grayscale(.5) opacity(.9);
+.rating1:not(:checked) > label:hover,.rating2:not(:checked) > label:hover,
+.rating3:not(:checked) > label:hover,.rating4:not(:checked) > label:hover,
+.rating5:not(:checked) > label:hover,.rating6:not(:checked) > label:hover,
+.rating7:not(:checked) > label:hover,.rating8:not(:checked) > label:hover,
+.rating1:not(:checked) > label:hover ~ label,.rating2:not(:checked) > label:hover ~ label,
+.rating3:not(:checked) > label:hover ~ label,.rating4:not(:checked) > label:hover ~ label,
+.rating5:not(:checked) > label:hover ~ label,.rating6:not(:checked) > label:hover ~ label,
+.rating7:not(:checked) > label:hover ~ label,.rating8:not(:checked) > label:hover ~ label {
+    color: gold;
+    text-shadow:1px 1px goldenrod, 2px 2px #B57340, .1em .1em .2em rgba(0,0,0,.5);
 }
 
-/* Extras */
-#ratings a:visited {
-	color: #888
+.rating1 > input:checked + label:hover,.rating2 > input:checked + label:hover,
+.rating3 > input:checked + label:hover,.rating4 > input:checked + label:hover,
+.rating5 > input:checked + label:hover,.rating6 > input:checked + label:hover,
+.rating7 > input:checked + label:hover,.rating8 > input:checked + label:hover,
+.rating1 > input:checked + label:hover ~ label,.rating2 > input:checked + label:hover ~ label,
+.rating3 > input:checked + label:hover ~ label,.rating4 > input:checked + label:hover ~ label,
+.rating5 > input:checked + label:hover ~ label,.rating6 > input:checked + label:hover ~ label,
+.rating6 > input:checked + label:hover ~ label,.rating8 > input:checked + label:hover ~ label,
+.rating1 > input:checked ~ label:hover,.rating2 > input:checked ~ label:hover,
+.rating3 > input:checked ~ label:hover,.rating4 > input:checked ~ label:hover,
+.rating5 > input:checked ~ label:hover,.rating6 > input:checked ~ label:hover,
+.rating7 > input:checked ~ label:hover,.rating8 > input:checked ~ label:hover,
+.rating1 > input:checked ~ label:hover ~ label,.rating2 > input:checked ~ label:hover ~ label,
+.rating3 > input:checked ~ label:hover ~ label,.rating4 > input:checked ~ label:hover ~ label,
+.rating5 > input:checked ~ label:hover ~ label,.rating6 > input:checked ~ label:hover ~ label,
+.rating7 > input:checked ~ label:hover ~ label,.rating8 > input:checked ~ label:hover ~ label,
+.rating1 > input:checked ~ label:hover ~ label, .rating2 > input:checked ~ label:hover ~ label,
+.rating3 > input:checked ~ label:hover ~ label, .rating4 > input:checked ~ label:hover ~ label,
+.rating5 > input:checked ~ label:hover ~ label, .rating6 > input:checked ~ label:hover ~ label,
+.rating7 > input:checked ~ label:hover ~ label, .rating8 > input:checked ~ label:hover ~ label{
+    color: #ea0;
+    text-shadow:1px 1px goldenrod, 2px 2px #B57340, .1em .1em .2em rgba(0,0,0,.5);
 }
 
-#ratings a {
-	color: #444;
-	text-decoration: none;
-}
-
-#ratings p {
-	margin-bottom: .3em;
+.rating1 > label:active, .rating2 > label:active
+.rating3 > label:active, .rating4 > label:active
+.rating5 > label:active, .rating6 > label:active
+.rating7 > label:active, .rating8 > label:active {
+    position:relative;
+    top:2px;
+    left:2px;
 }

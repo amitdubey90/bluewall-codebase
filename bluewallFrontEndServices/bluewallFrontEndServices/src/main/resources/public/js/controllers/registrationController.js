@@ -1,4 +1,4 @@
-app.controller('registrationController', function($scope, $state, $rootScope, registrationService){
+app.controller('registrationController', function($scope, $state, $rootScope, messageService, registrationService){
   console.log('inside registartionController');
   var obj = {}
   $scope.ratings = function(foodId, userRating){
@@ -14,10 +14,17 @@ app.controller('registrationController', function($scope, $state, $rootScope, re
   $scope.register = function(user,food) {
 	  console.log("Inside register function contrl")
 	  registrationService.registerUser(user,$rootScope.foodRatings).then(function(data) {
-			$state.go('welcome');
-			alert("Registration Successful");
+		  if(null!=data.data){
+				 messageService.info("Registration Successful");				
+				 $state.go($state.current, {}, {reload: true});
+			 }else{
+				 messageService.error("Error","Could not register user");
+				 $state.go($state.current, {}, {reload: true});
+			 }
 		}, function(error) {
-			alert("Error in registering user")
+			messageService.error("Error","Could not register user");
+			$state.go($state.current, {}, {reload: true});
+			console.log(error.statusText);
 		});
 	}
 
