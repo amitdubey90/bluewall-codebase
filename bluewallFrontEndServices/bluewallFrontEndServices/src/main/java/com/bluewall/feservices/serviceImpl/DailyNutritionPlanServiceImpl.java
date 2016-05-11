@@ -16,7 +16,7 @@ public class DailyNutritionPlanServiceImpl implements DailyNutritionPlanService{
 	
 	@Override
 	public UserDailyNutritionPlan getDailyNutritionPlan(int userID) {
-		
+
 		return dailyNutritionPlanDao.getDailyNutritionPlan(userID);
 		
 	}

@@ -64,6 +64,7 @@
 							style="width: 600px; height: 300px; margin-top: 3%; margin-left: -41%;"></div>
 					</div>
 					<div class="col-xs-6" style="margin-left: -12%;">
+						<div id="nutrientChart"></div>
 						<div>
 							<small style="margin-left: 15%;">
 								<table class="table" style="width: 96%;margin-left: 22%;">
@@ -72,27 +73,26 @@
 									</caption>
 									<thead>
 										<tr>
-											<th>NUTRIENT</th>
-											<th>GRAMS</th>
-											<th>KCALS</th>
+											<th>Nutrient</th>
+											<th>Consumed (gms)</th>
+											<th>Required (gms)</th>
 										</tr>
 									</thead>
 									<tbody>
 										<tr>
-
 											<td>Proteins</td>
-											<td>{{nutrientDetails.proteinInGms}}</td>
-											<td>{{nutrientDetails.proteinInCalories}}</td>
+											<td>{{nutrientDetails.proteintConsumed | number}}</td>
+											<td>{{nutrientDetails.proteinInGms | number}}</td>
 										</tr>
 										<tr>
 											<td>Carbohydrates</td>
-											<td>{{nutrientDetails.carbInGms}}</td>
-											<td>{{nutrientDetails.carbInCalories}}</td>
+											<td>{{nutrientDetails.carbsConsumed | number}}</td>
+											<td>{{nutrientDetails.carbInGms | number}}</td>
 										</tr>
 										<tr>
 											<td>Fats</td>
-											<td>{{nutrientDetails.fatInGms}}</td>
-											<td>{{nutrientDetails.fatInCalories}}</td>
+											<td>{{nutrientDetails.fatConsumed | number}}</td>
+											<td>{{nutrientDetails.fatInGms | number}}</td>
 										</tr>
 									</tbody>
 								</table>

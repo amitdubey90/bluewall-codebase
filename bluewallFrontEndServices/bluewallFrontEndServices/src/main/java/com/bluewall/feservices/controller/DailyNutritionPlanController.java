@@ -33,10 +33,7 @@ public class DailyNutritionPlanController {
 			UserDailyNutritionPlan userDailyPlan = new UserDailyNutritionPlan();
 
 			userDailyPlan = dailyNutritionPlanService.getDailyNutritionPlan(userID);
-
 			log.info("Now displaying daily nutrition chart");
-
-			log.info("Nutrition Chart displayed");
 			return userDailyPlan;
 		}
 		return null;

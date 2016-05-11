@@ -59,35 +59,118 @@
 			 console.log("Data returned from angular service:nutrient info ");
 			 $scope.nutrientDetails = nutrientInfo.data;
 
-			var protein = Math.round((nutrientInfo.data.proteinInCalories/nutrientInfo.data.dailyCalories)*100);
-			var carbs =  Math.round((nutrientInfo.data.carbInCalories/nutrientInfo.data.dailyCalories)*100);
-			var fats =  Math.round((nutrientInfo.data.fatInCalories/nutrientInfo.data.dailyCalories)*100);
-			 var chart = new CanvasJS.Chart("nutrientChart",
-						{
-							
-							animationEnabled: true,
-							legend:{
-								verticalAlign: "bottom",
-								horizontalAlign: "center"
-							},
-							width: 600,
-							height:300,
-							data: [
-							{       
-								type: "pie",
-								showInLegend: true,
-								toolTipContent: "{legendText}: <strong>{y}%</strong>",
-								indexLabel: "{label} {y}%",
-								dataPoints: [
-									{  y: protein, legendText: "Proteins", exploded: true, label: "Proteins",color:"#E21A48"},
-									{  y: carbs, legendText: "Carbohydrates", label: "Carbohydrates",color:"#1711B5" },
-									{  y: fats, legendText: "Fats", label: "Fats",color:"#05A702" },
-									
-								]
-						}
-						]
-						});
-						chart.render();
+			protein = (nutrientInfo.data.proteintConsumed/nutrientInfo.data.proteinInGms)*100;
+			carbs =  (nutrientInfo.data.carbsConsumed/nutrientInfo.data.carbInGms)*100;
+			fat =  (nutrientInfo.data.fatConsumed/nutrientInfo.data.fatInGms)*100;
+
+			protein = protein > 100 ? 100: Math.round(protein);
+			carbs = carbs > 100 ? 100: Math.round(carbs);
+			fat = fat > 100 ? 100: Math.round(fat);
+			var chart;
+			var chartingOptions = {
+
+			    chart: {
+			        type: 'solidgauge',
+			        marginTop: 50
+			    },
+
+			    title: {
+			        text: '',
+			        style: {
+			            fontSize: '24px'
+			        }
+			    },
+
+			    tooltip: {
+			        borderWidth: 0,
+			        backgroundColor: 'none',
+			        shadow: false,
+			        style: {
+			            fontSize: '16px'
+			        },
+			        pointFormat: '{series.name}<br><span style="font-size:2em; color:{point.color}; font-weight: bold">{point.y}%</span>',
+			        positioner: function (labelWidth, labelHeight, point) {
+			            var tooltipX, tooltipY;
+			            
+			            tooltipX = point.plotX + chart.plotLeft - 40;
+			            tooltipY = point.plotY + chart.plotTop - 175;
+			            
+			            return {
+			                x: tooltipX,
+			                y: tooltipY
+			            };
+			        }
+			    },
+
+			    pane: {
+			        startAngle: 0,
+			        endAngle: 360,
+			        background: [{ // Track for Protein
+			            outerRadius: '112%',
+			            innerRadius: '88%',
+			            backgroundColor: Highcharts.Color(Highcharts.getOptions().colors[0]).setOpacity(0.3).get(),
+			            borderWidth: 0
+			        }, { // Track for Carbs
+			            outerRadius: '87%',
+			            innerRadius: '63%',
+			            backgroundColor: Highcharts.Color(Highcharts.getOptions().colors[1]).setOpacity(0.3).get(),
+			            borderWidth: 0
+			        }, { // Track for Fat
+			            outerRadius: '62%',
+			            innerRadius: '38%',
+			            backgroundColor: Highcharts.Color(Highcharts.getOptions().colors[2]).setOpacity(0.3).get(),
+			            borderWidth: 0
+			        }]
+			    },
+
+			    yAxis: {
+			        min: 0,
+			        max: 100,
+			        lineWidth: 0,
+			        tickPositions: []
+			    },
+
+			    plotOptions: {
+			        solidgauge: {
+			            borderWidth: '30px',
+			            dataLabels: {
+			                enabled: false
+			            },
+			            linecap: 'round',
+			            stickyTracking: false
+			        }
+			    },
+
+			    series: [{
+			        name: 'Proteins',
+			        borderColor: Highcharts.getOptions().colors[0],
+			        data: [{
+			            color: Highcharts.getOptions().colors[0],
+			            radius: '100%',
+			            innerRadius: '100%',
+			            y: protein
+			        }]
+			    }, {
+			        name: 'Carbs',
+			        borderColor: Highcharts.getOptions().colors[1],
+			        data: [{
+			            color: Highcharts.getOptions().colors[1],
+			            radius: '75%',
+			            innerRadius: '75%',
+			            y: carbs
+			        }]
+			    }, {
+			        name: 'Fats',
+			        borderColor: Highcharts.getOptions().colors[2],
+			        data: [{
+			            color: Highcharts.getOptions().colors[2],
+			            radius: '50%',
+			            innerRadius: '50%',
+			            y: fat
+			        }]
+			    }]
+			};
+ 			chart = $('#nutrientChart').highcharts(chartingOptions).highcharts();
 		},function(error){
 			$scope.error = "Unable to load nutrientInfo feed: "+error.statusText;
 			console.log(error.statusText);

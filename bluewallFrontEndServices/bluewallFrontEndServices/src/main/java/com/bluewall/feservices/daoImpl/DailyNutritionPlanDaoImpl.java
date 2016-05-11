@@ -47,7 +47,17 @@ public class DailyNutritionPlanDaoImpl implements DailyNutritionPlanDao{
 				userDailyPlan.setProteinInGms(rs.getDouble("proteinInGms"));
 				userDailyPlan.setProteinInCalories(rs.getDouble("proteinInCalories"));
 			}
-			
+
+			pst = connection.prepareStatement(Queries.GET_USER_NUTRIENTS_CONSUMED);
+			pst.setInt(1, userID);
+			rs = pst.executeQuery();
+
+			while (rs.next()){
+				userDailyPlan.setFatConsumed(rs.getDouble("fat"));
+				userDailyPlan.setCarbsConsumed(rs.getDouble("carbs"));
+				userDailyPlan.setProteintConsumed(rs.getDouble("protein"));
+			}
+
 		} catch (SQLException e) {
 			log.error("GET DAILY NUTRITION PLAN: SQL Exception - Check the sql query or the connection string");
 			e.printStackTrace();
@@ -58,6 +68,4 @@ public class DailyNutritionPlanDaoImpl implements DailyNutritionPlanDao{
 		return userDailyPlan;	
 		
 	}
-	
-
 }

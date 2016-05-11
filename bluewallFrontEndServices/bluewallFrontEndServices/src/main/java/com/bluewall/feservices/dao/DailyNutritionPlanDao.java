@@ -4,6 +4,5 @@ import com.bluewall.util.bean.UserDailyNutritionPlan;
 
 public interface DailyNutritionPlanDao {
 	
-	public UserDailyNutritionPlan getDailyNutritionPlan(int userID);
-	
+	UserDailyNutritionPlan getDailyNutritionPlan(int userID);
 }
