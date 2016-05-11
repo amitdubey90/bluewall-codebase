@@ -495,7 +495,7 @@ h1, h2, h3, h4, h5, h6 {
   float: left;
   text-align: center;
   font-size: 16px;
-  min-height: 300px;
+  min-height: 411px;
   vertical-align: middle;
   padding: 40px;
   background: #fff;
@@ -526,7 +526,7 @@ h1, h2, h3, h4, h5, h6 {
   bottom: 0;
 }
 #fh5co-intro .fh5co-block > .overlay {
-  background: #fff;
+  background: #52d3aa;
   opacity: 1;
   z-index: 9;
   position: absolute;
@@ -544,7 +544,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 #fh5co-intro .fh5co-block > .fh5co-text .fh5co-intro-icon {
   font-size: 50px;
-  color: #52d3aa;
+  color: #fff;
   margin-bottom: 30px;
   display: block;
 }
