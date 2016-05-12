@@ -61,6 +61,7 @@ public class RecommendationDaoImpl implements RecommendationDao {
 				while (rs.next()) {
 					fi = new FoodInfo();
 					fi.setFoodName(rs.getString("name"));
+					fi.setFoodCategory(rs.getString("category"));
 					fi.setFoodId(rs.getInt("foodB"));
 					fi.setFoodCalorie(rs.getDouble("foodBCalories"));
 					fi.setImageUrl(rs.getString("imageUrl"));

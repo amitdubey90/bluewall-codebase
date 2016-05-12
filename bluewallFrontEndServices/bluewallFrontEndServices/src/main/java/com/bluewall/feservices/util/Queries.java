@@ -39,7 +39,7 @@ public class Queries {
 
 	public static final String INS_USER_TASTE_PREFERENCES = "insert into UserRating (userID,foodID,rating,ratingTimeStamp) values (?,?,?,?)";
 
-	public static final String GET_RECOMMENDATION_FOR_USER = "SELECT FoodInfo.name, FoodInfo.imageUrl, FoodSimilarity.foodB, FoodSimilarity.similarity, FoodSimilarity.foodBCalories " +
+	public static final String GET_RECOMMENDATION_FOR_USER = "SELECT FoodInfo.name, FoodInfo.category, FoodInfo.imageUrl, FoodSimilarity.foodB, FoodSimilarity.similarity, FoodSimilarity.foodBCalories " +
 			"FROM FoodInfo,FoodSimilarity where foodA = ?";
 	public static final String GET_RECOMMENDATION_FOR_USER_CONDITION = " and foodBCalories < ? and FoodInfo.foodId = FoodSimilarity.foodB order by similarity desc limit ?";
 

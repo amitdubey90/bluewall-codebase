@@ -194,6 +194,7 @@
 					 food.foodId = data.data[i].foodId;
 					 food.foodName = data.data[i].foodName;
 					 food.foodCalorie = data.data[i].foodCalorie;
+					 food.foodCategory = data.data[i].foodCategory;
 					 food.image = data.data[i].imageUrl;
 					 $scope.recommendationList.push(food);
 				 }
