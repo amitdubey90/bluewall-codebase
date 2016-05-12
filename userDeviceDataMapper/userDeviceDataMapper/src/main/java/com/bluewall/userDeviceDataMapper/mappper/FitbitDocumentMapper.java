@@ -17,7 +17,7 @@ import org.bson.Document;
 @Slf4j
 public class FitbitDocumentMapper implements ActivityLogMapper<Document> {
 
-    SimpleDateFormat formatter = new SimpleDateFormat("YYYY-MM-dd");
+    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
     @Override
     public ActivityLog map(Document doc) {
         ActivityLog output = null;
