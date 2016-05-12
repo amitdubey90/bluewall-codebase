@@ -50,6 +50,7 @@ public class DailyNutritionPlanDaoImpl implements DailyNutritionPlanDao{
 
 			pst = connection.prepareStatement(Queries.GET_USER_NUTRIENTS_CONSUMED);
 			pst.setInt(1, userID);
+			pst.setInt(2, userID);
 			rs = pst.executeQuery();
 
 			while (rs.next()){

@@ -61,6 +61,7 @@ public class Queries {
 
 	public static final String GET_USER_NUTRIENTS_CONSUMED = "SELECT SUM(carbohydrates * weight / eqvGMS) AS carbs, SUM(fat * weight / eqvGMS) AS fat, " +
 			"SUM(protein * weight / eqvGMS) AS protein FROM (SELECT foodId, carbohydrates, fat, protein, eqvGMS, " +
-			"(SELECT weightConsumed FROM userDatabase.FoodLog WHERE foodId = f.foodId) weight FROM FoodNutrientPerXGram f " +
-			"WHERE foodId IN (SELECT foodId FROM FoodLog WHERE userId = ? AND foodLogDate = DATE(NOW()))) AS t";
+			"(SELECT weightConsumed FROM userDatabase.FoodLog WHERE foodId = f.foodId AND userId = ? AND foodLogDate = DATE(NOW())) " +
+			"weight FROM FoodNutrientPerXGram f WHERE foodId IN (SELECT foodId FROM FoodLog " +
+			"WHERE userId = ? AND foodLogDate = DATE(NOW()))) AS t";
 }
