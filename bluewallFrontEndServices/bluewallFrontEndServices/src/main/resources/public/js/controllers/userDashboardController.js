@@ -43,12 +43,20 @@
 		
 	    userDashboardService.populateUserActivityFeed().then(function(activityFeed){
 			 console.log("Data returned from angular service:activity feed");
-			 $scope.activitiesList = activityFeed.data;
+			 var userActivityFeed = [];
+			 userActivityFeed.push(activityFeed.data[0]);
+			 userActivityFeed.push(activityFeed.data[1]);
+			 userActivityFeed.push(activityFeed.data[2]);
+			 userActivityFeed.push(activityFeed.data[3]);
+			 userActivityFeed.push(activityFeed.data[4]);
+			 userActivityFeed.push(activityFeed.data[5]);
+			 $scope.activitiesList = userActivityFeed;
 			 console.log("1: "+activityFeed.data[0]);
 			 console.log("2: "+activityFeed.data[1]);
 			 console.log("3: "+activityFeed.data[2]);
 			 console.log("4: "+activityFeed.data[3]);
 			 console.log("5: "+activityFeed.data[4]);
+			 console.log("5: "+activityFeed.data[5]);
 			 
 		},function(error){
 			$scope.error = "Unable to load activity feed: "+error.statusText;

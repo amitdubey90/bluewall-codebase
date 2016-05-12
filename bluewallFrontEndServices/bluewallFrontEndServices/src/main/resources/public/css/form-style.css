@@ -83,32 +83,32 @@
   font-family:"Reenie Beanie",arial,sans-serif;
   font-size:180%;
 }
-#stickyNotes ul li a{
+/* #stickyNotes ul li a{
   -webkit-transform: rotate(-6deg);
   -o-transform: rotate(-6deg);
   -moz-transform:rotate(-6deg);
-}
+} */
 #stickyNotes ul li:nth-child(even) a{
-  -o-transform:rotate(4deg);
+  /* -o-transform:rotate(4deg);
   -webkit-transform:rotate(4deg);
   -moz-transform:rotate(4deg);
-  position:relative;
+  position:relative; */
   top:5px;
   background:#cfc;
 }
 #stickyNotes ul li:nth-child(3n) a{
-  -o-transform:rotate(-3deg);
+  /* -o-transform:rotate(-3deg);
   -webkit-transform:rotate(-3deg);
-  -moz-transform:rotate(-3deg);
-  position:relative;
+  -moz-transform:rotate(-3deg); 
+  position:relative;*/
   top:-5px;
   /* background:#ccf; */
 }
 #stickyNotes ul li:nth-child(5n) a{
-  -o-transform:rotate(5deg);
+ /*  -o-transform:rotate(5deg);
   -webkit-transform:rotate(5deg);
   -moz-transform:rotate(5deg);
-  position:relative;
+  position:relative; */
   top:-10px;
 }
 #stickyNotes ul li a:hover, #stickyNotes ul li a:focus{
