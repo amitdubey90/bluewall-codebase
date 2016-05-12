@@ -5,7 +5,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.StringJoiner;
 
 import javax.sql.DataSource;
@@ -32,6 +34,11 @@ public class RecommendationDaoImpl implements RecommendationDao {
 	public List<FoodInfo> getRecommendationsForUser(List<Integer> foodIdList, float calories, int count) {
 		Preconditions.checkNotNull(foodIdList);
 		Preconditions.checkArgument(foodIdList.size() != 0, "Preferred food list is empty");
+
+		//hack to remove repeated recommendation
+		Set<Integer> set = new HashSet<>(foodIdList);
+		foodIdList.clear();
+		foodIdList.addAll(set);
 
 		List<FoodInfo> recommendations = new ArrayList<>();
 		ResultSet rs = null;
