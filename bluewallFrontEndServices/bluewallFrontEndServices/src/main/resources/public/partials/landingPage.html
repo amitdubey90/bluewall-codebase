@@ -1,13 +1,15 @@
 
-<section id="fh5co-home" data-section="home" style="data-stellar-background-ratio="0.5">
+<section id="fh5co-home" data-section="home" style=""0.5">
 	<!-- <div class="gradient">
 		<video id="bg" src="images/ExerciseVsDiet.mp4" autoplay="true" loop="true" muted="true" style="width: 100%;"></video>
 	</div> -->
 	<!-- <div class="container">
 		<video id="bg" src="images/ExerciseVsDiet.mp4" autoplay="true" loop="true" muted="true" style="width: 100%;"></video>
 	</div> -->
-	<div class="container" style="width: 100%;height: 70%;margin-top: 1%;">
-		<video id="bg" src="images/ExerciseVsDiet.mp4" autoplay="true" loop="true" muted="true" style="width: 100%;"></video>
+	<div class="container"
+		style="width: 100%; height: 70%; margin-top: 1%;">
+		<video id="bg" src="images/ExerciseVsDiet.mp4" autoplay="true"
+			loop="true" muted="true" style="width: 100%;"></video>
 		<!-- <div class="text-wrap">
 			<div class="text-inner">
 				<div class="row">
@@ -17,17 +19,24 @@
 		</div> -->
 	</div>
 </section>
-<modal title="Login form" visible="showModal" >
-  <form class="form-signin" ng-submit="login(); toggleModal()"  ng-controller="loginController">
- 	  <table border="0" style="width: 100%;">
+<modal title="Login form" visible="showModal">
+<form class="form-signin" ng-submit="login(); toggleModal()"
+	ng-controller="loginController">
+	<table border="0" style="width: 100%;">
 		<tr>
-			<td>Email ID<span style="color:red;">*</span>:</td>
-			<td><input type="email" id="inputEmail" ng-model="credentials.username" class="form-control" placeholder="Email address" required autofocus></td>
+			<td>Email ID<span style="color: red;">*</span>:
+			</td>
+			<td><input type="email" id="inputEmail"
+				ng-model="credentials.username" class="form-control"
+				placeholder="Email address" required autofocus></td>
 		</tr>
 		<tr></tr>
 		<tr>
-			<td>Password<span style="color:red;">*</span>:</td>
-			<td><input type="password" id="inputPassword" ng-model="credentials.password" class="form-control" placeholder="Password" required></td>
+			<td>Password<span style="color: red;">*</span>:
+			</td>
+			<td><input type="password" id="inputPassword"
+				ng-model="credentials.password" class="form-control"
+				placeholder="Password" required></td>
 		</tr>
 		<!-- <tr>
 			<td>
@@ -39,270 +48,398 @@
 			</td>
 		</tr> -->
 		<tr>
-			<td colspan="2" align="center"><button class="btn btn-lg btn-primary btn-block" type="submit" >Sign in</button></td>
+			<td colspan="2" align="center"><button
+					class="btn btn-lg btn-primary btn-block" type="submit">Sign
+					in</button></td>
 		</tr>
-	  </table>
-    </form>
+	</table>
+</form>
 </modal>
 <modal1 title="Registration form" visible="showRegisModal">
-  <form ng-submit="register(user,food); toggleRegisModal()" method="post" ng-controller="registrationController">
-			<table border="0" style="width: 100%;">
+<form ng-submit="register(user,food); toggleRegisModal()" method="post"
+	ng-controller="registrationController">
+	<table border="0" style="width: 100%;">
+		<tr>
+			<td>First Name<span style="color: red;">*</span>: <input
+				placeholder="First Name" class="form-control" type="text"
+				name="firstName" value="LMNO" ng-model="user.firstName"
+				required="required" /></td>
+			<td>Last Name<span style="color: red;">*</span>:<input
+				placeholder="Last Name" class="form-control" type="text"
+				name="lastName" value="LMNO" ng-model="user.lastName"
+				required="required" /></td>
+			<td>E-mail<span style="color: red;">*</span>:<input
+				placeholder="Email address" class="form-control" type="email"
+				name="emailID" value="LMNO@gmail.com" ng-model="user.emailID"
+				required="required" /></td>
+			<td>Password<span style="color: red;">*</span>:<input
+				placeholder="Password" class="form-control" type="password"
+				value="lmno" ng-model="user.password" required="required" /></td>
+		</tr>
+		<tr>
+			<td>Contact Number:<input placeholder="Contact Number"
+				class="form-control" type="number" ng-model="user.contactNumber" /></td>
+			<td>Age<span style="color: red;">*</span>:<input
+				placeholder="Age" class="form-control" type="number" value=45
+				ng-model="user.age" required="required" /></td>
+			<td>Gender<span style="color: red;">*</span>:<select
+				class="form-control" name="gender" ng-model="user.gender"
+				required="required">
+					<option value="">Select</option>
+					<option value="female">Female</option>
+					<option value="male">Male</option>
+			</select>
+			</td>
+			<td>Current Location<span style="color: red;">*</span>:<input
+				placeholder="Current Location" class="form-control" type="text"
+				value="sj" ng-model="user.currentLocation" required="required" /></td>
+		</tr>
+		<tr>
+			<td>Height (Feet)<span style="color: red;">*</span>:<input
+				placeholder="Height in Feet" class="form-control" type="text"
+				value="33" ng-model="user.height" required="required" /></td>
+			<td>Weight (Kgs)<span style="color: red;">*</span>:<input
+				placeholder="Weight in Kgs" class="form-control" type="text"
+				value="33" ng-model="user.weight" required="required" /></td>
+			<td colspan="2">Activity Level<span style="color: red;">*</span>:
+				<select class="form-control" name="actLevel"
+				ng-model="user.activityLevel" required="required">
+					<option value="">Select</option>
+					<option value="veryActive" selected>Very Active</option>
+					<option value="active">Active</option>
+					<option value="moderateActive">Moderate</option>
+					<option value="noActivity">No Activity</option>
+			</select>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2">Goal Type<span style="color: red;">*</span>: <select
+				class="form-control" name="goalType" ng-model="user.goalType"
+				required>
+					<option value="">Select</option>
+					<option value="gain" selected>Gain Weight</option>
+					<option value="lose">Lose Weight</option>
+					<option value="maintain">Maintain Weight</option>
+
+			</select>
+			</td>
+			<td colspan="2">Target Weight (kgs)<span style="color: red;">*</span>:<input
+				placeholder="Target weight in pounds" class="form-control"
+				type="number" value="33" ng-model="user.targetWeight" required /></td>
+		</tr>
+		<tr>
+			<td>Food preference<span style="color: red;">*</span>: <select
+				class="form-control" name="foodPreference" ng-model="user.foodpref"
+				required>
+					<option value="">Select</option>
+					<option value="Vegetarian" selected>Vegetarian</option>
+					<option value="Non-Vegetarian">Non-Vegetarian</option>
+			</select>
+			</td>
+		</tr>
+		<tr>
+			<table style="width: 100%;">
 				<tr>
-					<td>First Name<span style="color:red;">*</span>: <input placeholder="First Name" class="form-control" type="text" name="firstName"	value="LMNO" ng-model="user.firstName" required="required" /></td>
-					<td>Last Name<span style="color:red;">*</span>:<input placeholder="Last Name" class="form-control" type="text" name="lastName" value="LMNO" ng-model="user.lastName" required="required" /></td>
-					<td>E-mail<span style="color:red;">*</span>:<input placeholder="Email address" class="form-control" type="email" name="emailID" value="LMNO@gmail.com" ng-model="user.emailID" required="required" /></td>
-					<td>Password<span style="color:red;">*</span>:<input placeholder="Password" class="form-control" type="password" value="lmno" ng-model="user.password" required="required" /></td>
+					<td colspan="2">Do you like?</td>
 				</tr>
 				<tr>
-					<td>Contact Number:<input placeholder="Contact Number" class="form-control" type="number" ng-model="user.contactNumber" /></td>
-					<td>Age<span style="color:red;">*</span>:<input placeholder="Age" class="form-control" type="number" value=45 ng-model="user.age" required="required"/></td>
-					<td>Gender<span style="color:red;">*</span>:<select class="form-control" name="gender" ng-model="user.gender" required="required">
-										<option value="">Select</option>
-										<option value="female">Female</option>
-										<option value="male">Male</option>
-								</select>
+					<td><label class="col-xs-2">Milk<span
+							style="color: red;">*</span>:
+					</label>
+						<div class="col-xs-5">
+							<div class="slider-font-style" style="margin-left: 0px;">
+								<div class="rating1">
+									<input type="radio" id="star51" name="rating1" value="5"
+										ng-click="ratings(1079, 5)" required /><label for="star51"
+										title="Rocks!">5 stars</label> <input type="radio" id="star41"
+										name="rating1" value="4" ng-click="ratings(1079, 4)" /><label
+										for="star41" title="Pretty good">4 stars</label> <input
+										type="radio" id="star31" name="rating1" value="3"
+										ng-click="ratings(1079, 3)" /><label for="star31" title="Meh">3
+										stars</label> <input type="radio" id="star21" name="rating1" value="2"
+										ng-click="ratings(1079, 2)" /><label for="star21"
+										title="Kinda bad">2 stars</label> <input type="radio"
+										id="star11" name="rating1" value="1"
+										ng-click="ratings(1079, 1)" /><label for="star11"
+										title="Sucks big time">1 star</label>
+								</div>
+							</div>
+						</div></td>
+				</tr>
+				<tr>
+					<td><label class="col-xs-2">Apples<span
+							style="color: red;">*</span>:
+					</label>
+						<div class="col-xs-5">
+							<div class="slider-font-style" style="margin-left: 0px;">
+								<div class="rating2">
+									<input type="radio" id="star52" name="rating2" value="5"
+										ng-click="ratings(9003, 5)" required /><label for="star52"
+										title="Rocks!">5 stars</label> <input type="radio" id="star42"
+										name="rating2" value="4" ng-click="ratings(9003, 4)" /><label
+										for="star42" title="Pretty good">4 stars</label> <input
+										type="radio" id="star32" name="rating2" value="3"
+										ng-click="ratings(9003, 3)" /><label for="star32" title="Meh">3
+										stars</label> <input type="radio" id="star22" name="rating2" value="2"
+										ng-click="ratings(9003, 2)" /><label for="star22"
+										title="Kinda bad">2 stars</label> <input type="radio"
+										id="star12" name="rating2" value="1"
+										ng-click="ratings(9003, 1)" /><label for="star12"
+										title="Sucks big time">1 star</label>
+								</div>
+							</div>
+						</div></td>
+				</tr>
+				<tr>
+					<td><label class="col-xs-2">Lentils, Sprouted<span
+							style="color: red;">*</span>:
+					</label>
+						<div class="col-xs-5">
+							<div class="slider-font-style" style="margin-left: 0px;">
+								<div class="rating3">
+									<input type="radio" id="star53" name="rating3" value="5"
+										ng-click="ratings(11926, 5)" required /><label for="star53"
+										title="Rocks!">5 stars</label> <input type="radio" id="star43"
+										name="rating3" value="4" ng-click="ratings(11926, 4)" /><label
+										for="star43" title="Pretty good">4 stars</label> <input
+										type="radio" id="star33" name="rating3" value="3"
+										ng-click="ratings(11926, 3)" /><label for="star33"
+										title="Meh">3 stars</label> <input type="radio" id="star23"
+										name="rating3" value="2" ng-click="ratings(11926, 2)" /><label
+										for="star23" title="Kinda bad">2 stars</label> <input
+										type="radio" id="star13" name="rating3" value="1"
+										ng-click="ratings(11926, 1)" /><label for="star13"
+										title="Sucks big time">1 star</label>
+								</div>
+							</div>
+						</div></td>
+				</tr>
+				<tr>
+					<td><label class="col-xs-2">Potatoes, Fried<span
+							style="color: red;">*</span>:
+					</label>
+						<div class="col-xs-5">
+							<div class="slider-font-style" style="margin-left: 0px;">
+								<div class="rating4">
+									<input type="radio" id="star54" name="rating4" value="5"
+										ng-click="ratings(11840, 5)" required /><label for="star54"
+										title="Rocks!">5 stars</label> <input type="radio" id="star44"
+										name="rating4" value="4" ng-click="ratings(11840, 4)" /><label
+										for="star44" title="Pretty good">4 stars</label> <input
+										type="radio" id="star34" name="rating4" value="3"
+										ng-click="ratings(11840, 3)" /><label for="star34"
+										title="Meh">3 stars</label> <input type="radio" id="star24"
+										name="rating4" value="2" ng-click="ratings(11840, 2)" /><label
+										for="star24" title="Kinda bad">2 stars</label> <input
+										type="radio" id="star14" name="rating4" value="1"
+										ng-click="ratings(11840, 1)" /><label for="star14"
+										title="Sucks big time">1 star</label>
+								</div>
+							</div>
+						</div></td>
+				</tr>
+				<tr>
+					<td>
+						<div ng-if="user.foodpref === 'Non-Vegetarian'">
+							<label class="col-xs-2">Beef patties<span
+								style="color: red;">*</span>:
+							</label>
+							<div class="col-xs-5">
+								<div class="slider-font-style" style="margin-left: 0px;">
+									<div class="rating5">
+										<input type="radio" id="star55" name="rating5" value="5"
+											ng-click="ratings(13317, 5)" required /><label for="star55"
+											title="Rocks!">5 stars</label> <input type="radio"
+											id="star45" name="rating5" value="4"
+											ng-click="ratings(13317, 4)" /><label for="star45"
+											title="Pretty good">4 stars</label> <input type="radio"
+											id="star35" name="rating5" value="3"
+											ng-click="ratings(13317, 3)" /><label for="star35"
+											title="Meh">3 stars</label> <input type="radio" id="star25"
+											name="rating5" value="2" ng-click="ratings(13317, 2)" /><label
+											for="star25" title="Kinda bad">2 stars</label> <input
+											type="radio" id="star15" name="rating5" value="1"
+											ng-click="ratings(13317, 1)" /><label for="star15"
+											title="Sucks big time">1 star</label>
+									</div>
+								</div>
+							</div>
+						</div>
 					</td>
-					<td>Current Location<span style="color:red;">*</span>:<input placeholder="Current Location" class="form-control" type="text" value="sj" ng-model="user.currentLocation" required="required"/></td>
 				</tr>
 				<tr>
-					<td>Height (Feet)<span style="color:red;">*</span>:<input placeholder="Height in Feet" class="form-control" type="text" value="33" ng-model="user.height" required="required"/></td>
-					<td>Weight (Kgs)<span style="color:red;">*</span>:<input placeholder="Weight in Kgs" class="form-control" type="text" value="33" ng-model="user.weight" required="required"/></td>
-					<td colspan="2">Activity Level<span style="color:red;">*</span>:
-						<select class="form-control" name="actLevel" ng-model="user.activityLevel" required="required">
-								<option value="">Select</option>
-								<option value="veryActive" selected>Very Active</option>
-								<option value="active">Active</option>
-								<option value="moderateActive">Moderate</option>
-								<option value="noActivity">No Activity</option>
-						</select>
+					<td>
+						<div ng-if="user.foodpref === 'Non-Vegetarian'">
+							<label class="col-xs-2">Chicken wings with BBQ Sauce<span
+								style="color: red;">*</span>:
+							</label>
+							<div class="col-xs-5">
+								<div class="slider-font-style" style="margin-left: 0px;">
+									<div class="rating6">
+										<input type="radio" id="star56" name="rating6" value="5"
+											ng-click="ratings(5312, 5)" required /><label for="star56"
+											title="Rocks!">5 stars</label> <input type="radio"
+											id="star46" name="rating6" value="4"
+											ng-click="ratings(5312, 4)" /><label for="star46"
+											title="Pretty good">4 stars</label> <input type="radio"
+											id="star36" name="rating6" value="3"
+											ng-click="ratings(5312, 3)" /><label for="star36"
+											title="Meh">3 stars</label> <input type="radio" id="star26"
+											name="rating6" value="2" ng-click="ratings(5312, 2)" /><label
+											for="star26" title="Kinda bad">2 stars</label> <input
+											type="radio" id="star16" name="rating6" value="1"
+											ng-click="ratings(5312, 1)" /><label for="star16"
+											title="Sucks big time">1 star</label>
+									</div>
+								</div>
+							</div>
+						</div>
 					</td>
 				</tr>
 				<tr>
-					<td colspan="2">Goal Type<span style="color:red;">*</span>:
-						<select class="form-control" name="goalType" ng-model="user.goalType" required>
-								<option value="">Select</option>
-								<option value="gain" selected>Gain Weight</option>
-								<option value="lose">Lose Weight</option>
-								<option value="maintain">Maintain Weight</option>
-	
-						</select>
+					<td>
+						<div ng-if="user.foodpref === 'Vegetarian'">
+							<label class="col-xs-2">Pasta with Onion and Garlic
+								Italian Sauce<span style="color: red;">*</span>:
+							</label>
+							<div class="col-xs-5">
+								<div class="slider-font-style" style="margin-left: 0px;">
+									<div class="rating7">
+										<input type="radio" id="star57" name="rating7" value="5"
+											ng-click="ratings(6222, 5)" required /><label for="star57"
+											title="Rocks!">5 stars</label> <input type="radio"
+											id="star47" name="rating7" value="4"
+											ng-click="ratings(6222, 4)" /><label for="star47"
+											title="Pretty good">4 stars</label> <input type="radio"
+											id="star37" name="rating7" value="3"
+											ng-click="ratings(6222, 3)" /><label for="star37"
+											title="Meh">3 stars</label> <input type="radio" id="star27"
+											name="rating7" value="2" ng-click="ratings(6222, 2)" /><label
+											for="star27" title="Kinda bad">2 stars</label> <input
+											type="radio" id="star17" name="rating7" value="1"
+											ng-click="ratings(6222, 1)" /><label for="star17"
+											title="Sucks big time">1 star</label>
+									</div>
+								</div>
+							</div>
+						</div>
 					</td>
-					<td colspan="2">Target Weight (kgs)<span style="color:red;">*</span>:<input placeholder="Target weight in pounds" class="form-control" type="number" value="33" ng-model="user.targetWeight" required /></td>
 				</tr>
 				<tr>
-					<td>Food preference<span style="color:red;">*</span>:
-						<select class="form-control" name="foodPreference" ng-model="user.foodpref" required>
-							<option value="">Select</option>
-							<option value="Vegetarian" selected>Vegetarian</option>
-							<option value="Non-Vegetarian">Non-Vegetarian</option>
-						</select>
+					<td>
+						<div ng-if="user.foodpref === 'Non-Vegetarian'">
+							<label class="col-xs-2">Pasta with Mini Meatballs Italian
+								Sauce<span style="color: red;">*</span>:
+							</label>
+							<div class="col-xs-5">
+								<div class="slider-font-style" style="margin-left: 0px;">
+									<div class="rating8">
+										<input type="radio" id="star58" name="rating8" value="5"
+											ng-click="ratings(6228, 5)" required /><label for="star58"
+											title="Rocks!">5 stars</label> <input type="radio"
+											id="star48" name="rating8" value="4"
+											ng-click="ratings(6228, 4)" /><label for="star48"
+											title="Pretty good">4 stars</label> <input type="radio"
+											id="star38" name="rating8" value="3"
+											ng-click="ratings(6228, 3)" /><label for="star38"
+											title="Meh">3 stars</label> <input type="radio" id="star28"
+											name="rating8" value="2" ng-click="ratings(6228, 2)" /><label
+											for="star28" title="Kinda bad">2 stars</label> <input
+											type="radio" id="star18" name="rating8" value="1"
+											ng-click="ratings(6228, 1)" /><label for="star18"
+											title="Sucks big time">1 star</label>
+									</div>
+								</div>
+							</div>
+						</div>
 					</td>
-				</tr>	
-					<tr>			
-						<table style="width: 100%;">
-						<tr>
-							<td colspan="2">Do you like?</td>
-						</tr>
-						<tr>
-							<td>
-								<label class="col-xs-2">Milk<span style="color:red;">*</span>:</label>
-								<div class="col-xs-5">
-									<div class="slider-font-style" style="margin-left: 0px;">
-										<div class="rating1">
-										    <input type="radio" id="star51" name="rating1" value="5" ng-click="ratings(1079, 5)" required /><label for="star51" title="Rocks!">5 stars</label>
-										    <input type="radio" id="star41" name="rating1" value="4" ng-click="ratings(1079, 4)" /><label for="star41" title="Pretty good">4 stars</label>
-										    <input type="radio" id="star31" name="rating1" value="3" ng-click="ratings(1079, 3)" /><label for="star31" title="Meh">3 stars</label>
-										    <input type="radio" id="star21" name="rating1" value="2" ng-click="ratings(1079, 2)" /><label for="star21" title="Kinda bad">2 stars</label>
-										    <input type="radio" id="star11" name="rating1" value="1" ng-click="ratings(1079, 1)" /><label for="star11" title="Sucks big time">1 star</label>
-										</div>
-									</div>
-								</div>
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<label class="col-xs-2">Apples<span style="color:red;">*</span>:</label>
-								<div class="col-xs-5">
-									<div class="slider-font-style" style="margin-left: 0px;">
-										<div class="rating2">
-										    <input type="radio" id="star52" name="rating2" value="5" ng-click="ratings(9003, 5)" required /><label for="star52" title="Rocks!">5 stars</label>
-										    <input type="radio" id="star42" name="rating2" value="4" ng-click="ratings(9003, 4)" /><label for="star42" title="Pretty good">4 stars</label>
-										    <input type="radio" id="star32" name="rating2" value="3" ng-click="ratings(9003, 3)" /><label for="star32" title="Meh">3 stars</label>
-										    <input type="radio" id="star22" name="rating2" value="2" ng-click="ratings(9003, 2)" /><label for="star22" title="Kinda bad">2 stars</label>
-										    <input type="radio" id="star12" name="rating2" value="1" ng-click="ratings(9003, 1)" /><label for="star12" title="Sucks big time">1 star</label>
-										</div>
-									</div>
-								</div>
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<label class="col-xs-2">Lentils, Sprouted<span style="color:red;">*</span>:</label>
-								<div class="col-xs-5">
-									<div class="slider-font-style" style="margin-left: 0px;">
-									   <div class="rating3">
-										    <input type="radio" id="star53" name="rating3" value="5" ng-click="ratings(11926, 5)" required /><label for="star53" title="Rocks!">5 stars</label>
-										    <input type="radio" id="star43" name="rating3" value="4" ng-click="ratings(11926, 4)" /><label for="star43" title="Pretty good">4 stars</label>
-										    <input type="radio" id="star33" name="rating3" value="3" ng-click="ratings(11926, 3)" /><label for="star33" title="Meh">3 stars</label>
-										    <input type="radio" id="star23" name="rating3" value="2" ng-click="ratings(11926, 2)" /><label for="star23" title="Kinda bad">2 stars</label>
-										    <input type="radio" id="star13" name="rating3" value="1" ng-click="ratings(11926, 1)" /><label for="star13" title="Sucks big time">1 star</label>
-										</div>
-									</div>
-								</div>
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<label class="col-xs-2">Potatoes, Fried<span style="color:red;">*</span>:</label>
-								<div class="col-xs-5">
-									<div class="slider-font-style" style="margin-left: 0px;">
-									    <div class="rating4">
-										    <input type="radio" id="star54" name="rating4" value="5" ng-click="ratings(11840, 5)" required /><label for="star54" title="Rocks!">5 stars</label>
-										    <input type="radio" id="star44" name="rating4" value="4" ng-click="ratings(11840, 4)" /><label for="star44" title="Pretty good">4 stars</label>
-										    <input type="radio" id="star34" name="rating4" value="3" ng-click="ratings(11840, 3)" /><label for="star34" title="Meh">3 stars</label>
-										    <input type="radio" id="star24" name="rating4" value="2" ng-click="ratings(11840, 2)" /><label for="star24" title="Kinda bad">2 stars</label>
-										    <input type="radio" id="star14" name="rating4" value="1" ng-click="ratings(11840, 1)" /><label for="star14" title="Sucks big time">1 star</label>
-										</div>
-									</div>
-								</div>
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<div ng-if="user.foodpref === 'Non-Vegetarian'">
-									<label class="col-xs-2">Beef patties<span style="color:red;">*</span>:</label>
-									<div class="col-xs-5">
-										<div class="slider-font-style" style="margin-left: 0px;">
-										   <div class="rating5">
-											    <input type="radio" id="star55" name="rating5" value="5" ng-click="ratings(13317, 5)" required /><label for="star55" title="Rocks!">5 stars</label>
-											    <input type="radio" id="star45" name="rating5" value="4" ng-click="ratings(13317, 4)" /><label for="star45" title="Pretty good">4 stars</label>
-											    <input type="radio" id="star35" name="rating5" value="3" ng-click="ratings(13317, 3)" /><label for="star35" title="Meh">3 stars</label>
-											    <input type="radio" id="star25" name="rating5" value="2" ng-click="ratings(13317, 2)" /><label for="star25" title="Kinda bad">2 stars</label>
-											    <input type="radio" id="star15" name="rating5" value="1" ng-click="ratings(13317, 1)" /><label for="star15" title="Sucks big time">1 star</label>
-											</div>
-										</div>
-									</div>
-								</div>
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<div ng-if="user.foodpref === 'Non-Vegetarian'" >
-									<label class="col-xs-2">Chicken wings with BBQ Sauce<span style="color:red;">*</span>:</label>
-									<div class="col-xs-5">
-										<div class="slider-font-style" style="margin-left: 0px;">
-										    <div class="rating6">
-											    <input type="radio" id="star56" name="rating6" value="5" ng-click="ratings(5312, 5)" required /><label for="star56" title="Rocks!">5 stars</label>
-											    <input type="radio" id="star46" name="rating6" value="4" ng-click="ratings(5312, 4)" /><label for="star46" title="Pretty good">4 stars</label>
-											    <input type="radio" id="star36" name="rating6" value="3" ng-click="ratings(5312, 3)" /><label for="star36" title="Meh">3 stars</label>
-											    <input type="radio" id="star26" name="rating6" value="2" ng-click="ratings(5312, 2)" /><label for="star26" title="Kinda bad">2 stars</label>
-											    <input type="radio" id="star16" name="rating6" value="1" ng-click="ratings(5312, 1)" /><label for="star16" title="Sucks big time">1 star</label>
-											</div>
-										</div>
-									</div>
-								</div>
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<div ng-if="user.foodpref === 'Vegetarian'">
-									<label class="col-xs-2">Pasta with Onion and Garlic Italian Sauce<span style="color:red;">*</span>:</label>
-									<div class="col-xs-5">
-										<div class="slider-font-style" style="margin-left: 0px;">
-										    <div class="rating7">
-											    <input type="radio" id="star57" name="rating7" value="5" ng-click="ratings(6222, 5)" required /><label for="star57" title="Rocks!">5 stars</label>
-											    <input type="radio" id="star47" name="rating7" value="4" ng-click="ratings(6222, 4)" /><label for="star47" title="Pretty good">4 stars</label>
-											    <input type="radio" id="star37" name="rating7" value="3" ng-click="ratings(6222, 3)" /><label for="star37" title="Meh">3 stars</label>
-											    <input type="radio" id="star27" name="rating7" value="2" ng-click="ratings(6222, 2)" /><label for="star27" title="Kinda bad">2 stars</label>
-											    <input type="radio" id="star17" name="rating7" value="1" ng-click="ratings(6222, 1)" /><label for="star17" title="Sucks big time">1 star</label>
-											</div>
-										</div>
-									</div>
-								</div>
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<div ng-if="user.foodpref === 'Non-Vegetarian'">
-									<label class="col-xs-2">Pasta with Mini Meatballs Italian Sauce<span style="color:red;">*</span>:</label>
-									<div class="col-xs-5">
-										<div class="slider-font-style" style="margin-left: 0px;">
-										    <div class="rating8">
-											    <input type="radio" id="star58" name="rating8" value="5" ng-click="ratings(6228, 5)" required /><label for="star58" title="Rocks!">5 stars</label>
-											    <input type="radio" id="star48" name="rating8" value="4" ng-click="ratings(6228, 4)" /><label for="star48" title="Pretty good">4 stars</label>
-											    <input type="radio" id="star38" name="rating8" value="3" ng-click="ratings(6228, 3)" /><label for="star38" title="Meh">3 stars</label>
-											    <input type="radio" id="star28" name="rating8" value="2" ng-click="ratings(6228, 2)" /><label for="star28" title="Kinda bad">2 stars</label>
-											    <input type="radio" id="star18" name="rating8" value="1" ng-click="ratings(6228, 1)" /><label for="star18" title="Sucks big time">1 star</label>
-											</div>
-										</div>
-									</div>
-								</div>
-							</td>
-						</tr>
-					</table>
-				</tr>
-				<tr>
-					<td colspan="2" align="center"><input class="btn btn-lg btn-primary btn-block" type="submit" value="Register" /></td>
 				</tr>
 			</table>
-		</form>
+		</tr>
+		<tr>
+			<td colspan="2" align="center"><input
+				class="btn btn-lg btn-primary btn-block" type="submit"
+				value="Register" /></td>
+		</tr>
+	</table>
+</form>
 </modal1>
 <section id="fh5co-intro">
-	<div class="col-md-4 col-md-offset-2" style="margin-left: 40%;margin-right: 0%;margin-top: -8%;">
-		<p> 
-			<button class="btn btn-lg text-normal btn-primary-outline" ng-click="toggleModal()" style="background-color: #52d3aa;color: white;">Login</button>
-			<button class="btn btn-lg text-normal btn-primary-outline" ng-click="toggleRegisModal()" style="background-color: #52d3aa;color: white;">Register</button>
+	<div class="col-md-8"
+		style="margin-left: 38%; font-weight: 700; margin-top: -10%;">
+		<h1 class="to-animate fadeInRight animated"
+			style="margin-left: -13%; width: 100%; font-weight: 700; font-size: -webkit-xxx-large;">Don't
+			Eat less, EatRight!</h1>
+		<p>
+			<button class="btn btn-lg text-normal btn-primary-outline"
+				ng-click="toggleModal()"
+				style="background-color: #52d3aa; color: white;">Login</button>
+			<button class="btn btn-lg text-normal btn-primary-outline"
+				ng-click="toggleRegisModal()"
+				style="background-color: #52d3aa; color: white;">Register</button>
 		</p>
 	</div>
 	<div class="container" style="margin-top: 4%;">
-		<div class="row row-bottom-padded-lg" style="margin-right: -9%;margin-left: -7%;">
-			<div class="fh5co-block to-animate" style="background-color:black;">
+		<div class="row row-bottom-padded-lg"
+			style="margin-right: -9%; margin-left: -7%;">
+			<div class="fh5co-block to-animate" style="background-color: black;">
 				<div class="overlay-darker"></div>
 				<div class="overlay"></div>
 				<div class="fh5co-text">
-					<i class="fh5co-intro-icon"><span class="glyphicon glyphicon-scale"></span></i>
+					<i class="fh5co-intro-icon"><span
+						class="glyphicon glyphicon-scale"></span></i>
 					<h2 style="color: white;">Fitness Device</h2>
-					<p style="color: white;">Connect all fitness devices in a single independent platform.</p>
+					<p style="color: white;">Connect all fitness devices in a
+						single independent platform.</p>
 					<!-- <p><a href="#" class="btn btn-primary">Get In Touch</a></p> -->
 				</div>
 			</div>
-			<div class="fh5co-block to-animate" style="background-color:black;">
+			<div class="fh5co-block to-animate" style="background-color: black;">
 				<div class="overlay-darker"></div>
 				<div class="overlay"></div>
 				<div class="fh5co-text">
-					<i class="fh5co-intro-icon"><span class="glyphicon glyphicon-apple"></span></i>
+					<i class="fh5co-intro-icon"><span
+						class="glyphicon glyphicon-apple"></span></i>
 					<h2 style="color: white;">Food Reccommendations</h2>
-					<p style="color: white;">Get daily food suggestions based on your food preferences. Log daily food and track calorie consumption.</p>
+					<p style="color: white;">Get daily food suggestions based on
+						your food preferences. Log daily food and track calorie
+						consumption.</p>
 					<!-- <p><a href="#" class="btn btn-primary">Click Me</a></p> -->
 				</div>
 			</div>
-			<div class="fh5co-block to-animate" style="background-color:black;">
+			<div class="fh5co-block to-animate" style="background-color: black;">
 				<div class="overlay-darker"></div>
 				<div class="overlay"></div>
 				<div class="fh5co-text">
-					<i class="fh5co-intro-icon"><span class="glyphicon glyphicon-road"></span></i>
+					<i class="fh5co-intro-icon"><span
+						class="glyphicon glyphicon-road"></span></i>
 					<h2 style="color: white;">Activity Feeds</h2>
-					<p style="color: white;">Get latest food activity details every day. Log daily activities and track calories burnt.</p>
+					<p style="color: white;">Get latest food activity details every
+						day. Log daily activities and track calories burnt.</p>
 					<!-- <p><a href="#" class="btn btn-primary">Why Us?</a></p> -->
 				</div>
 			</div>
-			<div class="fh5co-block to-animate" style="background-color:black;">
+			<div class="fh5co-block to-animate" style="background-color: black;">
 				<div class="overlay-darker"></div>
 				<div class="overlay"></div>
 				<div class="fh5co-text">
-					<i class="fh5co-intro-icon"><span class="glyphicon glyphicon-leaf"></span></i>
+					<i class="fh5co-intro-icon"><span
+						class="glyphicon glyphicon-leaf"></span></i>
 					<h2 style="color: white;">Nutrient Plan</h2>
-					<p style="color: white;">View division of Carbohydrates, Fats and Protiens based on daily calories and target weight.</p>
+					<p style="color: white;">View division of Carbohydrates, Fats
+						and Protiens based on daily calories and target weight.</p>
 					<!-- <p><a href="#" class="btn btn-primary">Why Us?</a></p> -->
 				</div>
 			</div>
-			<div class="fh5co-block to-animate" style="background-color:black;">
+			<div class="fh5co-block to-animate" style="background-color: black;">
 				<div class="overlay-darker"></div>
 				<div class="overlay"></div>
 				<div class="fh5co-text">
-					<i class="fh5co-intro-icon"><span class="glyphicon glyphicon-user"></span></i>
+					<i class="fh5co-intro-icon"><span
+						class="glyphicon glyphicon-user"></span></i>
 					<h2 style="color: white;">Calorie Summary</h2>
-					<p style="color: white;">Keep a track daily calories, calories burnt and calories consumed. </p>
+					<p style="color: white;">Keep a track daily calories, calories
+						burnt and calories consumed.</p>
 					<!-- <p><a href="#" class="btn btn-primary">Why Us?</a></p> -->
 				</div>
 			</div>
@@ -540,18 +677,30 @@
 				<h2 class="to-animate">About</h2>
 				<div class="row">
 					<div class="col-md-8 col-md-offset-2 subtext to-animate">
-						<h3>If you dont do what is best for your body, you are the one who comes up on the short end.</h3>
+						<h3>If you dont do what is best for your body, you are the
+							one who comes up on the short end.</h3>
+						<h3>EatRight is a device independent fitness tracking
+							application that takes complete control of your daily diet and
+							physical activities by allowing you to set target goals and
+							providing you with a daily planned diet. The diet plan focuses on
+							user's physical activity level, taste preferences for food, food
+							likes and dislikes and daily calorie requirements suiting the
+							fitness goal. EatRight makes it easier for the user to focus on
+							his diet by providing food recommendations.</h3>
 					</div>
 				</div>
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-md-4" >
+			<div class="col-md-4">
 				<div class="fh5co-person text-center to-animate">
-					<figure><img src="images/Amit.jpg" alt="Image"></figure>
+					<figure>
+						<img src="images/Amit.jpg" alt="Image">
+					</figure>
 					<h3>Amit Dubey</h3>
 					<span class="fh5co-position">Software Architect</span>
-					<p>My primary area of interest and expertise is in Software Development Algorithms.</p>
+					<p>My primary area of interest and expertise is in Software
+						Development Algorithms.</p>
 					<!-- <ul class="social social-circle">
 						<li><a href="#"><i class="icon-twitter"></i></a></li>
 						<li><a href="#"><i class="icon-facebook"></i></a></li>
@@ -561,10 +710,13 @@
 			</div>
 			<div class="col-md-4">
 				<div class="fh5co-person text-center to-animate">
-					<figure><img src="images/Jenil.jpg" alt="Image"></figure>
+					<figure>
+						<img src="images/Jenil.jpg" alt="Image">
+					</figure>
 					<h3>Jenil Doshi</h3>
 					<span class="fh5co-position">Software Application Developer</span>
-					<p>My primary area of interest and expertise is in Web Application Development.</p>
+					<p>My primary area of interest and expertise is in Web
+						Application Development.</p>
 					<!-- <ul class="social social-circle">
 						<li><a href="#"><i class="icon-twitter"></i></a></li>
 						<li><a href="#"><i class="icon-facebook"></i></a></li>
@@ -574,10 +726,13 @@
 			</div>
 			<div class="col-md-4">
 				<div class="fh5co-person text-center to-animate">
-					<figure><img src="images/Raina.jpg" alt="Image"></figure>
+					<figure>
+						<img src="images/Raina.jpg" alt="Image">
+					</figure>
 					<h3>Raina Shastri</h3>
 					<span class="fh5co-position">Software Engineer</span>
-					<p style="margin-bottom: 31%;">My primary area of interest and expertise is in Enterprise Software Development.</p>
+					<p style="margin-bottom: 31%;">My primary area of interest and
+						expertise is in Enterprise Software Development.</p>
 					<!-- <ul class="social social-circle">
 						<li><a href="#"><i class="icon-twitter"></i></a></li>
 						<li><a href="#"><i class="icon-facebook"></i></a></li>
@@ -587,10 +742,13 @@
 			</div>
 			<div class="col-md-4">
 				<div class="fh5co-person text-center to-animate">
-					<figure><img src="images/Vrushank.jpg" alt="Image"></figure>
+					<figure>
+						<img src="images/Vrushank.jpg" alt="Image">
+					</figure>
 					<h3>Vrushank Doshi</h3>
 					<span class="fh5co-position">Software Engineer in Test</span>
-					<p>My primary area of interest and expertise is in Software Testing Frameworks.</p>
+					<p>My primary area of interest and expertise is in Software
+						Testing Frameworks.</p>
 					<!-- <ul class="social social-circle">
 						<li><a href="#"><i class="icon-twitter"></i></a></li>
 						<li><a href="#"><i class="icon-facebook"></i></a></li>
@@ -602,7 +760,9 @@
 	</div>
 </section>
 
-<section id="fh5co-counters" style="background-image: url(images/full_image_1.jpg);" data-stellar-background-ratio="0.5">
+<section id="fh5co-counters"
+	style="background-image: url(images/full_image_1.jpg);"
+	data-stellar-background-ratio="0.5">
 	<div class="fh5co-overlay"></div>
 	<div class="container" style="margin-top: 0%;">
 		<div class="row">
@@ -610,7 +770,7 @@
 				<h2>Technologies</h2>
 			</div>
 		</div>
-		<div class="row" style="margin-left: -7%;margin-right: -13%;">
+		<div class="row" style="margin-left: -7%; margin-right: -13%;">
 			<div class="col-md-3 col-sm-6 col-xs-12">
 				<div class="fh5co-counter to-animate">
 					<img alt="html" src="images/html.png">
@@ -704,7 +864,7 @@
 	</div>
 </div> -->
 </section>
-<div class="container" style="width:35%" align="center">
+<div class="container" style="width: 35%" align="center">
 	<div class="">
 		<div class="col-md-12 text-center">
 			<p>&copy; EatRight. All Rights Reserved.</p>
