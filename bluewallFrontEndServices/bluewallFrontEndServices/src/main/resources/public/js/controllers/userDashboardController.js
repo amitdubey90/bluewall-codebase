@@ -184,7 +184,6 @@
 			console.log(error.statusText);
 		});
 		 
-		 
 		 userDashboardService.getFoodRecommendations().then(function(data){
 			// $scope.recommendationList = data.data;
 			 $scope.myInterval = 6000000;
@@ -195,7 +194,7 @@
 					 food.foodId = data.data[i].foodId;
 					 food.foodName = data.data[i].foodName;
 					 food.foodCalorie = data.data[i].foodCalorie;
-					 food.image = 'http://lorempixel.com/400/200/food';
+					 food.image = data.data[i].imageUrl;
 					 $scope.recommendationList.push(food);
 				 }
 			 }
