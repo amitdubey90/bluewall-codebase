@@ -3,6 +3,9 @@ package com.bluewall.userDeviceDataMapper.mappper;
 import com.bluewall.userDeviceDataMapper.bean.ActivityLog;
 import com.bluewall.userDeviceDataMapper.util.Constants;
 import lombok.extern.slf4j.Slf4j;
+
+import java.sql.Date;
+
 import org.bson.Document;
 
 /**
@@ -21,7 +24,7 @@ public class FitbitDocumentMapper implements ActivityLogMapper<Document> {
                     .userID(getUserId(doc))
                     .loggedFrom(Constants.FITBIT_LOGGED_FROM)
                     .activityName(Constants.DEFAULT_ACTIVITY_NAME)
-                    .caloriesBurnt(getCaloriesBurnt(doc))
+                    .caloriesBurnt(getCaloriesBurnt(doc)).activityLogDate(getActivityLogDate(doc))
                     .build();
         } catch (Throwable t) {
             log.debug("Could not map {} to ActivityLog.\n{}", doc.toJson(), t);
@@ -29,7 +32,11 @@ public class FitbitDocumentMapper implements ActivityLogMapper<Document> {
         return output;
     }
 
-    private int getUserId(Document doc) {
+    private Date getActivityLogDate(Document doc) {
+		return (Date) doc.getDate(Constants.ACTIVITY_LOG_DATE_KEY);
+	}
+
+	private int getUserId(Document doc) {
         return doc.getInteger(Constants.FITBIT_USERID_KEY);
     }
 

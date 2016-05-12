@@ -1,8 +1,8 @@
 package com.bluewall.userDeviceDataMapper.bean;
 
-import lombok.Data;
+import java.sql.Date;
 
-import java.sql.Timestamp;
+import lombok.Data;
 
 /**
  * POJO representing activity logs in the database
@@ -18,4 +18,5 @@ public class ActivityLog {
     private long duration;
     private int caloriesBurnt;
     private int loggedFrom;
+    private Date activityLogDate;
 }

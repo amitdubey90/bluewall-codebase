@@ -10,107 +10,114 @@ import org.bson.Document;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.Calendar;
 import java.util.stream.IntStream;
 
 /**
- * Worker thread that reads {@link ActivityLog} from outbound queue and writes them to the database.
+ * Worker thread that reads {@link ActivityLog} from outbound queue and writes
+ * them to the database.
  */
 @Slf4j
 public class OutboundQueueWorker extends Thread {
 
-    private QueueManager<Document> queue;
-    private boolean forever;
-    private int workerId;
+	private QueueManager<Document> queue;
+	private boolean forever;
+	private int workerId;
 
-    public OutboundQueueWorker(ThreadGroup tg, QueueManager<Document> queue, int workerId) {
-        this.queue = queue;
-        this.workerId = workerId;
-        this.forever = true;
-        this.setName("OutboundWorker-"+workerId);
+	public OutboundQueueWorker(ThreadGroup tg, QueueManager<Document> queue, int workerId) {
+		this.queue = queue;
+		this.workerId = workerId;
+		this.forever = true;
+		this.setName("OutboundWorker-" + workerId);
 
-        if (queue == null) {
-            throw new RuntimeException("Queue manager is null");
-        }
-    }
+		if (queue == null) {
+			throw new RuntimeException("Queue manager is null");
+		}
+	}
 
-    @Override
-    public void run() {
-        log.info("Outbound worker {} running.", workerId);
-        try (MySqlConnectionManager sqlConnectionMgr = new MySqlConnectionManager()) {
-            Connection connection = sqlConnectionMgr.getConnection();
-            PreparedStatement pst = connection.prepareStatement(Queries.ACTIVITY_LOG_INSERT);
+	@Override
+	public void run() {
+		log.info("Outbound worker {} running.", workerId);
+		try (MySqlConnectionManager sqlConnectionMgr = new MySqlConnectionManager()) {
+			Connection connection = sqlConnectionMgr.getConnection();
+			PreparedStatement pst = connection.prepareStatement(Queries.ACTIVITY_LOG_INSERT);
 
-            int recordCount = 0;
-            while (true) {
+			int recordCount = 0;
+			while (true) {
 
-                try {
-                    if (!forever && queue.getOutboundSize() == 0) {
-                        break;
-                    }
+				try {
+					if (!forever && queue.getOutboundSize() == 0) {
+						break;
+					}
 
-                    ActivityLog activityLog = queue.dequeueOutbound();
+					ActivityLog activityLog = queue.dequeueOutbound();
 
-                    if (activityLog != null) {
-                        log.info("Outbound {}", activityLog.toString());
-                        int colIndex = 1;
+					if (activityLog != null) {
+						log.info("Outbound {}", activityLog.toString());
+						int colIndex = 1;
 
-                        pst.setInt(colIndex++, activityLog.getUserID());
-                        pst.setString(colIndex++, activityLog.getActivityName());
-                        pst.setInt(colIndex++, activityLog.getDistance());
-                        pst.setLong(colIndex++, activityLog.getDuration());
-                        pst.setInt(colIndex++, activityLog.getCaloriesBurnt());
-                        pst.setInt(colIndex++, activityLog.getLoggedFrom());
+						pst.setInt(colIndex++, activityLog.getUserID());
+						pst.setString(colIndex++, activityLog.getActivityName());
+						pst.setInt(colIndex++, activityLog.getDistance());
+						pst.setLong(colIndex++, activityLog.getDuration());
+						pst.setInt(colIndex++, activityLog.getCaloriesBurnt());
+						pst.setInt(colIndex++, activityLog.getLoggedFrom());
+						pst.setDate(colIndex++,	activityLog.getActivityLogDate());
+						java.util.Date now = Calendar.getInstance().getTime();
+						java.sql.Timestamp currentTimestamp = new java.sql.Timestamp(now.getTime());
+						pst.setTimestamp(colIndex++, currentTimestamp);
 
-                        pst.addBatch();
-                        recordCount++;
-                    } else if (recordCount > 0) {
-                        flushToDatabase(pst);
-                        recordCount = 0;
-                    }
-                } catch (SQLException e) {
-                    log.error("SQLException in outbound queue worker {}", e);
-                } catch (Exception e) {
-                    log.error("Exception in outbound queue worker {}", e);
-                }
-            }
-            //flush any remaining records before shutting down
-            if (recordCount > 0) {
-                flushToDatabase(pst);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+						pst.addBatch();
+						recordCount++;
+					} else if (recordCount > 0) {
+						flushToDatabase(pst);
+						recordCount = 0;
+					}
+				} catch (SQLException e) {
+					log.error("SQLException in outbound queue worker {}", e);
+				} catch (Exception e) {
+					log.error("Exception in outbound queue worker {}", e);
+				}
+			}
+			// flush any remaining records before shutting down
+			if (recordCount > 0) {
+				flushToDatabase(pst);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 
-        if (!forever) {
-            log.info("Outbound worker {} shutting down.", workerId);
-        }
-    }
+		if (!forever) {
+			log.info("Outbound worker {} shutting down.", workerId);
+		}
+	}
 
-    /**
-     * Executes a batch of {@link PreparedStatement}
-     * @param pst
-     * @return int - total number of records inserted
-     * @throws SQLException
-     */
-    private int flushToDatabase(PreparedStatement pst) throws SQLException {
-        log.info("Flushing records to database.");
-        int output[];
-        try {
-            output = pst.executeBatch();
-        } catch (SQLException e) {
-            log.error("Failed to execute batch.");
-            throw (e);
-        }
-        int updateCount = IntStream.of(output).sum();
-        log.info("Successfully flushed {} records to database", updateCount);
-        return updateCount;
-    }
+	/**
+	 * Executes a batch of {@link PreparedStatement}
+	 * 
+	 * @param pst
+	 * @return int - total number of records inserted
+	 * @throws SQLException
+	 */
+	private int flushToDatabase(PreparedStatement pst) throws SQLException {
+		log.info("Flushing records to database.");
+		int output[];
+		try {
+			output = pst.executeBatch();
+		} catch (SQLException e) {
+			log.error("Failed to execute batch.");
+			throw (e);
+		}
+		int updateCount = IntStream.of(output).sum();
+		log.info("Successfully flushed {} records to database", updateCount);
+		return updateCount;
+	}
 
-    /**
-     * Method to shutdown the thread
-     */
-    public void shutdown() {
-        log.info("Outbound worker {} shutting down initiated", workerId);
-        forever = false;
-    }
+	/**
+	 * Method to shutdown the thread
+	 */
+	public void shutdown() {
+		log.info("Outbound worker {} shutting down initiated", workerId);
+		forever = false;
+	}
 }
