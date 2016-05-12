@@ -233,6 +233,8 @@
 				<tbody>
 					<tr ng-repeat="activity in activityLoggedList">
 						<td>{{activity.name}}</td>
+						<td ng-if="activity.duration == 0">-</td>
+ 						<td ng-if="activity.duration > 0">{{activity.duration}} minutes</td>
 						<td>{{activity.duration}}</td>
 						<td>{{activity.caloriesBurnt}}</td>
 						<td>{{activity.activityLogDate}}</td>
@@ -260,4 +262,3 @@
 				</div>
 			</div>
 </div>
-
