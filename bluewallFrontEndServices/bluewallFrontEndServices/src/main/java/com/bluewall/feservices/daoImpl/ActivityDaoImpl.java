@@ -130,7 +130,7 @@ public class ActivityDaoImpl implements ActivityDao {
 			prepStatement.setFloat(5, userActivity.getDuration());
 			prepStatement.setFloat(6, userActivity.getCaloriesBurnt());
 			prepStatement.setInt(7, 14);
-			//prepStatement.setTimestamp(8, userActivity.getLogTime());
+			prepStatement.setTimestamp(8, userActivity.getLogTime());
 			prepStatement.executeUpdate();
 			connection.commit();
 			log.info("Activity Successfully created for user ID: " + userId);

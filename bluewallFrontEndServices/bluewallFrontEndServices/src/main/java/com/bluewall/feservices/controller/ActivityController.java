@@ -1,5 +1,6 @@
 package com.bluewall.feservices.controller;
 
+import java.util.Calendar;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -96,7 +97,7 @@ public class ActivityController {
 		if (null != principal) {
 			userId = principal.getUserID();
 			activity.setLoggedFrom("Fitness Application");
-			//activity.setLogTime(new java.sql.Timestamp(Calendar.getInstance().getTime().getTime()));
+			activity.setLogTime(new java.sql.Timestamp(Calendar.getInstance().getTime().getTime()));
 			activityService.createActivity(activity, userId);
 			return true;
 		}
