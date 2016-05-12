@@ -80,7 +80,7 @@ public class FoodDaoImpl implements FoodDao {
 		Connection connection = null;
 		PreparedStatement pst = null;
 
-		String sqlStatement = Queries.GET_FOODID + " where name = '" + createFood.getName() + "'";
+		String sqlStatement = Queries.GET_FOODID + " where name = \""+createFood.getName()+"\"";
 
 		try {
 			connection = dataSource.getConnection();

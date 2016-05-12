@@ -37,41 +37,32 @@ public class RecommendationDaoImpl implements RecommendationDao {
 		ResultSet rs = null;
 		Connection connection = null;
 		PreparedStatement pst = null;
-
-		// build the query
-		StringBuffer query = new StringBuffer(Queries.GET_RECOMMENDATION_FOR_USER);
-		query.append("(");
-		StringJoiner joiner = new StringJoiner(",");
-		for (int i : foodIdList) {
-			joiner.add(String.valueOf(i));
-		}
-		query.append(joiner.toString());
-		query.append(")");
-		query.append(Queries.GET_RECOMMENDATION_FOR_USER_CONDITION);
-
 		try {
-			connection = dataSource.getConnection();
-			pst = connection.prepareStatement(query.toString());
-
-			int colId = 1;
-
-			pst.setDouble(colId++, calories);
-			pst.setInt(colId++, count);
-
-			rs = pst.executeQuery();
-			FoodInfo fi = null;
-			while (rs.next()) {
-				fi = new FoodInfo();
-				fi.setFoodName(rs.getString("name"));
-				fi.setFoodId(rs.getInt("foodB"));
-				fi.setFoodCalorie(rs.getDouble("foodBCalories"));
-				recommendations.add(fi);
+			// build the query
+			StringBuffer query = null;
+			for (int i : foodIdList) {
+				query = new StringBuffer(Queries.GET_RECOMMENDATION_FOR_USER);
+				query.append(Queries.GET_RECOMMENDATION_FOR_USER_CONDITION);
+				connection = dataSource.getConnection();
+				pst = connection.prepareStatement(query.toString());
+				int colId = 1;
+				pst.setInt(colId++, i);
+				pst.setDouble(colId++, calories);
+				pst.setInt(colId++, 2);
+				rs = pst.executeQuery();
+				FoodInfo fi = null;
+				while (rs.next()) {
+					fi = new FoodInfo();
+					fi.setFoodName(rs.getString("name"));
+					fi.setFoodId(rs.getInt("foodB"));
+					fi.setFoodCalorie(rs.getDouble("foodBCalories"));
+					recommendations.add(fi);
+				}
 			}
 			log.info("getRecommendationsForUser successful");
 		} catch (SQLException e) {
 			log.error("SqlException in getRecommendationsForUser {}", e);
-		}
-		finally{
+		} finally {
 			DatabaseResouceCloser.closeAllSilent(connection, pst, rs);
 		}
 		return recommendations;
@@ -100,11 +91,11 @@ public class RecommendationDaoImpl implements RecommendationDao {
 		} catch (SQLException e) {
 			log.error("SqlException in getLatestPreferredFoodItem {}", e);
 		}
-		
-		finally{
+
+		finally {
 			DatabaseResouceCloser.closeAllSilent(connection, pst, rs);
 		}
-		
+
 		return foodIdList;
 	}
 }

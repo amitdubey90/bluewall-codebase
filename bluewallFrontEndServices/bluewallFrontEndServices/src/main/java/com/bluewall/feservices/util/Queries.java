@@ -40,11 +40,11 @@ public class Queries {
 	public static final String INS_USER_TASTE_PREFERENCES = "insert into UserRating (userID,foodID,rating,ratingTimeStamp) values (?,?,?,?)";
 
 	public static final String GET_RECOMMENDATION_FOR_USER = "SELECT FoodInfo.name, FoodSimilarity.foodB, FoodSimilarity.similarity, FoodSimilarity.foodBCalories " +
-			"FROM FoodInfo,FoodSimilarity where foodA in ";
+			"FROM FoodInfo,FoodSimilarity where foodA = ?";
 	public static final String GET_RECOMMENDATION_FOR_USER_CONDITION = " and foodBCalories < ? and FoodInfo.foodId = FoodSimilarity.foodB order by similarity desc limit ?";
 
 	public static final String GET_PREFERRED_FOOD_ID = "(SELECT distinct(foodId) FROM UserRating WHERE userID = ? AND rating >= " +
-			"(SELECT AVG(rating) FROM UserRating WHERE userId = ?) ORDER BY ratingTimeStamp DESC , rating DESC limit 2) union " +
+			"(SELECT AVG(rating) FROM UserRating WHERE userId = ?) ORDER BY ratingTimeStamp DESC , rating DESC limit 3) union " +
 			"(SELECT distinct(foodId) FROM userDatabase.FoodLog WHERE userID = ? ORDER BY logTime DESC LIMIT 2)";
 	
 	public static final String UPSERT_USER_RATINGS = "INSERT INTO UserRating (userID, foodID, rating) VALUES (?, ?, ?) "
