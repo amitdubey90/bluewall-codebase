@@ -45,9 +45,11 @@ public class CalorieController {
 				sumCalorieBurnt = calorieService.getSumCaloriesBurnt(userID, date);
 				SimpleDateFormat smpDate = new SimpleDateFormat("yyyy-MM-dd");
 				if(date.equals(smpDate.format(new Date()))){
-					dailyCalories = ((dailyCalories/24) * Calendar.getInstance().get(Calendar.HOUR_OF_DAY));
+					sumCalorieBurnt += ((dailyCalories/24) * Calendar.getInstance().get(Calendar.HOUR_OF_DAY));
+				} else
+				{
+					sumCalorieBurnt += dailyCalories;
 				}
-				sumCalorieBurnt += dailyCalories;
 				sumCalorieConsumed = calorieService.getSumCaloriesConsumed(userID, date);
 				netCalorie = sumCalorieConsumed - sumCalorieBurnt;
 				percentCalorie = (netCalorie / dailyCalories) * 100;
