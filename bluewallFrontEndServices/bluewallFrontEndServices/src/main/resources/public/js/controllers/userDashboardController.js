@@ -95,7 +95,21 @@
 		 
 		 
 		 userDashboardService.getFoodRecommendations().then(function(data){
-			 $scope.recommendationList = data.data;
+			// $scope.recommendationList = data.data;
+			 $scope.myInterval = 6000000;
+			 $scope.recommendationList = [];
+			 if(data.data){
+				 for(i=0;i<data.data.length;i++){
+					 var food= {};
+					 food.foodId = data.data[i].foodId;
+					 food.foodName = data.data[i].foodName;
+					 food.foodCalorie = data.data[i].foodCalorie;
+					 food.image = 'http://lorempixel.com/400/200/food';
+					 $scope.recommendationList.push(food);
+				 }
+			 }
+			 console.log($scope.recommendationList);
+			 console.log("RECOMMENDED: "+JSON.stringify(data.data));
 			 console.log("Recomendation fetched successfully");
 		 },function(error){
 				$scope.error = "Unable to load recommendations: "+error.statusText;
@@ -152,7 +166,7 @@
 		
 		this.getFoodRecommendations = function(){
 			
-			return $http.get("/recommendation/get/5").then(function(food){
+			return $http.get("/recommendation/get/10").then(function(food){
 				console.log("Data returned from backend servie: recommendations service: "+ JSON.stringify(food));
 				return food;
 			});

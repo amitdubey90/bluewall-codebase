@@ -1,5 +1,6 @@
 .rating1, .rating2, .rating3, .rating4, .rating5, .rating6, .rating7, .rating8 {
     float:left;
+    margin-left:21%;
 }
 
 .rating1:not(:checked) > input, .rating2:not(:checked) > input,

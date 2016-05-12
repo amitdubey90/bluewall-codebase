@@ -1,0 +1,19 @@
+#slides_control > div{
+  height: 100%;
+}
+#foodImage{
+  margin:auto;
+  width: 100%;
+  height:50%
+}
+#slides_control {
+  position:absolute;
+  width: 85%;
+  left:50%;
+  top:73px;
+  margin-left:-41%;
+}
+
+.carousel-indicators li{
+	display:none;
+}
