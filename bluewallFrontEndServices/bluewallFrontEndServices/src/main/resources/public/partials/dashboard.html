@@ -112,6 +112,10 @@
 							<div>
 		    					<carousel interval="myInterval">
 			       				 	<slide ng-repeat="food in recommendationList" active="food.active">
+			       				 	<p>
+			         					<h4 style="color:black"><strong>Category : {{food.foodCategory}}</strong></h4>
+			         					<h3 style="color:black;margin-top: -3%;">{{food.foodName}} :<strong>{{food.foodCalorie}} Kcals</strong></h3>
+			         				</p>
 			         				<img id="foodImage" ng-src="{{food.image}}">
 			         				<div class="carousel-caption">
 			         				<div class="rating1" align="center">
@@ -122,10 +126,7 @@
 											    <input type="radio" id="star1{{$index}}" name="rating{{$index}}" value="1" ng-click="userRating(food.foodId, $index);" /><label for="star1{{$index}}" title="Sucks big time">1 star</label>
 											</div>
 			         				</div>
-			         				<p>
-			         					<h5 style="color:black">Category : {{food.foodCategory}}</h5>
-			         					<h5 style="color:black;margin-top: -3%;">{{food.foodName}} : {{food.foodCalorie}} Kcals</h5>
-			         				</p>
+			         				
 			         				
          						
 		       				 	</slide>
