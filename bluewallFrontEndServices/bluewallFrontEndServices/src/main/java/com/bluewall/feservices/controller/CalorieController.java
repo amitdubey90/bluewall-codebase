@@ -52,7 +52,7 @@ public class CalorieController {
 				}
 				sumCalorieConsumed = calorieService.getSumCaloriesConsumed(userID, date);
 				netCalorie = sumCalorieConsumed - sumCalorieBurnt;
-				percentCalorie = (netCalorie / dailyCalories) * 100;
+				percentCalorie = (sumCalorieConsumed / dailyCalories) * 100;
 				
 				if (percentCalorie > 100)
 					percentCalorie = 100;
